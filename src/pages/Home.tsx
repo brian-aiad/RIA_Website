@@ -20,52 +20,33 @@ function Hero() {
   useImagePreload(images.hero.consultation);
 
   return (
-    <section className="relative overflow-hidden noise-overlay diagonal-pattern">
-      {/* Full-bleed background photo: broker-client consultation */}
-      <img
-        src={images.hero.consultation}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover"
-        fetchPriority="high"
-        width={1680}
-        height={945}
-      />
-      {/* Navy overlay */}
-      <div className="absolute inset-0" style={{ backgroundColor: "rgba(6,14,31,0.64)" }} />
-      {/* Soft gradient sweetener for legibility on the left */}
-      <div className="absolute inset-0 bg-gradient-to-r from-brand-950/92 via-brand-900/58 to-brand-900/12" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_24%,rgba(245,166,35,0.22),transparent_28%)]" />
+    <section className="home-hero relative overflow-hidden bg-brand-950">
+      <div className="home-hero-media absolute inset-0 overflow-hidden">
+        <img
+          src={images.hero.consultation}
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover"
+          fetchPriority="high"
+          width={1680}
+          height={945}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-950/95 via-brand-950/58 to-brand-950/10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_24%,rgba(245,166,35,0.18),transparent_30%)]" />
+      </div>
+      <div aria-hidden="true" className="absolute -left-28 bottom-0 h-80 w-80 rounded-full border border-white/[.06] shadow-[inset_0_0_0_38px_rgba(245,158,11,.025)]" />
+      <div aria-hidden="true" className="absolute left-10 top-16 h-px w-28 bg-gradient-to-r from-gold-400/70 to-transparent" />
 
       <div className="container relative pt-24 pb-20 lg:pt-28 lg:pb-24">
         {/* ── Left: Copy ── */}
-        <div className="max-w-xl relative z-[2]">
+        <div className="hero-copy-enter max-w-xl relative z-[2]">
           {/* Trust badge pill */}
-          <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
-            <svg className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 24 24"><path d="m12 17.3 6 3.6-1.6-6.9 5.3-4.5-7-.6L12 2 9.3 8.9l-7 .6 5.3 4.5L6 20.9z" /></svg>
-            <span className="text-white/90 text-sm font-semibold">Local Los Angeles Insurance Guidance</span>
+          <span className="inline-flex items-center gap-2 border-l-2 border-gold-400 pl-3 mb-6">
+            <span className="text-gold-300 text-[11px] font-bold uppercase tracking-[.18em]">Mar Vista · Independent since 2003</span>
           </span>
 
           <h1 className="display-1 text-white">
-            Insurance that{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10">works for you</span>
-              <svg
-                className="absolute -bottom-3 left-0 w-full"
-                height="14"
-                viewBox="0 0 320 14"
-                fill="none"
-                aria-hidden
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M2 9C40 3 80 11 120 7C160 3 200 11 240 7C280 3 300 9 318 6"
-                  stroke="#F5A623"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </span>
+            Coverage for <span className="text-gradient-gold">real life</span> in Los Angeles.
           </h1>
 
           <p className="mt-6 text-lg text-white/85 leading-relaxed">
@@ -74,7 +55,7 @@ function Hero() {
 
           <p
             className="mt-4 text-gold-400 font-semibold text-[15px]"
-            style={{ borderLeft: "3px solid #F5A623", paddingLeft: "12px" }}
+            style={{ borderLeft: "3px solid #E3A719", paddingLeft: "12px" }}
           >
             Ask about options for nonstandard license situations.
           </p>
@@ -118,12 +99,7 @@ function Hero() {
 
       </div>
 
-      {/* Subtle wave divider */}
-      <div className="wave-divider">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="white">
-          <path d="M0 30C240 50 480 20 720 30C960 40 1200 20 1440 30V60H0V30Z" />
-        </svg>
-      </div>
+      <div aria-hidden="true" className="home-hero-cut absolute inset-x-0 bottom-0 h-12 bg-white" />
     </section>
   );
 }
@@ -162,7 +138,7 @@ function ServicesMasonry() {
         onClick={openQuoteModal}
         aria-label={`Get a quote for ${title}`}
         className="service-card group relative flex flex-col justify-end overflow-hidden rounded-2xl ring-1 ring-slate-200/80 hover:ring-slate-300 hover:shadow-lifted transition-all duration-300 text-left w-full"
-        style={{ aspectRatio: "4 / 3", background: "linear-gradient(135deg, #1a2a4a 0%, #0f2147 100%)" }}
+        style={{ aspectRatio: "4 / 3", background: "linear-gradient(135deg, #193b6b 0%, #102653 100%)" }}
       >
         {img && (
           <div className="img-duotone absolute inset-0">
@@ -175,7 +151,7 @@ function ServicesMasonry() {
               decoding="async"
               width={800}
               height={600}
-              style={{ background: "linear-gradient(135deg, #1a2a4a 0%, #0f2147 100%)" }}
+              style={{ background: "linear-gradient(135deg, #193b6b 0%, #102653 100%)" }}
             />
           </div>
         )}
@@ -392,12 +368,12 @@ function ServiceAreas() {
     { name: "Venice", slug: "venice", note: "Local Westside service" },
     { name: "Marina del Rey", slug: "marina-del-rey", note: "Home, auto & watercraft" },
     { name: "West Los Angeles", slug: "west-los-angeles", note: "Households & businesses" },
+    { name: "Palms", slug: "palms", note: "Minutes from our office" },
+    { name: "Sawtelle", slug: "sawtelle", note: "Renters, auto & small business" },
     { name: "Playa Vista", slug: "playa-vista", note: "Renters, condos & business" },
     { name: "Westchester", slug: "westchester", note: "Nearby insurance guidance" },
     { name: "Inglewood", slug: "inglewood", note: "Business and personal lines" },
-    { name: "Beverly Hills", slug: "beverly-hills", note: "Property & specialty risks" },
-    { name: "El Segundo", slug: "el-segundo", note: "Commercial insurance & bonds" },
-    { name: "Manhattan Beach", slug: "manhattan-beach", note: "Property, auto & liability" },
+    { name: "Ladera Heights", slug: "ladera-heights", note: "Home, auto & professional risks" },
   ];
 
   return (

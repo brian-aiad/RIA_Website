@@ -129,7 +129,7 @@ export default function Contact() {
                 ),
                 title: "Text Us",
                 detail: site.contact.text,
-                sub: "Fast replies during business hours",
+                sub: "Available during posted business hours",
                 href: site.contact.textHref,
                 accent: false,
               },
@@ -205,7 +205,7 @@ export default function Contact() {
                     className="w-16 h-16 mx-auto rounded-full grid place-items-center"
                     style={{ background: "var(--gold-500)", boxShadow: "var(--shadow-gold)" }}
                   >
-                    <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none" stroke="#0B1E3D" strokeWidth={3.5}>
+                    <svg className="w-9 h-9" viewBox="0 0 24 24" fill="none" stroke="#102653" strokeWidth={3.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>

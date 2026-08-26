@@ -15,12 +15,12 @@ const DEFAULT_AREA_SERVED = [
   "Venice, Los Angeles, CA",
   "Marina del Rey, CA",
   "West Los Angeles, CA",
+  "Palms, Los Angeles, CA",
+  "Sawtelle, Los Angeles, CA",
   "Playa Vista, Los Angeles, CA",
   "Westchester, Los Angeles, CA",
   "Inglewood, CA",
-  "Beverly Hills, CA",
-  "El Segundo, CA",
-  "Manhattan Beach, CA",
+  "Ladera Heights, CA",
 ];
 
 export default function LocalBusinessSchema({

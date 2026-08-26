@@ -51,12 +51,12 @@ const ROUTES = [
   "/insurance/venice",
   "/insurance/marina-del-rey",
   "/insurance/west-los-angeles",
+  "/insurance/palms",
+  "/insurance/sawtelle",
   "/insurance/playa-vista",
   "/insurance/westchester",
   "/insurance/inglewood",
-  "/insurance/beverly-hills",
-  "/insurance/el-segundo",
-  "/insurance/manhattan-beach",
+  "/insurance/ladera-heights",
   "/",
 ];
 

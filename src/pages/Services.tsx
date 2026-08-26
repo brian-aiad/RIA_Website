@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { openQuoteModal } from "../lib/openQuote";
 import { site } from "../lib/site";
@@ -20,17 +22,17 @@ const SERVICE_TABS = [
     icon: Car,
     badge: "Most Popular",
     title: "Auto Insurance",
-    desc: "From daily drivers to weekend classics — comprehensive coverage with competitive rates and prompt eID cards after binding.",
+    desc: "From daily drivers to weekend classics, we compare liability and physical-damage options across available carrier programs.",
     img: images.services.auto,
     alt: "Premium auto insurance coverage",
     highlights: [
       { title: "Full coverage options", sub: "Liability, comprehensive, collision" },
       { title: "SR-22 filing support", sub: "Electronic submission when eligible" },
       { title: "Nonstandard license situations", sub: "Ask about available programs" },
-      { title: "Multi-car discounts", sub: "Save on family policies" },
+      { title: "Multi-car discounts", sub: "Available options vary by carrier" },
     ],
     stats: [
-      { value: "Prompt", label: "eID Cards" },
+      { value: "Digital", label: "Proof After Binding" },
       { value: "Multiple", label: "Carriers" },
       { value: "SR-22", label: "Filing Help" },
     ],
@@ -46,9 +48,9 @@ const SERVICE_TABS = [
     alt: "Comprehensive home insurance protection",
     highlights: [
       { title: "Dwelling & personal property", sub: "Full replacement options" },
-      { title: "Liability protection", sub: "Coverage up to $1M+" },
+      { title: "Liability protection", sub: "Limits selected for your needs" },
       { title: "Renters coverage too", sub: "Coverage for belongings and liability" },
-      { title: "Bundle & save", sub: "Home + Auto discounts" },
+      { title: "Multi-policy options", sub: "Home + auto discounts may apply" },
     ],
     stats: [
       { value: "Bundle", label: "Auto + Home" },
@@ -104,13 +106,13 @@ const SERVICE_TABS = [
     icon: Bike,
     badge: null,
     title: "Motorcycle Insurance",
-    desc: "Coverage for riders with liability, collision, and gear protection. Multi-bike discounts available.",
+    desc: "Coverage for riders may include liability, collision, comprehensive, and optional gear or accessory protection.",
     img: images.services.motorcycle,
     alt: "Motorcycle insurance coverage",
     highlights: [
       { title: "Liability & collision", sub: "Full protection on the road" },
       { title: "Gear protection", sub: "Helmets, jackets, accessories" },
-      { title: "Multi-bike discounts", sub: "Garage policy savings" },
+      { title: "Multi-bike options", sub: "Discount availability varies" },
       { title: "Prompt proof of coverage", sub: "Available after carrier binding" },
     ],
     stats: [
@@ -132,7 +134,7 @@ const SERVICE_TABS = [
       { title: "RV & motorhome", sub: "Full-time & part-time coverage" },
       { title: "Boat & watercraft", sub: "On and off the water" },
       { title: "Specialty toys", sub: "ATVs, jet skis, and more" },
-      { title: "Weekend-ready coverage", sub: "Quick bind, fast eID" },
+      { title: "Proof after binding", sub: "Subject to carrier confirmation" },
     ],
     stats: [
       { value: "RV", label: "Motorhome Options" },
@@ -150,10 +152,29 @@ export default function Services() {
   });
 
   const [activeTab, setActiveTab] = useState("auto");
+  const tabPanelRef = useRef<HTMLDivElement>(null);
 
 
   const active = SERVICE_TABS.find((t) => t.key === activeTab) || SERVICE_TABS[0];
   const ActiveIcon = active.icon;
+
+  useGSAP(
+    () => {
+      const panel = tabPanelRef.current;
+      if (!panel || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const image = panel.querySelector("img");
+      const copy = panel.querySelector(".service-tab-copy");
+      const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+      if (image) {
+        timeline.fromTo(image, { scale: 1.055, clipPath: "inset(0 9% 0 0)" }, { scale: 1, clipPath: "inset(0 0% 0 0)", duration: 0.72 });
+      }
+      if (copy) {
+        timeline.fromTo(Array.from(copy.children), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.48, stagger: 0.045, clearProps: "transform,opacity" }, "-=0.5");
+      }
+    },
+    { dependencies: [activeTab], scope: tabPanelRef, revertOnUpdate: true },
+  );
 
   const extraServices = (site.services as { key: string; title?: string; name?: string; blurb?: string; desc?: string }[])
     .slice(6)
@@ -222,7 +243,7 @@ export default function Services() {
           </div>
 
           {/* Tab content — two column */}
-          <div key={active.key}>
+          <div key={active.key} ref={tabPanelRef} className="service-tab-panel">
               <div className="grid md:grid-cols-2 gap-10 md:gap-14 lg:gap-16 items-center">
                 {/* Image side */}
                 <div className="relative">
@@ -245,7 +266,7 @@ export default function Services() {
                 </div>
 
                 {/* Content side */}
-                <div>
+                <div className="service-tab-copy">
                   <div className="inline-flex items-center justify-center w-14 h-14 bg-brand-50 rounded-2xl ring-1 ring-brand-100 mb-5">
                     <ActiveIcon className="w-7 h-7 text-brand-700" />
                   </div>
@@ -298,8 +319,8 @@ export default function Services() {
           <Stagger className="mt-16 md:mt-20 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
             {[
               { title: "Need SR-22?", sub: "Electronic filing support" },
-              { title: "Bundle & Save", sub: "Home + Auto discounts" },
-              { title: "Claims Support", sub: "We handle the paperwork" },
+              { title: "Multi-policy Options", sub: "Home + auto discounts may apply" },
+              { title: "Policy Support", sub: "Guidance after coverage is issued" },
             ].map((item) => (
               <StaggerChild key={item.title}>
                 <button onClick={openQuoteModal} className="group bg-white hover:bg-brand-50/40 p-5 md:p-6 rounded-2xl ring-1 ring-slate-200/80 hover:ring-brand-200 hover:shadow-lifted transition-all duration-300 block w-full text-left">
@@ -315,7 +336,7 @@ export default function Services() {
       <InsuranceWorkflow
         tone="offwhite"
         title="Coverage decisions before carrier selection"
-        lede="The right service page should help you understand what needs to be quoted, what documents matter, and how fast coverage can be bound."
+        lede="A useful service page should help you understand what needs to be quoted, which documents matter, and what happens before coverage is bound."
       />
 
       {/* ── Additional services ── */}
@@ -347,7 +368,7 @@ export default function Services() {
       {/* ── Bottom CTA ── */}
       <CTASection
         title="Can't find what you need?"
-        lede="We handle unusual risks too. Tell us what you need and we'll find a solution."
+        lede="Tell us what needs protection. We will review the details and explain the programs available for your situation."
         primaryLabel="Start a Conversation"
         secondaryLabel={`Call ${site.contact.phone}`}
       />

@@ -44,8 +44,8 @@ const HOMEPAGE = "https://raflainsurance.com/";
 // Expected city slugs — must match sitemap AND homepage ServiceAreas.
 const EXPECTED_CITIES = [
   "mar-vista", "culver-city", "santa-monica", "venice", "marina-del-rey",
-  "west-los-angeles", "playa-vista", "westchester", "inglewood",
-  "beverly-hills", "el-segundo", "manhattan-beach",
+  "west-los-angeles", "palms", "sawtelle", "playa-vista", "westchester",
+  "inglewood", "ladera-heights",
 ];
 
 /**

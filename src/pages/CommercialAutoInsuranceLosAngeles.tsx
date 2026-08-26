@@ -220,13 +220,13 @@ export default function CommercialAutoInsuranceLosAngelesPage() {
         </div>
       </section>
 
-      {/* Consultation image — commercial coverage specialist */}
+      {/* Consultation image — commercial coverage review */}
       <section className="sp bg-white">
         <div className="container max-w-6xl">
           <ConsultationImage
             image={images.clients.commercialConsultation}
-            alt="Commercial auto insurance broker at Rafla Insurance in Los Angeles, CA reviewing fleet vehicle coverage and business policy options with small business owner"
-            eyebrow="Commercial Auto Specialists · Los Angeles CA"
+            alt="Local service-business team preparing two work vans for the day in West Los Angeles"
+            eyebrow="Commercial Auto Guidance · Los Angeles CA"
             heading="Commercial auto quoting that starts with your business, not a form"
             badge="Fleet · Single vehicle · NEMT · Delivery"
             stats={[

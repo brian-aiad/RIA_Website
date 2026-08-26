@@ -10,6 +10,7 @@ import { CTASection, Section, SectionHeader } from "../design-system";
 import { site } from "../lib/site";
 import { usePageMeta } from "../lib/seo";
 import { openQuoteModal } from "../lib/openQuote";
+import { images } from "../lib/images";
 
 type CityInfo = { slug: string; name: string; blurb: string; distance: string; zips: string[] };
 
@@ -20,12 +21,12 @@ const CITIES: CityInfo[] = [
   { slug: "venice", name: "Venice", blurb: "Venice residents come to us for auto, renters, homeowners, motorcycle, and small-business insurance support close to home.", distance: "west of our office along Venice Boulevard", zips: ["90291"] },
   { slug: "marina-del-rey", name: "Marina del Rey", blurb: "From daily drivers to watercraft and rental properties, local clients can bring several coverage needs into one conversation.", distance: "southwest of our Mar Vista office", zips: ["90292"] },
   { slug: "west-los-angeles", name: "West Los Angeles", blurb: "We serve West Los Angeles households and businesses with guidance across auto, property, commercial, and specialty coverage.", distance: "north of our office via the 405 or local streets", zips: ["90025", "90064"] },
+  { slug: "palms", name: "Palms", blurb: "Palms residents, renters, drivers, and neighborhood businesses can work with a nearby independent agency for personal and commercial coverage.", distance: "just east of our office along Venice Boulevard", zips: ["90034"] },
+  { slug: "sawtelle", name: "Sawtelle", blurb: "We help Sawtelle households and small businesses compare auto, renters, property, liability, and specialty insurance options.", distance: "northwest of our office via local Westside streets", zips: ["90025"] },
   { slug: "playa-vista", name: "Playa Vista", blurb: "Renters, condo owners, drivers, and growing businesses can compare protection for both personal and professional risks.", distance: "south of our office near the 405", zips: ["90094"] },
   { slug: "westchester", name: "Westchester", blurb: "Families, landlords, and local businesses can review personal and commercial insurance with a nearby independent broker.", distance: "south of our office toward LAX", zips: ["90045"] },
   { slug: "inglewood", name: "Inglewood", blurb: "We help drivers, property owners, contractors, and small businesses compare coverage and understand their options.", distance: "southeast of our office via the 405", zips: ["90301", "90302", "90303", "90304", "90305"] },
-  { slug: "beverly-hills", name: "Beverly Hills", blurb: "Clients can review auto, home, umbrella, valuable-property, and business coverage with one local agency.", distance: "northeast of our office", zips: ["90210", "90211", "90212"] },
-  { slug: "el-segundo", name: "El Segundo", blurb: "Residents and companies can compare personal insurance, commercial auto, liability, workers' compensation, and bonds.", distance: "south of our office near LAX", zips: ["90245"] },
-  { slug: "manhattan-beach", name: "Manhattan Beach", blurb: "We help households and businesses review property, auto, liability, and specialty insurance needs.", distance: "south of our office via the 405", zips: ["90266"] },
+  { slug: "ladera-heights", name: "Ladera Heights", blurb: "Ladera Heights homeowners, drivers, landlords, and professionals can review personal and business protection with a local broker.", distance: "southeast of our office via Culver Boulevard", zips: ["90056"] },
 ];
 
 const CITY_MAP = Object.fromEntries(CITIES.map((city) => [city.slug, city])) as Record<string, CityInfo>;
@@ -37,6 +38,14 @@ const COVERAGE_LINES = [
   { title: "Motorcycle, RV & Boat", desc: "Coverage for riders, recreational vehicles, and watercraft.", Icon: Bike },
   { title: "SR-22 Filing", desc: "Help with California SR-22 insurance and filing requirements.", Icon: FileText },
 ];
+
+function cityHeroImage(slug: string) {
+  if (slug === "mar-vista") return images.hero.storefront;
+  if (["venice", "marina-del-rey", "santa-monica"].includes(slug)) return images.city.coastal;
+  if (["culver-city", "palms", "sawtelle", "west-los-angeles"].includes(slug)) return images.city.palmsCulver;
+  if (["playa-vista", "westchester", "inglewood", "ladera-heights"].includes(slug)) return images.city.southWestside;
+  return images.city.westside;
+}
 
 export default function CityLanding() {
   const { citySlug } = useParams<{ citySlug: string }>();
@@ -76,7 +85,7 @@ export default function CityLanding() {
         title={`Insurance broker serving ${city.name}`}
         subtitle="Personal attention, independent carrier access, and clear help from quote through renewal."
         breadcrumb={city.name}
-        backgroundImage={city.slug === "mar-vista" ? "/images/client/rafla-building-street.jpg" : "/images/ois-city-community-golden-v4.webp"}
+        backgroundImage={cityHeroImage(city.slug)}
         imageFilter="contrast(1.06) saturate(0.96) brightness(0.9)"
       >
         <div className="flex flex-wrap gap-3">
@@ -93,7 +102,7 @@ export default function CityLanding() {
             <span className="eyebrow">Local service area</span>
             <h2 className="mt-3 display-2 text-slate-900">Coverage for {city.name} households and businesses</h2>
             <p className="mt-5 text-lg text-slate-600 leading-relaxed">{city.blurb}</p>
-            <p className="mt-4 text-slate-500 leading-relaxed">Rafla Insurance Agency is {city.distance}. Call, email, or stop by to discuss your current coverage, a new purchase, or a business insurance requirement.</p>
+            <p className="mt-4 text-slate-500 leading-relaxed">Our Mar Vista office is {city.distance}. Call, email, or stop by to discuss your current coverage, a new purchase, or a business insurance requirement.</p>
             <p className="mt-5 text-sm text-slate-500"><strong className="text-slate-700">ZIP codes served:</strong> {city.zips.join(", ")}</p>
           </Reveal>
         </div>

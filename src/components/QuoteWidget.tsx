@@ -13,6 +13,7 @@ const QUOTE_TYPES = [
 
 export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number }) {
   const [open, setOpen] = useState(false);
+  const [launcherVisible, setLauncherVisible] = useState(false);
   const [quoteType, setQuoteType] = useState<(typeof QUOTE_TYPES)[number]["label"]>("Auto");
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -22,6 +23,21 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
     const handleOpen = () => setOpen(true);
     window.addEventListener("openQuoteModal", handleOpen);
     return () => window.removeEventListener("openQuoteModal", handleOpen);
+  }, []);
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => setLauncherVisible(window.scrollY > window.innerHeight * 0.55));
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, []);
   useEffect(() => { if (openSignal > 0) setOpen(true); }, [openSignal]);
   useEffect(() => {
@@ -33,7 +49,28 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
     previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const dialog = closeButtonRef.current?.closest<HTMLElement>("[role='dialog']");
+      const focusable = dialog
+        ? Array.from(dialog.querySelectorAll<HTMLElement>("a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])"))
+        : [];
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && (active === first || !dialog?.contains(active))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => {
@@ -45,7 +82,7 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
 
   return (
     <>
-      <motion.button type="button" onClick={() => setOpen(true)} initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.2, type: "spring" }} className="fixed bottom-5 right-4 z-50 flex items-center gap-2 rounded-full bg-brand-900 px-4 py-3 text-sm font-semibold text-white shadow-heavy ring-1 ring-brand-700 hover:bg-brand-800 sm:bottom-20 sm:right-6" aria-label="Get a quote">
+      <motion.button type="button" onClick={() => setOpen(true)} initial={false} animate={{ scale: launcherVisible ? 1 : 0.85, opacity: launcherVisible ? 1 : 0, y: launcherVisible ? 0 : 12 }} transition={{ type: "spring", stiffness: 360, damping: 28 }} className={`fixed bottom-5 right-4 z-50 flex items-center gap-2 rounded-full bg-brand-900 px-4 py-3 text-sm font-semibold text-white shadow-heavy ring-1 ring-brand-700 hover:bg-brand-800 sm:bottom-6 sm:right-6 ${launcherVisible ? "pointer-events-auto" : "pointer-events-none"}`} aria-label="Get a quote" aria-hidden={!launcherVisible} tabIndex={launcherVisible ? 0 : -1}>
         <ClipboardCheck className="h-5 w-5 text-gold-300" /><span className="hidden sm:inline">Get a Quote</span><span className="sm:hidden">Quote</span>
       </motion.button>
 
@@ -53,7 +90,7 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
         {open && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] grid place-items-center p-4">
             <button type="button" className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setOpen(false)} aria-label="Close quote dialog" />
-            <motion.section initial={{ y: 24, opacity: 0, scale: 0.97 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 24, opacity: 0, scale: 0.97 }} className="relative w-full max-w-3xl overflow-hidden rounded-3xl bg-white shadow-heavy" role="dialog" aria-modal="true" aria-labelledby="quote-title" aria-describedby="quote-description">
+            <motion.section initial={{ y: 24, opacity: 0, scale: 0.97 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 24, opacity: 0, scale: 0.97 }} className="relative max-h-[calc(100dvh-2rem)] w-full max-w-3xl overflow-y-auto overscroll-contain rounded-3xl bg-white shadow-heavy" role="dialog" aria-modal="true" aria-labelledby="quote-title" aria-describedby="quote-description">
               <div className="flex items-start justify-between border-b border-slate-100 px-6 py-5">
                 <div><p className="eyebrow">Free consultation</p><h2 id="quote-title" className="mt-1 text-xl font-bold text-slate-900">Start your insurance quote</h2><p id="quote-description" className="mt-1 text-sm text-slate-500">Choose a coverage type, then contact the office using the method you prefer.</p></div>
                 <button ref={closeButtonRef} type="button" onClick={() => setOpen(false)} className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700" aria-label="Close"><X className="h-5 w-5" /></button>

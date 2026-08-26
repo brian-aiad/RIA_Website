@@ -225,7 +225,7 @@ export default function AutoInsuranceLosAngelesCA() {
                 After a qualifying policy is bound, the insurer can submit an SR-22 electronically to the California DMV. Bring your driver's license or reinstatement paperwork, vehicle VIN, current declarations page if available, and any court or DMV reference number. We will explain the carrier's filing process and provide any confirmation available.
               </p>
               <p className="text-base text-slate-600 leading-relaxed mb-4">
-                California typically requires you to carry SR-22 for three years. During that period, your policy must remain active — any lapse restarts the clock with the DMV. As an independent broker, we have access to carriers that specialize in SR-22 situations and can find competitive rates even when other companies have declined.
+                The DMV or court determines how long your filing must remain in effect. Keeping the qualifying policy active matters because a lapse can trigger another notice to the DMV. As an independent broker, we can compare available carrier programs for SR-22 situations and explain the tradeoffs in coverage and price.
               </p>
               <p className="text-base text-slate-600 leading-relaxed">
                 For full details on SR-22 cost, duration, and what to expect, visit our dedicated page.

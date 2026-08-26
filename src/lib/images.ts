@@ -6,39 +6,37 @@ export function srcset(src: string): string {
 /** Centralized image paths — all optimized from /public/images */
 export const images = {
   hero: {
-    /** Generated consultation scene composed for the homepage hero */
-    consultation: "/images/ois-hero-consultation-2026.webp",
+    /** Original Rafla consultation scene composed for the homepage hero */
+    consultation: "/images/rafla/home-hero.webp",
     /** Real photo: exterior storefront on Venice Blvd, Los Angeles */
     storefront: "/images/client/rafla-building-street.jpg",
     officeDetail: "/images/client/rafla-building-front.jpg",
   },
   home: {
-    why: "/images/ois-home-why-hispanic-consult-v4.webp",
-    reviews: "/images/ois-home-reviews-client-v4.webp",
+    why: "/images/rafla/about-conversation.webp",
+    reviews: "/images/rafla/policy-review.webp",
   },
   services: {
-    auto: "/images/ois-product-auto-car-v3.webp",
-    home: "/images/ois-product-home-house-v3.webp",
-    workers: "/images/ois-product-commercial-vehicles-v3.webp",
-    commercial: "/images/ois-product-commercial-vehicles-v3.webp",
-    motorcycle: "/images/ois-product-motorcycle-v3.webp",
-    rv: "/images/ois-product-rv-boat-v3.webp",
+    auto: "/images/rafla/auto-mar-vista.webp",
+    home: "/images/rafla/home-bungalow.webp",
+    workers: "/images/rafla/workers-comp.webp",
+    commercial: "/images/rafla/commercial-fleet.webp",
+    motorcycle: "/images/rafla/motorcycle-venice.webp",
+    rv: "/images/rafla/rv-boat-marina.webp",
   },
   products: {
-    overview: "/images/ois-services-overview-products-v3.webp",
-    auto: "/images/ois-product-auto-car-v3.webp",
-    home: "/images/ois-product-home-house-v3.webp",
-    workers: "/images/ois-product-commercial-vehicles-v3.webp",
-    commercial: "/images/ois-product-commercial-vehicles-v3.webp",
-    motorcycle: "/images/ois-product-motorcycle-v3.webp",
-    rv: "/images/ois-product-rv-boat-v3.webp",
-    sr22: "/images/ois-product-sr22-document-v3.webp",
-    noLicense: "/images/ois-product-no-license-docs-v3.webp",
+    overview: "/images/rafla/services-overview.webp",
+    auto: "/images/rafla/auto-mar-vista.webp",
+    home: "/images/rafla/home-bungalow.webp",
+    workers: "/images/rafla/workers-comp.webp",
+    commercial: "/images/rafla/commercial-fleet.webp",
+    motorcycle: "/images/rafla/motorcycle-venice.webp",
+    rv: "/images/rafla/rv-boat-marina.webp",
+    sr22: "/images/rafla/sr22-review.webp",
+    noLicense: "/images/rafla/document-consultation.webp",
   },
   about: {
-    /** Real photo: main office interior — teal walls, hardwood floors, workstations */
-    office: "/images/client/rafla-building-front.jpg",
-    /** Real photo: second interior angle — consultation area */
+    office: "/images/rafla/about-conversation.webp",
     officeAlt: "/images/client/rafla-building-angle.jpg",
   },
   location: {
@@ -46,26 +44,31 @@ export const images = {
     exterior: "/images/client/rafla-building-street.jpg",
     /** Real photo: wider exterior showing the shopping center context */
     exteriorWide: "/images/client/rafla-building-wide.jpg",
-    /** Real photo: main office interior */
+    /** Real photo: close exterior view of the Rafla storefront */
     interior: "/images/client/rafla-building-front.jpg",
-    /** Real photo: consultation / private office room */
+    /** Real photo: angled exterior view of the Rafla storefront */
     consultationRoom: "/images/client/rafla-building-angle.jpg",
   },
   testimonials: {
-    auto: "/images/ois-testimonial-auto-client-v4.webp",
-    family: "/images/ois-testimonial-family-client-v4.webp",
-    business: "/images/ois-testimonial-business-client-v4.webp",
+    auto: "/images/rafla/auto-mar-vista.webp",
+    family: "/images/rafla/home-bungalow.webp",
+    business: "/images/rafla/about-conversation.webp",
   },
   clients: {
-    officeConsultation: "/images/ois-testimonial-auto-client-v4.webp",
-    autoConsultation: "/images/ois-hispanic-auto-consult-v3.webp",
-    sr22Consultation: "/images/ois-sr22-hispanic-consult-v4.webp",
-    noLicenseConsultation: "/images/ois-no-license-hispanic-consult-v4.webp",
-    commercialConsultation: "/images/ois-testimonial-business-client-v4.webp",
-    /** Real photo: consultation room interior */
-    contactFrontDesk: "/images/client/rafla-building-angle.jpg",
+    officeConsultation: "/images/rafla/home-hero.webp",
+    autoConsultation: "/images/rafla/home-hero.webp",
+    sr22Consultation: "/images/rafla/sr22-review.webp",
+    noLicenseConsultation: "/images/rafla/document-consultation.webp",
+    commercialConsultation: "/images/rafla/commercial-fleet.webp",
+    contactFrontDesk: "/images/rafla/contact-welcome.webp",
   },
   claims: {
-    docs: "/images/client/rafla-building-front.jpg",
+    docs: "/images/rafla/policy-review.webp",
+  },
+  city: {
+    westside: "/images/rafla/westside-jacaranda.webp",
+    coastal: "/images/rafla/coastal-marina.webp",
+    palmsCulver: "/images/rafla/palms-culver.webp",
+    southWestside: "/images/rafla/south-westside.webp",
   },
 };

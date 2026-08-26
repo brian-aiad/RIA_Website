@@ -120,18 +120,18 @@
       "permanent": true
     },
     {
-      "source": "/insurance/beverly-hills/",
-      "destination": "/insurance/beverly-hills",
+      "source": "/insurance/palms/",
+      "destination": "/insurance/palms",
       "permanent": true
     },
     {
-      "source": "/insurance/el-segundo/",
-      "destination": "/insurance/el-segundo",
+      "source": "/insurance/sawtelle/",
+      "destination": "/insurance/sawtelle",
       "permanent": true
     },
     {
-      "source": "/insurance/manhattan-beach/",
-      "destination": "/insurance/manhattan-beach",
+      "source": "/insurance/ladera-heights/",
+      "destination": "/insurance/ladera-heights",
       "permanent": true
     }
   ],
@@ -161,7 +161,7 @@
     {
       "source": "/",
       "headers": [
-        { "key": "Link", "value": "</images/ois-hero-consultation-2026.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high" }
+        { "key": "Link", "value": "</images/rafla/home-hero.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high" }
       ]
     },
     {

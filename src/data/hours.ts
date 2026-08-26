@@ -21,18 +21,9 @@ export const REGULAR_HOURS = {
  * Add entries here — Brian should confirm actual hours for each holiday.
  * Entries with `closed: true` mean the office is completely closed.
  */
-export const SPECIAL_HOURS: SpecialHoursEntry[] = [
-  // 2026 US Federal holidays — confirm with Brian whether office is open, closed, or reduced hours
-  { date: "2026-05-25", label: "Memorial Day",       closed: true },
-  { date: "2026-07-03", label: "Independence Day Eve", closed: true },
-  { date: "2026-09-07", label: "Labor Day",           closed: true },
-  { date: "2026-11-26", label: "Thanksgiving",        closed: true },
-  { date: "2026-11-27", label: "Day after Thanksgiving", closed: true },
-  { date: "2026-12-24", label: "Christmas Eve",       opensAt: "10:00", closesAt: "13:00" },
-  { date: "2026-12-25", label: "Christmas Day",       closed: true },
-  { date: "2026-12-31", label: "New Year's Eve",      opensAt: "10:00", closesAt: "13:00" },
-  { date: "2027-01-01", label: "New Year's Day",      closed: true },
-];
+// Publish only client-confirmed exceptions. An empty list keeps the site from
+// presenting assumed holiday closures as fact.
+export const SPECIAL_HOURS: SpecialHoursEntry[] = [];
 
 /** Returns today's special-hours entry if one exists, otherwise null. */
 export function getTodaySpecialHours(): SpecialHoursEntry | null {

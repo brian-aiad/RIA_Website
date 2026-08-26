@@ -255,10 +255,10 @@ export default function SR22InsuranceLosAngeles() {
               Filing charges and the cost of the underlying auto policy vary by carrier and driver. The larger cost difference often comes from the driving event or insurance history that led to the SR-22 requirement, not the certificate alone.
             </p>
             <p className="text-base text-slate-600 leading-relaxed mb-4">
-              The premium increase varies significantly by carrier. Some companies specialize in non-standard or high-risk auto insurance and offer more competitive rates for SR-22 situations than standard carriers. This is exactly where an independent broker provides real value — we compare SR-22-eligible carriers side by side so you're not overpaying simply because your first call was to the wrong company.
+              The premium impact varies significantly by carrier and by the driving or insurance history behind the filing. An independent broker can compare available SR-22-eligible programs side by side so you can review both price and coverage.
             </p>
             <p className="text-base text-slate-600 leading-relaxed">
-              After your three-year filing requirement ends and your record improves, we can re-shop your policy to bring your rate back down. We proactively monitor these milestones for long-term clients.
+              When the DMV or court confirms that the filing requirement has ended, ask us to review the policy again. Carrier appetite and pricing may change as the underlying driving and insurance history changes.
             </p>
           </Reveal>
         </div>

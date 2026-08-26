@@ -30,7 +30,7 @@ export const site = {
     { key: "moto", title: "Motorcycle", blurb: "Coverage for riders with gear and accessory protection." },
     { key: "rec", title: "Recreational", blurb: "RV, boat, and specialty toys — enjoy the weekend safely." },
     { key: "bonds", title: "Surety Bonds", blurb: "License, permit, contract, and commercial bond support." },
-    { key: "reg", title: "Registration Services", blurb: "Skip the DMV lines. Title transfers, renewals, and plates." },
+    { key: "reg", title: "Registration Services", blurb: "Ask about title transfers, renewals, and plate services." },
     { key: "sr22", title: "SR-22 Filing", blurb: "Electronic filing support after a qualifying policy is bound." },
     { key: "translate", title: "Document Translation", blurb: "Accurate translation in Arabic, Spanish, and English." },
   ],

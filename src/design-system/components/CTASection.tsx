@@ -23,7 +23,7 @@ interface CTASectionProps {
  * Usage:
  *   <CTASection
  *     title="Ready to compare multiple carriers?"
- *     lede="We find the best rate for your situation in minutes."
+ *     lede="Let us compare available options for your situation."
  *   />
  */
 export function CTASection({

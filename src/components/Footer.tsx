@@ -26,13 +26,13 @@ const companyLinks = [
 
 const cityLinks = [
   { name: "Mar Vista", slug: "mar-vista" },
+  { name: "Palms", slug: "palms" },
   { name: "Culver City", slug: "culver-city" },
-  { name: "Santa Monica", slug: "santa-monica" },
   { name: "Venice", slug: "venice" },
   { name: "Marina del Rey", slug: "marina-del-rey" },
   { name: "West LA", slug: "west-los-angeles" },
-  { name: "Inglewood", slug: "inglewood" },
-  { name: "Westchester", slug: "westchester" },
+  { name: "Sawtelle", slug: "sawtelle" },
+  { name: "Playa Vista", slug: "playa-vista" },
 ];
 
 function FooterHeading({ children }: { children: ReactNode }) {

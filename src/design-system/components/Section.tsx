@@ -38,6 +38,7 @@ export function Section({ children, className = "", id, tone = "light", padding 
   return (
     <Tag
       id={id}
+      data-motion-section="true"
       className={`${toneClasses[tone]} ${paddingClasses[padding]} ${className}`}
     >
       {children}

@@ -1,5 +1,6 @@
 import { ClipboardCheck, FileText, Phone, ShieldCheck } from "lucide-react";
 import { openQuoteModal } from "../lib/openQuote";
+import { images } from "../lib/images";
 import { site } from "../lib/site";
 
 const REVIEW_ITEMS = [
@@ -14,7 +15,7 @@ export default function BrokerHeroPanel() {
     <aside className="overflow-hidden rounded-2xl bg-white/[0.08] text-white ring-1 ring-white/15 shadow-heavy backdrop-blur-md">
       <div className="relative h-56 overflow-hidden bg-brand-950">
         <img
-          src="/images/ois-office-desk-detail-v3.webp"
+          src={images.claims.docs}
           alt="Insurance policy folders and keys on a broker desk"
           className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.04]"
           width={800}

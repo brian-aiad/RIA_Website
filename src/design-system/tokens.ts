@@ -12,16 +12,16 @@
 // CSS-in-JS, Framer Motion color animations).
 export const colors = {
   // Navy — primary brand
-  navyDeepest:   "#060e1f",  // brand-950: darkest hero, footer
-  navyDeep:      "#0b1e3d",  // brand-900: hero overlays, dark cards
-  navyStrong:    "#0f2147",  // brand-800: buttons, icon backgrounds
-  navyMid:       "#1e3a8a",  // brand-700: text links, hover states
-  navyLight:     "#dbeafe",  // brand-100: pale navy tint for light backgrounds
-  navyPale:      "#eff6ff",  // brand-50: very light backgrounds
+  navyDeepest:   "#061329",  // brand-950: darkest hero, footer
+  navyDeep:      "#0b1d3e",  // brand-900: hero overlays, dark cards
+  navyStrong:    "#102653",  // brand-800: exact Rafla logo navy
+  navyMid:       "#193b6b",  // brand-700: text links, hover states
+  navyLight:     "#e4ebf5",  // brand-100: pale navy tint for light backgrounds
+  navyPale:      "#f3f6fb",  // brand-50: very light backgrounds
   // Gold — accent ONLY (primary CTAs, stars, highlights — nowhere else)
-  goldDark:      "#d97706",  // gold-600: text, dark contexts
-  gold:          "#f5a623",  // gold-500: primary CTA background
-  goldLight:     "#fcd34d",  // gold-400: lighter highlight
+  goldDark:      "#b9820f",  // gold-600: text, dark contexts
+  gold:          "#e3a719",  // gold-500: exact Rafla logo gold
+  goldLight:     "#eabb3f",  // gold-400: lighter highlight
   // Neutrals
   grayDark:      "#0f172a",  // slate-900: headings
   grayBody:      "#475569",  // slate-600: body text

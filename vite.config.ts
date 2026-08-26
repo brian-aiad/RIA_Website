@@ -17,7 +17,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ["react", "react-dom", "react-router-dom"],
-          animations: ["framer-motion", "lenis"],
+          animations: ["framer-motion", "gsap", "@gsap/react"],
           ui: ["lucide-react"],
         },
       },

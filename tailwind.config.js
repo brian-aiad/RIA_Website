@@ -15,26 +15,30 @@ export default {
     },
     extend: {
       colors: {
-        /* Brand — derived from the OIS logo shield blue */
+        /* Rafla brand — sampled from the supplied logo and business card */
         brand: {
-          50:  "#eff6ff",
-          100: "#dbeafe",
-          200: "#bfdbfe",
-          300: "#93c5fd",
-          400: "#60a5fa",
-          500: "#3b82f6",   /* bright blue accent */
-          600: "#2563eb",
-          700: "#1d4ed8",
-          800: "#1e3a8a",   /* logo navy */
-          900: "#1e2f5e",
-          950: "#0f172a",   /* near-black navy */
+          50:  "#f3f6fb",
+          100: "#e4ebf5",
+          200: "#c6d5e9",
+          300: "#96b3d5",
+          400: "#628cc0",
+          500: "#3569a8",
+          600: "#234f89",
+          700: "#193b6b",
+          800: "#102653",   /* exact logo/card navy */
+          900: "#0b1d3e",
+          950: "#061329",
         },
-        /* Gold accent for CTAs */
+        /* Warm metallic family built around the exact card/logo gold */
         gold: {
-          300: "#fcd34d",
-          400: "#fbbf24",
-          500: "#f59e0b",
-          600: "#d97706",
+          50:  "#fdf9ed",
+          100: "#f9edc8",
+          200: "#f6dfa0",
+          300: "#f3ce70",
+          400: "#eabb3f",
+          500: "#e3a719",   /* exact logo/card gold */
+          600: "#b9820f",
+          700: "#8b610d",
         },
       },
       fontFamily: {

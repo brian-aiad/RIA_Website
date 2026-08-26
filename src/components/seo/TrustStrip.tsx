@@ -38,7 +38,7 @@ export default function TrustStrip() {
             className="flex items-center gap-1.5 text-current opacity-80 hover:opacity-100 transition-opacity duration-150"
           >
             <DotIcon />
-            <span className="text-sm font-medium leading-tight whitespace-nowrap">
+            <span className="text-sm font-medium leading-tight whitespace-normal sm:whitespace-nowrap">
               {item.label}
             </span>
           </li>

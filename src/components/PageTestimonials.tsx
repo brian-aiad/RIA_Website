@@ -19,7 +19,7 @@ export default function PageTestimonials({ tone = "offwhite" }: { tone?: "white"
         </RevealOnScroll>
         <div className="grid gap-4 sm:grid-cols-3">
           {EXPECTATIONS.map(({ title, text, Icon }) => (
-            <article key={title} className="rounded-2xl bg-white p-6 ring-1 ring-slate-200/80 shadow-soft">
+            <article key={title} className="reveal-surface rounded-2xl bg-white p-6 ring-1 ring-slate-200/80 shadow-soft">
               <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-700 ring-1 ring-brand-100"><Icon className="h-5 w-5" /></div>
               <h3 className="mt-4 font-bold text-slate-900">{title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-500">{text}</p>

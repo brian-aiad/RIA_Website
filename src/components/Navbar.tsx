@@ -40,12 +40,37 @@ export default function Navbar() {
     return () => document.documentElement.classList.remove("overflow-hidden");
   }, [open]);
 
-  /* esc */
+  /* keyboard navigation and focus containment */
   useEffect(() => {
     if (!open) return;
-    const fn = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const focusTimer = window.setTimeout(() => sheetRef.current?.querySelector<HTMLElement>("a[href], button")?.focus(), 0);
+    const fn = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        btnRef.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const focusable = [
+        btnRef.current,
+        ...Array.from(sheetRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? []),
+      ].filter((item): item is HTMLElement => Boolean(item));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     window.addEventListener("keydown", fn);
-    return () => window.removeEventListener("keydown", fn);
+    return () => {
+      window.clearTimeout(focusTimer);
+      window.removeEventListener("keydown", fn);
+    };
   }, [open]);
 
   /* outside click */
@@ -181,7 +206,7 @@ export default function Navbar() {
         {open && (
             <div
               ref={sheetRef}
-              className="lg:hidden overflow-hidden border-t border-slate-100"
+              className="mobile-menu-sheet lg:hidden overflow-hidden border-t border-slate-100 bg-white/95 backdrop-blur-xl"
             >
               <div className="container py-5 space-y-2">
                 {LINKS.map((l) => (

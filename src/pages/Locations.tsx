@@ -24,7 +24,7 @@ const HOURS: HourRow[] = [
   { label: "Sunday",    short: "Sun", closed: true },
 ];
 
-const SERVICE_AREA = ["Mar Vista", "Culver City", "Santa Monica", "Venice", "Marina del Rey", "West Los Angeles", "Playa Vista", "Westchester", "Inglewood", "Beverly Hills", "El Segundo", "Manhattan Beach"];
+const SERVICE_AREA = ["Mar Vista", "Palms", "Culver City", "Venice", "Marina del Rey", "Santa Monica", "West Los Angeles", "Sawtelle", "Playa Vista", "Westchester", "Inglewood", "Ladera Heights"];
 
 function cx(...v: (string | false | null | undefined)[]) {
   return v.filter(Boolean).join(" ");
@@ -98,7 +98,7 @@ export default function Locations() {
         imageFilter="contrast(1.08) saturate(1.04) brightness(0.96)"
         rightContent={
           <div className="rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-heavy aspect-[4/3]">
-            <img src={images.clients.contactFrontDesk} alt="Rafla Insurance Agency office building on Venice Boulevard" className="w-full h-full object-cover" width={800} height={600} />
+            <img src={images.clients.contactFrontDesk} alt="Insurance advisor welcoming a client into a neighborhood office" className="w-full h-full object-cover" width={800} height={600} />
           </div>
         }
       >

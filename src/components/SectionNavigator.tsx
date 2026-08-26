@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 type HeadingItem = {
@@ -79,11 +79,6 @@ export default function SectionNavigator() {
     };
   }, [pathname]);
 
-  const activeLabel = useMemo(
-    () => headings.find((heading) => heading.id === activeId)?.label ?? headings[0]?.label,
-    [activeId, headings]
-  );
-
   if (headings.length < 3 || !showNavigator) return null;
 
   return (
@@ -118,17 +113,6 @@ export default function SectionNavigator() {
         </div>
       </aside>
 
-      <div className="fixed inset-x-0 bottom-3 z-30 px-3 sm:hidden">
-        <a
-          href={`#${activeId || headings[0].id}`}
-          className="mx-auto flex max-w-[22rem] items-center justify-between gap-3 rounded-full bg-brand-950/[0.92] px-4 py-2.5 text-white shadow-heavy ring-1 ring-white/10 backdrop-blur-xl"
-        >
-          <span className="min-w-0 truncate text-[12px] font-semibold">{activeLabel}</span>
-          <span className="h-1.5 w-12 overflow-hidden rounded-full bg-white/15">
-            <span className="block h-full origin-left rounded-full bg-gold-400" style={{ transform: `scaleX(${progress})` }} />
-          </span>
-        </a>
-      </div>
     </>
   );
 }

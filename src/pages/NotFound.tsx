@@ -45,7 +45,7 @@ export default function NotFound() {
               >
                 <path
                   d="M2 5.5c40-3 100-3 196 0"
-                  stroke="#fbbf24"
+                  stroke="#e3a719"
                   strokeWidth="3"
                   strokeLinecap="round"
                 />

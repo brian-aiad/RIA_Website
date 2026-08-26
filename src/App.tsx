@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollProgress from "./components/ScrollProgress";
 import SectionNavigator from "./components/SectionNavigator";
+import RouteMotion from "./components/RouteMotion";
 
 // Eagerly load primary prerendered pages. Keeping these eager prevents direct
 // route loads from replacing prerendered content with a Suspense fallback.
@@ -84,7 +85,7 @@ export default function App() {
         <Navbar />
         <div className="flex-1">
           <SectionNavigator />
-          <div key={location.pathname}>
+          <RouteMotion key={location.pathname} routeKey={location.pathname}>
             <Suspense fallback={<LoadingFallback />}>
               <Routes location={location}>
                 <Route path="/" element={<Home />} />
@@ -104,7 +105,7 @@ export default function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
-          </div>
+          </RouteMotion>
         </div>
         <Footer />
       </div>

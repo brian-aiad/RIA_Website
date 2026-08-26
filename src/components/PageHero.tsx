@@ -21,10 +21,9 @@ interface PageHeroProps {
 }
 
 /**
- * Shared page hero used by Services / Contact / About / Locations.
- * Matches the home hero treatment: photo background + dark overlay,
- * diagonal line texture, vignette, Playfair Display headline, gold
- * accent rule, and a wave divider.
+ * Shared editorial page hero used throughout the Rafla site. The angled
+ * image plane, subtle map geometry, and warm-gold details are intentionally
+ * distinct from the source site while staying consistent with Rafla's brand.
  */
 export default function PageHero({
   title,
@@ -47,12 +46,12 @@ export default function PageHero({
       className="page-hero relative overflow-hidden"
       style={{
         background:
-          "linear-gradient(135deg, #060E1F 0%, #0B1E3D 50%, #162D5E 100%)",
+          "linear-gradient(135deg, #061329 0%, #0B1D3E 50%, #193B6B 100%)",
       }}
     >
       {/* Background photo */}
       {backgroundImage && (
-        <>
+        <div className="page-hero-media absolute inset-0 overflow-hidden">
           <img
             src={backgroundImage}
             alt=""
@@ -84,75 +83,18 @@ export default function PageHero({
             }}
             aria-hidden="true"
           />
-        </>
+        </div>
       )}
 
-      {/* Diagonal line texture */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(-55deg, transparent, transparent 30px, rgba(255,255,255,0.018) 30px, rgba(255,255,255,0.018) 31px)",
-        }}
-      />
-
-      {/* Vignette edges */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 40%, rgba(6,14,31,0.45) 100%)",
-        }}
-      />
-
-      {/* ─── Floating decorative accents (brand personality, no impact on layout) ─── */}
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 3 }}>
-        <svg
-          className="absolute -top-6 right-6 lg:right-24 w-56 h-56 animate-float"
-          viewBox="0 0 100 100"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="0.7"
-          style={{ color: "rgba(245,158,11,0.07)" }}
-        >
-          <path d="M50 8L12 22v24c0 20 14 38 38 46 24-8 38-26 38-46V22L50 8z" />
-          <path d="M50 16L18 28v20c0 16 11 30 32 38 21-8 32-22 32-38V28L50 16z" strokeOpacity="0.5" />
+      <div aria-hidden="true" className="page-hero-cartography absolute inset-0 pointer-events-none overflow-hidden">
+        <svg className="absolute -bottom-24 -left-24 h-[28rem] w-[28rem]" viewBox="0 0 420 420" fill="none">
+          <circle cx="210" cy="210" r="118" stroke="rgba(255,255,255,.055)" />
+          <circle cx="210" cy="210" r="168" stroke="rgba(245,158,11,.08)" />
+          <path d="M20 252C96 158 170 306 246 200C308 113 356 145 408 84" stroke="rgba(255,255,255,.08)" strokeWidth="1.5" />
+          <path d="M70 344C124 278 184 354 250 294C306 244 348 263 392 220" stroke="rgba(245,158,11,.11)" />
         </svg>
-        <svg
-          className="absolute bottom-20 left-4 lg:left-16 w-28 h-28"
-          viewBox="0 0 110 110"
-          fill="currentColor"
-          style={{ color: "rgba(255,255,255,0.04)" }}
-        >
-          {Array.from({ length: 25 }, (_, i) => (
-            <circle key={i} cx={(i % 5) * 22 + 11} cy={Math.floor(i / 5) * 22 + 11} r="3" />
-          ))}
-        </svg>
-        <svg
-          className="absolute top-[58%] right-2 lg:right-14 w-24 h-24 animate-float-delayed"
-          viewBox="0 0 100 100"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.2"
-          style={{ color: "rgba(255,255,255,0.04)" }}
-        >
-          <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" />
-        </svg>
-        <div
-          className="absolute top-14 left-[36%] w-16 h-16 rounded-full border animate-spin-slow"
-          style={{ borderColor: "rgba(245,158,11,0.07)" }}
-        />
-        <svg
-          className="absolute top-24 left-8 lg:left-20 w-7 h-7 animate-float"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          style={{ color: "rgba(255,255,255,0.05)", animationDelay: "0.8s" }}
-        >
-          <rect x="10" y="2" width="4" height="20" rx="2" />
-          <rect x="2" y="10" width="20" height="4" rx="2" />
-        </svg>
+        <div className="absolute left-[7%] top-20 h-px w-24 bg-gradient-to-r from-gold-400/70 to-transparent" />
+        <div className="absolute left-[7%] top-[5.35rem] text-[9px] font-bold uppercase tracking-[.34em] text-white/25">Westside · Los Angeles</div>
       </div>
 
       <div className="container relative z-10 pt-28 pb-24 md:pt-32 md:pb-28">
@@ -243,22 +185,7 @@ export default function PageHero({
         </div>
       </div>
 
-      {/* Wave divider — same SVG used everywhere */}
-      <div className="absolute bottom-0 left-0 right-0 leading-[0]">
-        <svg
-          viewBox="0 0 1440 64"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-          className="w-full"
-          style={{ display: "block", height: "60px" }}
-        >
-          <path
-            d="M0 64L1440 64L1440 24C1200 64 900 4 720 24C540 44 240 4 0 24L0 64Z"
-            fill="white"
-          />
-        </svg>
-      </div>
+      <div aria-hidden="true" className="page-hero-cut absolute inset-x-0 bottom-0 h-12 bg-white" />
     </section>
   );
 }

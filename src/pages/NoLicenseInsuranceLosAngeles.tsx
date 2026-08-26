@@ -113,13 +113,13 @@ export default function NoLicenseInsuranceLosAngeles() {
         </div>
       </section>
 
-      {/* Consultation image — non-standard license specialist */}
+      {/* Consultation image — nonstandard license guidance */}
       <section className="sp bg-slate-50">
         <div className="container max-w-6xl">
           <ConsultationImage
             image={images.clients.noLicenseConsultation}
             alt="Rafla Insurance agent in Los Angeles, CA helping ITIN holder and foreign driver's license applicant obtain California auto insurance coverage"
-            eyebrow="Non-Standard Insurance Specialists"
+            eyebrow="Nonstandard Coverage Guidance"
             heading="Coverage guidance for lawful nonstandard license situations"
             imageLeft
             badge="ITIN & foreign-license review"
@@ -285,7 +285,7 @@ export default function NoLicenseInsuranceLosAngeles() {
         <div className="container max-w-3xl text-center">
           <Reveal>
             <h2 className="text-3xl font-bold text-white mb-3" style={{ fontFamily: "var(--font-display)" }}>
-              Tell us your situation — we'll find the options
+              Tell us your situation — we'll review the options
             </h2>
             <p className="text-white/70 mb-6">
               No judgment and no pressure. We review lawful nonstandard license situations carefully and explain the available carrier requirements.
