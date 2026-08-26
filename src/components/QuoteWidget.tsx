@@ -72,7 +72,7 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
             <button type="button" className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setOpen(false)} aria-label="Close quote dialog" />
             <motion.section initial={{ y: 20, opacity: 0, scale: 0.985 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 20, opacity: 0, scale: 0.985 }} className="relative max-h-[calc(100dvh-2rem)] w-full max-w-3xl overflow-y-auto overscroll-contain border border-gold-500 bg-white shadow-heavy" role="dialog" aria-modal="true" aria-labelledby="quote-title" aria-describedby="quote-description">
               <div className="flex items-start justify-between border-b border-brand-100 px-6 py-5">
-                <div><p className="eyebrow">Coverage desk / new file</p><h2 id="quote-title" className="mt-1 text-xl font-bold text-brand-950">Start your insurance quote</h2><p id="quote-description" className="mt-1 text-sm text-slate-500">Choose a coverage type, then contact the office using the method you prefer.</p></div>
+                <div><p className="eyebrow">Rafla Insurance Agency</p><h2 id="quote-title" className="mt-1 text-xl font-bold text-brand-950">Start your insurance quote</h2><p id="quote-description" className="mt-1 text-sm text-slate-500">Choose a coverage type, then contact the office using the method you prefer.</p></div>
                 <button ref={closeButtonRef} type="button" onClick={() => setOpen(false)} className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700" aria-label="Close"><X className="h-5 w-5" /></button>
               </div>
 

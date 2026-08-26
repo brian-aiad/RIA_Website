@@ -3,13 +3,13 @@ import CoverageBriefPage, { type CoverageBriefConfig } from "../components/Cover
 const config: CoverageBriefConfig = {
   index: "01",
   eyebrow: "Auto insurance",
-  title: "A clearer route through California auto coverage.",
+  title: "Auto insurance for the way you really drive.",
   lede: "Liability, physical damage, optional protections, and specialty situations—reviewed from a local broker’s desk in Mar Vista.",
   metaTitle: "Auto Insurance Los Angeles CA | Rafla Insurance Agency",
   metaDescription: "Compare Los Angeles auto insurance for liability, comprehensive, collision, uninsured motorist and specialty situations with a Mar Vista independent broker.",
   canonical: "https://raflainsurance.com/auto-insurance-los-angeles-ca",
-  image: "/images/atlas/auto-route.webp",
-  imageAlt: "White vehicle model on a navy paper street grid with a gold route line",
+  image: "/images/agency/auto-home-v2.webp",
+  imageAlt: "An everyday car and bungalow on a Westside Los Angeles driveway",
   signals: [
     { label: "California minimum", value: "30 / 60 / 15" },
     { label: "Review style", value: "Limits + deductibles + use" },
@@ -32,13 +32,13 @@ const config: CoverageBriefConfig = {
   checklistTitle: "Details that make a quote more precise.",
   checklist: ["Driver names, dates of birth, and license information", "Vehicle VINs, mileage, use, and garaging address", "Current declarations page if available", "Desired limits and deductible range", "Loan or lease information", "Tickets, accidents, or filing requirements"],
   fieldNote: "Tell us how the vehicle is actually used. Commuting, rideshare, deliveries, business use, and household drivers can materially change eligibility and coverage needs.",
-  detailTitle: "Price is one variable. Contract terms are the rest of the file.",
+  detailTitle: "Price matters. The coverage behind it matters more.",
   detail: [
     "A useful comparison looks at the carrier, coverage limits, deductibles, exclusions, endorsements, claims access, and the total cost—not only the first premium number on the page.",
     "We can also review SR-22 needs and nonstandard license situations separately. Those circumstances require accurate facts and carrier-specific underwriting; no single outcome can be promised before review.",
   ],
   related: [
-    { label: "SR-22 filing brief", href: "/sr22-insurance-los-angeles" },
+    { label: "SR-22 filing support", href: "/sr22-insurance-los-angeles" },
     { label: "Specialty license situations", href: "/no-license-auto-insurance-los-angeles" },
     { label: "Commercial vehicles", href: "/commercial-auto-insurance-los-angeles" },
   ],

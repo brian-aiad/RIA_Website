@@ -6,7 +6,7 @@ import { usePageMeta } from "../lib/seo";
 import { site } from "../lib/site";
 
 const sections = [
-  { title: "Starting the file", code: "A", questions: [
+  { title: "Getting a quote", code: "A", questions: [
     ["What information helps with a quote?", "It depends on the coverage. A current declarations page is useful. Driver and vehicle details, property information, or business operations, payroll, vehicles, and loss history may also be requested."],
     ["Can Rafla compare multiple carriers?", "As an independent agency, Rafla can review available programs from multiple carriers, subject to carrier appointments, market availability, eligibility, and underwriting."],
     ["Is an online estimate guaranteed?", "No. A quote can change after verification or underwriting. Coverage is not effective until the carrier or agency confirms binding in writing and all required conditions are met."],
@@ -36,11 +36,11 @@ export default function Faq() {
   return (
     <main id="main-content" className="atlas-page faq-file">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "FAQ", url: "https://raflainsurance.com/faq" }]} />
-      <DossierHeader index="Q+A" eyebrow="Answer library" title="Straight answers before the fine print." lede="A practical reference for the questions that come up before a quote, during underwriting, and after coverage begins." image="/images/atlas/filing-path.webp" imageAlt="Organized insurance documents connected by a gold path">
-        <AtlasButton tone="navy" onClick={openQuoteModal}>Ask about my file</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
+      <DossierHeader index="Q+A" eyebrow="Insurance questions, clearly answered" title="Helpful answers without the jargon." lede="A practical reference for questions that come up before a quote, during underwriting, and after coverage begins." image="/images/agency/policy-desk-v2.webp" imageAlt="Insurance documents, vehicle keys, and notes arranged for review">
+        <AtlasButton tone="navy" onClick={openQuoteModal}>Ask us a question</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
       </DossierHeader>
       <section className="answer-library"><div className="atlas-container answer-library__grid">
-        <aside className="answer-library__index motion-reveal"><AtlasEyebrow>Directory</AtlasEyebrow>{sections.map((section) => <a key={section.code} href={`#faq-${section.code}`}>{section.code} / {section.title}</a>)}</aside>
+        <aside className="answer-library__index motion-reveal"><AtlasEyebrow>Browse by topic</AtlasEyebrow>{sections.map((section) => <a key={section.code} href={`#faq-${section.code}`}>{section.title}</a>)}</aside>
         <div>{sections.map((section) => <section key={section.code} id={`faq-${section.code}`} className="answer-group"><div className="answer-group__title motion-reveal"><span>{section.code}</span><h2>{section.title}</h2></div>{section.questions.map(([q,a],index) => <details key={q} className="answer-drawer motion-reveal" open={section.code === "A" && index === 0}><summary><span>{section.code}{index+1}</span>{q}<i /></summary><p>{a}</p></details>)}</section>)}</div>
       </div></section>
       <QuoteBand title="Your situation may need a more specific answer." text="Website explanations are general. Bring the actual policy, notice, contract, vehicle, property, or business details into the conversation." />

@@ -11,23 +11,23 @@ export default function Footer() {
         <div className="atlas-footer__mast">
           <div className="atlas-footer__identity">
             <img src="/logo.svg" alt="Rafla Insurance Agency" width="240" height="64" />
-            <p>Independent insurance guidance for the Los Angeles Westside.</p>
+            <p>Personal, independent insurance guidance from our Mar Vista office.</p>
           </div>
-          <button type="button" onClick={openQuoteModal}>Open a quote file <ArrowUpRight size={18} /></button>
+          <button type="button" onClick={openQuoteModal}>Request a quote <ArrowUpRight size={18} /></button>
         </div>
 
         <div className="atlas-footer__grid">
           <section>
-            <span className="atlas-footer__label">The coverage desk</span>
-            {coverageEntries.slice(0, 4).map((entry) => <Link key={entry.key} to={entry.href}>{entry.number} / {entry.title}</Link>)}
-            <Link to="/services">All services</Link>
+            <span className="atlas-footer__label">Insurance services</span>
+            {coverageEntries.slice(0, 4).map((entry) => <Link key={entry.key} to={entry.href}>{entry.title}</Link>)}
+            <Link to="/services">View all services</Link>
           </section>
           <section>
-            <span className="atlas-footer__label">Nearby atlas</span>
+            <span className="atlas-footer__label">Communities we serve</span>
             <div className="atlas-footer__cities">
               {cities.slice(0, 8).map((city) => <Link key={city.slug} to={`/insurance/${city.slug}`}>{city.name}</Link>)}
             </div>
-            <Link to="/locations">All service areas</Link>
+            <Link to="/locations">Explore service areas</Link>
           </section>
           <section className="atlas-footer__office">
             <span className="atlas-footer__label">Mar Vista office</span>

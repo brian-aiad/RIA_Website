@@ -16,7 +16,7 @@ export default function About() {
   return (
     <main id="main-content" className="atlas-page about-file">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "About", url: "https://raflainsurance.com/about" }]} />
-      <DossierHeader index="A1" eyebrow="The agency" title="A real desk on Venice Boulevard." lede="Independent carrier access, multilingual conversations, and the kind of continuity that only comes from knowing who will answer the phone." image={images.hero.storefront} imageAlt="Rafla Insurance Agency office building on Venice Boulevard in Mar Vista">
+      <DossierHeader index="A1" eyebrow="About Rafla Insurance" title="Local guidance. Personal attention." lede="Independent carrier access, multilingual conversations, and the comfort of knowing who will answer when you call." image={images.hero.storefront} imageAlt="Rafla Insurance Agency office building on Venice Boulevard in Mar Vista">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Start a conversation</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.mapsHref} target="_blank" rel="noreferrer"><MapPin size={15} /> Visit the office</a>
       </DossierHeader>
@@ -35,7 +35,7 @@ export default function About() {
           <div className="agency-principles__grid">
             {[
               ["01", "The comparison", "See how limits, deductibles, exclusions, endorsements, and price move together."],
-              ["02", "The language", "Discuss the file in English, Spanish, or Arabic when that makes the details clearer."],
+              ["02", "The language", "Discuss your coverage in English, Spanish, or Arabic when that makes the details clearer."],
               ["03", "The handoff", "Know what comes next after a quote, application, document request, or claim notice."],
               ["04", "The relationship", "Keep a local office and familiar contact connected to the policy over time."],
             ].map(([n,title,text]) => <article key={n} className="motion-reveal"><span>{n}</span><h3>{title}</h3><p>{text}</p></article>)}
@@ -47,14 +47,14 @@ export default function About() {
         <div className="atlas-container agency-team__grid">
           <div className="agency-team__visual motion-reveal"><img src={images.about.office} alt="Insurance consultation at Rafla Insurance Agency" width="1200" height="900" loading="lazy" /><div><Languages size={18} /> English · Spanish · Arabic</div></div>
           <div className="agency-team__records">
-            <div className="motion-reveal"><AtlasEyebrow>People at the desk</AtlasEyebrow><h2>Names, numbers, and direct lines.</h2></div>
+            <div className="motion-reveal"><AtlasEyebrow>Meet your local contacts</AtlasEyebrow><h2>Real people, ready to help.</h2></div>
             {site.team.map((person, index) => <article key={person.name} className="motion-reveal"><span>0{index + 1}</span><div><h3>{person.name}</h3><p>{person.role}{person.license ? ` · ${person.license}` : ""}</p></div><a href={person.phoneHref}><Phone size={15} />{person.phone}</a></article>)}
             <a className="agency-team__office" href={site.contact.phoneHref}>Office line {site.contact.phone}<ArrowRight size={16} /></a>
           </div>
         </div>
       </section>
 
-      <QuoteBand title="Put a local broker in the file." />
+      <QuoteBand title="Get to know your local insurance team." />
     </main>
   );
 }

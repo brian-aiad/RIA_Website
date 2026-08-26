@@ -12,7 +12,7 @@ const groupCopy = {
   home: "Part of Rafla’s immediate Westside network around the Venice Boulevard office, where residential, renter, driver, and small-business needs often overlap.",
   coast: "Coastal households and businesses can bring auto, renters, property, liability, commercial, motorcycle, boat, and specialty questions into one independent review.",
   north: "Drivers, renters, property owners, professionals, and local businesses can work with a nearby independent broker instead of navigating separate carrier menus alone.",
-  south: "Households, landlords, contractors, drivers, and growing businesses can review personal and commercial needs through Rafla’s Mar Vista coverage desk.",
+  south: "Households, landlords, contractors, drivers, and growing businesses can review personal and commercial needs with Rafla’s local Mar Vista team.",
 };
 
 const coverageLinks = [
@@ -34,23 +34,23 @@ export default function CityLanding() {
     <main id="main-content" className="atlas-page city-file">
       <LocalBusinessSchema url={canonical} areaServed={[`${city.name}, CA`, "Los Angeles, CA"]} />
       <BreadcrumbSchema crumbs={[{name:"Home",url:"https://raflainsurance.com/"},{name:"Service areas",url:"https://raflainsurance.com/locations"},{name:city.name,url:canonical}]} />
-      <DossierHeader index={city.zips[0]} eyebrow="Local coverage file" title={`Insurance broker serving ${city.name}.`} lede={`${city.note} Independent personal and commercial guidance from Rafla’s Venice Boulevard office.`} image="/images/atlas/westside-atlas.webp" imageAlt="Rafla Insurance Westside service area atlas">
-        <AtlasButton tone="navy" onClick={openQuoteModal}>Start a {city.name} quote</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
+      <DossierHeader index={city.zips[0]} eyebrow={`Insurance near ${city.name}`} title={`A local insurance broker serving ${city.name}.`} lede={`${city.note} Get independent personal and commercial guidance from Rafla’s Venice Boulevard office.`} image="/images/agency/office-venice-v2.webp" imageAlt="Rafla Insurance Agency office at 12240 Venice Boulevard">
+        <AtlasButton tone="navy" onClick={openQuoteModal}>Request a {city.name} quote</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
       </DossierHeader>
 
       <div className="atlas-container"><FactRail facts={[{label:"Community",value:city.name},{label:"ZIP codes",value:city.zips.join(" · ")},{label:"Agency office",value:"Mar Vista / 90066"},{label:"Languages",value:"English · Spanish · Arabic"}]} /></div>
 
       <section className="city-orientation"><div className="atlas-container city-orientation__grid">
-        <div className="city-orientation__title motion-reveal"><AtlasEyebrow>Local orientation</AtlasEyebrow><h2>Coverage starts with the local facts—not a city-name template.</h2></div>
-        <div className="city-orientation__copy motion-reveal"><p>{groupCopy[city.group]}</p><p>We do not assume that two neighbors need the same carrier, limit, or policy structure. Vehicles, property, occupants, operations, payroll, contracts, claims, and filing history still determine the file.</p></div>
+        <div className="city-orientation__title motion-reveal"><AtlasEyebrow>Local, personal guidance</AtlasEyebrow><h2>Your needs matter more than your ZIP code.</h2></div>
+        <div className="city-orientation__copy motion-reveal"><p>{groupCopy[city.group]}</p><p>Two neighbors may need different carriers, limits, or policy structures. Vehicles, property, occupants, operations, payroll, contracts, claims, and filing history all shape the right conversation.</p></div>
         <aside className="city-orientation__office motion-reveal"><MapPin/><span>Rafla office</span><strong>{site.contact.address}</strong><a href={site.contact.mapsHref} target="_blank" rel="noreferrer">Directions <ArrowRight size={14}/></a></aside>
       </div></section>
 
-      <section className="city-coverage"><div className="atlas-container"><div className="city-coverage__heading motion-reveal"><AtlasEyebrow light>{city.name} coverage desk</AtlasEyebrow><h2>Open the relevant brief.</h2></div><div className="city-coverage__grid">{coverageLinks.map(({label,text,href,icon:Icon},index) => <Link key={href} to={href} className="motion-reveal"><span>0{index+1}</span><Icon/><h3>{label}</h3><p>{text}</p><ArrowRight/></Link>)}</div></div></section>
+      <section className="city-coverage"><div className="atlas-container"><div className="city-coverage__heading motion-reveal"><AtlasEyebrow light>Insurance options for {city.name}</AtlasEyebrow><h2>Explore popular coverage.</h2></div><div className="city-coverage__grid">{coverageLinks.map(({label,text,href,icon:Icon},index) => <Link key={href} to={href} className="motion-reveal"><span>0{index+1}</span><Icon/><h3>{label}</h3><p>{text}</p><ArrowRight/></Link>)}</div></div></section>
 
-      <section className="nearby-files"><div className="atlas-container nearby-files__grid"><div className="motion-reveal"><AtlasEyebrow>Nearby files</AtlasEyebrow><h2>Continue through the Westside atlas.</h2></div><div>{nearby.map((item,index) => <Link key={item.slug} to={`/insurance/${item.slug}`} className="motion-reveal"><span>0{index+1}</span><strong>{item.name}</strong><small>{item.zips.join(" · ")}</small><ArrowRight size={16}/></Link>)}</div></div></section>
+      <section className="nearby-files"><div className="atlas-container nearby-files__grid"><div className="motion-reveal"><AtlasEyebrow>Nearby communities</AtlasEyebrow><h2>Insurance help throughout the Westside.</h2></div><div>{nearby.map((item,index) => <Link key={item.slug} to={`/insurance/${item.slug}`} className="motion-reveal"><span>0{index+1}</span><strong>{item.name}</strong><small>{item.zips.join(" · ")}</small><ArrowRight size={16}/></Link>)}</div></div></section>
 
-      <QuoteBand title={`Talk through a ${city.name} insurance file.`} text="Bring the actual details and any current declarations page, renewal, lender request, contract, or DMV notice. We’ll identify the next useful step." />
+      <QuoteBand title={`Talk with a local broker serving ${city.name}.`} text="Bring any current declarations page, renewal, lender request, contract, or DMV notice. We’ll help identify the next useful step." />
     </main>
   );
 }

@@ -18,8 +18,8 @@ const app = (
   </React.StrictMode>
 );
 
-// The local prerender step snapshots the fully rendered browser DOM after scroll
-// and entrance animations have settled. Hydrating that post-animation HTML creates
-// React 418 mismatches, so the client mounts cleanly while crawlers still receive
-// route-specific static HTML.
+// The local prerender step snapshots browser-rendered DOM. Some JSX creates
+// adjacent text nodes that the browser merges when that snapshot is serialized,
+// so mounting cleanly avoids hydration mismatches while preserving static HTML
+// for the initial response and for search crawlers.
 ReactDOM.createRoot(rootEl).render(app);

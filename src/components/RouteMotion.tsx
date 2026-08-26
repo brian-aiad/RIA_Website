@@ -1,109 +1,90 @@
-import { useRef, type ReactNode } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-ScrollTrigger.config({ ignoreMobileResize: true, limitCallbacks: true });
+import { useEffect, useRef, type ReactNode } from "react";
 
 /**
- * One motion owner for every route. Targets opt in with a class; the controller
- * never scans or animates whole sections. Animations are one-shot and affect
- * compositor-friendly opacity/transform properties only.
+ * Scroll effects are deliberately non-critical. The page and its CSS hero
+ * entrance paint first; GSAP loads when the browser is idle and owns only the
+ * one-shot, transform/opacity reveals below the fold.
  */
 export default function RouteMotion({ children, routeKey }: { children: ReactNode; routeKey: string }) {
   const scope = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      const root = scope.current;
-      if (!root) return;
+  useEffect(() => {
+    const root = scope.current;
+    if (!root) return;
+
+    let cancelled = false;
+    let teardown: (() => void) | undefined;
+
+    const setupMotion = async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      if (cancelled) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({ ignoreMobileResize: true, limitCallbacks: true });
+
       const media = gsap.matchMedia();
+      const context = gsap.context(() => {
+        media.add(
+          { reduce: "(prefers-reduced-motion: reduce)", desktop: "(min-width: 800px)" },
+          (matchContext) => {
+            const { reduce, desktop } = matchContext.conditions as { reduce: boolean; desktop: boolean };
+            const revealNodes = gsap.utils.toArray<HTMLElement>(".motion-reveal", root);
 
-      media.add(
-        { reduce: "(prefers-reduced-motion: reduce)", desktop: "(min-width: 800px)" },
-        (context) => {
-          const { reduce, desktop } = context.conditions as { reduce: boolean; desktop: boolean };
-          const revealNodes = gsap.utils.toArray<HTMLElement>(".motion-reveal", root);
-          const heroChildren = gsap.utils.toArray<HTMLElement>(".hero-copy-enter > *", root);
-          const heroVisuals = gsap.utils.toArray<HTMLElement>(".atlas-parallax", root);
-          const routeLines = gsap.utils.toArray<HTMLElement>(".route-draw", root);
+            if (reduce) {
+              gsap.set(revealNodes, { clearProps: "all" });
+              return;
+            }
 
-          if (reduce) {
-            gsap.set([...revealNodes, ...heroChildren, ...heroVisuals, ...routeLines], { clearProps: "all" });
-            return;
-          }
-
-          if (heroChildren.length) {
-            gsap.fromTo(heroChildren, { autoAlpha: 0, y: 18 }, {
-              autoAlpha: 1,
-              y: 0,
-              duration: 0.62,
-              stagger: 0.055,
-              ease: "power2.out",
-              clearProps: "opacity,visibility,transform",
+            ScrollTrigger.batch(revealNodes, {
+              start: "top 91%",
+              once: true,
+              interval: 0.06,
+              batchMax: desktop ? 5 : 2,
+              onEnter: (batch) => {
+                gsap.fromTo(batch, { autoAlpha: 0, y: desktop ? 20 : 12 }, {
+                  autoAlpha: 1,
+                  y: 0,
+                  duration: 0.52,
+                  stagger: 0.04,
+                  ease: "power2.out",
+                  overwrite: "auto",
+                  clearProps: "opacity,visibility,transform",
+                });
+              },
             });
-          }
+          },
+        );
+      }, root);
 
-          if (heroVisuals.length) {
-            gsap.fromTo(heroVisuals, { autoAlpha: 0, y: desktop ? 22 : 12, scale: 0.992 }, {
-              autoAlpha: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.82,
-              delay: 0.08,
-              ease: "power2.out",
-              clearProps: "opacity,visibility,transform",
-            });
-          }
-
-          routeLines.forEach((line) => {
-            gsap.fromTo(line, { scaleX: 0, transformOrigin: "left center" }, {
-              scaleX: 1,
-              duration: 0.9,
-              ease: "power2.inOut",
-              scrollTrigger: { trigger: line, start: "top 96%", once: true },
-              clearProps: "transform",
-            });
-          });
-
-          ScrollTrigger.batch(revealNodes, {
-            start: "top 91%",
-            once: true,
-            interval: 0.06,
-            batchMax: desktop ? 5 : 2,
-            onEnter: (batch) => {
-              gsap.fromTo(batch, { autoAlpha: 0, y: desktop ? 22 : 14 }, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.58,
-                stagger: 0.045,
-                ease: "power2.out",
-                overwrite: "auto",
-                clearProps: "opacity,visibility,transform",
-              });
-            },
-          });
-        },
-      );
-
-      let cancelled = false;
-      const refresh = () => { if (!cancelled) ScrollTrigger.refresh(); };
+      let disposed = false;
+      const refresh = () => { if (!disposed) ScrollTrigger.refresh(); };
       const frame = window.requestAnimationFrame(refresh);
-      const fontReady = document.fonts?.ready.then(refresh);
-      const pendingImages = Array.from(root.querySelectorAll("img")).filter((img) => !img.complete);
-      pendingImages.forEach((img) => img.addEventListener("load", refresh, { once: true }));
+      const pendingImages = Array.from(root.querySelectorAll("img")).filter((image) => !image.complete);
+      pendingImages.forEach((image) => image.addEventListener("load", refresh, { once: true }));
 
-      return () => {
-        cancelled = true;
+      teardown = () => {
+        disposed = true;
         window.cancelAnimationFrame(frame);
-        void fontReady;
-        pendingImages.forEach((img) => img.removeEventListener("load", refresh));
+        pendingImages.forEach((image) => image.removeEventListener("load", refresh));
         media.revert();
+        context.revert();
       };
-    },
-    { scope, dependencies: [routeKey], revertOnUpdate: true },
-  );
+    };
+
+    const idleId = "requestIdleCallback" in window
+      ? window.requestIdleCallback(() => void setupMotion(), { timeout: 1800 })
+      : globalThis.setTimeout(() => void setupMotion(), 700);
+
+    return () => {
+      cancelled = true;
+      if ("cancelIdleCallback" in window && typeof idleId === "number") window.cancelIdleCallback(idleId);
+      else if (typeof idleId === "number") globalThis.clearTimeout(idleId);
+      teardown?.();
+    };
+  }, [routeKey]);
 
   return <div ref={scope} className="route-frame">{children}</div>;
 }

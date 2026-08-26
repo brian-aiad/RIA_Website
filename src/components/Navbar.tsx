@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Menu, Phone, X } from "lucide-react";
+import { ArrowUpRight, Clock3, MapPin, Menu, Phone, X } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { coverageEntries } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
 import { site } from "../lib/site";
 
 const navItems = [
-  { to: "/services", label: "Coverage" },
-  { to: "/about", label: "The agency" },
-  { to: "/locations", label: "Westside" },
-  { to: "/faq", label: "Answers" },
+  { to: "/services", label: "Insurance" },
+  { to: "/about", label: "About Us" },
+  { to: "/locations", label: "Service Areas" },
+  { to: "/faq", label: "FAQs" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -55,6 +55,13 @@ export default function Navbar() {
   return (
     <header className="atlas-nav-wrap">
       <a className="skip-link" href="#main-content">Skip to content</a>
+      <div className="ria-utility">
+        <div className="atlas-container">
+          <span><MapPin size={13} /> 12240 Venice Blvd, Suite 2 · Mar Vista</span>
+          <span><Clock3 size={13} /> Mon–Fri 10–7 · Sat 10–3</span>
+          <a href={site.contact.phoneHref}><Phone size={13} /> {site.contact.phone}</a>
+        </div>
+      </div>
       <div className="atlas-nav atlas-container">
         <NavLink to="/" className="atlas-nav__brand" aria-label="Rafla Insurance Agency home">
           <img src="/logo.svg" alt="Rafla Insurance Agency" width="208" height="52" />
@@ -66,19 +73,19 @@ export default function Navbar() {
         </nav>
         <div className="atlas-nav__actions">
           <span className="atlas-nav__languages">EN / ES / AR</span>
-          <button type="button" onClick={openQuoteModal} className="atlas-nav__quote">Quote <ArrowUpRight size={15} /></button>
+          <button type="button" onClick={openQuoteModal} className="atlas-nav__quote">Get a Quote <ArrowUpRight size={15} /></button>
           <button ref={triggerRef} type="button" className="atlas-nav__menu" onClick={() => setOpen(true)} aria-expanded={open} aria-controls="mobile-nav" aria-label="Open navigation"><Menu /></button>
         </div>
       </div>
       <div className={`mobile-nav-backdrop ${open ? "is-open" : ""}`} aria-hidden={!open} onMouseDown={() => setOpen(false)} />
       <div ref={panelRef} id="mobile-nav" className={`mobile-nav ${open ? "is-open" : ""}`} aria-hidden={!open} inert={!open}>
-        <div className="mobile-nav__top"><span>Navigate Rafla</span><button type="button" onClick={() => setOpen(false)} aria-label="Close navigation"><X /></button></div>
+        <div className="mobile-nav__top"><span>Menu</span><button type="button" onClick={() => setOpen(false)} aria-label="Close navigation"><X /></button></div>
         <nav aria-label="Mobile navigation" className="mobile-nav__main">
-          <NavLink to="/">Home <span>00</span></NavLink>
-          {navItems.map((item, index) => <NavLink key={item.to} to={item.to}>{item.label}<span>0{index + 1}</span></NavLink>)}
+          <NavLink to="/">Home</NavLink>
+          {navItems.map((item) => <NavLink key={item.to} to={item.to}>{item.label}</NavLink>)}
         </nav>
-        <div className="mobile-nav__coverage"><span>Coverage desk</span>{coverageEntries.slice(0, 4).map((entry) => <NavLink key={entry.key} to={entry.href}>{entry.title}</NavLink>)}</div>
-        <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><button type="button" onClick={openQuoteModal}>Start a quote <ArrowUpRight size={16} /></button></div>
+        <div className="mobile-nav__coverage"><span>Popular insurance services</span>{coverageEntries.slice(0, 4).map((entry) => <NavLink key={entry.key} to={entry.href}>{entry.title}</NavLink>)}</div>
+        <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><button type="button" onClick={openQuoteModal}>Request a quote <ArrowUpRight size={16} /></button></div>
       </div>
     </header>
   );

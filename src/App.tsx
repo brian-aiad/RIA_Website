@@ -56,8 +56,6 @@ export default function App() {
     };
 
     window.addEventListener("openQuoteModal", openQuoteWidget);
-    window.addEventListener("load", loadQuoteWidget, { once: true });
-
     const idleId =
       "requestIdleCallback" in window
         ? window.requestIdleCallback(loadQuoteWidget, { timeout: 5000 })
@@ -65,7 +63,6 @@ export default function App() {
 
     return () => {
       window.removeEventListener("openQuoteModal", openQuoteWidget);
-      window.removeEventListener("load", loadQuoteWidget);
       if ("cancelIdleCallback" in window && typeof idleId === "number") {
         window.cancelIdleCallback(idleId);
       } else if (typeof idleId === "number") {

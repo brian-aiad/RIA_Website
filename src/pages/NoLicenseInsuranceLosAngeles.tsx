@@ -3,13 +3,13 @@ import CoverageBriefPage, { type CoverageBriefConfig } from "../components/Cover
 const config: CoverageBriefConfig = {
   index: "04B",
   eyebrow: "Specialty license situations",
-  title: "A careful review for a nonstandard driver file.",
+  title: "Careful help for nonstandard driver situations.",
   lede: "Foreign-license, newly licensed, and other nontraditional situations deserve accurate facts—not a blanket online promise.",
   metaTitle: "Specialty Auto Insurance Situations Los Angeles | Rafla Insurance",
   metaDescription: "Discuss foreign-license, newly licensed and other nonstandard auto-insurance situations with a multilingual independent broker in Los Angeles.",
   canonical: "https://raflainsurance.com/no-license-auto-insurance-los-angeles",
-  image: "/images/atlas/filing-path.webp",
-  imageAlt: "Layered application documents, vehicle key, and a gold review path",
+  image: "/images/agency/policy-desk-v2.webp",
+  imageAlt: "Insurance documents, vehicle keys, and notes arranged for review",
   signals: [
     { label: "Review type", value: "Carrier-specific" },
     { label: "Languages", value: "English · Spanish · Arabic" },
@@ -18,7 +18,7 @@ const config: CoverageBriefConfig = {
   ],
   introTitle: "“No license” can describe several very different situations.",
   intro: [
-    "A person may hold a valid foreign license, be newly arrived, be in the process of obtaining a California license, own a vehicle without driving it, or face a suspension or other action. Those are not interchangeable underwriting files.",
+    "A person may hold a valid foreign license, be newly arrived, be in the process of obtaining a California license, own a vehicle without driving it, or face a suspension or other action. Those circumstances may be treated differently in underwriting.",
     "The agency begins by documenting who owns the vehicle, who will drive, what license or identification each person holds, how the vehicle is used, and whether a DMV or court requirement applies.",
   ],
   anatomyTitle: "Separate the facts before asking for a price.",
@@ -35,11 +35,11 @@ const config: CoverageBriefConfig = {
   detailTitle: "Accuracy protects the application.",
   detail: [
     "A quote based on incomplete or incorrect ownership, driver, garaging, or license information may change or become unavailable after verification. Bring the complicated facts up front.",
-    "Rafla can review available carrier programs and communicate in English, Spanish, or Arabic. Eligibility, price, payment terms, and filing ability remain subject to the carrier and the specific file.",
+    "Rafla can review available carrier programs and communicate in English, Spanish, or Arabic. Eligibility, price, payment terms, and filing ability remain subject to the carrier and the specific situation.",
   ],
   related: [
-    { label: "Auto coverage brief", href: "/auto-insurance-los-angeles-ca" },
-    { label: "SR-22 filing brief", href: "/sr22-insurance-los-angeles" },
+    { label: "Auto insurance", href: "/auto-insurance-los-angeles-ca" },
+    { label: "SR-22 filing support", href: "/sr22-insurance-los-angeles" },
     { label: "Contact the agency", href: "/contact" },
   ],
   faqs: [

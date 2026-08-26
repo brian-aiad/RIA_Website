@@ -16,17 +16,17 @@ export default function Contact() {
   return (
     <main id="main-content" className="atlas-page contact-file">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Contact", url: "https://raflainsurance.com/contact" }]} />
-      <DossierHeader index="C1" eyebrow="Contact the desk" title="Choose the clearest way in." lede="Call the office, open a quote file, send an email, or visit us on Venice Boulevard. A real person will take it from there." image={images.clients.contactFrontDesk} imageAlt="A welcoming insurance consultation desk">
-        <AtlasButton tone="navy" onClick={openQuoteModal}>Open a secure quote form</AtlasButton>
+      <DossierHeader index="C1" eyebrow="We’re here to help" title="Let’s start with a conversation." lede="Call, request a quote, send an email, or visit us on Venice Boulevard. A real person will take it from there." image={images.clients.contactFrontDesk} imageAlt="Rafla Insurance Agency office at 12240 Venice Boulevard">
+        <AtlasButton tone="navy" onClick={openQuoteModal}>Request a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} />Call now</a>
       </DossierHeader>
 
       <section className="contact-switchboard">
         <div className="atlas-container">
-          <div className="contact-switchboard__heading motion-reveal"><AtlasEyebrow>Agency switchboard</AtlasEyebrow><h2>Four direct routes.</h2></div>
+          <div className="contact-switchboard__heading motion-reveal"><AtlasEyebrow>Contact Rafla Insurance</AtlasEyebrow><h2>Choose what works for you.</h2></div>
           <div className="contact-switchboard__grid">
             <a href={site.contact.phoneHref} className="motion-reveal"><span>01</span><Phone /><h3>Office line</h3><strong>{site.contact.phone}</strong><p>Quotes, policy questions, renewals, and general help.</p><ArrowRight /></a>
-            <button type="button" onClick={openQuoteModal} className="motion-reveal"><span>02</span><MessageSquareText /><h3>Quote file</h3><strong>Start online</strong><p>Share the first details so the agency can prepare the conversation.</p><ArrowRight /></button>
+            <button type="button" onClick={openQuoteModal} className="motion-reveal"><span>02</span><MessageSquareText /><h3>Request a quote</h3><strong>Start online</strong><p>Share the first details so our team can prepare for the conversation.</p><ArrowRight /></button>
             <a href={site.contact.emailHref} className="motion-reveal"><span>03</span><Mail /><h3>Email</h3><strong>{site.contact.email}</strong><p>Do not send highly sensitive information by ordinary email.</p><ArrowRight /></a>
             <a href={site.contact.mapsHref} target="_blank" rel="noreferrer" className="motion-reveal"><span>04</span><MapPin /><h3>Visit</h3><strong>12240 Venice Blvd</strong><p>Suite 2 · Los Angeles, CA 90066</p><ExternalLink /></a>
           </div>
@@ -44,7 +44,7 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="contact-team"><div className="atlas-container"><div className="contact-team__heading motion-reveal"><AtlasEyebrow>Direct contacts</AtlasEyebrow><h2>People connected to the file.</h2></div><div className="contact-team__grid">{site.team.map((person,index) => <article key={person.name} className="motion-reveal"><span>0{index+1}</span><h3>{person.name}</h3><p>{person.role}</p>{person.license && <small>{person.license}</small>}<a href={person.phoneHref}><Phone size={14}/>{person.phone}</a></article>)}</div></div></section>
+      <section className="contact-team"><div className="atlas-container"><div className="contact-team__heading motion-reveal"><AtlasEyebrow>Direct contacts</AtlasEyebrow><h2>Reach someone who knows the agency.</h2></div><div className="contact-team__grid">{site.team.map((person,index) => <article key={person.name} className="motion-reveal"><span>0{index+1}</span><h3>{person.name}</h3><p>{person.role}</p>{person.license && <small>{person.license}</small>}<a href={person.phoneHref}><Phone size={14}/>{person.phone}</a></article>)}</div></div></section>
     </main>
   );
 }

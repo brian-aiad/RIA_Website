@@ -36,8 +36,8 @@ export function AtlasImage({
   sizes = "(max-width: 900px) 100vw, 50vw",
   ...props
 }: ImgHTMLAttributes<HTMLImageElement> & { src: string; alt: string }) {
-  const isAtlasAsset = src.startsWith("/images/atlas/") && src.endsWith(".webp") && !src.endsWith("-sm.webp") && !src.endsWith("-md.webp");
-  const srcSet = isAtlasAsset
+  const isResponsiveAsset = src.startsWith("/images/agency/") && src.endsWith(".webp") && !src.endsWith("-sm.webp") && !src.endsWith("-md.webp");
+  const srcSet = isResponsiveAsset
     ? `${src.replace(/\.webp$/, "-sm.webp")} 640w, ${src.replace(/\.webp$/, "-md.webp")} 1100w, ${src} 1568w`
     : undefined;
 
@@ -77,8 +77,8 @@ export function DossierHeader({
           <figure className="dossier-hero__visual atlas-parallax">
             <AtlasImage src={image} alt={imageAlt ?? ""} width="1536" height="1024" fetchPriority="high" />
             <figcaption>
-              <span>Rafla field note</span>
-              Independent guidance / Los Angeles Westside
+              <span>Rafla Insurance Agency</span>
+              Independent · Local · Here when you need us
             </figcaption>
           </figure>
         )}
@@ -89,8 +89,8 @@ export function DossierHeader({
 }
 
 export function QuoteBand({
-  title = "Let’s make the next step clear.",
-  text = "Tell us what you need to protect. We’ll tell you what information helps us compare available options.",
+  title = "Let’s find coverage that feels right.",
+  text = "Tell us what you want to protect. A local broker will help you understand the options and the details that matter.",
 }: {
   title?: string;
   text?: string;
@@ -100,12 +100,12 @@ export function QuoteBand({
       <div className="atlas-container quote-band__grid motion-reveal">
         <div className="quote-band__mark" aria-hidden="true"><Sparkles size={22} /></div>
         <div>
-          <AtlasEyebrow light>Start a conversation</AtlasEyebrow>
+          <AtlasEyebrow light>Personal help starts here</AtlasEyebrow>
           <h2>{title}</h2>
         </div>
         <p>{text}</p>
         <div className="quote-band__actions">
-          <AtlasButton tone="gold" onClick={openQuoteModal}>Start a quote</AtlasButton>
+          <AtlasButton tone="gold" onClick={openQuoteModal}>Request a quote</AtlasButton>
           <a className="quote-band__phone" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
         </div>
       </div>
@@ -131,7 +131,7 @@ export function LocalOfficeCard({ compact = false }: { compact?: boolean }) {
     <aside className={`local-office-card ${compact ? "local-office-card--compact" : ""}`}>
       <div className="local-office-card__pin"><MapPin size={18} /></div>
       <div>
-        <span>Local office</span>
+        <span>Your neighborhood agency</span>
         <strong>Venice Blvd / Mar Vista</strong>
         <p>{site.contact.address}</p>
       </div>
