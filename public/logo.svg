@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 190" role="img" aria-labelledby="title desc">
+  <title id="title">Rafla Insurance Agency</title>
+  <desc id="desc">Navy and gold Rafla Insurance Agency logo</desc>
+  <rect width="760" height="190" rx="18" fill="#fff"/>
+  <g transform="translate(20 14)">
+    <path d="M18 128V70C18 30 46 7 81 7s63 23 63 63v58" fill="#102653"/>
+    <path d="M30 69c0-31 21-50 51-50 25 0 44 13 50 36" fill="none" stroke="#e3a719" stroke-width="8" stroke-linecap="round"/>
+    <path d="M44 38h52c20 0 34 12 34 30 0 16-9 26-24 30l31 45h-29L81 102H67v41H44V38Zm23 20v25h25c9 0 15-5 15-13 0-8-6-12-15-12H67Z" fill="#fff"/>
+    <path d="M33 118 17 149h128l-16-31-10 13H43l-10-13Z" fill="#102653"/>
+    <g fill="#fff"><path d="m41 135 9-8 9 8v12H41z"/><path d="M72 138c0-8 7-15 15-15s15 7 15 15v9H72z"/><path d="m113 146 8-18 8 18z"/></g>
+  </g>
+  <g transform="translate(190 45)" fill="#102653">
+    <text x="0" y="50" font-family="Georgia, 'Times New Roman', serif" font-size="68" letter-spacing="7">RAFLA</text>
+    <text x="3" y="85" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="8">INSURANCE AGENCY</text>
+    <path d="M4 103h400" stroke="#e3a719" stroke-width="3"/><circle cx="419" cy="103" r="6" fill="#e3a719"/><path d="M434 103h105" stroke="#e3a719" stroke-width="3"/>
+    <text x="3" y="137" font-family="Arial, Helvetica, sans-serif" font-size="18" letter-spacing="1.5">PERSONAL &amp; COMMERCIAL INSURANCE</text>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+# .gitignore
+node_modules/
+dist/
+.firebase/
+.env
+.env.*
+!.env.example
+.vscode/
+*.log
+.DS_Store
+.vercel/
+.vercel
+.playwright-cli/
+output/
