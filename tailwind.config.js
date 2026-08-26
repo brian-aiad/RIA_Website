@@ -42,8 +42,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Inter"', "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
-        display: ['"DM Sans"', '"Inter"', "system-ui", "sans-serif"],
+        sans: ['"IBM Plex Sans"', "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+        display: ['"Bricolage Grotesque"', '"IBM Plex Sans"', "system-ui", "sans-serif"],
+        mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
       },
       fontSize: {
         "hero":    ["clamp(2.5rem, 5vw + 1rem, 4rem)", { lineHeight: "1.08", letterSpacing: "-0.03em", fontWeight: "800" }],

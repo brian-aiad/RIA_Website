@@ -1,456 +1,200 @@
-import { useMemo, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { openQuoteModal } from "../lib/openQuote";
-import { site } from "../lib/site";
-import { images, srcset } from "../lib/images";
-import { useImagePreload, usePageMeta } from "../lib/seo";
-import { Reveal, Stagger, StaggerChild } from "../components/AnimatedSection";
-import { MagneticButton } from "../components/MagneticButton";
+import { useState } from "react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, Languages, MapPin, Phone, ShieldCheck } from "lucide-react";
+import { Link } from "react-router-dom";
+import { AtlasButton, AtlasEyebrow, AtlasImage, FactRail, LocalOfficeCard, PaperNote, QuoteBand } from "../components/AtlasUI";
 import LocalBusinessSchema from "../components/seo/LocalBusinessSchema";
-import ReviewBadge from "../components/seo/ReviewBadge";
-import PageTestimonials from "../components/PageTestimonials";
-import TrustStrip from "../components/seo/TrustStrip";
-import { CTASection, Section, SectionHeader } from "../design-system";
-import InsuranceWorkflow from "../components/InsuranceWorkflow";
+import FAQSchema from "../components/seo/FAQSchema";
+import { confidenceMarks, coverageEntries } from "../data/atlas";
+import { openQuoteModal } from "../lib/openQuote";
+import { usePageMeta } from "../lib/seo";
+import { site } from "../lib/site";
 
-/* ═══════════════════════════════════════════════
-   HERO — Photo-based with full-bleed consultation background
-   ═══════════════════════════════════════════════ */
-function Hero() {
-  useImagePreload(images.hero.consultation);
+const homeFaqs = [
+  { question: "Why work with an independent insurance agency?", answer: "An independent agency can review available programs from more than one carrier. Eligibility and availability vary, but the conversation is not limited to a single company’s product menu." },
+  { question: "Which kinds of insurance does Rafla offer?", answer: "We help with auto, homeowners, renters, commercial auto, general liability, workers’ compensation, bonds, motorcycle, RV, boat, SR-22 filing support, and other specialty situations. Health, life, and notary services are not currently offered." },
+  { question: "Can I visit the office?", answer: "Yes. Rafla Insurance Agency is at 12240 Venice Boulevard, Suite 2, Los Angeles, CA 90066. Office hours are Monday through Friday 10am–7pm and Saturday 10am–3pm." },
+  { question: "What should I bring for a quote?", answer: "The useful details depend on the policy. A current declarations page, driver and vehicle information, property details, or business payroll and operations information can make the review more precise." },
+];
 
-  return (
-    <section className="home-hero relative overflow-hidden bg-brand-950">
-      <div className="home-hero-media absolute inset-0 overflow-hidden">
-        <img
-          src={images.hero.consultation}
-          alt=""
-          aria-hidden="true"
-          className="h-full w-full object-cover"
-          fetchPriority="high"
-          width={1680}
-          height={945}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-950/95 via-brand-950/58 to-brand-950/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_24%,rgba(245,166,35,0.18),transparent_30%)]" />
-      </div>
-      <div aria-hidden="true" className="absolute -left-28 bottom-0 h-80 w-80 rounded-full border border-white/[.06] shadow-[inset_0_0_0_38px_rgba(245,158,11,.025)]" />
-      <div aria-hidden="true" className="absolute left-10 top-16 h-px w-28 bg-gradient-to-r from-gold-400/70 to-transparent" />
+const homeServiceAreas = [
+  { slug: "mar-vista", name: "Mar Vista" },
+  { slug: "culver-city", name: "Culver City" },
+  { slug: "santa-monica", name: "Santa Monica" },
+  { slug: "venice", name: "Venice" },
+  { slug: "marina-del-rey", name: "Marina del Rey" },
+  { slug: "west-los-angeles", name: "West Los Angeles" },
+  { slug: "palms", name: "Palms" },
+  { slug: "sawtelle", name: "Sawtelle" },
+  { slug: "playa-vista", name: "Playa Vista" },
+  { slug: "westchester", name: "Westchester" },
+  { slug: "inglewood", name: "Inglewood" },
+  { slug: "ladera-heights", name: "Ladera Heights" },
+];
 
-      <div className="container relative pt-24 pb-20 lg:pt-28 lg:pb-24">
-        {/* ── Left: Copy ── */}
-        <div className="hero-copy-enter max-w-xl relative z-[2]">
-          {/* Trust badge pill */}
-          <span className="inline-flex items-center gap-2 border-l-2 border-gold-400 pl-3 mb-6">
-            <span className="text-gold-300 text-[11px] font-bold uppercase tracking-[.18em]">Mar Vista · Independent since 2003</span>
-          </span>
-
-          <h1 className="display-1 text-white">
-            Coverage for <span className="text-gradient-gold">real life</span> in Los Angeles.
-          </h1>
-
-          <p className="mt-6 text-lg text-white/85 leading-relaxed">
-            Personal and commercial coverage with independent guidance from a local Los Angeles agency.
-          </p>
-
-          <p
-            className="mt-4 text-gold-400 font-semibold text-[15px]"
-            style={{ borderLeft: "3px solid #E3A719", paddingLeft: "12px" }}
-          >
-            Ask about options for nonstandard license situations.
-          </p>
-
-          <div className="mt-5">
-            <ReviewBadge compact />
-          </div>
-
-          <div className="mt-7 flex flex-col sm:flex-row gap-3">
-            <MagneticButton as="div" className="inline-block">
-              <button onClick={openQuoteModal} className="btn btn-accent btn-lg group">
-                Get Your Free Quote
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-6-6l6 6-6 6" /></svg>
-              </button>
-            </MagneticButton>
-            <MagneticButton as="div" className="inline-block" strength={0.2}>
-              <a href={site.contact.phoneHref} className="btn btn-ghost-light btn-lg">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
-                Call {site.contact.phone}
-              </a>
-            </MagneticButton>
-          </div>
-
-          {/* Trust signals — compact inline */}
-          <div className="mt-8 flex flex-wrap items-center gap-y-2">
-            {[
-              { icon: <svg className="w-4 h-4 text-gold-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 6v6c0 5 3.6 8.7 8 10 4.4-1.3 8-5 8-10V6l-8-4z" /></svg>, text: "Licensed CA Broker" },
-              { icon: <svg className="w-4 h-4 text-gold-400" viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.3 6 3.6-1.6-6.9 5.3-4.5-7-.6L12 2 9.3 8.9l-7 .6 5.3 4.5L6 20.9z" /></svg>, text: "Personal Local Service" },
-              { icon: <svg className="w-4 h-4 text-gold-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93z" /></svg>, text: "3 Languages" },
-            ].map((b, i) => (
-              <span key={i} className="flex items-center">
-                <span className="flex items-center gap-2 text-[13px] font-medium text-white/85 px-3 first:pl-0 cursor-default">
-                  {b.icon}
-                  {b.text}
-                </span>
-                {i < 2 && <span className="text-white/30 select-none" aria-hidden>|</span>}
-              </span>
-            ))}
-          </div>
-        </div>
-
-      </div>
-
-      <div aria-hidden="true" className="home-hero-cut absolute inset-x-0 bottom-0 h-12 bg-white" />
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   SERVICES — Masonry / staggered grid
-   ═══════════════════════════════════════════════ */
-type Svc = { key: string; title?: string; name?: string; blurb?: string; desc?: string };
-
-const serviceImages: Record<string, { src: string; alt: string }> = {
-  auto: { src: images.services.auto, alt: "Auto insurance coverage from Rafla Insurance in Los Angeles, CA" },
-  home: { src: images.services.home, alt: "Home and renters insurance for California homeowners" },
-  workers: { src: images.services.workers, alt: "Workers’ compensation and business insurance" },
-  commercial: { src: images.services.commercial, alt: "Commercial and business insurance for Los Angeles CA businesses" },
-  moto: { src: images.services.motorcycle, alt: "Motorcycle insurance coverage for California riders" },
-  rec: { src: images.services.rv, alt: "RV, boat and recreational vehicle insurance" },
-};
-
-function ServicesMasonry() {
-  // All 6 core services in deliberate order
-  const items = useMemo(() => {
-    const order = ["auto", "home", "workers", "commercial", "moto", "rec"];
-    const map = new Map((site.services as Svc[]).map((s) => [s.key, s]));
-    return order.map((k) => map.get(k)).filter(Boolean) as Svc[];
-  }, []);
-
-  const renderCard = (s: Svc, idx: number) => {
-    const title = s.title ?? s.name ?? s.key;
-    const blurb = s.blurb ?? s.desc ?? "";
-    const img = serviceImages[s.key];
-    const featured = idx === 0;
-
-    return (
-      <button
-        type="button"
-        onClick={openQuoteModal}
-        aria-label={`Get a quote for ${title}`}
-        className="service-card group relative flex flex-col justify-end overflow-hidden rounded-2xl ring-1 ring-slate-200/80 hover:ring-slate-300 hover:shadow-lifted transition-all duration-300 text-left w-full"
-        style={{ aspectRatio: "4 / 3", background: "linear-gradient(135deg, #193b6b 0%, #102653 100%)" }}
-      >
-        {img && (
-          <div className="img-duotone absolute inset-0">
-            <img
-              src={img.src}
-              srcSet={srcset(img.src)}
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
-              alt={img.alt}
-              loading="lazy"
-              decoding="async"
-              width={800}
-              height={600}
-              style={{ background: "linear-gradient(135deg, #193b6b 0%, #102653 100%)" }}
-            />
-          </div>
-        )}
-        {/* Bottom navy fade for text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/40 to-brand-950/5 z-[2]" />
-
-        {featured && (
-          <span className="absolute top-4 left-4 z-10 inline-flex items-center gap-1.5 bg-gold-400 text-brand-950 text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md">
-            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="m12 17.3 6 3.6-1.6-6.9 5.3-4.5-7-.6L12 2 9.3 8.9l-7 .6 5.3 4.5L6 20.9z" /></svg>
-            Most Popular
-          </span>
-        )}
-
-        <div className="relative z-10 p-5">
-          <h3 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>{title}</h3>
-          <p className="mt-1.5 text-[13px] text-white/75 leading-relaxed line-clamp-2">{blurb}</p>
-          <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold text-gold-400 group-hover:gap-2 transition-all">
-            Get a quote
-            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-6-6l6 6-6 6" /></svg>
-          </span>
-        </div>
-      </button>
-    );
-  };
-
-  return (
-    <section className="sp" style={{ background: "var(--surface-gray)" }}>
-      <div className="container">
-        <Reveal>
-          <span className="eyebrow">What We Cover</span>
-          <h2 className="mt-3 display-2 text-slate-900 max-w-xl">
-            Personal &amp; commercial coverage, tailored to&nbsp;you
-          </h2>
-          <p className="mt-3 text-slate-500 max-w-lg">
-            We compare available programs to find coverage that fits your life and business.
-          </p>
-        </Reveal>
-
-        {/* 3 × 2 equal grid */}
-        <Stagger className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5" gap={0.06}>
-          {items.map((s, i) => (
-            <StaggerChild key={s.key}>{renderCard(s, i)}</StaggerChild>
-          ))}
-        </Stagger>
-
-        <Reveal delay={0.2} className="mt-7">
-          <NavLink to="/services" className="btn btn-outline group">
-            View All Services
-            <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-6-6l6 6-6 6" /></svg>
-          </NavLink>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   ABOUT SPLIT — Asymmetric 2-col
-   ═══════════════════════════════════════════════ */
-function AboutSplit() {
-  return (
-    <section className="sp bg-white overflow-hidden cv-auto-tall">
-      <div className="container">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <Reveal direction="left" className="relative">
-            <div className="rounded-3xl overflow-hidden shadow-heavy ring-1 ring-slate-100 aspect-[4/3]">
-              <img
-                src={images.home.why}
-                srcSet={srcset(images.home.why)}
-                sizes="(max-width: 1024px) 100vw, 600px"
-                alt="Rafla Insurance broker reviewing coverage options with Los Angeles clients"
-                className="h-full w-full object-cover"
-                loading="lazy"
-                decoding="async"
-                width={800}
-                height={600}
-              />
-            </div>
-            <div
-              className="absolute -bottom-6 -right-4 lg:-right-8 rounded-2xl overflow-hidden shadow-heavy w-60 h-44 lg:w-72 lg:h-48"
-              style={{ border: "2px solid rgba(245,166,35,0.45)" }}
-            >
-              <img src={images.hero.storefront} alt="Rafla Insurance Agency office building on Venice Boulevard in Los Angeles" className="h-full w-full object-cover" loading="lazy" />
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-brand-950/85 via-brand-950/40 to-transparent px-4 py-3">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-gold-300">Our Mar Vista office</p>
-                <p className="text-[11px] text-white/80">12240 Venice Blvd, Suite 2</p>
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal direction="right">
-            <span className="eyebrow">Why Rafla Insurance</span>
-            <h2 className="mt-3 display-2 text-slate-900">
-              Local service backed by an independent point of view
-            </h2>
-            <p className="mt-3 text-slate-500 leading-relaxed text-[15px]">
-              {site.description}
-            </p>
-
-            <div className="mt-6 space-y-3">
-              {[
-                "We compare available programs and explain the tradeoffs clearly",
-                "Multilingual staff — Arabic, Spanish, and English",
-                "Claims guidance and advocacy when you need it most",
-                "Foreign-license and nontraditional ownership situations reviewed carefully",
-              ].map((t) => (
-                <div key={t} className="flex gap-3">
-                  <div className="mt-1 shrink-0 w-5 h-5 rounded-full bg-gold-50 ring-1 ring-gold-200 grid place-items-center">
-                    <svg className="w-3 h-3 text-gold-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                  </div>
-                  <span className="text-slate-600 text-[15px]">{t}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6">
-              <NavLink to="/about" className="btn btn-outline group">
-                More About Us
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-6-6l6 6-6 6" /></svg>
-              </NavLink>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-
-/* ═══════════════════════════════════════════════
-   FAQ — Accordion
-   ═══════════════════════════════════════════════ */
-function FAQ() {
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
-  const qa = [
-    { q: "How fast can I get a quote?", a: "Timing depends on the coverage and the details required. Call with what you have and we will explain the next step." },
-    { q: "Can you help with an SR-22?", a: "Yes. We can help you quote qualifying auto coverage and coordinate the carrier's SR-22 filing with the California DMV." },
-    { q: "Can you help me after I buy?", a: "Absolutely. Policy changes, claims guidance, renewal checkups — we're here." },
-    { q: "Which carriers do you work with?", a: "We work with multiple carrier programs across personal and commercial lines. Availability varies by risk and location." },
-    { q: "Can you help with a foreign or nontraditional license situation?", a: "Some lawful situations may have coverage options, including foreign-license holders or a vehicle owner who is not the driver. Every person operating the vehicle must be properly licensed." },
-  ];
-
-  return (
-    <Section tone="light" className="cv-auto-tall">
-      <div className="container max-w-2xl">
-        <SectionHeader eyebrow="FAQ" title="Common questions" align="center" className="mb-10" />
-
-        <div>
-          {qa.map((item, i) => (
-            <Reveal key={i} delay={i * 0.05}>
-              <div style={{ borderBottom: "1px solid var(--border-light)" }}>
-                <button
-                  onClick={() => setOpenIdx(openIdx === i ? null : i)}
-                  className="w-full flex items-center justify-between text-left group"
-                  style={{ padding: "20px 0" }}
-                >
-                  <span
-                    className="pr-4 group-hover:text-brand-800 transition-colors"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontWeight: 600,
-                      fontSize: "1rem",
-                      color: "var(--text-primary)",
-                    }}
-                  >
-                    {item.q}
-                  </span>
-                  <span
-                    className={`shrink-0 w-8 h-8 grid place-items-center text-brand-800 transition-transform duration-200 ${openIdx === i ? "rotate-45" : ""}`}
-                    aria-hidden
-                  >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14M5 12h14" />
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  className="grid transition-all duration-300"
-                  style={{ gridTemplateRows: openIdx === i ? "1fr" : "0fr" }}
-                >
-                  <div className="overflow-hidden">
-                    <p
-                      style={{
-                        fontSize: "0.95rem",
-                        lineHeight: 1.75,
-                        color: "var(--text-secondary)",
-                        paddingBottom: "20px",
-                      }}
-                    >
-                      {item.a}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   STICKY RIBBON
-   ═══════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════
-   SERVICE AREAS — City landing page hub
-   ═══════════════════════════════════════════════ */
-function ServiceAreas() {
-  const cities = [
-    { name: "Mar Vista", slug: "mar-vista", note: "Our home base — walk-ins welcome" },
-    { name: "Culver City", slug: "culver-city", note: "Personal & commercial coverage" },
-    { name: "Santa Monica", slug: "santa-monica", note: "Auto, renters & property" },
-    { name: "Venice", slug: "venice", note: "Local Westside service" },
-    { name: "Marina del Rey", slug: "marina-del-rey", note: "Home, auto & watercraft" },
-    { name: "West Los Angeles", slug: "west-los-angeles", note: "Households & businesses" },
-    { name: "Palms", slug: "palms", note: "Minutes from our office" },
-    { name: "Sawtelle", slug: "sawtelle", note: "Renters, auto & small business" },
-    { name: "Playa Vista", slug: "playa-vista", note: "Renters, condos & business" },
-    { name: "Westchester", slug: "westchester", note: "Nearby insurance guidance" },
-    { name: "Inglewood", slug: "inglewood", note: "Business and personal lines" },
-    { name: "Ladera Heights", slug: "ladera-heights", note: "Home, auto & professional risks" },
-  ];
-
-  return (
-    <section className="sp bg-white" id="service-areas">
-      <div className="container">
-        <Reveal className="text-center max-w-2xl mx-auto">
-          <span className="eyebrow">Service Areas</span>
-          <h2 className="mt-3 display-2 text-slate-900">
-            Serving Los Angeles' Westside and nearby communities
-          </h2>
-          <p className="mt-3 text-slate-500">
-            One local office serves households and businesses across Los Angeles' Westside and nearby communities.
-          </p>
-        </Reveal>
-
-        <Stagger className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3" gap={0.03}>
-          {cities.map((city) => (
-            <StaggerChild key={city.slug}>
-              <NavLink
-                to={`/insurance/${city.slug}`}
-                className="block h-full bg-slate-50 rounded-2xl p-4 ring-1 ring-slate-200/80 hover:ring-brand-300 hover:shadow-soft hover:-translate-y-0.5 transition-all"
-              >
-                <div className="font-bold text-slate-900 text-[15px]">
-                  {city.name}
-                </div>
-                <div className="mt-1 text-[12px] text-slate-500 leading-snug">{city.note}</div>
-                <div className="mt-2 flex items-center gap-1 text-[11px] font-semibold text-brand-700">
-                  See coverage
-                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-6-6l6 6-6 6" /></svg>
-                </div>
-              </NavLink>
-            </StaggerChild>
-          ))}
-        </Stagger>
-
-        <Reveal delay={0.2} className="mt-7 text-center">
-          <NavLink to="/locations" className="btn btn-outline group">
-            View our Los Angeles office location
-            <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-6-6l6 6-6 6" /></svg>
-          </NavLink>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   PAGE ASSEMBLY
-   ═══════════════════════════════════════════════ */
 export default function Home() {
+  const [activeCoverage, setActiveCoverage] = useState(coverageEntries[0]);
   usePageMeta({
-    title: "Insurance Broker Los Angeles CA — Free Quote | Rafla Insurance",
-    description: "Independent Los Angeles insurance broker for auto, home, renters, business, workers' compensation, bonds, SR-22, motorcycle, RV and boat coverage.",
+    title: "Rafla Insurance Agency | Independent Broker in Mar Vista, Los Angeles",
+    description: "Independent insurance broker on Venice Boulevard in Mar Vista for auto, home, renters, commercial, workers’ compensation, bonds, SR-22 and specialty coverage.",
     canonical: "https://raflainsurance.com/",
   });
 
-
   return (
-    <main id="main-content">
-      <LocalBusinessSchema />
-      <Hero />
-      <div className="bg-white border-b border-slate-100 py-4 text-slate-600">
-        <div className="container">
-          <TrustStrip />
+    <main id="main-content" className="atlas-page">
+      <LocalBusinessSchema url="https://raflainsurance.com/" areaServed={["Mar Vista", "Los Angeles Westside", "Los Angeles, CA"]} />
+      <FAQSchema questions={homeFaqs.map((faq) => ({ q: faq.question, a: faq.answer }))} />
+
+      <section className="atlas-home-hero">
+        <div className="atlas-container atlas-home-hero__grid">
+          <div className="atlas-home-hero__copy hero-copy-enter">
+            <AtlasEyebrow>Independent / Mar Vista / CA Lic. 0D95584</AtlasEyebrow>
+            <h1>Insurance,<br /><span>made navigable.</span></h1>
+            <p>Clear guidance for the things you drive, own, rent, and build—one local conversation at a time.</p>
+            <div className="atlas-home-hero__actions">
+              <AtlasButton tone="navy" onClick={openQuoteModal}>Build my quote</AtlasButton>
+              <a href={site.contact.phoneHref} className="atlas-home-hero__phone"><Phone size={16} /> {site.contact.phone}</a>
+            </div>
+            <div className="atlas-home-hero__micro">
+              <span><ShieldCheck size={15} /> Independent agency</span>
+              <span><Languages size={15} /> English · Español · العربية</span>
+            </div>
+          </div>
+
+          <div className="atlas-home-hero__visual atlas-parallax">
+            <AtlasImage src="/images/atlas/coverage-desk.webp" alt="A broker’s coverage desk with a home model, car key, policy documents, and a gold route" width="1536" height="960" sizes="(max-width: 900px) 100vw, 55vw" fetchPriority="high" />
+            <svg className="atlas-home-hero__orbit" viewBox="0 0 300 300" aria-hidden="true">
+              <circle cx="150" cy="150" r="124" />
+              <path d="M68 159a82 82 0 0 1 164 0" />
+              <path d="M92 159a58 58 0 0 1 116 0" />
+              <circle cx="150" cy="159" r="5" />
+            </svg>
+            <div className="atlas-home-hero__stamp" aria-hidden="true"><span>RIA</span><small>WESTSIDE<br />COVERAGE DESK</small></div>
+            <div className="atlas-home-hero__coordinates"><MapPin size={14} /> 90066 / VENICE BLVD</div>
+          </div>
+        </div>
+        <div className="atlas-home-hero__foot atlas-container">
+          <a href="#coverage-index">Explore the coverage desk <ArrowDown size={15} /></a>
+          <span>Personal + commercial insurance</span>
+        </div>
+      </section>
+
+      <div className="brand-runner" aria-label="Agency services">
+        <div>
+          {["Auto insurance", "Home & renters", "Commercial coverage", "Workers’ compensation", "SR-22 filing", "Surety bonds", "Motorcycle · RV · boat"].map((item) => <span key={item}><i aria-hidden="true" />{item}</span>)}
+          {["Auto insurance", "Home & renters", "Commercial coverage", "Workers’ compensation", "SR-22 filing", "Surety bonds", "Motorcycle · RV · boat"].map((item) => <span key={`copy-${item}`} aria-hidden="true"><i />{item}</span>)}
         </div>
       </div>
-      <ServicesMasonry />
-      <InsuranceWorkflow tone="light" />
-      <AboutSplit />
-      <PageTestimonials />
-      <ServiceAreas />
-      <FAQ />
-      <CTASection
-        title="Ready to review your coverage?"
-        lede="Talk with a licensed Los Angeles broker by phone, text, email, or in person."
-        secondaryLabel={`Call ${site.contact.phone}`}
-      />
+
+      <section id="coverage-index" className="coverage-register">
+        <div className="atlas-container">
+          <div className="coverage-register__heading motion-reveal">
+            <AtlasEyebrow>Coverage register</AtlasEyebrow>
+            <h2>Start with what<br />needs protecting.</h2>
+            <p>No wall of interchangeable cards. Choose the situation that brought you here and open the relevant brief.</p>
+          </div>
+          <div className="coverage-register__body">
+            <div className="coverage-register__list">
+              {coverageEntries.map((entry) => {
+                const Icon = entry.icon;
+                return (
+                  <Link key={entry.key} to={entry.href} onMouseEnter={() => setActiveCoverage(entry)} onFocus={() => setActiveCoverage(entry)} className={`coverage-row coverage-row--${entry.accent} ${activeCoverage.key === entry.key ? "is-active" : ""} motion-reveal`}>
+                    <span className="coverage-row__number">{entry.number}</span>
+                    <span className="coverage-row__icon"><Icon size={21} strokeWidth={1.8} /></span>
+                    <span className="coverage-row__title">{entry.title}</span>
+                    <span className="coverage-row__copy">{entry.short}</span>
+                    <span className="coverage-row__arrow"><ArrowRight size={20} /></span>
+                  </Link>
+                );
+              })}
+            </div>
+            <figure className="coverage-register__preview motion-reveal">
+              <AtlasImage key={activeCoverage.image} src={activeCoverage.image} alt={activeCoverage.imageAlt} width="1536" height="1024" sizes="(max-width: 950px) 100vw, 45vw" />
+              <figcaption><span>Selected brief / {activeCoverage.number}</span><strong>{activeCoverage.title}</strong><Link to={activeCoverage.href}>Open file <ArrowUpRight size={15} /></Link></figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section className="broker-method">
+        <div className="route-rule" aria-hidden="true"><span className="route-draw" /></div>
+        <div className="atlas-container broker-method__grid">
+          <div className="broker-method__intro motion-reveal">
+            <AtlasEyebrow light>The broker method</AtlasEyebrow>
+            <h2>A route through the fine print.</h2>
+            <p>Insurance decisions get easier when the process is visible. We turn the paperwork into three concrete conversations.</p>
+            <LocalOfficeCard compact />
+          </div>
+          <ol className="broker-method__steps">
+            {[
+              ["01", "Bring the real details", "Your current declarations page, vehicle or property details, and the facts that make your situation different."],
+              ["02", "Compare what changes", "We review available programs and explain limits, deductibles, exclusions, and price tradeoffs in plain language."],
+              ["03", "Choose with context", "You decide. We help with the application, supporting documents, and the next step after binding."],
+            ].map(([number, title, text]) => (
+              <li key={number} className="motion-reveal"><span>{number}</span><div><h3>{title}</h3><p>{text}</p></div><Check size={18} /></li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="home-proof">
+        <div className="atlas-container">
+          <div className="home-proof__heading motion-reveal">
+            <AtlasEyebrow>What feels different here</AtlasEyebrow>
+            <h2>Local enough to know the context.<br />Independent enough to compare.</h2>
+          </div>
+          <div className="home-proof__grid">
+            {confidenceMarks.map(({ label, detail, icon: Icon }, index) => (
+              <article key={label} className="proof-card motion-reveal">
+                <span>0{index + 1}</span><Icon size={24} /><h3>{label}</h3><p>{detail}</p>
+              </article>
+            ))}
+            <PaperNote label="A useful first call" tone="teal">
+              <p>Not sure which policy name fits? Describe the vehicle, property, job, or requirement. We’ll start there.</p>
+              <button type="button" onClick={openQuoteModal}>Talk it through <ArrowRight size={16} /></button>
+            </PaperNote>
+          </div>
+          <FactRail facts={[
+            { label: "Office", value: "Mar Vista / 90066" },
+            { label: "Languages", value: "English · Spanish · Arabic" },
+            { label: "Hours", value: "Weekdays 10–7 · Sat 10–3" },
+            { label: "Agency license", value: "California 0D95584" },
+          ]} />
+        </div>
+      </section>
+
+      <section className="westside-window">
+        <div className="atlas-container westside-window__grid">
+          <div className="westside-window__media motion-reveal">
+            <AtlasImage src="/images/atlas/westside-atlas.webp" alt="Layered paper atlas representing Rafla Insurance service areas across the Los Angeles Westside" width="1536" height="960" loading="lazy" />
+            <div className="westside-window__label">Service-area study / illustration</div>
+          </div>
+          <div className="westside-window__copy motion-reveal">
+            <AtlasEyebrow>Westside coverage atlas</AtlasEyebrow>
+            <h2>Based in Mar Vista.<br />Built around nearby communities.</h2>
+            <p>Our Venice Boulevard office sits in the Palms–Mar Vista–Del Rey community-plan area. We work with clients across the Westside and surrounding Los Angeles communities.</p>
+            <div className="westside-window__cities">
+              {homeServiceAreas.slice(0, 8).map((city) => <Link key={city.slug} to={`/insurance/${city.slug}`}>{city.name}<ArrowUpRight size={13} /></Link>)}
+            </div>
+            <AtlasButton to="/locations" tone="line">Open the local atlas</AtlasButton>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-answers">
+        <div className="atlas-container home-answers__grid">
+          <div className="home-answers__intro motion-reveal"><AtlasEyebrow>Before you call</AtlasEyebrow><h2>Four useful answers.</h2><p>Short, direct, and grounded in how the agency actually works.</p><Link to="/faq">Read every answer <ArrowRight size={15} /></Link></div>
+          <div className="home-answers__list">
+            {homeFaqs.map((faq, index) => (
+              <details key={faq.question} className="answer-drawer motion-reveal" open={index === 0}>
+                <summary><span>0{index + 1}</span>{faq.question}<i aria-hidden="true" /></summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <QuoteBand />
     </main>
   );
 }

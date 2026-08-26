@@ -3,8 +3,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import ScrollProgress from "./components/ScrollProgress";
-import SectionNavigator from "./components/SectionNavigator";
 import RouteMotion from "./components/RouteMotion";
 
 // Eagerly load primary prerendered pages. Keeping these eager prevents direct
@@ -80,11 +78,9 @@ export default function App() {
     <>
       <ScrollToTop />
 
-      <div className="min-h-dvh flex flex-col bg-slate-50">
-        <ScrollProgress />
+      <div className="min-h-dvh flex flex-col bg-[#f6f4ed]">
         <Navbar />
         <div className="flex-1">
-          <SectionNavigator />
           <RouteMotion key={location.pathname} routeKey={location.pathname}>
             <Suspense fallback={<LoadingFallback />}>
               <Routes location={location}>

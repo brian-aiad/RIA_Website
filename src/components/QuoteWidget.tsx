@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ClipboardCheck, Mail, MessageSquareText, Phone, X } from "lucide-react";
+import { Mail, MessageSquareText, Phone, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { site } from "../lib/site";
@@ -13,7 +13,6 @@ const QUOTE_TYPES = [
 
 export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number }) {
   const [open, setOpen] = useState(false);
-  const [launcherVisible, setLauncherVisible] = useState(false);
   const [quoteType, setQuoteType] = useState<(typeof QUOTE_TYPES)[number]["label"]>("Auto");
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -23,21 +22,6 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
     const handleOpen = () => setOpen(true);
     window.addEventListener("openQuoteModal", handleOpen);
     return () => window.removeEventListener("openQuoteModal", handleOpen);
-  }, []);
-  useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => setLauncherVisible(window.scrollY > window.innerHeight * 0.55));
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
   }, []);
   useEffect(() => { if (openSignal > 0) setOpen(true); }, [openSignal]);
   useEffect(() => {
@@ -82,17 +66,13 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
 
   return (
     <>
-      <motion.button type="button" onClick={() => setOpen(true)} initial={false} animate={{ scale: launcherVisible ? 1 : 0.85, opacity: launcherVisible ? 1 : 0, y: launcherVisible ? 0 : 12 }} transition={{ type: "spring", stiffness: 360, damping: 28 }} className={`fixed bottom-5 right-4 z-50 flex items-center gap-2 rounded-full bg-brand-900 px-4 py-3 text-sm font-semibold text-white shadow-heavy ring-1 ring-brand-700 hover:bg-brand-800 sm:bottom-6 sm:right-6 ${launcherVisible ? "pointer-events-auto" : "pointer-events-none"}`} aria-label="Get a quote" aria-hidden={!launcherVisible} tabIndex={launcherVisible ? 0 : -1}>
-        <ClipboardCheck className="h-5 w-5 text-gold-300" /><span className="hidden sm:inline">Get a Quote</span><span className="sm:hidden">Quote</span>
-      </motion.button>
-
       <AnimatePresence>
         {open && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] grid place-items-center p-4">
             <button type="button" className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setOpen(false)} aria-label="Close quote dialog" />
-            <motion.section initial={{ y: 24, opacity: 0, scale: 0.97 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 24, opacity: 0, scale: 0.97 }} className="relative max-h-[calc(100dvh-2rem)] w-full max-w-3xl overflow-y-auto overscroll-contain rounded-3xl bg-white shadow-heavy" role="dialog" aria-modal="true" aria-labelledby="quote-title" aria-describedby="quote-description">
-              <div className="flex items-start justify-between border-b border-slate-100 px-6 py-5">
-                <div><p className="eyebrow">Free consultation</p><h2 id="quote-title" className="mt-1 text-xl font-bold text-slate-900">Start your insurance quote</h2><p id="quote-description" className="mt-1 text-sm text-slate-500">Choose a coverage type, then contact the office using the method you prefer.</p></div>
+            <motion.section initial={{ y: 20, opacity: 0, scale: 0.985 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 20, opacity: 0, scale: 0.985 }} className="relative max-h-[calc(100dvh-2rem)] w-full max-w-3xl overflow-y-auto overscroll-contain border border-gold-500 bg-white shadow-heavy" role="dialog" aria-modal="true" aria-labelledby="quote-title" aria-describedby="quote-description">
+              <div className="flex items-start justify-between border-b border-brand-100 px-6 py-5">
+                <div><p className="eyebrow">Coverage desk / new file</p><h2 id="quote-title" className="mt-1 text-xl font-bold text-brand-950">Start your insurance quote</h2><p id="quote-description" className="mt-1 text-sm text-slate-500">Choose a coverage type, then contact the office using the method you prefer.</p></div>
                 <button ref={closeButtonRef} type="button" onClick={() => setOpen(false)} className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700" aria-label="Close"><X className="h-5 w-5" /></button>
               </div>
 
@@ -100,7 +80,7 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
                 <div className="bg-brand-950 p-6 text-white">
                   <p className="text-xs font-bold uppercase tracking-widest text-gold-300">Coverage type</p>
                   <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-1">
-                    {QUOTE_TYPES.map((item) => <button type="button" aria-pressed={quoteType === item.label} key={item.label} onClick={() => setQuoteType(item.label)} className={`rounded-xl px-4 py-3 text-left text-sm font-semibold transition ${quoteType === item.label ? "bg-gold-400 text-brand-950" : "bg-white/5 text-white/75 ring-1 ring-white/10 hover:bg-white/10"}`}>{item.label}</button>)}
+                    {QUOTE_TYPES.map((item) => <button type="button" aria-pressed={quoteType === item.label} key={item.label} onClick={() => setQuoteType(item.label)} className={`border px-4 py-3 text-left text-sm font-semibold transition ${quoteType === item.label ? "border-gold-500 bg-gold-500 text-brand-950" : "border-white/10 bg-white/5 text-white/75 hover:bg-white/10"}`}>{item.label}</button>)}
                   </div>
                   <p className="mt-5 text-sm leading-relaxed text-white/65">{selected.note}</p>
                 </div>
@@ -108,13 +88,13 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
                 <div className="p-6 md:p-8">
                   <h3 className="font-bold text-slate-900">Helpful information to have ready</h3>
                   <ul className="mt-4 space-y-3">
-                    {selected.checklist.map((item) => <li key={item} className="flex gap-3 text-sm text-slate-600"><span className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-50 text-brand-700">✓</span>{item}</li>)}
+                    {selected.checklist.map((item) => <li key={item} className="flex gap-3 text-sm text-slate-600"><span className="mt-1 grid h-5 w-5 shrink-0 place-items-center bg-gold-100 text-brand-800">✓</span>{item}</li>)}
                   </ul>
                   <div className="mt-7 grid gap-3 sm:grid-cols-2">
                     <a href={site.contact.phoneHref} className="btn btn-accent"><Phone className="h-4 w-4" />Call {site.contact.phone}</a>
                     <a href={site.contact.textHref} className="btn btn-primary"><MessageSquareText className="h-4 w-4" />Text Mark</a>
                     <a href={site.contact.emailHref} className="btn btn-outline"><Mail className="h-4 w-4" />Email the Office</a>
-                    <Link to="/contact" onClick={() => setOpen(false)} className="btn btn-outline">Use Contact Form</Link>
+                    <Link to="/contact" onClick={() => setOpen(false)} className="btn btn-outline">Contact Options</Link>
                   </div>
                   <p className="mt-5 text-xs leading-relaxed text-slate-400">Do not send Social Security numbers, payment information, or full driver’s-license images by email or text.</p>
                 </div>

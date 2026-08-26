@@ -7,12 +7,13 @@ import App from "./App";
 import "./index.css";
 
 const rootEl = document.getElementById("root")!;
+const isDeployedHost = /(^|\.)raflainsurance\.com$|\.vercel\.app$/.test(window.location.hostname);
 const app = (
   <React.StrictMode>
     <BrowserRouter>
       <App />
-      <Analytics />
-      <SpeedInsights />
+      {isDeployedHost && <Analytics />}
+      {isDeployedHost && <SpeedInsights />}
     </BrowserRouter>
   </React.StrictMode>
 );
