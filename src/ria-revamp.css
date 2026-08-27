@@ -372,7 +372,7 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   background: var(--agency-navy);
   animation: drawer-change 280ms ease both;
 }
-@keyframes drawer-change { from { opacity: .65; transform: translateX(8px); } }
+@keyframes drawer-change { from { transform: translateX(8px); } }
 .coverage-desk__number { color: var(--agency-gold); font-size: .62rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
 .coverage-desk__icon { width: 2rem; height: 2rem; margin-top: auto; color: var(--agency-gold); stroke-width: 1.6; }
 .coverage-desk__copy small { display: block; margin-top: 1.25rem; color: rgba(255,255,255,.5); font-size: .58rem; letter-spacing: .06em; text-transform: uppercase; }
@@ -1385,8 +1385,9 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   border: 1px solid rgba(255,255,255,.35);
 }
 
-/* One hero entrance owns the composition; descendants keep the short copy beat. */
-.hero-copy-enter { animation: none; }
+/* The hero is immediately readable; the composed motion begins below the fold. */
+.hero-copy-enter,
+.hero-copy-enter > * { animation: none; }
 
 /* JS applies this class only after GSAP is ready. Without JS, the original CSS
    drawing animation remains a complete fallback. */
@@ -1446,6 +1447,241 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .service-ledger__image--photo > img { min-height: 15rem; }
   .service-ledger > ul { grid-column: 1; grid-row: 3; padding-top: 1.25rem; }
   .service-ledger > button { grid-column: 1; grid-row: 4; margin: 0 1.25rem 1.25rem; }
+}
+
+/* ========================================================================== */
+/* INDEPENDENT-BROKERAGE EDITION                                               */
+/* A clearer market-review story, with the card's serif/sans voice and less    */
+/* repeated wallpaper competing with the actual insurance information.         */
+/* ========================================================================== */
+
+:root {
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+}
+
+.ria-hero h1,
+.ria-section-heading h2,
+.ria-review__copy h2,
+.ria-local__copy h2,
+.ria-faq header h2,
+.dossier-hero h1,
+.services-ledger__intro h2,
+.services-briefs__copy h2,
+.scope-note h2,
+.agency-story__statement h2,
+.agency-team__records h2,
+.agency-principles h2,
+.office-record h2,
+.city-directory h2,
+.contact-switchboard h2,
+.contact-desk h2,
+.contact-team h2,
+.city-orientation__title h2,
+.city-coverage h2,
+.nearby-files h2,
+.brief-chapter h2,
+.quote-band h2 {
+  font-weight: 600;
+  letter-spacing: -.035em;
+}
+
+.ria-hero h1 { line-height: .94; letter-spacing: -.045em; }
+.ria-hero h1 span { font-weight: 500; }
+.ria-story h3,
+.coverage-desk__copy h3,
+.service-ledger__title h3,
+.agency-principles article h3,
+.city-coverage__grid h3 { font-family: var(--font-display); font-weight: 600; }
+
+/* Printed texture is now an accent rather than wallpaper on every band. */
+.ria-coverage,
+.ria-review,
+.ria-faq,
+.quote-band { background-image: none; }
+.ria-hero::before,
+.dossier-hero {
+  background-image: linear-gradient(rgba(11,33,70,.05) 1px, transparent 1px);
+  background-repeat: repeat;
+  background-size: 100% 3.2rem;
+}
+
+/* The brokerage path is a functional diagram, not a generic row of cards. */
+.brokerage-path {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(6.5rem, 9vw, 9rem) 0;
+  color: white;
+  border-top: 4px solid var(--agency-gold);
+  border-bottom: 1px solid rgba(255,255,255,.14);
+  background-color: #071832;
+  background-image:
+    linear-gradient(90deg, transparent 0 72%, rgba(255,255,255,.035) 72% 72.08%, transparent 72.08%),
+    radial-gradient(circle at 91% 13%, rgba(213,161,31,.12), transparent 24rem);
+}
+.brokerage-path .atlas-container { position: relative; z-index: 1; }
+.brokerage-path__heading {
+  display: grid;
+  grid-template-columns: minmax(28rem,.9fr) minmax(24rem,.65fr);
+  gap: clamp(3rem,8vw,8rem);
+  align-items: end;
+}
+.brokerage-path .ria-kicker { color: var(--agency-gold); }
+.brokerage-path__heading h2 {
+  max-width: 47rem;
+  margin-top: 1rem;
+  color: white;
+  font: 600 clamp(3.05rem,5vw,5rem)/.94 var(--font-display);
+  letter-spacing: -.04em;
+}
+.brokerage-path__heading > p {
+  max-width: 35rem;
+  padding-left: 1.4rem;
+  border-left: 3px solid var(--agency-gold);
+  color: rgba(255,255,255,.7);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+.brokerage-path__rail {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  margin-top: clamp(4.5rem,7vw,6.5rem);
+}
+.brokerage-path__track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  overflow: hidden;
+  background: rgba(255,255,255,.18);
+}
+.brokerage-path__track span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--agency-gold);
+  transform-origin: left center;
+}
+.brokerage-path__step {
+  position: relative;
+  min-height: 18rem;
+  padding: 3rem clamp(1.35rem,2.3vw,2.4rem) 1.5rem 0;
+  border-right: 1px solid rgba(255,255,255,.13);
+}
+.brokerage-path__step + .brokerage-path__step { padding-left: clamp(1.35rem,2.3vw,2.4rem); }
+.brokerage-path__step:last-child { border-right: 0; padding-right: 0; }
+.brokerage-path__node {
+  position: absolute;
+  top: -1.15rem;
+  left: 0;
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border: 1px solid var(--agency-gold);
+  color: var(--agency-navy);
+  background: var(--agency-gold);
+  box-shadow: 0 0 0 .45rem #071832;
+  transform-origin: center;
+}
+.brokerage-path__step + .brokerage-path__step .brokerage-path__node { left: clamp(1.35rem,2.3vw,2.4rem); }
+.brokerage-path__node svg { width: 1.05rem; stroke-width: 1.8; }
+.brokerage-path__step > span {
+  color: var(--agency-gold);
+  font: 700 .6rem/1 var(--font-body);
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.brokerage-path__step h3 {
+  margin-top: .9rem;
+  color: white;
+  font: 600 clamp(1.9rem,2.7vw,2.75rem)/1 var(--font-display);
+}
+.brokerage-path__step p {
+  max-width: 16.5rem;
+  margin-top: 1rem;
+  color: rgba(255,255,255,.62);
+  font-size: .84rem;
+  line-height: 1.65;
+}
+.brokerage-path__roles {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 2.5rem;
+  padding: 1.4rem clamp(1.25rem,2.5vw,2.25rem);
+  border: 1px solid rgba(213,161,31,.7);
+  background: var(--agency-white);
+  color: var(--agency-navy);
+  box-shadow: .65rem .65rem 0 rgba(213,161,31,.82);
+}
+.brokerage-path__roles > div { display: grid; grid-template-columns: minmax(7rem,.62fr) minmax(9rem,.8fr) minmax(0,1.5fr); gap: .6rem 1rem; align-items: center; }
+.brokerage-path__roles > div + div { border-left: 1px solid var(--agency-rule); padding-left: 2rem; }
+.brokerage-path__roles small { color: var(--agency-gold-dark); font: 700 .58rem/1.2 var(--font-body); letter-spacing: .09em; text-transform: uppercase; }
+.brokerage-path__roles strong { font: 600 1.15rem/1.1 var(--font-display); }
+.brokerage-path__roles span { color: var(--agency-muted); font-size: .73rem; line-height: 1.45; }
+.brokerage-path__roles > i { color: var(--agency-gold-dark); font: 600 1.5rem/1 var(--font-display); font-style: normal; }
+
+/* Supporting dark bands use quiet policy ruling; the pictogram field remains
+   reserved for the local-office and footer signatures. */
+.agency-principles,
+.scope-note,
+.contact-desk,
+.city-coverage {
+  background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px);
+  background-repeat: repeat;
+  background-size: 100% 6rem;
+}
+.agency-principles__icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--agency-gold-dark);
+  stroke-width: 1.45;
+}
+
+@media (max-width: 1120px) {
+  .brokerage-path__heading { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .brokerage-path__roles > div { grid-template-columns: 1fr; gap: .3rem; }
+}
+
+@media (max-width: 900px) {
+  .brokerage-path { padding: 5.5rem 0; }
+  .brokerage-path__heading { grid-template-columns: 1fr; gap: 1.5rem; }
+  .brokerage-path__heading > p { max-width: 43rem; }
+  .brokerage-path__rail { grid-template-columns: 1fr 1fr; margin-top: 4.5rem; }
+  .brokerage-path__track { display: none; }
+  .brokerage-path__step,
+  .brokerage-path__step + .brokerage-path__step {
+    min-height: 15rem;
+    padding: 2rem 1.5rem 1.5rem 3.5rem;
+    border-top: 1px solid rgba(255,255,255,.16);
+    border-right: 1px solid rgba(255,255,255,.13);
+  }
+  .brokerage-path__step:nth-child(odd) { border-right: 0; }
+  .brokerage-path__node,
+  .brokerage-path__step + .brokerage-path__step .brokerage-path__node { top: 1.7rem; left: 0; box-shadow: none; }
+  .brokerage-path__roles { grid-template-columns: 1fr; gap: 1rem; }
+  .brokerage-path__roles > i { display: none; }
+  .brokerage-path__roles > div + div { padding-top: 1rem; padding-left: 0; border-top: 1px solid var(--agency-rule); border-left: 0; }
+}
+
+@media (max-width: 620px) {
+  .brokerage-path { padding: 4.5rem 0; }
+  .brokerage-path__heading h2 { font-size: clamp(2.65rem,12vw,3.8rem); }
+  .brokerage-path__heading > p { padding-left: 1rem; font-size: .93rem; }
+  .brokerage-path__rail { grid-template-columns: 1fr; margin-top: 3.5rem; }
+  .brokerage-path__step,
+  .brokerage-path__step + .brokerage-path__step {
+    min-height: 0;
+    padding: 1.65rem .25rem 1.65rem 3.25rem;
+    border-right: 0;
+  }
+  .brokerage-path__node,
+  .brokerage-path__step + .brokerage-path__step .brokerage-path__node { top: 1.45rem; }
+  .brokerage-path__step p { max-width: 28rem; }
+  .brokerage-path__roles { margin-top: 1.5rem; padding: 1.1rem; box-shadow: .4rem .4rem 0 rgba(213,161,31,.82); }
 }
 
 @media (prefers-reduced-motion: reduce) {

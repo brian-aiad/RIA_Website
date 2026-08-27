@@ -1,4 +1,4 @@
-import { ArrowRight, Languages, MapPin, Phone, ShieldCheck } from "lucide-react";
+import { ArrowRight, ClipboardCheck, Languages, MapPin, Phone, PhoneCall, Scale, ShieldCheck } from "lucide-react";
 import { AtlasButton, AtlasEyebrow, DossierHeader, QuoteBand } from "../components/AtlasUI";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { openQuoteModal } from "../lib/openQuote";
@@ -34,11 +34,11 @@ export default function About() {
           <div className="agency-principles__heading motion-reveal"><AtlasEyebrow light>Working principles</AtlasEyebrow><h2>What the agency tries to make easier.</h2></div>
           <div className="agency-principles__grid">
             {[
-              ["01", "The comparison", "See how limits, deductibles, exclusions, endorsements, and price move together."],
-              ["02", "The language", "Discuss your coverage in English, Spanish, or Arabic when that makes the details clearer."],
-              ["03", "The handoff", "Know what comes next after a quote, application, document request, or claim notice."],
-              ["04", "The relationship", "Keep a local office and familiar contact connected to the policy over time."],
-            ].map(([n,title,text]) => <article key={n} className="motion-reveal"><span>{n}</span><h3>{title}</h3><p>{text}</p></article>)}
+              { title: "The comparison", text: "See how limits, deductibles, exclusions, endorsements, and price move together.", icon: Scale },
+              { title: "The language", text: "Discuss your coverage in English, Spanish, or Arabic when that makes the details clearer.", icon: Languages },
+              { title: "The handoff", text: "Know what comes next after a quote, application, document request, or claim notice.", icon: ClipboardCheck },
+              { title: "The relationship", text: "Keep a local office and familiar contact connected to the policy over time.", icon: PhoneCall },
+            ].map(({ title, text, icon: Icon }) => <article key={title} className="motion-reveal"><Icon className="agency-principles__icon" aria-hidden="true" /><h3>{title}</h3><p>{text}</p></article>)}
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Clock3, MapPin, Menu, Phone, X } from "lucide-react";
+import { ArrowUpRight, MapPin, Menu, Phone, ShieldCheck, X } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { coverageEntries } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
@@ -68,7 +68,7 @@ export default function Navbar() {
       <div className="ria-utility">
         <div className="atlas-container">
           <span><MapPin size={13} /> 12240 Venice Blvd, Suite 2 · Mar Vista</span>
-          <span><Clock3 size={13} /> Mon–Fri 10–7 · Sat 10–3</span>
+          <span><ShieldCheck size={13} /> Independent property &amp; casualty brokerage</span>
           <a href={site.contact.phoneHref}><Phone size={13} /> {site.contact.phone}</a>
         </div>
       </div>

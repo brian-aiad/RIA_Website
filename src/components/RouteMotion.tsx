@@ -55,7 +55,6 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
 
             prepared.forEach(({ step, targets }) => {
               gsap.set(targets, {
-                opacity: 0.94,
                 x: step.x ?? 0,
                 y: step.y ?? 0,
                 scale: step.scale ?? 1,
@@ -69,15 +68,14 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
 
             prepared.forEach(({ step, targets }) => {
               timeline
-                .set(targets, { willChange: "transform,opacity" }, step.at ?? ">")
+                .set(targets, { willChange: "transform" }, step.at ?? ">")
                 .to(targets, {
-                  opacity: 1,
                   x: 0,
                   y: 0,
                   scale: 1,
                   duration: step.duration ?? 0.5,
                   stagger: step.stagger ?? 0,
-                  clearProps: "opacity,transform,willChange",
+                  clearProps: "transform,willChange",
                 }, "<");
             });
           });
@@ -85,6 +83,12 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
 
         // Homepage: each band has its own short, editorially meaningful beat.
         stageGroup(".ria-service-strip", [{ selector: "a", y: 8, duration: 0.36, stagger: 0.035 }], "clamp(top 92%)");
+        stageGroup(".brokerage-path", [
+          { selector: ".brokerage-path__heading > div", x: -14, duration: 0.58 },
+          { selector: ".brokerage-path__heading > p", x: 14, duration: 0.54, at: "-=0.42" },
+          { selector: ".brokerage-path__step", y: 12, duration: 0.48, stagger: 0.06, at: "-=0.3" },
+          { selector: ".brokerage-path__roles", y: 10, duration: 0.5, at: "-=0.3" },
+        ], "clamp(top 90%)");
         stageGroup(".ria-coverage", [
           { selector: ".ria-section-heading", y: 10, duration: 0.48 },
           { selector: ".coverage-desk", y: 14, scale: 0.995, duration: 0.58, at: "-=0.34" },
@@ -187,16 +191,75 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         root.querySelectorAll<HTMLElement>(".quote-band").forEach((band) => {
           if (band.getBoundingClientRect().top < window.innerHeight + 24) return;
           const targets = Array.from(band.querySelectorAll<HTMLElement>(".quote-band__mark, h2, .quote-band__grid > p, .quote-band__actions"));
-          gsap.set(targets, { opacity: 0.94, y: 10 });
+          gsap.set(targets, { y: 10 });
           gsap.to(targets, {
-            opacity: 1,
             y: 0,
             duration: 0.44,
             stagger: 0.045,
             ease: "power3.out",
-            clearProps: "opacity,transform,willChange",
+            clearProps: "transform,willChange",
             scrollTrigger: { trigger: band, start: "clamp(top 88%)", once: true },
           });
+        });
+
+        // This is the one scroll-linked narrative on the site: the gold route
+        // follows the actual work of an independent broker from brief to service.
+        root.querySelectorAll<HTMLElement>("[data-brokerage-path]").forEach((rail) => {
+          const track = rail.querySelector<HTMLElement>(".brokerage-path__track span");
+          const nodes = Array.from(rail.querySelectorAll<HTMLElement>(".brokerage-path__node"));
+          if (!track || !nodes.length) return;
+
+          gsap.set(track, { scaleX: 0, transformOrigin: "left center", willChange: "transform" });
+          gsap.set(nodes, { scale: 0.78, transformOrigin: "center" });
+          const timeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: rail,
+              start: "clamp(top 82%)",
+              end: "clamp(bottom 58%)",
+              scrub: 0.55,
+            },
+          });
+          timeline.to(track, { scaleX: 1, duration: 1, ease: "none" }, 0)
+            .to(nodes, {
+              scale: 1,
+              duration: 0.12,
+              stagger: 0.22,
+              ease: "back.out(1.5)",
+            }, 0.02);
+        });
+
+        // Small pieces of the print identity arrive as the reader reaches them.
+        // These transform-only cues work across interior pages without fading copy.
+        root.querySelectorAll<HTMLElement>(".atlas-eyebrow > span").forEach((rule) => {
+          if (rule.getBoundingClientRect().top < window.innerHeight + 24) return;
+          gsap.fromTo(rule,
+            { scaleX: 0.05, transformOrigin: "left center" },
+            {
+              scaleX: 1,
+              duration: 0.52,
+              ease: "power2.out",
+              clearProps: "transform,willChange",
+              scrollTrigger: { trigger: rule, start: "clamp(top 90%)", once: true },
+            },
+          );
+        });
+
+        // Documentary photos settle gently into their frames. No opacity or
+        // layout properties are animated, so content stays stable while scrolling.
+        root.querySelectorAll<HTMLElement>(
+          ".ria-story__photo, .agency-team__visual img, .office-record__photo img, .contact-desk__photo img, .service-ledger__image--photo img",
+        ).forEach((photo) => {
+          if (photo.getBoundingClientRect().top < window.innerHeight + 24) return;
+          gsap.fromTo(photo,
+            { scale: 1.025, transformOrigin: "center" },
+            {
+              scale: 1,
+              duration: 0.72,
+              ease: "power2.out",
+              clearProps: "transform,willChange",
+              scrollTrigger: { trigger: photo, start: "clamp(top 88%)", once: true },
+            },
+          );
         });
 
         // Stable, insurance-specific drawings reveal only when encountered.

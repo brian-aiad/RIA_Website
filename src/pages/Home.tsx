@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AtlasButton, AtlasImage, QuoteBand } from "../components/AtlasUI";
+import BrokeragePath from "../components/BrokeragePath";
 import CoverageDesk from "../components/CoverageDesk";
 import CoverageLinework from "../components/CoverageLinework";
 import PolicyReviewSheet from "../components/PolicyReviewSheet";
@@ -56,7 +57,7 @@ export default function Home() {
           <div className="ria-hero__copy hero-copy-enter">
             <p className="ria-kicker">Independent insurance agency · Mar Vista</p>
             <h1>Coverage for Los Angeles, <span>explained by a local broker.</span></h1>
-            <p className="ria-hero__lede">Auto, home, commercial, workers’ compensation, bonds, and specialty coverage from the Rafla office on Venice Boulevard.</p>
+            <p className="ria-hero__lede">Rafla is an independent agency—not an insurance company. We review available programs for auto, home, commercial, workers’ compensation, bonds, and specialty coverage from our Venice Boulevard office.</p>
             <div className="ria-hero__actions">
               <AtlasButton tone="navy" onClick={openQuoteModal}>Request a quote</AtlasButton>
               <a href={site.contact.phoneHref}><Phone size={17} /> {site.contact.phone}</a>
@@ -86,6 +87,8 @@ export default function Home() {
           ))}
         </div>
       </nav>
+
+      <BrokeragePath />
 
       <section className="ria-coverage" id="coverage-options">
         <div className="atlas-container">
