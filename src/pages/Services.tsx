@@ -1,4 +1,4 @@
-import { ArrowRight, Check, FileSearch, Phone } from "lucide-react";
+import { ArrowRight, Building2, Car, Check, FileBadge2, FileSearch, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, PaperNote, QuoteBand } from "../components/AtlasUI";
 import CoverageLinework, { type CoverageLineworkVariant } from "../components/CoverageLinework";
@@ -72,9 +72,43 @@ export default function Services() {
 
       <section className="scope-note">
         <div className="atlas-container scope-note__grid">
-          <div className="motion-reveal"><FileSearch size={32} /><AtlasEyebrow light>Our current services</AtlasEyebrow><h2>A focused property and casualty agency.</h2></div>
-          <PaperNote label="Currently offered" tone="blue"><p>Personal and commercial property/casualty coverage, bonds, SR-22 support, and selected agency services.</p></PaperNote>
-          <PaperNote label="Not currently offered"><p>Health, life, and notary services are not currently available. We will update this website if our licensing changes.</p></PaperNote>
+          <div className="scope-note__intro motion-reveal">
+            <FileSearch size={32} />
+            <AtlasEyebrow light>Our current services</AtlasEyebrow>
+            <h2>A focused property and casualty agency.</h2>
+            <ul className="scope-note__focus">
+              <li><Car aria-hidden="true" /><span><strong>Personal lines</strong>Vehicles, homes, rentals, and belongings</span></li>
+              <li><Building2 aria-hidden="true" /><span><strong>Business lines</strong>Vehicles, liability, property, and employees</span></li>
+              <li><FileBadge2 aria-hidden="true" /><span><strong>Bonds &amp; filings</strong>Contract requirements and specialty situations</span></li>
+            </ul>
+          </div>
+          <PaperNote label="Currently offered" tone="blue">
+            <div className="scope-card__heading">
+              <strong>Property &amp; casualty</strong>
+              <p>One local desk for everyday personal and business risks.</p>
+            </div>
+            <ul className="scope-card__list scope-card__list--active">
+              <li><Check aria-hidden="true" />Auto, motorcycle &amp; recreation</li>
+              <li><Check aria-hidden="true" />Homeowners &amp; renters</li>
+              <li><Check aria-hidden="true" />Business vehicles &amp; liability</li>
+              <li><Check aria-hidden="true" />Workers’ compensation</li>
+              <li><Check aria-hidden="true" />Bonds, filings &amp; SR-22 support</li>
+            </ul>
+            <button type="button" onClick={openQuoteModal}>Review my coverage <ArrowRight aria-hidden="true" size={15} /></button>
+          </PaperNote>
+          <PaperNote label="Not currently offered">
+            <div className="scope-card__heading">
+              <strong>Future license areas</strong>
+              <p>These services are intentionally outside our current agency scope.</p>
+            </div>
+            <ul className="scope-card__list scope-card__list--inactive">
+              <li><span aria-hidden="true">—</span>Health insurance</li>
+              <li><span aria-hidden="true">—</span>Life insurance</li>
+              <li><span aria-hidden="true">—</span>Notary services</li>
+            </ul>
+            <div className="scope-card__boundary"><FileBadge2 aria-hidden="true" /><span>Our licensed lane<strong>Property &amp; casualty</strong></span></div>
+            <small>We’ll update this website if our licensing changes. Questions about another risk? Call the broker desk.</small>
+          </PaperNote>
         </div>
       </section>
 

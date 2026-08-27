@@ -1509,7 +1509,7 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
 .brokerage-path {
   position: relative;
   overflow: hidden;
-  padding: clamp(6.5rem, 9vw, 9rem) 0;
+  padding: clamp(5.75rem, 7vw, 7.5rem) 0;
   color: white;
   border-top: 4px solid var(--agency-gold);
   border-bottom: 1px solid rgba(255,255,255,.14);
@@ -1533,7 +1533,7 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   font: 600 clamp(3.05rem,5vw,5rem)/.94 var(--font-display);
   letter-spacing: -.04em;
 }
-.brokerage-path__heading > p {
+.brokerage-path__support > p {
   max-width: 35rem;
   padding-left: 1.4rem;
   border-left: 3px solid var(--agency-gold);
@@ -1541,11 +1541,27 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   font-size: 1rem;
   line-height: 1.72;
 }
+.brokerage-path__support ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .55rem;
+  max-width: 35rem;
+  margin-top: 1.25rem;
+  padding-left: 1.4rem;
+}
+.brokerage-path__support li {
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+  color: rgba(255,255,255,.84);
+  font-size: .73rem;
+}
+.brokerage-path__support li svg { width: .95rem; color: var(--agency-gold); stroke-width: 2; }
 .brokerage-path__rail {
   position: relative;
   display: grid;
   grid-template-columns: repeat(4,minmax(0,1fr));
-  margin-top: clamp(4.5rem,7vw,6.5rem);
+  margin-top: clamp(3.75rem,5vw,5rem);
 }
 .brokerage-path__track {
   position: absolute;
@@ -1565,7 +1581,7 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
 }
 .brokerage-path__step {
   position: relative;
-  min-height: 18rem;
+  min-height: 16.5rem;
   padding: 3rem clamp(1.35rem,2.3vw,2.4rem) 1.5rem 0;
   border-right: 1px solid rgba(255,255,255,.13);
 }
@@ -1605,12 +1621,30 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   font-size: .84rem;
   line-height: 1.65;
 }
+.brokerage-path__deliverable {
+  display: grid;
+  gap: .35rem;
+  max-width: 16.5rem;
+  margin-top: 1.35rem;
+  padding-top: .85rem;
+  border-top: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.84);
+  font-size: .69rem;
+  line-height: 1.35;
+}
+.brokerage-path__deliverable span {
+  color: var(--agency-gold);
+  font-size: .52rem;
+  font-weight: 750;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
 .brokerage-path__roles {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   gap: 2rem;
   align-items: center;
-  margin-top: 2.5rem;
+  margin-top: 1.75rem;
   padding: 1.4rem clamp(1.25rem,2.5vw,2.25rem);
   border: 1px solid rgba(213,161,31,.7);
   background: var(--agency-white);
@@ -1641,6 +1675,78 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   stroke-width: 1.45;
 }
 
+/* Sticky coverage navigation doubles as a useful local broker card instead of
+   leaving an empty rail beside long-form policy guidance. */
+.brief-index__desk {
+  display: grid;
+  gap: .55rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(213,161,31,.62);
+}
+.brief-index__desk small { color: var(--agency-gold); font-size: .52rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+.brief-index__desk strong { color: white; font: 600 1.15rem/1.1 var(--font-display); }
+.brief-index__desk p { color: rgba(255,255,255,.62); font-size: .66rem; line-height: 1.5; }
+.brief-index__desk button {
+  display: inline-flex;
+  justify-content: space-between;
+  gap: .5rem;
+  align-items: center;
+  margin-top: .3rem;
+  padding: .7rem;
+  color: var(--agency-navy);
+  background: var(--agency-gold);
+  font-size: .62rem;
+  font-weight: 750;
+}
+
+/* The services scope panel is now an insurance inventory, not a headline
+   floating beside two tall notes. */
+.scope-note { padding: clamp(5rem,6.5vw,6.5rem) 0; }
+.scope-note__grid { grid-template-columns: minmax(24rem,1.15fr) minmax(16rem,.65fr) minmax(16rem,.65fr); gap: 1rem; }
+.scope-note__grid > .scope-note__intro { justify-content: flex-start; }
+.scope-note__grid > .scope-note__intro > svg { margin-bottom: 1.4rem; }
+.scope-note__intro h2 { max-width: 33rem; margin-top: .85rem; }
+.scope-note__focus { display: grid; gap: 0; margin-top: 1.6rem; border-top: 1px solid rgba(255,255,255,.18); }
+.scope-note__focus li { display: grid; grid-template-columns: 1.8rem 1fr; gap: .75rem; align-items: center; padding: .85rem 0; border-bottom: 1px solid rgba(255,255,255,.14); }
+.scope-note__focus svg { width: 1.15rem; color: var(--agency-gold); stroke-width: 1.6; }
+.scope-note__focus span { display: grid; gap: .2rem; color: rgba(255,255,255,.62); font-size: .71rem; }
+.scope-note__focus strong { color: white; font-size: .76rem; }
+.scope-note .paper-note { min-height: 19rem; padding: 1.7rem; }
+.scope-note .paper-note > div { justify-content: flex-start; }
+.scope-card__heading { padding-bottom: 1.25rem; border-bottom: 1px solid rgba(11,33,70,.18); }
+.scope-card__heading strong { display: block; color: var(--agency-navy); font: 700 1.55rem/1.08 var(--font-display); letter-spacing: -.025em; }
+.scope-card__heading p { margin-top: .55rem; color: #566277; font: 500 .75rem/1.5 var(--font-body); letter-spacing: 0; }
+.scope-card__list { display: grid; margin-top: .8rem; }
+.scope-card__list li { display: grid; grid-template-columns: 1.25rem 1fr; gap: .55rem; align-items: center; padding: .72rem 0; border-bottom: 1px solid rgba(11,33,70,.13); color: var(--agency-navy); font-size: .72rem; font-weight: 650; line-height: 1.25; }
+.scope-card__list svg { width: .95rem; color: #8a6506; stroke-width: 2; }
+.scope-card__list--inactive li { color: #566277; font-weight: 600; }
+.scope-card__list--inactive li > span { color: #a57500; font-size: 1rem; }
+.scope-card__boundary { display: grid; grid-template-columns: 2rem 1fr; gap: .7rem; align-items: center; margin-top: 1.1rem; padding: .9rem; border: 1px solid rgba(11,33,70,.16); background: var(--agency-paper); }
+.scope-card__boundary svg { color: #a57500; stroke-width: 1.5; }
+.scope-card__boundary span { display: grid; gap: .18rem; color: #667085; font-size: .56rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.scope-card__boundary strong { color: var(--agency-navy); font-size: .72rem; letter-spacing: 0; text-transform: none; }
+.scope-note .paper-note button { display: flex; width: 100%; justify-content: space-between; margin-top: auto; padding: .85rem 0 .25rem; color: var(--agency-navy); border-bottom: 1px solid var(--agency-navy); font: 750 .67rem/1 var(--font-body); }
+.scope-note .paper-note > div > small { display: block; margin-top: auto; padding-top: 1rem; color: #667085; font-size: .63rem; line-height: 1.55; }
+
+/* Calibrated density across supporting pages: preserve breathing room, remove
+   oversized blank bands between already-complete compositions. */
+.services-ledger,
+.services-briefs,
+.agency-story,
+.agency-principles,
+.agency-team,
+.office-record,
+.city-directory,
+.contact-switchboard,
+.contact-team,
+.answer-library,
+.city-orientation,
+.city-coverage,
+.nearby-files { padding-block: clamp(4.75rem,6.5vw,6.5rem); }
+.agency-principles article { min-height: 12rem; }
+.brief-reading { padding-block: clamp(4.75rem,6vw,6.25rem); }
+
 @media (max-width: 1120px) {
   .brokerage-path__heading { grid-template-columns: 1fr 1fr; gap: 3rem; }
   .brokerage-path__roles > div { grid-template-columns: 1fr; gap: .3rem; }
@@ -1649,7 +1755,8 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
 @media (max-width: 900px) {
   .brokerage-path { padding: 5.5rem 0; }
   .brokerage-path__heading { grid-template-columns: 1fr; gap: 1.5rem; }
-  .brokerage-path__heading > p { max-width: 43rem; }
+  .brokerage-path__support > p { max-width: 43rem; }
+  .brokerage-path__support ul { max-width: 43rem; }
   .brokerage-path__rail { grid-template-columns: 1fr 1fr; margin-top: 4.5rem; }
   .brokerage-path__track { display: none; }
   .brokerage-path__step,
@@ -1665,12 +1772,19 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .brokerage-path__roles { grid-template-columns: 1fr; gap: 1rem; }
   .brokerage-path__roles > i { display: none; }
   .brokerage-path__roles > div + div { padding-top: 1rem; padding-left: 0; border-top: 1px solid var(--agency-rule); border-left: 0; }
+  .brief-index__desk { grid-column: 1/-1; grid-template-columns: 1fr auto; align-items: end; }
+  .brief-index__desk small,
+  .brief-index__desk p { grid-column: 1; }
+  .brief-index__desk button { grid-column: 2; grid-row: 1/4; }
+  .scope-note__grid { grid-template-columns: 1fr 1fr; }
+  .scope-note__intro { grid-column: 1/-1; }
 }
 
 @media (max-width: 620px) {
   .brokerage-path { padding: 4.5rem 0; }
   .brokerage-path__heading h2 { font-size: clamp(2.65rem,12vw,3.8rem); }
-  .brokerage-path__heading > p { padding-left: 1rem; font-size: .93rem; }
+  .brokerage-path__support > p { padding-left: 1rem; font-size: .93rem; }
+  .brokerage-path__support ul { padding-left: 1rem; }
   .brokerage-path__rail { grid-template-columns: 1fr; margin-top: 3.5rem; }
   .brokerage-path__step,
   .brokerage-path__step + .brokerage-path__step {
@@ -1682,6 +1796,23 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .brokerage-path__step + .brokerage-path__step .brokerage-path__node { top: 1.45rem; }
   .brokerage-path__step p { max-width: 28rem; }
   .brokerage-path__roles { margin-top: 1.5rem; padding: 1.1rem; box-shadow: .4rem .4rem 0 rgba(213,161,31,.82); }
+  .scope-note { padding: 4rem 0; }
+  .scope-note__grid { grid-template-columns: 1fr; }
+  .scope-note__intro { grid-column: auto; }
+  .scope-note .paper-note { min-height: 13rem; }
+  .services-ledger,
+  .services-briefs,
+  .agency-story,
+  .agency-principles,
+  .agency-team,
+  .office-record,
+  .city-directory,
+  .contact-switchboard,
+  .contact-team,
+  .answer-library,
+  .city-orientation,
+  .city-coverage,
+  .nearby-files { padding-block: 4rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -64,6 +64,12 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
             <a href="#documents">What to have ready</a>
             <a href="#fine-print">A practical note</a>
             <a href="#answers">Common questions</a>
+            <div className="brief-index__desk">
+              <small>Rafla broker desk</small>
+              <strong>{site.contact.phone}</strong>
+              <p>Mon–Fri 10–7 · Sat 10–3<br />English · Spanish · Arabic</p>
+              <button type="button" onClick={openQuoteModal}>Request a review <ArrowRight size={14} /></button>
+            </div>
           </aside>
           <div className="brief-reading__content">
             <section id="orientation" className="brief-chapter motion-reveal">

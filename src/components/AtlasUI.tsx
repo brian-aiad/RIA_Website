@@ -34,12 +34,13 @@ export function AtlasImage({
   src,
   alt,
   sizes = "(max-width: 900px) 100vw, 50vw",
+  srcSet: providedSrcSet,
   ...props
 }: ImgHTMLAttributes<HTMLImageElement> & { src: string; alt: string }) {
   const isResponsiveAsset = src.startsWith("/images/agency/") && src.endsWith(".webp") && !src.endsWith("-sm.webp") && !src.endsWith("-md.webp");
-  const srcSet = isResponsiveAsset
+  const srcSet = providedSrcSet ?? (isResponsiveAsset
     ? `${src.replace(/\.webp$/, "-sm.webp")} 640w, ${src.replace(/\.webp$/, "-md.webp")} 1100w, ${src} 1568w`
-    : undefined;
+    : undefined);
 
   return <img src={src} srcSet={srcSet} sizes={srcSet ? sizes : undefined} alt={alt} decoding="async" {...props} />;
 }

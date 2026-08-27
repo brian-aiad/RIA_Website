@@ -85,7 +85,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         stageGroup(".ria-service-strip", [{ selector: "a", y: 8, duration: 0.36, stagger: 0.035 }], "clamp(top 92%)");
         stageGroup(".brokerage-path", [
           { selector: ".brokerage-path__heading > div", x: -14, duration: 0.58 },
-          { selector: ".brokerage-path__heading > p", x: 14, duration: 0.54, at: "-=0.42" },
+          { selector: ".brokerage-path__support", x: 14, duration: 0.54, at: "-=0.42" },
           { selector: ".brokerage-path__step", y: 12, duration: 0.48, stagger: 0.06, at: "-=0.3" },
           { selector: ".brokerage-path__roles", y: 10, duration: 0.5, at: "-=0.3" },
         ], "clamp(top 90%)");
@@ -118,6 +118,10 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         stageGroup(".services-briefs", [
           { selector: ".services-briefs__copy", x: -12, duration: 0.5 },
           { selector: ".services-briefs__list > a", x: 8, duration: 0.38, stagger: 0.035, at: "-=0.34" },
+        ]);
+        stageGroup(".scope-note", [
+          { selector: ".scope-note__intro", x: -12, duration: 0.54 },
+          { selector: ".paper-note", y: 12, duration: 0.5, stagger: 0.08, at: "-=0.38" },
         ]);
         stageGroup(".agency-story", [
           { selector: ".agency-story__statement", x: -12, duration: 0.5 },
