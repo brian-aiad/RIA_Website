@@ -16,7 +16,7 @@ export default function Contact() {
   return (
     <main id="main-content" className="atlas-page contact-file">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Contact", url: "https://raflainsurance.com/contact" }]} />
-      <DossierHeader index="C1" eyebrow="We’re here to help" title="Let’s start with a conversation." lede="Call, request a quote, send an email, or visit us on Venice Boulevard. A real person will take it from there." image={images.clients.contactFrontDesk} imageAlt="Rafla Insurance Agency office at 12240 Venice Boulevard">
+      <DossierHeader index="C1" eyebrow="We’re here to help" title="Let’s start with a conversation." lede="Call, request a quote, send an email, or visit us on Venice Boulevard. A real person will take it from there." image={images.clients.contactFrontDesk} imageAlt="Representative insurance-office service moment with a person answering a policy question by phone">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Request a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} />Call now</a>
       </DossierHeader>

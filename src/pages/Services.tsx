@@ -1,14 +1,22 @@
 import { ArrowRight, Check, FileSearch, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AtlasButton, AtlasEyebrow, DossierHeader, PaperNote, QuoteBand } from "../components/AtlasUI";
+import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, PaperNote, QuoteBand } from "../components/AtlasUI";
 import CoverageLinework, { type CoverageLineworkVariant } from "../components/CoverageLinework";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { coverageEntries, serviceGroups } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
+import { images } from "../lib/images";
 import { usePageMeta } from "../lib/seo";
 import { site } from "../lib/site";
 
 const groupDrawings: CoverageLineworkVariant[] = ["auto", "home", "commercial", "specialty"];
+const groupPhotos = [images.services.auto, null, images.services.workers, null] as const;
+const groupPhotoAlts = [
+  "A Los Angeles driver reviewing auto insurance documents with a broker beside an everyday car",
+  "",
+  "A small Los Angeles contractor crew preparing tools and safety equipment before the workday",
+  "",
+] as const;
 
 export default function Services() {
   usePageMeta({
@@ -39,7 +47,11 @@ export default function Services() {
                 <article id={group.id} key={group.id} className={`service-ledger service-ledger--${index % 2 ? "paper" : "navy"} motion-reveal`}>
                   <div className="service-ledger__number">0{index + 1}</div>
                   <div className="service-ledger__title"><span>{group.kicker}</span><Icon size={28} /><h3>{group.label}</h3></div>
-                  <div className="service-ledger__image"><CoverageLinework variant={groupDrawings[index]} /></div>
+                  <div className={`service-ledger__image ${groupPhotos[index] ? "service-ledger__image--photo" : "service-ledger__image--drawing"}`}>
+                    {groupPhotos[index]
+                      ? <AtlasImage src={groupPhotos[index]} alt={groupPhotoAlts[index]} width="1536" height="1024" loading="lazy" />
+                      : <CoverageLinework variant={groupDrawings[index]} />}
+                  </div>
                   <ul>{group.lines.map((line) => <li key={line}><Check size={14} />{line}</li>)}</ul>
                   <button type="button" onClick={openQuoteModal}>Talk about this coverage <ArrowRight size={16} /></button>
                 </article>

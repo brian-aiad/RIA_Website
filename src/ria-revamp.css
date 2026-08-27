@@ -1248,3 +1248,207 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .answer-library__grid > div:last-child,
   .contact-switchboard__grid { margin-right: .4rem; box-shadow: .4rem .4rem 0 var(--agency-navy); }
 }
+
+/* ========================================================================== */
+/* EDITORIAL CLEANUP + COMPOSED MOTION                                        */
+/* The pictogram system is a signature at page edges, not reading wallpaper.  */
+/* ========================================================================== */
+
+:root {
+  --agency-paper-grain:
+    radial-gradient(circle at 18% 22%, rgba(11,33,70,.035) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 68%, rgba(213,161,31,.04) 0 1px, transparent 1.5px);
+}
+
+.ria-editorial,
+.brief-reading,
+.services-ledger,
+.services-briefs,
+.agency-story,
+.agency-team,
+.office-record,
+.city-directory,
+.contact-switchboard,
+.contact-team,
+.answer-library,
+.city-orientation,
+.nearby-files,
+.planning-note {
+  background-image: var(--agency-paper-grain);
+  background-size: 7px 7px, 9px 9px;
+}
+
+.ria-editorial,
+.agency-story,
+.office-record,
+.contact-switchboard,
+.answer-library,
+.city-orientation,
+.agency-team,
+.city-directory,
+.contact-team,
+.nearby-files { box-shadow: none; }
+
+/* The photo placeholder now feels like paper while responsive files decode. */
+.dossier-hero__visual { background-color: #dfe3e8; }
+.dossier-hero__visual--linework { background-color: var(--agency-white); }
+
+/* High-contrast office plaque on the Locations page. */
+.office-record__details { color: white; }
+.office-record__details .atlas-eyebrow { color: var(--agency-gold); }
+.office-record__details h2 { color: white; }
+.office-record__lines { border-color: rgba(255,255,255,.2); }
+.office-record__lines a,
+.office-record__lines p {
+  border-color: rgba(255,255,255,.2);
+  color: rgba(255,255,255,.78);
+}
+.office-record__lines a:hover { color: white; }
+.office-record__lines svg { color: var(--agency-gold); }
+
+/* Services alternate human evidence with Rafla's own technical drawings. */
+.service-ledger__image { position: relative; }
+.service-ledger__image--photo { display: block; background: #dfe3e8; }
+.service-ledger__image--photo > img {
+  width: 100%;
+  height: 100%;
+  min-height: 19rem;
+  object-fit: cover;
+  filter: saturate(.78) contrast(1.03);
+}
+.service-ledger__image--photo::after {
+  content: "FIELD / COVERAGE REVIEW";
+  position: absolute;
+  right: .75rem;
+  bottom: .75rem;
+  padding: .45rem .6rem;
+  border-left: 3px solid var(--agency-gold);
+  color: white;
+  background: rgba(7,24,50,.9);
+  font: 750 .55rem/1 var(--font-body);
+  letter-spacing: .08em;
+}
+.service-ledger__image--drawing { background-color: var(--agency-white); }
+
+/* Long policy briefs read like documents: the opening chapter leads. */
+.brief-reading__content > .brief-chapter:not(:first-child) h2,
+.brief-documents h2,
+.brief-faq h2 { font-size: clamp(1.95rem,3vw,3.1rem); }
+
+/* Remove empty card acreage while retaining the four-part agency record. */
+.agency-principles article { min-height: 13.5rem; }
+.contact-switchboard__grid > a,
+.contact-switchboard__grid > button { min-height: 13.25rem; }
+.service-ledger,
+.service-ledger--navy,
+.service-ledger--paper { min-height: 31rem; }
+
+/* A true two-by-two coverage folio. Earlier layout layers mixed a two-column
+   outer grid with four-column cards, which could clip actions at wide sizes. */
+.services-ledger__groups {
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 0;
+}
+.service-ledger,
+.service-ledger--navy,
+.service-ledger--paper {
+  grid-template-columns: minmax(9.5rem,.72fr) minmax(15rem,1.28fr);
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+  padding: 0;
+}
+.service-ledger__number { display: none; }
+.service-ledger__title {
+  min-height: 10.5rem;
+  grid-column: 1;
+  grid-row: 1;
+  padding: 1.55rem 1.45rem 1rem;
+}
+.service-ledger__image {
+  min-height: 22rem;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+.service-ledger__image--photo > img { min-height: 22rem; }
+.service-ledger > ul {
+  grid-column: 1;
+  grid-row: 2 / span 2;
+  align-content: start;
+  padding: 0 1.45rem 1.45rem;
+}
+.service-ledger > button {
+  z-index: 2;
+  grid-column: 2;
+  grid-row: 3;
+  align-self: end;
+  margin: 1rem;
+  border: 1px solid rgba(255,255,255,.35);
+}
+
+/* One hero entrance owns the composition; descendants keep the short copy beat. */
+.hero-copy-enter { animation: none; }
+
+/* JS applies this class only after GSAP is ready. Without JS, the original CSS
+   drawing animation remains a complete fallback. */
+.motion-managed .ria-story__drawing path,
+.motion-managed .ria-story__drawing circle,
+.motion-managed .brief-closing-image__drawing path,
+.motion-managed .brief-closing-image__drawing circle,
+.motion-managed .service-ledger__image--drawing .coverage-linework path,
+.motion-managed .service-ledger__image--drawing .coverage-linework circle { animation: none; }
+
+@media (max-width: 620px) {
+  .ria-hero__copy { padding: 2.65rem 0 1.8rem; }
+  .ria-hero h1 {
+    margin-top: .7rem;
+    font-size: clamp(2.55rem,11.4vw,3.6rem);
+    letter-spacing: -.032em;
+  }
+  .ria-hero__lede { margin-top: 1rem; line-height: 1.55; }
+  .ria-hero__actions { margin-top: 1.35rem; gap: .8rem; }
+  .dossier-hero h1,
+  .ria-section-heading h2,
+  .ria-review__copy h2,
+  .ria-local__copy h2,
+  .ria-faq header h2 { letter-spacing: -.03em; }
+  .agency-principles article { min-height: 10.75rem; }
+  .contact-switchboard__grid > a,
+  .contact-switchboard__grid > button { min-height: 11.75rem; }
+  .service-ledger__image--photo > img { min-height: 15rem; }
+}
+
+@media (max-width: 900px) {
+  .services-ledger__groups { grid-template-columns: 1fr; }
+  .service-ledger,
+  .service-ledger--navy,
+  .service-ledger--paper {
+    min-height: 27rem;
+    grid-template-columns: minmax(10rem,.7fr) minmax(16rem,1.3fr);
+    grid-template-rows: auto 1fr auto;
+  }
+  .service-ledger__title { grid-column: 1; grid-row: 1; }
+  .service-ledger__image { min-height: 20rem; grid-column: 2; grid-row: 1 / span 2; }
+  .service-ledger__image--photo > img { min-height: 20rem; }
+  .service-ledger > ul { grid-column: 1; grid-row: 2 / span 2; }
+  .service-ledger > button { grid-column: 2; grid-row: 3; }
+}
+
+@media (max-width: 620px) {
+  .service-ledger,
+  .service-ledger--navy,
+  .service-ledger--paper {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+  .service-ledger__title { min-height: 0; grid-column: 1; grid-row: 1; }
+  .service-ledger__image { min-height: 15rem; grid-column: 1; grid-row: 2; }
+  .service-ledger__image--photo > img { min-height: 15rem; }
+  .service-ledger > ul { grid-column: 1; grid-row: 3; padding-top: 1.25rem; }
+  .service-ledger > button { grid-column: 1; grid-row: 4; margin: 0 1.25rem 1.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-managed .coverage-linework path,
+  .motion-managed .coverage-linework circle { stroke-dashoffset: 0 !important; }
+}

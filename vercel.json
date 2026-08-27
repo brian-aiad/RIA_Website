@@ -159,12 +159,6 @@
       ]
     },
     {
-      "source": "/",
-      "headers": [
-        { "key": "Link", "value": "</images/rafla/home-hero.webp>; rel=preload; as=image; type=image/webp; fetchpriority=high" }
-      ]
-    },
-    {
       "source": "/sitemap.xml",
       "headers": [
         { "key": "Content-Type", "value": "application/xml; charset=utf-8" },

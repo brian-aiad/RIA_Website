@@ -71,7 +71,7 @@ export default function Home() {
             <AtlasImage src={images.hero.people} alt="An independent insurance broker reviewing a policy folder with a Los Angeles couple" width="1536" height="1024" sizes="(max-width: 900px) 100vw, 52vw" fetchPriority="high" />
             <figcaption><span>Independent guidance</span><strong>A conversation before a recommendation.</strong><small>Personal & commercial insurance</small></figcaption>
             <div className="ria-hero__office-proof">
-              <AtlasImage src={images.hero.storefront} alt="Rafla Insurance Agency on Venice Boulevard" width="924" height="1365" />
+              <AtlasImage src="/images/brand/office-venice-thumb-v3.webp" alt="Rafla Insurance Agency on Venice Boulevard" width="320" height="240" />
               <span><small>Actual office</small><strong>12240 Venice Blvd · Mar Vista</strong></span>
             </div>
             <div className="ria-hero__address" aria-hidden="true">12240</div>
