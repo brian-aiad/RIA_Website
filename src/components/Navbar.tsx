@@ -19,6 +19,16 @@ export default function Navbar() {
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
+  const isSectionActive = (to: string) => {
+    if (to === "/services") {
+      return pathname === to || coverageEntries.some((entry) => pathname === entry.href);
+    }
+    if (to === "/locations") {
+      return pathname === to || pathname.startsWith("/insurance/");
+    }
+    return pathname === to;
+  };
+
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
@@ -68,7 +78,7 @@ export default function Navbar() {
         </NavLink>
         <nav className="atlas-nav__links" aria-label="Primary navigation">
           {navItems.map((item) => (
-            <NavLink key={item.to} to={item.to} className={({ isActive }) => isActive ? "is-active" : ""}>{item.label}</NavLink>
+            <NavLink key={item.to} to={item.to} className={isSectionActive(item.to) ? "is-active" : ""}>{item.label}</NavLink>
           ))}
         </nav>
         <div className="atlas-nav__actions">
@@ -81,8 +91,8 @@ export default function Navbar() {
       <div ref={panelRef} id="mobile-nav" className={`mobile-nav ${open ? "is-open" : ""}`} aria-hidden={!open} inert={!open}>
         <div className="mobile-nav__top"><span>Menu</span><button type="button" onClick={() => setOpen(false)} aria-label="Close navigation"><X /></button></div>
         <nav aria-label="Mobile navigation" className="mobile-nav__main">
-          <NavLink to="/">Home</NavLink>
-          {navItems.map((item) => <NavLink key={item.to} to={item.to}>{item.label}</NavLink>)}
+          <NavLink to="/" end className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink>
+          {navItems.map((item) => <NavLink key={item.to} to={item.to} className={isSectionActive(item.to) ? "active" : ""}>{item.label}</NavLink>)}
         </nav>
         <div className="mobile-nav__coverage"><span>Popular insurance services</span>{coverageEntries.slice(0, 4).map((entry) => <NavLink key={entry.key} to={entry.href}>{entry.title}</NavLink>)}</div>
         <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><button type="button" onClick={openQuoteModal}>Request a quote <ArrowUpRight size={16} /></button></div>

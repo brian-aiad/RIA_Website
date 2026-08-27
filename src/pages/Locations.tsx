@@ -1,6 +1,7 @@
 import { ArrowRight, Clock3, ExternalLink, Languages, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AtlasButton, AtlasEyebrow, DossierHeader, QuoteBand } from "../components/AtlasUI";
+import WestsideMap from "../components/WestsideMap";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import LocalBusinessSchema from "../components/seo/LocalBusinessSchema";
 import { cities } from "../data/atlas";
@@ -44,6 +45,7 @@ export default function Locations() {
       <section className="city-directory">
         <div className="atlas-container">
           <div className="city-directory__heading motion-reveal"><AtlasEyebrow>Communities we serve</AtlasEyebrow><h2>Insurance help across the Westside.</h2><p>We work with households and businesses throughout nearby communities. Carrier availability and eligibility depend on the individual risk.</p></div>
+          <div className="locations-map-plate motion-reveal"><WestsideMap /></div>
           <div className="city-directory__grid">
             {cities.map((city, index) => <Link key={city.slug} to={`/insurance/${city.slug}`} className={`city-record city-record--${city.group} motion-reveal`}><span>{String(index + 1).padStart(2,"0")}</span><div><h3>{city.name}</h3><p>{city.note}</p><small>{city.zips.join(" · ")}</small></div><ArrowRight size={18} /></Link>)}
           </div>

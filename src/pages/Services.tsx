@@ -1,13 +1,14 @@
 import { ArrowRight, Check, FileSearch, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, PaperNote, QuoteBand } from "../components/AtlasUI";
+import { AtlasButton, AtlasEyebrow, DossierHeader, PaperNote, QuoteBand } from "../components/AtlasUI";
+import CoverageLinework, { type CoverageLineworkVariant } from "../components/CoverageLinework";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { coverageEntries, serviceGroups } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
 import { usePageMeta } from "../lib/seo";
 import { site } from "../lib/site";
 
-const groupImages = ["/images/agency/auto-home-v2.webp", "/images/agency/auto-home-v2.webp", "/images/agency/workers-v2.webp", "/images/agency/specialty-v2.webp"];
+const groupDrawings: CoverageLineworkVariant[] = ["auto", "home", "commercial", "specialty"];
 
 export default function Services() {
   usePageMeta({
@@ -19,7 +20,7 @@ export default function Services() {
   return (
     <main id="main-content" className="atlas-page services-atlas">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Services", url: "https://raflainsurance.com/services" }]} />
-      <DossierHeader index="Services" eyebrow="Personal and business insurance" title="Insurance for what you own, drive, and operate." lede="From the car in your driveway to the business that keeps you moving, we help bring your coverage into one clear conversation." image="/images/agency/policy-desk-v2.webp" imageAlt="Policy documents, vehicle keys, and notes prepared for an insurance review">
+      <DossierHeader index="Services" eyebrow="Personal and business insurance" title="Insurance for what you own, drive, and operate." lede="From the car in your driveway to the business that keeps you moving, we help bring your coverage into one clear conversation." image="/images/agency/people-business-v4.webp" imageAlt="A Westside small-business crew loading tools into a work van outside their shop">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Tell us what you need</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
       </DossierHeader>
@@ -38,7 +39,7 @@ export default function Services() {
                 <article id={group.id} key={group.id} className={`service-ledger service-ledger--${index % 2 ? "paper" : "navy"} motion-reveal`}>
                   <div className="service-ledger__number">0{index + 1}</div>
                   <div className="service-ledger__title"><span>{group.kicker}</span><Icon size={28} /><h3>{group.label}</h3></div>
-                  <div className="service-ledger__image"><AtlasImage src={groupImages[index]} alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" /></div>
+                  <div className="service-ledger__image"><CoverageLinework variant={groupDrawings[index]} /></div>
                   <ul>{group.lines.map((line) => <li key={line}><Check size={14} />{line}</li>)}</ul>
                   <button type="button" onClick={openQuoteModal}>Talk about this coverage <ArrowRight size={16} /></button>
                 </article>

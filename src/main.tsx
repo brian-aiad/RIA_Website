@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import App from "./App";
 import "./index.css";
+import "./ria-revamp.css";
 
 const rootEl = document.getElementById("root")!;
 const isDeployedHost = /(^|\.)raflainsurance\.com$|\.vercel\.app$/.test(window.location.hostname);

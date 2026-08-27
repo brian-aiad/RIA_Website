@@ -16,6 +16,10 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
     let teardown: (() => void) | undefined;
 
     const setupMotion = async () => {
+      // On phones, native scrolling wins. The page keeps its lightweight CSS
+      // entrances, while all section content remains in the normal paint flow.
+      if (window.matchMedia("(max-width: 799px), (prefers-reduced-motion: reduce)").matches) return;
+
       const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
@@ -26,6 +30,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
       ScrollTrigger.config({ ignoreMobileResize: true, limitCallbacks: true });
 
       const media = gsap.matchMedia();
+      let revealFallback = 0;
       const context = gsap.context(() => {
         media.add(
           { reduce: "(prefers-reduced-motion: reduce)", desktop: "(min-width: 800px)" },
@@ -38,23 +43,52 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               return;
             }
 
-            ScrollTrigger.batch(revealNodes, {
+            // Read every position first, then stage only content that is still
+            // below the fold. This avoids hiding an element at the moment it
+            // enters the viewport, which can look like a flash on fast scrolls.
+            const revealLine = window.innerHeight * 0.92;
+            const positions = revealNodes.map((node) => ({ node, top: node.getBoundingClientRect().top }));
+            const stagedNodes = positions.filter(({ top }) => top >= revealLine).map(({ node }) => node);
+            const visibleNodes = positions.filter(({ top }) => top < revealLine).map(({ node }) => node);
+
+            if (visibleNodes.length) {
+              gsap.set(visibleNodes, { clearProps: "opacity,visibility,transform,willChange" });
+            }
+            if (!stagedNodes.length) return;
+
+            gsap.set(stagedNodes, {
+              opacity: 0.92,
+              y: desktop ? 10 : 7,
+              willChange: "transform,opacity",
+            });
+
+            const revealBatch = (batch: Element[]) => {
+              gsap.to(batch, {
+                opacity: 1,
+                y: 0,
+                duration: 0.42,
+                stagger: 0.025,
+                ease: "power2.out",
+                overwrite: "auto",
+                clearProps: "opacity,visibility,transform,willChange",
+              });
+            };
+
+            ScrollTrigger.batch(stagedNodes, {
               start: "top 91%",
               once: true,
-              interval: 0.06,
-              batchMax: desktop ? 5 : 2,
-              onEnter: (batch) => {
-                gsap.fromTo(batch, { autoAlpha: 0, y: desktop ? 20 : 12 }, {
-                  autoAlpha: 1,
-                  y: 0,
-                  duration: 0.52,
-                  stagger: 0.04,
-                  ease: "power2.out",
-                  overwrite: "auto",
-                  clearProps: "opacity,visibility,transform",
-                });
-              },
+              interval: 0.04,
+              batchMax: desktop ? 6 : 3,
+              onEnter: revealBatch,
+              onEnterBack: revealBatch,
             });
+
+            // Programmatic jumps (find-in-page, hash links, screenshots) can
+            // skip an entry boundary. Never let enhancement hide content.
+            revealFallback = window.setTimeout(() => {
+              const stillHidden = stagedNodes.filter((node) => Number(getComputedStyle(node).opacity) < .95);
+              if (stillHidden.length) gsap.set(stillHidden, { clearProps: "opacity,visibility,transform,willChange" });
+            }, 2500);
           },
         );
       }, root);
@@ -69,6 +103,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         disposed = true;
         window.cancelAnimationFrame(frame);
         pendingImages.forEach((image) => image.removeEventListener("load", refresh));
+        window.clearTimeout(revealFallback);
         media.revert();
         context.revert();
       };

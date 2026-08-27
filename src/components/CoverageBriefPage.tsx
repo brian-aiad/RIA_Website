@@ -1,6 +1,7 @@
 import { ArrowRight, Check, FileText, Phone, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, FactRail, PaperNote, QuoteBand } from "./AtlasUI";
+import CoverageLinework, { type CoverageLineworkVariant } from "./CoverageLinework";
 import BreadcrumbSchema from "./seo/BreadcrumbSchema";
 import LocalBusinessSchema from "./seo/LocalBusinessSchema";
 import { openQuoteModal } from "../lib/openQuote";
@@ -33,12 +34,19 @@ export type CoverageBriefConfig = {
 
 export default function CoverageBriefPage({ config }: { config: CoverageBriefConfig }) {
   usePageMeta({ title: config.metaTitle, description: config.metaDescription, canonical: config.canonical });
+  const drawing: CoverageLineworkVariant = config.index === "01"
+    ? "auto"
+    : config.index === "02"
+      ? "home"
+      : config.index === "03"
+        ? "commercial"
+        : "sr22";
 
   return (
     <main id="main-content" className="atlas-page coverage-brief">
       <LocalBusinessSchema url="https://raflainsurance.com/" areaServed={["Los Angeles, CA", "Mar Vista", "Los Angeles Westside"]} />
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Services", url: "https://raflainsurance.com/services" }, { name: config.eyebrow, url: config.canonical }]} />
-      <DossierHeader index={config.index} eyebrow={config.eyebrow} title={config.title} lede={config.lede} image={config.image} imageAlt={config.imageAlt}>
+      <DossierHeader index={config.index} eyebrow={config.eyebrow} title={config.title} lede={config.lede} visual={<CoverageLinework variant={drawing} />}>
         <AtlasButton tone="navy" onClick={openQuoteModal}>Request a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
       </DossierHeader>
@@ -115,7 +123,8 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
 
       <section className="brief-closing-image">
         <div className="atlas-container brief-closing-image__inner motion-reveal">
-          <AtlasImage src={config.image} alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" />
+          <AtlasImage src={config.image} alt={config.imageAlt} width="1536" height="1024" loading="lazy" />
+          <CoverageLinework className="brief-closing-image__drawing" variant={drawing} />
           <div><FileText size={22} /><span>Rafla Insurance Agency</span><strong>{config.eyebrow}</strong></div>
         </div>
       </section>

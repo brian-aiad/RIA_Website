@@ -2597,6 +2597,118 @@ body {
 .mobile-nav__contact { background: var(--ria-navy); }
 .mobile-nav__contact button { border-radius: 2px; background: var(--ria-gold); color: var(--ria-navy-deep); }
 
+/* Inner-page contrast contracts. These components deliberately mix paper and
+   navy surfaces, so their text colors are scoped to the surface they sit on. */
+.agency-principles h2,
+.city-coverage h2 { color: white; }
+.agency-principles .atlas-eyebrow--light,
+.city-coverage .atlas-eyebrow--light { color: rgba(255,255,255,.78); }
+
+.agency-story__seal {
+  min-height: 11rem;
+  aspect-ratio: auto;
+  padding: 1.25rem;
+  border: 1px solid var(--ria-gold);
+  color: white;
+  box-shadow: .65rem .65rem 0 rgba(16,38,83,.1);
+  transform: rotate(-1.5deg);
+}
+.agency-story__seal svg { color: var(--ria-gold-light); }
+.agency-story__seal span { color: rgba(255,255,255,.72); font-family: var(--font-body); font-weight: 750; }
+.agency-story__seal strong { color: white; font-family: var(--font-display); font-size: 1.2rem; }
+
+.agency-team__records article { grid-template-columns: minmax(0,1fr) auto; }
+.agency-team__records article > div { grid-column: 1; }
+.agency-team__records article > a { grid-column: 2; justify-self: end; }
+
+.contact-team article {
+  grid-template-columns: minmax(0,1fr) auto;
+  grid-template-rows: auto auto auto;
+  column-gap: 2rem;
+  align-items: start;
+}
+.contact-team h3 { grid-column: 1; grid-row: 1; }
+.contact-team p { grid-column: 1; grid-row: 2; margin-top: .35rem; }
+.contact-team small { grid-column: 1; grid-row: 3; }
+.contact-team a { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
+
+.office-record__details {
+  padding: clamp(1.75rem,4vw,3rem);
+  color: white;
+}
+.office-record__details .atlas-eyebrow { color: var(--ria-gold-light); }
+.office-record__details h2 {
+  color: white;
+  font-size: clamp(2rem,3.8vw,3.55rem);
+  line-height: 1.04;
+}
+.office-record__lines { border-color: rgba(255,255,255,.18); }
+.office-record__lines a,
+.office-record__lines p {
+  border-color: rgba(255,255,255,.18);
+  color: rgba(255,255,255,.82);
+}
+.office-record__lines a:hover { color: white; }
+.office-record__lines svg { color: var(--ria-gold-light); }
+
+.contact-desk__hours {
+  padding: clamp(1.75rem,4vw,3rem);
+  border-top: 4px solid var(--ria-gold);
+  background: var(--ria-navy);
+  color: white;
+}
+.contact-desk__hours .atlas-eyebrow--light { color: var(--ria-gold-light); }
+.contact-desk__hours h2 { color: white; }
+.contact-desk__hours dl,
+.contact-desk__hours dl div { border-color: rgba(255,255,255,.2); }
+.contact-desk__hours dt { color: rgba(255,255,255,.72); }
+.contact-desk__hours dd { color: white; font-family: var(--font-body); }
+.contact-desk__hours > p { color: rgba(255,255,255,.66); }
+
+.planning-note {
+  padding: clamp(2.5rem,5vw,4.5rem) 0;
+  border: 0;
+  background: white;
+}
+.planning-note__inner {
+  padding: clamp(1.5rem,3vw,2.5rem);
+  border: 1px solid var(--ria-line);
+  border-left: 5px solid var(--ria-gold);
+  background: var(--ria-paper);
+}
+.planning-note span { color: #745708; font-weight: 800; }
+.planning-note p { color: var(--ria-muted); }
+
+@media (hover: hover) and (pointer: fine) {
+  .city-record:hover h3,
+  .city-record:focus-visible h3,
+  .contact-switchboard__grid > :hover h3,
+  .contact-switchboard__grid > :focus-visible h3,
+  .contact-switchboard__grid > :hover strong,
+  .contact-switchboard__grid > :focus-visible strong { color: white; }
+}
+
+@media (max-width: 640px) {
+  .agency-principles__heading { display: block; }
+  .agency-principles__heading h2 { max-width: 19rem; margin-top: 1rem; }
+  .agency-story__seal { width: 11rem; min-height: 9.5rem; }
+  .agency-principles article { min-height: 13.5rem; }
+  .city-coverage__grid a { min-height: 12.5rem; }
+  .contact-switchboard__grid > a,
+  .contact-switchboard__grid > button { min-height: 13.5rem; }
+  .contact-switchboard__grid > * > svg:first-of-type { margin-top: 0; }
+  .contact-team article { grid-template-columns: 1fr; }
+  .contact-team h3,
+  .contact-team p,
+  .contact-team small,
+  .contact-team a { grid-column: 1; grid-row: auto; }
+  .contact-team a { margin-top: .75rem; justify-self: start; }
+  .office-record__details,
+  .contact-desk__hours { padding: 1.5rem 1.15rem; }
+  .office-record__details h2 { font-size: clamp(1.85rem,9vw,2.55rem); }
+  .planning-note__inner { grid-template-columns: 1fr; gap: 1rem; }
+}
+
 [role="dialog"][aria-modal="true"] { border-width: 1px; border-top: 5px solid var(--ria-gold); border-radius: 0; font-family: var(--font-body); }
 [role="dialog"][aria-modal="true"] h2,
 [role="dialog"][aria-modal="true"] h3 { font-family: var(--font-display); }

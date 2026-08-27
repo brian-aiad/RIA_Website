@@ -1,5 +1,5 @@
 import type { ImgHTMLAttributes, ReactNode } from "react";
-import { ArrowRight, ArrowUpRight, MapPin, Phone, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, MessageSquareText, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { openQuoteModal } from "../lib/openQuote";
 import { site } from "../lib/site";
@@ -41,7 +41,7 @@ export function AtlasImage({
     ? `${src.replace(/\.webp$/, "-sm.webp")} 640w, ${src.replace(/\.webp$/, "-md.webp")} 1100w, ${src} 1568w`
     : undefined;
 
-  return <img src={src} srcSet={srcSet} sizes={srcSet ? sizes : undefined} alt={alt} {...props} />;
+  return <img src={src} srcSet={srcSet} sizes={srcSet ? sizes : undefined} alt={alt} decoding="async" {...props} />;
 }
 
 export function DossierHeader({
@@ -51,6 +51,7 @@ export function DossierHeader({
   lede,
   image,
   imageAlt,
+  visual,
   children,
 }: {
   index: string;
@@ -59,6 +60,7 @@ export function DossierHeader({
   lede: string;
   image?: string;
   imageAlt?: string;
+  visual?: ReactNode;
   children?: ReactNode;
 }) {
   return (
@@ -73,12 +75,20 @@ export function DossierHeader({
           <p className="dossier-hero__lede">{lede}</p>
           {children && <div className="dossier-hero__actions">{children}</div>}
         </div>
-        {image && (
+        {visual ? (
+          <figure className="dossier-hero__visual dossier-hero__visual--linework atlas-parallax">
+            {visual}
+            <figcaption>
+              <span>Rafla coverage desk</span>
+              Mar Vista · CA agency license 0D95584
+            </figcaption>
+          </figure>
+        ) : image && (
           <figure className="dossier-hero__visual atlas-parallax">
             <AtlasImage src={image} alt={imageAlt ?? ""} width="1536" height="1024" fetchPriority="high" />
             <figcaption>
-              <span>Rafla Insurance Agency</span>
-              Independent · Local · Here when you need us
+              <span>12240 Venice Boulevard</span>
+              Mar Vista · CA agency license 0D95584
             </figcaption>
           </figure>
         )}
@@ -98,7 +108,7 @@ export function QuoteBand({
   return (
     <section className="quote-band">
       <div className="atlas-container quote-band__grid motion-reveal">
-        <div className="quote-band__mark" aria-hidden="true"><Sparkles size={22} /></div>
+        <div className="quote-band__mark" aria-hidden="true"><MessageSquareText size={22} /></div>
         <div>
           <AtlasEyebrow light>Personal help starts here</AtlasEyebrow>
           <h2>{title}</h2>

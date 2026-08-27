@@ -8,8 +8,8 @@ const config: CoverageBriefConfig = {
   metaTitle: "Home & Renters Insurance Los Angeles CA | Rafla Insurance",
   metaDescription: "Review homeowners, renters, condo and landlord insurance with a Mar Vista independent broker serving Los Angeles and the Westside.",
   canonical: "https://raflainsurance.com/home-insurance-los-angeles-ca",
-  image: "/images/agency/auto-home-v2.webp",
-  imageAlt: "A modest Westside Los Angeles bungalow, driveway, car, and bicycle",
+  image: "/images/agency/people-household-v4.webp",
+  imageAlt: "A Westside Los Angeles family loading groceries and a child’s bicycle beside their car and home",
   signals: [
     { label: "Policy focus", value: "Property + liability" },
     { label: "Useful review", value: "Limits + exclusions" },

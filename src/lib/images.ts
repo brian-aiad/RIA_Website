@@ -6,6 +6,8 @@ export function srcset(src: string): string {
 /** Centralized image paths — all optimized from /public/images */
 export const images = {
   hero: {
+    /** Candid broker conversation created for Rafla's people-first campaign */
+    people: "/images/agency/people-broker-review-v4.webp",
     /** Documentary insurance-review still life created for Rafla */
     consultation: "/images/agency/policy-desk-v2.webp",
     /** Real photo: exterior storefront on Venice Blvd, Los Angeles */
@@ -13,6 +15,8 @@ export const images = {
     officeDetail: "/images/client/rafla-building-front.jpg",
   },
   home: {
+    household: "/images/agency/people-household-v4.webp",
+    business: "/images/agency/people-business-v4.webp",
     why: "/images/agency/policy-desk-v2.webp",
     reviews: "/images/agency/policy-desk-v2.webp",
   },
@@ -36,7 +40,7 @@ export const images = {
     noLicense: "/images/agency/policy-desk-v2.webp",
   },
   about: {
-    office: "/images/agency/policy-desk-v2.webp",
+    office: "/images/agency/people-broker-review-v4.webp",
     officeAlt: "/images/client/rafla-building-angle.jpg",
   },
   location: {

@@ -132,9 +132,17 @@ console.log("\n4. Sitemap city list vs homepage ServiceAreas:");
 const sitemapContent = readFileSync(join(PUBLIC_DIR, "sitemap.xml"), "utf-8");
 const sitemapCities = [...sitemapContent.matchAll(/\/insurance\/([a-z-]+)/g)].map(m => m[1]);
 
-const homeContent = readFileSync(join(SRC_DIR, "pages", "Home.tsx"), "utf-8");
-const homeCities = [...homeContent.matchAll(/slug:\s*["']([a-z-]+)["']/g)].map(m => m[1])
-  .filter(s => EXPECTED_CITIES.includes(s));
+// The homepage's service-area links live in its dedicated illustrated map.
+// Read both files so the check follows the rendered homepage composition rather
+// than requiring a duplicate, SEO-only city array in Home.tsx.
+const homeContent = [
+  readFileSync(join(SRC_DIR, "pages", "Home.tsx"), "utf-8"),
+  readFileSync(join(SRC_DIR, "components", "WestsideMap.tsx"), "utf-8"),
+].join("\n");
+const homeCities = [
+  ...[...homeContent.matchAll(/slug:\s*["']([a-z-]+)["']/g)].map(m => m[1]),
+  ...[...homeContent.matchAll(/["']([a-z-]+)["']\s*,\s*["'][^"']+["']\s*,\s*\d+/g)].map(m => m[1]),
+].filter(s => EXPECTED_CITIES.includes(s));
 
 const sitemapSet = new Set(sitemapCities);
 const homeSet = new Set(homeCities);
