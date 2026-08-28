@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, MapPin, Menu, Phone, ShieldCheck, X } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, Menu, Phone, ShieldCheck, X } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { coverageEntries } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
@@ -95,7 +95,15 @@ export default function Navbar() {
           {navItems.map((item) => <NavLink key={item.to} to={item.to} className={isSectionActive(item.to) ? "active" : ""}>{item.label}</NavLink>)}
         </nav>
         <div className="mobile-nav__coverage"><span>Popular insurance services</span>{coverageEntries.slice(0, 4).map((entry) => <NavLink key={entry.key} to={entry.href}>{entry.title}</NavLink>)}</div>
-        <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><button type="button" onClick={openQuoteModal}>Request a quote <ArrowUpRight size={16} /></button></div>
+        <div className="mobile-nav__office">
+          <a href={site.contact.mapsHref} target="_blank" rel="noreferrer">
+            <MapPin aria-hidden="true" />
+            <span><small>Visit the Mar Vista office</small><strong>12240 Venice Blvd, Suite 2</strong></span>
+            <ArrowUpRight aria-hidden="true" />
+          </a>
+          <p>Mon–Fri 10–7 · Sat 10–3 <span aria-hidden="true">/</span> English · Spanish · Arabic</p>
+        </div>
+        <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><a href={site.contact.emailHref}><Mail size={16} /> {site.contact.email}</a><button type="button" onClick={openQuoteModal}>Request a quote <ArrowUpRight size={16} /></button></div>
       </div>
     </header>
   );

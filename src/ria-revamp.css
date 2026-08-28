@@ -2214,3 +2214,302 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .broker-cases__visual figcaption,
   .broker-cases__file { transition: none !important; animation: none !important; }
 }
+
+/* ========================================================================== */
+/* CONTACT SURFACES — repaired mobile drawer + broker-file quote conversation  */
+/* ========================================================================== */
+
+/* A backdrop filter on the masthead made its fixed children use the 102px-tall
+   header as their containing block. The drawer and its backdrop now belong to
+   the viewport, as their fixed positioning intends. */
+.atlas-nav-wrap { backdrop-filter: none !important; }
+
+.quote-dialog-layer {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  isolation: isolate;
+}
+.quote-dialog-backdrop {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: rgba(3,12,29,.78);
+  backdrop-filter: blur(8px);
+}
+.quote-dialog {
+  position: relative;
+  width: min(100%,61rem);
+  max-height: calc(100dvh - 2.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid rgba(213,161,31,.8);
+  border-top: 5px solid var(--agency-gold);
+  color: var(--agency-ink);
+  background: var(--agency-white);
+  box-shadow: 1.1rem 1.1rem 0 rgba(213,161,31,.18), 0 2rem 6rem rgba(0,0,0,.34);
+  scrollbar-color: var(--agency-gold) #e7e9ec;
+  scrollbar-width: thin;
+}
+.quote-dialog__header {
+  display: grid;
+  grid-template-columns: 12rem minmax(0,1fr) 2.8rem;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.35rem 1.5rem;
+  border-bottom: 1px solid var(--agency-rule);
+  background: #fffefb;
+}
+.quote-dialog__brand {
+  display: grid;
+  gap: .65rem;
+  padding-right: 1.4rem;
+  border-right: 1px solid var(--agency-rule);
+}
+.quote-dialog__brand img { display: block; width: 10.5rem; height: auto; }
+.quote-dialog__brand span,
+.quote-dialog__intro small,
+.quote-dialog__file-label {
+  color: var(--agency-gold-dark);
+  font-size: .52rem;
+  font-weight: 760;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.quote-dialog__intro h2 {
+  margin-top: .35rem;
+  color: var(--agency-navy);
+  font: 600 clamp(1.85rem,3vw,2.65rem)/.98 var(--font-display);
+  letter-spacing: -.035em;
+}
+.quote-dialog__intro p { margin-top: .45rem; color: #566377; font-size: .76rem; line-height: 1.5; }
+.quote-dialog__close {
+  display: grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  place-items: center;
+  border: 1px solid var(--agency-rule);
+  color: var(--agency-navy);
+  background: var(--agency-white);
+  transition: color 160ms ease, background-color 160ms ease;
+}
+.quote-dialog__close svg { width: 1.15rem; }
+.quote-dialog__body { display: grid; grid-template-columns: 16.5rem minmax(0,1fr); }
+.quote-dialog__types {
+  display: flex;
+  min-height: 34rem;
+  flex-direction: column;
+  padding: 1.5rem;
+  color: white;
+  background: #071832;
+}
+.quote-dialog__types > span { color: var(--agency-gold); font-size: .55rem; font-weight: 760; letter-spacing: .11em; text-transform: uppercase; }
+.quote-dialog__types > div[role="tablist"] { display: grid; margin-top: 1.1rem; border-top: 1px solid rgba(255,255,255,.14); }
+.quote-dialog__types > div[role="tablist"] button {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.25rem 1fr 1rem;
+  gap: .65rem;
+  align-items: center;
+  min-height: 3.65rem;
+  padding: .8rem .85rem;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.72);
+  text-align: left;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+.quote-dialog__types > div[role="tablist"] button::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--agency-gold);
+  transform: scaleY(0);
+  transition: transform 160ms ease;
+}
+.quote-dialog__types button svg:first-child { width: 1rem; color: var(--agency-gold); stroke-width: 1.7; }
+.quote-dialog__types button svg:last-child { width: .85rem; opacity: .45; }
+.quote-dialog__types button strong { font-size: .73rem; font-weight: 680; }
+.quote-dialog__types button[aria-selected="true"] { color: white; background: rgba(255,255,255,.09); }
+.quote-dialog__types button[aria-selected="true"]::before { transform: scaleY(1); }
+.quote-dialog__types button[aria-selected="true"] svg:last-child { opacity: 1; }
+.quote-dialog__types > p {
+  margin-top: 1.15rem;
+  color: rgba(255,255,255,.66);
+  font-size: .7rem;
+  line-height: 1.55;
+  animation: quote-file-swap 240ms cubic-bezier(.2,.78,.28,1) both;
+}
+.quote-dialog__hours { display: grid; gap: .3rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(213,161,31,.48); }
+.quote-dialog__hours small { color: var(--agency-gold); font-size: .49rem; font-weight: 760; letter-spacing: .09em; text-transform: uppercase; }
+.quote-dialog__hours strong { color: white; font: 600 .92rem/1.2 var(--font-display); }
+.quote-dialog__hours span { color: rgba(255,255,255,.52); font-size: .55rem; }
+
+.quote-dialog__file {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1.75rem,3vw,2.75rem);
+  background-color: #fffefb;
+  background-image: linear-gradient(rgba(11,33,70,.05) 1px, transparent 1px);
+  background-position: 0 8.2rem;
+  background-size: 100% 2.35rem;
+}
+.quote-dialog__paperclip {
+  position: absolute;
+  top: 0;
+  right: 2.25rem;
+  width: 2.1rem;
+  height: 4.6rem;
+  border: 2px solid var(--agency-gold-dark);
+  border-top: 0;
+  border-radius: 0 0 1.1rem 1.1rem;
+  opacity: .72;
+}
+.quote-dialog__file h3 {
+  max-width: 25rem;
+  margin-top: .7rem;
+  color: var(--agency-navy);
+  font: 600 clamp(2.2rem,3.5vw,3.35rem)/.96 var(--font-display);
+  letter-spacing: -.04em;
+}
+.quote-dialog__file > p:not(.quote-dialog__privacy) { max-width: 34rem; margin-top: 1rem; color: #536075; font-size: .78rem; line-height: 1.6; }
+.quote-dialog__file ul { display: grid; margin-top: 1.2rem; border-top: 1px solid var(--agency-rule); animation: quote-file-swap 260ms cubic-bezier(.2,.78,.28,1) both; }
+.quote-dialog__file li { display: grid; grid-template-columns: 1.1rem 1fr; gap: .55rem; align-items: start; padding: .67rem 0; border-bottom: 1px solid var(--agency-rule); color: #39485d; font-size: .69rem; font-weight: 640; line-height: 1.4; }
+.quote-dialog__file li span { color: var(--agency-gold-dark); font-weight: 800; }
+.quote-dialog__actions { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; margin-top: 1.25rem; }
+.quote-dialog__action {
+  display: grid;
+  min-width: 0;
+  min-height: 4.15rem;
+  grid-template-columns: 1.15rem minmax(0,1fr) .9rem;
+  gap: .55rem;
+  align-items: center;
+  padding: .7rem .8rem;
+  border: 1px solid var(--agency-rule);
+  color: var(--agency-navy);
+  background: rgba(255,255,255,.9);
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+.quote-dialog__action > svg { width: 1rem; stroke-width: 1.8; }
+.quote-dialog__action > svg:last-child { width: .75rem; opacity: .55; }
+.quote-dialog__action > span { display: grid; min-width: 0; gap: .2rem; }
+.quote-dialog__action small { color: #657184; font-size: .49rem; font-weight: 720; letter-spacing: .06em; text-transform: uppercase; }
+.quote-dialog__action strong { min-width: 0; overflow-wrap: anywhere; font-size: .66rem; line-height: 1.25; }
+.quote-dialog__action--primary { border-color: var(--agency-gold-dark); color: var(--agency-navy); background: var(--agency-gold); }
+.quote-dialog__action--primary small { color: rgba(11,33,70,.72); }
+.quote-dialog__privacy { margin-top: 1rem; padding-top: .85rem; border-top: 1px solid var(--agency-rule); color: #697487; font-size: .58rem; line-height: 1.5; }
+
+@keyframes quote-file-swap { from { opacity: .88; transform: translate3d(0,5px,0); } }
+
+@media (hover: hover) and (pointer: fine) {
+  .quote-dialog__close:hover { color: white; background: var(--agency-navy); }
+  .quote-dialog__types button:hover { color: white; background: rgba(255,255,255,.07); }
+  .quote-dialog__action:hover { border-color: rgba(11,33,70,.48); background: #f1f3f5; }
+  .quote-dialog__action--primary:hover { border-color: var(--agency-navy); background: #e6b330; }
+}
+
+@media (max-width: 900px) {
+  .mobile-nav-backdrop { inset: 0; width: auto; height: auto; }
+  .mobile-nav {
+    inset: 0 0 0 auto;
+    width: min(94vw,30rem);
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+    scale: 1;
+    padding: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-left: 4px solid var(--agency-gold);
+    background: var(--agency-white);
+    box-shadow: -1.5rem 0 4rem rgba(3,12,29,.25);
+  }
+  .mobile-nav__top {
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    flex: 0 0 auto;
+    min-height: 4.2rem;
+    padding: .75rem 1rem;
+    border-bottom: 3px solid var(--agency-gold);
+    background: var(--agency-navy);
+  }
+  .mobile-nav__top button { width: 2.65rem; height: 2.65rem; color: white; background: rgba(255,255,255,.1); }
+  .mobile-nav__main { flex: 0 0 auto; margin: 0; padding: .25rem 1rem 0; }
+  .mobile-nav__main a { min-height: 3.35rem; padding: .3rem .15rem; border-bottom: 1px solid var(--agency-rule); color: var(--agency-navy); background: transparent; font: 600 1.22rem/1.05 var(--font-display); }
+  .mobile-nav__main a:hover,
+  .mobile-nav__main a.active { padding-inline: .7rem; background: #eef1f4; }
+  .mobile-nav__coverage { flex: 0 0 auto; gap: .45rem; margin: 0; padding: 1rem; background: #eef1f4; }
+  .mobile-nav__coverage > span { margin-bottom: .2rem; color: #59667a; font-size: .52rem; }
+  .mobile-nav__coverage a { display: flex; min-height: 2.6rem; align-items: center; padding: .55rem .65rem; border: 1px solid rgba(11,33,70,.18); color: var(--agency-navy); background: var(--agency-white); font-size: .68rem; line-height: 1.2; }
+  .mobile-nav__office {
+    display: grid;
+    flex: 1 0 auto;
+    align-content: end;
+    margin: 0;
+    padding: 1rem;
+    border-top: 1px solid var(--agency-rule);
+    background:
+      repeating-linear-gradient(0deg, transparent 0 2.15rem, rgba(11,33,70,.045) 2.15rem calc(2.15rem + 1px)),
+      var(--agency-paper);
+  }
+  .mobile-nav__office a { display: grid; grid-template-columns: 1.3rem 1fr 1rem; gap: .6rem; align-items: center; color: var(--agency-navy); }
+  .mobile-nav__office a > svg { width: 1.05rem; color: var(--agency-gold-dark); stroke-width: 1.8; }
+  .mobile-nav__office a > svg:last-child { width: .8rem; color: var(--agency-navy); }
+  .mobile-nav__office a span { display: grid; gap: .17rem; }
+  .mobile-nav__office small { color: #647084; font-size: .49rem; font-weight: 740; letter-spacing: .07em; text-transform: uppercase; }
+  .mobile-nav__office strong { font: 600 .86rem/1.2 var(--font-display); }
+  .mobile-nav__office p { margin: .65rem 0 0 1.9rem; color: #697487; font-size: .52rem; line-height: 1.5; }
+  .mobile-nav__office p span { padding-inline: .25rem; color: var(--agency-gold-dark); }
+  .mobile-nav__contact { flex: 0 0 auto; gap: .45rem; margin: 0; padding: 1rem; background: #071832; }
+  .mobile-nav__contact a,
+  .mobile-nav__contact button { min-height: 2.9rem; padding: .65rem; color: white; border: 1px solid rgba(255,255,255,.18); background: transparent; font: 680 .67rem/1.2 var(--font-body); }
+  .mobile-nav__contact button { border-color: var(--agency-gold); color: var(--agency-navy); background: var(--agency-gold); }
+
+  .quote-dialog__header { grid-template-columns: 10rem minmax(0,1fr) 2.8rem; gap: 1rem; }
+  .quote-dialog__brand img { width: 9rem; }
+  .quote-dialog__body { grid-template-columns: 14rem minmax(0,1fr); }
+}
+
+@media (max-width: 680px) {
+  .quote-dialog-layer { padding: .55rem; }
+  .quote-dialog { max-height: calc(100dvh - 1.1rem); box-shadow: .45rem .45rem 0 rgba(213,161,31,.2); }
+  .quote-dialog__header { grid-template-columns: 1fr 2.65rem; gap: .75rem 1rem; padding: 1rem; }
+  .quote-dialog__brand { align-self: center; padding-right: 0; border-right: 0; }
+  .quote-dialog__brand img { width: 8.6rem; }
+  .quote-dialog__brand span { display: none; }
+  .quote-dialog__close { grid-column: 2; grid-row: 1; }
+  .quote-dialog__intro { grid-column: 1/-1; grid-row: 2; }
+  .quote-dialog__intro h2 { font-size: clamp(1.85rem,9vw,2.45rem); }
+  .quote-dialog__body { grid-template-columns: 1fr; }
+  .quote-dialog__types { min-height: 0; padding: 1rem; }
+  .quote-dialog__types > div[role="tablist"] { grid-template-columns: 1fr 1fr; }
+  .quote-dialog__types > div[role="tablist"] button { min-height: 3.25rem; }
+  .quote-dialog__types > p { margin: .8rem 0; min-height: 2.2rem; }
+  .quote-dialog__hours { grid-template-columns: 1fr; margin-top: .2rem; }
+  .quote-dialog__file { padding: 1.35rem 1rem 1rem; background-position: 0 7.6rem; }
+  .quote-dialog__paperclip { right: 1rem; height: 3.4rem; }
+  .quote-dialog__file h3 { max-width: 19rem; font-size: clamp(2rem,10vw,2.7rem); }
+}
+
+@media (max-width: 420px) {
+  .mobile-nav { width: calc(100vw - 1rem); }
+  .mobile-nav__main a { min-height: 3.05rem; font-size: 1.08rem; }
+  .mobile-nav__coverage { padding: .85rem; }
+  .mobile-nav__office { padding: .85rem; }
+  .mobile-nav__contact { padding: .85rem; }
+  .quote-dialog__actions { grid-template-columns: 1fr; }
+  .quote-dialog__action { min-height: 3.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote-dialog__close,
+  .quote-dialog__types button,
+  .quote-dialog__types button::before,
+  .quote-dialog__action { transition: none !important; }
+  .quote-dialog__types > p,
+  .quote-dialog__file ul { animation: none !important; }
+}

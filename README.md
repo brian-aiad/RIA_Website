@@ -20,9 +20,9 @@ npm run build
 npm run validate:schema
 ```
 
-## Contact-form configuration
+## Contact email
 
-Set `VITE_WEB3FORMS_KEY` to enable direct form submission. Without it, the contact form opens a prefilled email to `brinsurance3@msn.com`.
+Public email links use `contact@raflainsurance.com`. Delivery and forwarding are managed by the domain's email provider rather than by the website.
 
 ## Production settings
 

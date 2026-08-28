@@ -19,6 +19,13 @@ check(emailHref === "mailto:contact@raflainsurance.com", `Public mail link misma
 
 await mobile.locator(".atlas-nav__menu").click();
 check(await mobile.locator("#mobile-nav").getAttribute("aria-hidden") === "false", "Mobile menu did not open");
+const mobileNavMetrics = await mobile.locator("#mobile-nav").evaluate((node) => {
+  const rect = node.getBoundingClientRect();
+  return { height: rect.height, viewport: window.innerHeight, overflowY: getComputedStyle(node).overflowY };
+});
+check(Math.abs(mobileNavMetrics.height - mobileNavMetrics.viewport) < 2, `Mobile menu is not viewport-height: ${JSON.stringify(mobileNavMetrics)}`);
+check(mobileNavMetrics.overflowY === "auto", `Mobile menu is not independently scrollable: ${mobileNavMetrics.overflowY}`);
+check(await mobile.locator(".mobile-nav__office").isVisible(), "Mobile menu office details are missing");
 await mobile.getByRole("button", { name: "Close navigation" }).click();
 check(await mobile.locator("#mobile-nav").getAttribute("aria-hidden") === "true", "Mobile menu did not close");
 
@@ -27,6 +34,13 @@ const dialog = mobile.getByRole("dialog");
 await dialog.waitFor({ state: "visible" });
 check(await mobile.evaluate(() => document.activeElement?.getAttribute("aria-label")) === "Close", "Quote dialog did not receive initial focus");
 check(await mobile.evaluate(() => document.body.style.overflow) === "hidden", "Quote dialog did not lock background scroll");
+const businessQuoteTab = dialog.getByRole("tab", { name: "Business", exact: true });
+await businessQuoteTab.click();
+check(await businessQuoteTab.getAttribute("aria-selected") === "true", "Quote dialog did not select the business file");
+check(await dialog.getByText("Business name and a plain description of the work").isVisible(), "Business quote checklist did not update");
+await businessQuoteTab.press("ArrowRight");
+const specialtyQuoteTab = dialog.getByRole("tab", { name: "Specialty", exact: true });
+check(await specialtyQuoteTab.getAttribute("aria-selected") === "true", "Quote dialog arrow-key navigation failed");
 await mobile.keyboard.press("Escape");
 await dialog.waitFor({ state: "hidden" });
 check(await mobile.evaluate(() => document.body.style.overflow) === "", "Quote dialog did not restore background scroll");
@@ -62,5 +76,5 @@ const reducedDialogStyle = await reducedDialog.evaluate((node) => ({
 check(reducedDialogStyle.opacity === "1", "Reduced-motion quote dialog was not immediately visible");
 await chromiumBrowser.close();
 
-console.log(JSON.stringify({ checks, failures, reducedDialogStyle }, null, 2));
+console.log(JSON.stringify({ checks, failures, mobileNavMetrics, reducedDialogStyle }, null, 2));
 if (failures.length) process.exitCode = 1;

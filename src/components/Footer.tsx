@@ -1,4 +1,4 @@
-import { ArrowUp, ArrowUpRight, Clock3, Languages, MapPin, Phone } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Clock3, Languages, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cities, coverageEntries } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
@@ -33,6 +33,7 @@ export default function Footer() {
             <span className="atlas-footer__label">Mar Vista office</span>
             <a href={site.contact.mapsHref} target="_blank" rel="noreferrer"><MapPin size={15} /> {site.contact.address}</a>
             <a href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
+            <a href={site.contact.emailHref}><Mail size={15} /> {site.contact.email}</a>
             <p><Clock3 size={15} /> Mon–Fri 10–7 · Sat 10–3</p>
             <p><Languages size={15} /> English · Spanish · Arabic</p>
           </section>
