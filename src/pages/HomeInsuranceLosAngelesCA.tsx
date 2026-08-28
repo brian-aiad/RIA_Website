@@ -21,7 +21,7 @@ const config: CoverageBriefConfig = {
     "Homeowners policies commonly separate protection for the dwelling, other structures, personal property, loss of use, personal liability, and medical payments to others. Renters and condo policies arrange those pieces differently.",
     "California does not generally require homeowners insurance, but a mortgage servicer usually requires coverage. Rebuild cost, property features, occupancy, loss history, deductibles, and carrier eligibility all shape the available options.",
   ],
-  anatomyTitle: "Six parts worth locating.",
+  anatomyTitle: "Know where these six coverages appear.",
   anatomy: [
     { title: "Dwelling", text: "Coverage for the house and attached structures after a covered loss, subject to the limit and policy terms.", tag: "Coverage A" },
     { title: "Other structures", text: "Detached structures such as certain garages or fences may have a separate limit.", tag: "Coverage B" },

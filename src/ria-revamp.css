@@ -572,6 +572,11 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   background: var(--agency-navy);
   box-shadow: none;
 }
+.dossier-hero__media {
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+}
 .dossier-hero__visual::after { content: ""; position: absolute; inset: .8rem; z-index: 2; border: 1px solid rgba(255,255,255,.25); pointer-events: none; }
 .dossier-hero__visual img { width: 100%; height: 100%; min-height: 30rem; object-fit: cover; filter: saturate(.75); }
 .dossier-hero__visual figcaption { z-index: 3; right: .8rem; bottom: .8rem; left: .8rem; border: 0; border-radius: 0; font-family: var(--font-body); backdrop-filter: none; }
@@ -1908,6 +1913,9 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
 .atlas-image--illustrated[src*="office-venice"] { object-position: 54% center; }
 .atlas-image--illustrated[src*="contact-service"] { object-position: 57% center; }
 .atlas-image--illustrated[src*="policy-desk"] { object-position: center; }
+.atlas-image--illustrated[src*="interior-contact"] { object-position: 66% center; }
+.atlas-image--illustrated[src*="interior-about"] { object-position: center 42%; }
+.atlas-image--illustrated[src*="interior-faq"] { object-position: center; }
 
 @media (hover: hover) and (pointer: fine) {
   .ria-story:hover,
@@ -1933,6 +1941,9 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .dossier-hero__visual .atlas-image--illustrated[src*="specialty"] { object-position: 45% center; }
   .dossier-hero__visual .atlas-image--illustrated[src*="office-venice"] { object-position: 57% center; }
   .dossier-hero__visual .atlas-image--illustrated[src*="contact-service"] { object-position: 60% center; }
+  .dossier-hero__visual .atlas-image--illustrated[src*="interior-contact"] { object-position: 69% center; }
+  .dossier-hero__visual .atlas-image--illustrated[src*="interior-about"] { object-position: 52% center; }
+  .dossier-hero__visual .atlas-image--illustrated[src*="interior-faq"] { object-position: center; }
 
   .ria-story { box-shadow: .35rem .35rem 0 rgba(11,33,70,.09); }
   .ria-story:nth-child(2) { box-shadow: .35rem .35rem 0 rgba(213,161,31,.24); }
@@ -3008,7 +3019,7 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .coverage-desk__copy p { font-size: .8rem; line-height: 1.5; }
 
   /* Policy service remains interactive, with less decorative height. */
-  .broker-cases { padding: 3.8rem 0; }
+  .broker-cases { padding: 3.5rem 0; }
   .broker-cases__heading { gap: 1rem; margin-bottom: 1.7rem; }
   .broker-cases__heading h2 { font-size: clamp(2.4rem,10.5vw,3rem); }
   .broker-cases__heading > p { font-size: .85rem; line-height: 1.55; }
@@ -3023,7 +3034,7 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .broker-cases__file li { padding: .65rem 0; font-size: .67rem; }
 
   /* Two audiences, two compact records—no artificial blank card height. */
-  .ria-editorial { padding: 3.75rem 0; }
+  .ria-editorial { padding: 3.5rem 0; }
   .ria-editorial .ria-section-heading { margin-bottom: 1.5rem; }
   .ria-editorial__grid { margin-top: 0; }
   .ria-story { min-height: 0; grid-template-rows: 11.25rem auto; }
@@ -3034,7 +3045,7 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .ria-story b { margin-top: 1rem; }
 
   /* Local proof is important; the map and facts are simply made denser. */
-  .ria-local { padding: 3.9rem 0; }
+  .ria-local { padding: 3.5rem 0; }
   .ria-local__grid { gap: 2.5rem; }
   .ria-local__copy h2 { font-size: clamp(2.35rem,10.5vw,3rem); }
   .ria-local__copy > p { margin-top: 1rem; font-size: .86rem; line-height: 1.58; }
@@ -3054,7 +3065,7 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .ria-local__facts strong { overflow-wrap: anywhere; font-size: .68rem; }
 
   /* Reviews remain complete and indexable, presented as a horizontal ledger. */
-  .ria-reviews { padding: 3.9rem 0; }
+  .ria-reviews { padding: 3.6rem 0; }
   .ria-reviews__heading { gap: 1.4rem; margin-bottom: 0; }
   .ria-reviews__heading h2 { font-size: clamp(2.35rem,10.5vw,3rem); }
   .ria-reviews__heading > div:first-child > p:last-child { margin-top: .85rem; font-size: .84rem; }
@@ -3084,10 +3095,10 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .ria-reviews blockquote footer { align-items: start; flex-direction: column; gap: .35rem; }
 
   /* Closed-by-default questions keep the path concise; answers remain one tap away. */
-  .ria-faq { padding: 3.75rem 0; }
+  .ria-faq { padding: 3.45rem 0; }
   .ria-faq__grid { gap: 1.5rem; }
   .ria-faq .answer-drawer summary { min-height: 4.7rem; }
-  .quote-band { padding: 2.9rem 0; }
+  .quote-band { padding: 2.1rem 0; }
   .quote-band h2 { font-size: clamp(2rem,9vw,2.5rem); }
   .quote-band__art {
     top: auto;

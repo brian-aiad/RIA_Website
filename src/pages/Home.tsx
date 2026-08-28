@@ -121,8 +121,8 @@ export default function Home() {
         <div className="atlas-container">
           <header className="ria-section-heading motion-reveal">
             <p className="ria-kicker">Personal and commercial</p>
-            <h2>The policies connect because real life does.</h2>
-            <p>A household can include a rental property, a work vehicle, or a home-based operation. We look at how the pieces affect one another before treating them as separate files.</p>
+            <h2>Review household and business policies side by side.</h2>
+            <p>A household may include a rental property, work vehicle, or home-based business. Those details can affect more than one policy and should be discussed together.</p>
           </header>
           <div className="ria-editorial__grid">
             <Link to="/auto-insurance-los-angeles-ca" className="ria-story motion-reveal">
@@ -200,7 +200,7 @@ export default function Home() {
       <section className="ria-faq section-folio-host">
         <SectionFolio>Client questions</SectionFolio>
         <div className="atlas-container ria-faq__grid">
-          <header className="motion-reveal"><p className="ria-kicker">Straight answers</p><h2>Common questions before you call.</h2><p>No generic promises—just a useful starting point for the conversation.</p><Link to="/faq">Read all FAQs <ArrowRight size={16} /></Link></header>
+          <header className="motion-reveal"><p className="ria-kicker">Straight answers</p><h2>Common questions before you call.</h2><p>Start with the basics, then call with the document or details specific to you.</p><Link to="/faq">Read all FAQs <ArrowRight size={16} /></Link></header>
           <div>
             {homeFaqs.map((faq) => (
               <details key={faq.question} className="answer-drawer motion-reveal">

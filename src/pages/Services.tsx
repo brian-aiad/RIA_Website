@@ -26,7 +26,7 @@ export default function Services() {
   return (
     <main id="main-content" className="atlas-page services-atlas">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Services", url: "https://raflainsurance.com/services" }]} />
-      <DossierHeader index="Services" eyebrow="Personal and business insurance" title="Insurance for what you own, drive, and operate." lede="From the car in your driveway to the business that keeps you moving, we help bring your coverage into one clear conversation." image="/images/illustrated/small-business-v6.webp" imageAlt="Illustration of a Westside small-business owner reviewing coverage outside her shop">
+      <DossierHeader index="Services" eyebrow="Personal and business insurance" title="Insurance for what you own, drive, and operate." lede="Tell us about the vehicle, property, household, or business in front of you. We’ll organize the carrier questions and coverage details around the real situation." image="/images/illustrated/small-business-v6.webp" imageAlt="Illustration of a Westside small-business owner reviewing coverage outside her shop">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Tell us what you need</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
       </DossierHeader>
@@ -36,8 +36,8 @@ export default function Services() {
         <div className="atlas-container">
           <div className="services-ledger__intro motion-reveal">
             <AtlasEyebrow>What we insure</AtlasEyebrow>
-            <h2>Your life is connected.<br />Your coverage should be, too.</h2>
-            <p>A vehicle can serve a household and a business. A home can contain equipment or rental exposure. We look at the seams instead of treating every policy as an island.</p>
+            <h2>Your policies should match<br />how you actually live and work.</h2>
+            <p>A vehicle may serve both a household and a business. A home may include rental use, stored equipment, or work activity. We check where one policy stops and another may need to begin.</p>
           </div>
           <div className="services-ledger__groups">
             {serviceGroups.map((group, index) => {
@@ -61,7 +61,7 @@ export default function Services() {
       <section className="services-briefs section-folio-host">
         <SectionFolio tone="paper">Practical guides</SectionFolio>
         <div className="atlas-container services-briefs__grid">
-          <div className="services-briefs__copy motion-reveal"><AtlasEyebrow>Coverage guides</AtlasEyebrow><h2>Learn before you decide.</h2><p>Explore practical explanations of common coverage, useful documents, and questions to bring to a broker conversation.</p></div>
+          <div className="services-briefs__copy motion-reveal"><AtlasEyebrow>Coverage guides</AtlasEyebrow><h2>Know what to compare.</h2><p>See the common coverage parts, useful documents, and questions worth bringing to the broker desk.</p></div>
           <div className="mobile-swipe-hint mobile-swipe-hint--ink"><span />Swipe through coverage guides</div>
           <div className="services-briefs__list" role="region" aria-label="Coverage guides" tabIndex={0}>
             {coverageEntries.slice(0, 4).map((entry) => <Link key={entry.key} to={entry.href} className="motion-reveal"><span>{entry.number}</span><strong>{entry.title}</strong><p>{entry.short}</p><ArrowRight size={18} /></Link>)}
@@ -85,7 +85,7 @@ export default function Services() {
           <PaperNote label="Currently offered" tone="blue">
             <div className="scope-card__heading">
               <strong>Property &amp; casualty</strong>
-              <p>One local desk for everyday personal and business risks.</p>
+              <p>Personal and business insurance handled from one local office.</p>
             </div>
             <ul className="scope-card__list scope-card__list--active">
               <li><Check aria-hidden="true" />Auto, motorcycle &amp; recreation</li>
@@ -99,7 +99,7 @@ export default function Services() {
           <PaperNote label="Not currently offered">
             <div className="scope-card__heading">
               <strong>Future license areas</strong>
-              <p>These services are intentionally outside our current agency scope.</p>
+              <p>Rafla does not currently offer these services.</p>
             </div>
             <ul className="scope-card__list scope-card__list--inactive">
               <li><span aria-hidden="true">—</span>Health insurance</li>
@@ -107,7 +107,7 @@ export default function Services() {
               <li><span aria-hidden="true">—</span>Notary services</li>
             </ul>
             <div className="scope-card__boundary"><FileBadge2 aria-hidden="true" /><span>Our licensed lane<strong>Property &amp; casualty</strong></span></div>
-            <small>We’ll update this website if our licensing changes. Questions about another risk? Call the broker desk.</small>
+            <small>If you are unsure whether a request fits our current license, call the office before sending documents.</small>
           </PaperNote>
         </div>
       </section>

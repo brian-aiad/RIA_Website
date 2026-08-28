@@ -19,9 +19,9 @@ const config: CoverageBriefConfig = {
   introTitle: "The same van can represent very different risks in different businesses.",
   intro: [
     "Commercial auto underwriting considers the business, vehicle types, radius, cargo, drivers, ownership, garaging, contracts, and how each vehicle is used. A contractor, florist, wholesaler, and delivery operation do not present the same risks.",
-    "The goal is to align vehicle coverage with the real operation and then check the seams with general liability, workers’ compensation, property, umbrella, and bond requirements.",
+    "The vehicle policy should reflect the real operation. It also needs to be reviewed alongside general liability, workers’ compensation, property, umbrella, and bond requirements when those apply.",
   ],
-  anatomyTitle: "Coverage that follows the way your business works.",
+  anatomyTitle: "Six details that shape a commercial auto policy.",
   anatomy: [
     { title: "Covered autos", text: "The symbols and schedule determine which owned, hired, or non-owned autos may be covered.", tag: "Policy structure" },
     { title: "Auto liability", text: "Addresses covered liability arising from business vehicle use, subject to limits, exclusions, and policy terms.", tag: "Core layer" },

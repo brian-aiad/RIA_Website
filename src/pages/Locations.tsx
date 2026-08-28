@@ -21,7 +21,7 @@ export default function Locations() {
     <main id="main-content" className="atlas-page locations-file">
       <LocalBusinessSchema url="https://raflainsurance.com/" areaServed={cities.map((city) => `${city.name}, CA`)} />
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Locations", url: "https://raflainsurance.com/locations" }]} />
-      <DossierHeader index="LA" eyebrow="Your Mar Vista insurance office" title="Close by when it matters." lede="Visit us on Venice Boulevard in Mar Vista. We serve nearby Westside and surrounding Los Angeles communities." image="/images/illustrated/office-venice-illustrated-v6.webp" imageAlt="Illustration of Rafla Insurance Agency's Venice Boulevard neighborhood office">
+      <DossierHeader index="LA" eyebrow="Your Mar Vista insurance office" title="Your insurance office is on Venice Boulevard." lede="Visit Rafla in Mar Vista or call from anywhere in the surrounding Los Angeles area. The office serves households and businesses across the Westside and nearby communities." image="/images/illustrated/office-venice-illustrated-v6.webp" imageAlt="Illustration of Rafla Insurance Agency's Venice Boulevard neighborhood office">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Request a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.mapsHref} target="_blank" rel="noreferrer">Directions <ExternalLink size={14} /></a>
       </DossierHeader>
@@ -46,7 +46,7 @@ export default function Locations() {
       <section className="city-directory section-folio-host">
         <SectionFolio tone="paper">Westside service area</SectionFolio>
         <div className="atlas-container">
-          <div className="city-directory__heading motion-reveal"><AtlasEyebrow>Communities we serve</AtlasEyebrow><h2>Insurance help across the Westside.</h2><p>We work with households and businesses throughout nearby communities. Carrier availability and eligibility depend on the individual risk.</p></div>
+          <div className="city-directory__heading motion-reveal"><AtlasEyebrow>Communities we serve</AtlasEyebrow><h2>A Mar Vista office for the Westside.</h2><p>We work with nearby households and businesses. The address tells us where you are; the vehicles, property, people, and operations determine what needs review.</p></div>
           <div className="locations-map-plate motion-reveal"><WestsideMap /></div>
           <div className="city-directory__grid">
             {cities.map((city, index) => <Link key={city.slug} to={`/insurance/${city.slug}`} className={`city-record city-record--${city.group} motion-reveal`}><span>{String(index + 1).padStart(2,"0")}</span><div><h3>{city.name}</h3><p>{city.note}</p><small>{city.zips.join(" · ")}</small></div><ArrowRight size={18} /></Link>)}
@@ -54,9 +54,9 @@ export default function Locations() {
         </div>
       </section>
 
-      <section className="planning-note"><div className="atlas-container planning-note__inner motion-reveal"><span>Rooted in the neighborhood</span><p>Los Angeles City Planning groups Palms, Mar Vista, Del Rey, and Playa Vista within the Palms–Mar Vista–Del Rey Community Plan area. Rafla’s 90066 office is well placed to serve that local Westside network and nearby communities.</p></div></section>
+      <section className="planning-note"><div className="atlas-container planning-note__inner motion-reveal"><span>Before you visit</span><p>Bring the document that started the question—a declarations page, renewal, lender request, contract, certificate sample, registration item, or DMV notice. Call first if the matter has a same-day deadline.</p></div></section>
 
-      <QuoteBand title="Local office. Direct conversation." text="Call ahead, start online, or visit the Venice Boulevard office during posted hours." />
+      <QuoteBand title="Call ahead or stop by the office." text="Start with the document or deadline in front of you. We’ll tell you what else is useful for the review." />
     </main>
   );
 }

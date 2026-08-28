@@ -21,7 +21,7 @@ const config: CoverageBriefConfig = {
     "California requires financial responsibility, and most drivers meet that responsibility with auto liability insurance. As of January 1, 2025, the minimum standard-policy liability limits are $30,000 for injury or death to one person, $60,000 per accident for injury or death to multiple people, and $15,000 for property damage.",
     "Those limits are a legal floor, not a recommendation for every household. Vehicle value, driving pattern, household assets, financing requirements, deductibles, and optional protections all change the discussion.",
   ],
-  anatomyTitle: "Read the policy in layers.",
+  anatomyTitle: "Five parts to compare on an auto quote.",
   anatomy: [
     { title: "Liability", text: "Helps address bodily injury or property damage you cause, subject to the policy’s terms and limits.", tag: "Required floor" },
     { title: "Collision", text: "May help repair or replace your covered vehicle after a collision, less the chosen deductible.", tag: "Optional / lender may require" },
@@ -32,7 +32,7 @@ const config: CoverageBriefConfig = {
   checklistTitle: "Details that make a quote more precise.",
   checklist: ["Driver names, dates of birth, and license information", "Vehicle VINs, mileage, use, and garaging address", "Current declarations page if available", "Desired limits and deductible range", "Loan or lease information", "Tickets, accidents, or filing requirements"],
   fieldNote: "Tell us how the vehicle is actually used. Commuting, rideshare, deliveries, business use, and household drivers can materially change eligibility and coverage needs.",
-  detailTitle: "Price matters. The coverage behind it matters more.",
+  detailTitle: "Compare the policy, not just the premium.",
   detail: [
     "A useful comparison looks at the carrier, coverage limits, deductibles, exclusions, endorsements, claims access, and the total cost—not only the first premium number on the page.",
     "We can also review SR-22 needs and nonstandard license situations separately. Those circumstances require accurate facts and carrier-specific underwriting; no single outcome can be promised before review.",

@@ -113,18 +113,18 @@ export type CityInfo = {
 };
 
 export const cities: CityInfo[] = [
-  { slug: "mar-vista", name: "Mar Vista", zips: ["90066"], group: "home", note: "Our office neighborhood on Venice Boulevard." },
-  { slug: "palms", name: "Palms", zips: ["90034"], group: "home", note: "Part of the same City Planning community-plan area as Mar Vista." },
-  { slug: "culver-city", name: "Culver City", zips: ["90230", "90232"], group: "home", note: "A nearby independent city and business center." },
-  { slug: "venice", name: "Venice", zips: ["90291"], group: "coast", note: "Coastal households, renters, drivers, and local businesses." },
-  { slug: "marina-del-rey", name: "Marina del Rey", zips: ["90292"], group: "coast", note: "Personal, property, business, and recreational risks near the coast." },
-  { slug: "santa-monica", name: "Santa Monica", zips: ["90401", "90402", "90403", "90404", "90405"], group: "coast", note: "Coverage reviews for residents, landlords, and businesses." },
-  { slug: "west-los-angeles", name: "West Los Angeles", zips: ["90025", "90064"], group: "north", note: "Personal and commercial guidance across the Westside." },
-  { slug: "sawtelle", name: "Sawtelle", zips: ["90025"], group: "north", note: "Auto, renters, property, and small-business coverage nearby." },
-  { slug: "playa-vista", name: "Playa Vista", zips: ["90094"], group: "south", note: "Renters, condo owners, drivers, and growing businesses." },
-  { slug: "westchester", name: "Westchester", zips: ["90045"], group: "south", note: "Households, landlords, contractors, and local firms." },
-  { slug: "inglewood", name: "Inglewood", zips: ["90301", "90302", "90303", "90304", "90305"], group: "south", note: "Drivers, property owners, contractors, and small businesses." },
-  { slug: "ladera-heights", name: "Ladera Heights", zips: ["90056"], group: "south", note: "Home, auto, landlord, and professional coverage reviews." },
+  { slug: "mar-vista", name: "Mar Vista", zips: ["90066"], group: "home", note: "Rafla’s office neighborhood on Venice Boulevard." },
+  { slug: "palms", name: "Palms", zips: ["90034"], group: "home", note: "A nearby neighborhood for drivers, renters, homeowners, and small businesses." },
+  { slug: "culver-city", name: "Culver City", zips: ["90230", "90232"], group: "home", note: "Nearby coverage help for households, landlords, contractors, and local firms." },
+  { slug: "venice", name: "Venice", zips: ["90291"], group: "coast", note: "Auto, renters, property, and business reviews for the coastal neighborhood." },
+  { slug: "marina-del-rey", name: "Marina del Rey", zips: ["90292"], group: "coast", note: "Coverage questions for drivers, renters, property owners, businesses, and watercraft." },
+  { slug: "santa-monica", name: "Santa Monica", zips: ["90401", "90402", "90403", "90404", "90405"], group: "coast", note: "Personal and business policy reviews from Rafla’s nearby Mar Vista office." },
+  { slug: "west-los-angeles", name: "West Los Angeles", zips: ["90025", "90064"], group: "north", note: "A nearby office for personal, property, and business insurance questions." },
+  { slug: "sawtelle", name: "Sawtelle", zips: ["90025"], group: "north", note: "Nearby help with auto, renters, property, and small-business policies." },
+  { slug: "playa-vista", name: "Playa Vista", zips: ["90094"], group: "south", note: "Policy reviews for renters, condo owners, drivers, and growing businesses." },
+  { slug: "westchester", name: "Westchester", zips: ["90045"], group: "south", note: "Insurance help for households, landlords, contractors, and local firms." },
+  { slug: "inglewood", name: "Inglewood", zips: ["90301", "90302", "90303", "90304", "90305"], group: "south", note: "Auto, property, contractor, and small-business coverage reviewed from Mar Vista." },
+  { slug: "ladera-heights", name: "Ladera Heights", zips: ["90056"], group: "south", note: "Home, auto, landlord, and professional coverage help from a nearby office." },
 ];
 
 export const cityMap = Object.fromEntries(cities.map((city) => [city.slug, city])) as Record<string, CityInfo>;

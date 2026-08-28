@@ -44,8 +44,13 @@ export const images = {
     filings: "/images/illustrated/certificates-bonds-v7.webp",
   },
   about: {
+    conversation: "/images/interior/interior-about.webp",
     office: "/images/illustrated/broker-desk-v6.webp",
     officeAlt: "/images/illustrated/office-venice-illustrated-v6.webp",
+  },
+  interior: {
+    contact: "/images/interior/interior-contact.webp",
+    faq: "/images/interior/interior-faq.webp",
   },
   location: {
     exterior: "/images/illustrated/office-venice-illustrated-v6.webp",
@@ -64,7 +69,7 @@ export const images = {
     sr22Consultation: "/images/illustrated/auto-review-v8.webp",
     noLicenseConsultation: "/images/illustrated/policy-desk-v6.webp",
     commercialConsultation: "/images/illustrated/small-business-v6.webp",
-    contactFrontDesk: "/images/illustrated/contact-service-v6.webp",
+    contactFrontDesk: "/images/interior/interior-contact.webp",
   },
   claims: {
     docs: "/images/illustrated/claims-service-v8.webp",

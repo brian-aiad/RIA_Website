@@ -48,8 +48,8 @@ export function AtlasImage({
   className,
   ...props
 }: ImgHTMLAttributes<HTMLImageElement> & { src: string; alt: string }) {
-  const isIllustratedAsset = src.startsWith("/images/illustrated/");
-  const isResponsiveAsset = (src.startsWith("/images/agency/") || src.startsWith("/images/illustrated/"))
+  const isIllustratedAsset = src.startsWith("/images/illustrated/") || src.startsWith("/images/interior/");
+  const isResponsiveAsset = (src.startsWith("/images/agency/") || src.startsWith("/images/illustrated/") || src.startsWith("/images/interior/"))
     && src.endsWith(".webp")
     && !src.endsWith("-sm.webp")
     && !src.endsWith("-phone.webp")
@@ -85,7 +85,7 @@ export function DossierHeader({
   children?: ReactNode;
 }) {
   return (
-    <header className="dossier-hero">
+    <header className="dossier-hero" data-dossier-hero>
       <div className="atlas-container dossier-hero__grid">
         <div className="dossier-hero__copy hero-copy-enter">
           <div className="dossier-hero__meta">
@@ -106,7 +106,9 @@ export function DossierHeader({
           </figure>
         ) : image && (
           <figure className="dossier-hero__visual atlas-parallax">
-            <AtlasImage src={image} alt={imageAlt ?? ""} width="1536" height="1024" fetchPriority="high" />
+            <div className="dossier-hero__media">
+              <AtlasImage src={image} alt={imageAlt ?? ""} width="1536" height={image.startsWith("/images/interior/") ? "864" : "1024"} fetchPriority="high" />
+            </div>
             <figcaption>
               <span>{visualLabel ?? "12240 Venice Boulevard"}</span>
               Mar Vista · CA agency license 0D95584
@@ -120,8 +122,8 @@ export function DossierHeader({
 }
 
 export function QuoteBand({
-  title = "Let’s find coverage that feels right.",
-  text = "Tell us what you want to protect. A local broker will help you understand the options and the details that matter.",
+  title = "Let’s review what changed.",
+  text = "Tell us what you drive, own, rent, or operate. A local broker will explain which details and documents matter next.",
 }: {
   title?: string;
   text?: string;

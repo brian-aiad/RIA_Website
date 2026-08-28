@@ -46,10 +46,10 @@ export default function BrokeragePath() {
         <header className="brokerage-path__heading">
           <div>
             <p className="ria-kicker">What an independent broker does</p>
-            <h2 id="brokerage-path-title">One conversation.<br />A wider view of the market.</h2>
+            <h2 id="brokerage-path-title">The review starts with facts,<br />not a carrier logo.</h2>
           </div>
           <div className="brokerage-path__support">
-            <p>Rafla is an independent insurance agency—not an insurance company. We help you make sense of available carrier programs, then remain a local point of contact after the policy is placed.</p>
+            <p>Rafla is an independent insurance agency—not an insurance company. We review available carrier programs, explain the meaningful differences, and remain a local contact after the policy is placed.</p>
             <ul aria-label="Brokerage service advantages">
               <li><CheckCircle2 aria-hidden="true" /> Available carrier programs reviewed</li>
               <li><CheckCircle2 aria-hidden="true" /> Coverage differences explained</li>

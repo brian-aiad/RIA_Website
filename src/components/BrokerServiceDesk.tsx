@@ -24,7 +24,7 @@ const deskFiles = [
     id: "change",
     label: "A policy change",
     context: "While covered",
-    title: "Tell us before the details drift.",
+    title: "Tell us when the policy facts change.",
     summary: "A new driver, address, employee, vehicle, renovation, or equipment purchase can change how the policy should be reviewed.",
     checklist: ["What changed and when", "Any lender, lease, or contract instructions", "Updated values, use, drivers, payroll, or locations"],
     image: images.home.property,

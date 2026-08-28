@@ -21,7 +21,7 @@ export default function Contact() {
   return (
     <main id="main-content" className="atlas-page contact-file">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Contact", url: "https://raflainsurance.com/contact" }]} />
-      <DossierHeader index="C1" eyebrow="We’re here to help" title="Let’s start with a conversation." lede="Call, request a quote, send an email, or visit us on Venice Boulevard. A real person will take it from there." image={images.clients.contactFrontDesk} imageAlt="Representative insurance-office service moment with a person answering a policy question by phone">
+      <DossierHeader index="C1" eyebrow="Contact Rafla Insurance" title="Call, email, start online, or stop by." lede="Reach the Venice Boulevard office for a quote, renewal, policy question, document request, or help finding the right carrier contact." image={images.clients.contactFrontDesk} imageAlt="Illustration of an insurance broker answering a client call from a Los Angeles office">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Request a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} />Call now</a>
       </DossierHeader>
@@ -29,11 +29,11 @@ export default function Contact() {
       <section className="contact-switchboard section-folio-host">
         <SectionFolio>Choose a channel</SectionFolio>
         <div className="atlas-container">
-          <div className="contact-switchboard__heading motion-reveal"><AtlasEyebrow>Contact Rafla Insurance</AtlasEyebrow><h2>Choose what works for you.</h2></div>
+          <div className="contact-switchboard__heading motion-reveal"><AtlasEyebrow>Contact options</AtlasEyebrow><h2>Use the channel that fits the question.</h2></div>
           <div className="mobile-swipe-hint mobile-swipe-hint--ink"><span />Swipe through contact options</div>
           <div className="contact-switchboard__grid" role="region" aria-label="Contact options" tabIndex={0}>
             <a href={site.contact.phoneHref} className="motion-reveal"><span>01</span><Phone /><h3>Office line</h3><strong>{site.contact.phone}</strong><p>Quotes, policy questions, renewals, and general help.</p><ArrowRight /></a>
-            <button type="button" onClick={openQuoteModal} className="motion-reveal"><span>02</span><MessageSquareText /><h3>Request a quote</h3><strong>Start online</strong><p>Share the first details so our team can prepare for the conversation.</p><ArrowRight /></button>
+            <button type="button" onClick={openQuoteModal} className="motion-reveal"><span>02</span><MessageSquareText /><h3>Prepare for a quote</h3><strong>See what to gather</strong><p>Choose a coverage type and review the useful details before you call.</p><ArrowRight /></button>
             <a href={site.contact.emailHref} className="motion-reveal"><span>03</span><Mail /><h3>Email</h3><strong>{site.contact.email}</strong><p>Do not send highly sensitive information by ordinary email.</p><ArrowRight /></a>
             <a href={site.contact.mapsHref} target="_blank" rel="noreferrer" className="motion-reveal"><span>04</span><MapPin /><h3>Visit</h3><strong>12240 Venice Blvd</strong><p>Suite 2 · Los Angeles, CA 90066</p><ExternalLink /></a>
           </div>
@@ -55,7 +55,7 @@ export default function Contact() {
       <section className="contact-team section-folio-host">
         <SectionFolio tone="paper">Direct lines</SectionFolio>
         <div className="atlas-container">
-          <div className="contact-team__heading motion-reveal"><AtlasEyebrow>Direct contacts</AtlasEyebrow><h2>Reach someone who knows the agency.</h2></div>
+          <div className="contact-team__heading motion-reveal"><AtlasEyebrow>Direct contacts</AtlasEyebrow><h2>Keep a direct number for the office.</h2></div>
           <div className="contact-team__grid">
             {site.team.map((person,index) => (
               <article key={person.name} className="motion-reveal">

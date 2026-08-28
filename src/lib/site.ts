@@ -1,6 +1,6 @@
 export const site = {
   name: "Rafla Insurance Agency",
-  tagline: "Trusted coverage with personal service.",
+  tagline: "Independent insurance help on Venice Boulevard.",
   description:
     "Rafla Insurance Agency is an independent insurance brokerage serving individuals, families, and businesses from the Mar Vista neighborhood of Los Angeles since 2003. We help clients compare personal and commercial coverage, including auto, home, renters, general liability, workers' compensation, bonds, motorcycle, RV, boat, and specialty insurance.",
   contact: {
@@ -42,12 +42,12 @@ export const site = {
     ],
   },
   services: [
-    { key: "auto", title: "Auto Insurance", blurb: "Liability, comp & collision, SR-22 support, and multi-car discounts." },
-    { key: "home", title: "Home & Renters", blurb: "Protect dwelling, belongings, and liability with right-sized coverage." },
-    { key: "workers", title: "Workers’ Compensation", blurb: "Coverage that helps protect your employees and your business." },
+    { key: "auto", title: "Auto Insurance", blurb: "Liability, comprehensive, collision, SR-22 support, and available discounts." },
+    { key: "home", title: "Home & Renters", blurb: "Review the dwelling, belongings, loss-of-use, and liability sections." },
+    { key: "workers", title: "Workers’ Compensation", blurb: "Review employee classifications, payroll, and workplace operations." },
     { key: "commercial", title: "Commercial", blurb: "General liability, BOP, commercial auto, and workers’ comp." },
-    { key: "moto", title: "Motorcycle", blurb: "Coverage for riders with gear and accessory protection." },
-    { key: "rec", title: "Recreational", blurb: "RV, boat, and specialty toys — enjoy the weekend safely." },
+    { key: "moto", title: "Motorcycle", blurb: "Liability, physical damage, gear, and accessory options for riders." },
+    { key: "rec", title: "Recreational", blurb: "RV, boat, and recreational-vehicle coverage questions." },
     { key: "bonds", title: "Surety Bonds", blurb: "License, permit, contract, and commercial bond support." },
     { key: "reg", title: "Registration Services", blurb: "Ask about title transfers, renewals, and plate services." },
     { key: "sr22", title: "SR-22 Filing", blurb: "Electronic filing support after a qualifying policy is bound." },
@@ -56,7 +56,7 @@ export const site = {
   faqs: [
     {
       q: "What is an insurance broker?",
-      a: "A licensed professional who shops multiple carriers on your behalf to match coverage, price, and service to your needs.",
+      a: "A licensed professional who can review available coverage, pricing, and service from more than one carrier, subject to appointments and eligibility.",
     },
     {
       q: "Which lines do you offer?",

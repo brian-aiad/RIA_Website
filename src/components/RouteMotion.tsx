@@ -159,6 +159,10 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
           { selector: ".locations-map-plate", scale: 0.99, duration: 0.55, at: "-=0.32" },
           { selector: ".city-directory__grid > .city-record", y: 12, scale: 0.995, duration: 0.46, stagger: 0.045, at: "-=0.32" },
         ]);
+        stageGroup(".planning-note", [
+          { selector: ".planning-note__inner > span", x: -10, duration: 0.42 },
+          { selector: ".planning-note__inner > p", x: 10, duration: 0.48, at: "-=0.32" },
+        ], "clamp(top 91%)");
         stageGroup(".contact-switchboard", [
           { selector: ".contact-switchboard__heading", y: 10, duration: 0.5 },
           { selector: ".contact-switchboard__grid > *", y: 14, scale: 0.995, duration: 0.5, stagger: 0.055, at: "-=0.3" },
@@ -220,8 +224,8 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
           });
         });
 
-        // This is the one scroll-linked narrative on the site: the gold route
-        // follows the actual work of an independent broker from brief to service.
+        // The homepage's primary scroll-linked narrative: the gold route follows
+        // the actual work of an independent broker from brief to service.
         if (!isCompact) root.querySelectorAll<HTMLElement>("[data-brokerage-path]").forEach((rail) => {
           const track = rail.querySelector<HTMLElement>(".brokerage-path__track span");
           const nodes = Array.from(rail.querySelectorAll<HTMLElement>(".brokerage-path__node"));
@@ -267,6 +271,22 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
             .to(nodes, { scale: 1, duration: 0.14, stagger: 0.3, ease: "back.out(1.45)" }, 0.04);
         });
 
+        // The illustration moves inside its printed frame while the opening
+        // brief leaves the viewport. Caption, frame, and layout stay fixed.
+        if (!isCompact) root.querySelectorAll<HTMLElement>("[data-dossier-hero]").forEach((hero) => {
+          const media = hero.querySelector<HTMLElement>(".dossier-hero__media");
+          if (!media) return;
+          gsap.fromTo(media,
+            { yPercent: -0.7, scale: 1.02, transformOrigin: "center", willChange: "transform" },
+            {
+              yPercent: 0.9,
+              scale: 1.045,
+              ease: "none",
+              scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 0.65 },
+            },
+          );
+        });
+
         // Small pieces of the print identity arrive as the reader reaches them.
         // These transform-only cues work across interior pages without fading copy.
         root.querySelectorAll<HTMLElement>(".atlas-eyebrow > span").forEach((rule) => {
@@ -280,6 +300,24 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               clearProps: "transform,willChange",
               scrollTrigger: { trigger: rule, start: "clamp(top 90%)", once: true },
             },
+          );
+        });
+
+        root.querySelectorAll<HTMLElement>(".section-folio").forEach((folio) => {
+          if (folio.getBoundingClientRect().top < window.innerHeight + 24) return;
+          const dot = folio.querySelector<HTMLElement>("i");
+          const timeline = gsap.timeline({
+            scrollTrigger: { trigger: folio.parentElement ?? folio, start: "clamp(top 92%)", once: true },
+            defaults: { ease: "power3.out" },
+          });
+          timeline.fromTo(folio,
+            { x: isCompact ? 6 : 10, willChange: "transform" },
+            { x: 0, duration: isCompact ? 0.34 : 0.44, clearProps: "transform,willChange" },
+          );
+          if (dot) timeline.fromTo(dot,
+            { scale: 0.2, transformOrigin: "center" },
+            { scale: 1, duration: 0.28, ease: "back.out(1.8)", clearProps: "transform" },
+            "-=0.2",
           );
         });
 
