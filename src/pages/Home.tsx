@@ -17,6 +17,7 @@ import { AtlasButton, AtlasImage, QuoteBand, SectionFolio } from "../components/
 import BrokeragePath from "../components/BrokeragePath";
 import BrokerServiceDesk from "../components/BrokerServiceDesk";
 import CoverageDesk from "../components/CoverageDesk";
+import CoverageInMotion from "../components/CoverageInMotion";
 import CoverageLinework from "../components/CoverageLinework";
 import WestsideMap from "../components/WestsideMap";
 import LocalBusinessSchema from "../components/seo/LocalBusinessSchema";
@@ -97,6 +98,8 @@ export default function Home() {
       </nav>
 
       <BrokeragePath />
+
+      <CoverageInMotion />
 
       <section className="ria-coverage section-folio-host" id="coverage-options">
         <SectionFolio>Coverage files</SectionFolio>

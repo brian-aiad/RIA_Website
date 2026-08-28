@@ -79,9 +79,25 @@ for (const suite of suites) {
         }
         scrollTo(0, maximum);
         await new Promise((resolve) => setTimeout(resolve, 180));
+
+        // Horizontal mobile ledgers intentionally lazy-load offscreen artwork.
+        // Traverse them like a user swipe before evaluating image health.
+        const horizontalRails = Array.from(document.querySelectorAll('[role="region"], [role="tablist"]'))
+          .filter((element) => element.scrollWidth > element.clientWidth + 2);
+        for (const rail of horizontalRails) {
+          rail.scrollIntoView({ block: "center", inline: "nearest" });
+          rail.scrollTo({ left: rail.scrollWidth, behavior: "instant" });
+          await new Promise((resolve) => setTimeout(resolve, 75));
+        }
+
         await Promise.all(
           Array.from(document.images, (image) =>
-            typeof image.decode === "function" ? image.decode().catch(() => undefined) : undefined,
+            typeof image.decode === "function"
+              ? Promise.race([
+                  image.decode().catch(() => undefined),
+                  new Promise((resolve) => setTimeout(resolve, 1_200)),
+                ])
+              : undefined,
           ),
         );
       });

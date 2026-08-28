@@ -85,6 +85,19 @@ check(await reduced.locator(".ria-reviews__note").textContent().then((text) => t
 check(await reduced.locator(`a[href="https://cdicloud.insurance.ca.gov/cal"]`).isVisible(), "California license verification link is missing");
 check(await reduced.locator(".ria-service-strip").evaluate((node) => node.getBoundingClientRect().height < 100), "Mobile coverage shortcuts are still using a tall multi-row layout");
 check(await reduced.locator(".brokerage-path__rail").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile broker steps are not a keyboard-focusable compact rail");
+const coverageFilmRail = reduced.locator(".coverage-motion__rail");
+const coverageFilmMetrics = await coverageFilmRail.evaluate((node) => ({
+  compact: node.scrollWidth > node.clientWidth && node.tabIndex === 0,
+  cards: node.querySelectorAll(".coverage-motion__scene").length,
+  captionsFit: Array.from(node.querySelectorAll("figcaption"), (caption) => caption.scrollHeight <= caption.clientHeight + 1),
+}));
+check(coverageFilmMetrics.compact, "Mobile coverage-day scenes are not a keyboard-focusable compact rail");
+check(coverageFilmMetrics.cards === 3, `Coverage-day scene count changed: ${JSON.stringify(coverageFilmMetrics)}`);
+check(coverageFilmMetrics.captionsFit.every(Boolean), `Coverage-day captions overflow their files: ${JSON.stringify(coverageFilmMetrics)}`);
+await coverageFilmRail.evaluate((node) => node.scrollTo({ left: node.scrollWidth, behavior: "instant" }));
+await reduced.waitForTimeout(350);
+const coverageFilmImagesReady = await coverageFilmRail.locator("img").evaluateAll((images) => images.map((image) => image.complete && image.naturalWidth > 0));
+check(coverageFilmImagesReady.every(Boolean), `Coverage-day artwork did not load after swiping the rail: ${JSON.stringify(coverageFilmImagesReady)}`);
 check(await reduced.locator(".ria-reviews__ledger").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile reviews are not a keyboard-focusable compact rail");
 check(await reduced.evaluate(() => document.body.scrollHeight < 11_000), "Mobile homepage remains excessively long after content prioritization");
 
@@ -136,6 +149,10 @@ motionPage.setDefaultTimeout(10_000);
 await motionPage.goto(`${base}/`, { waitUntil: "networkidle" });
 await motionPage.waitForTimeout(1_500);
 check(await motionPage.locator(".route-frame").evaluate((node) => node.classList.contains("motion-managed")), "GSAP enhancement did not initialize for standard motion");
+await motionPage.locator(".coverage-motion").scrollIntoViewIfNeeded();
+await motionPage.waitForTimeout(1_200);
+const coverageMotionState = await motionPage.locator(".coverage-motion__scene").evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).transform));
+check(coverageMotionState.every((transform) => transform === "none"), `Coverage-day entrance did not settle cleanly: ${JSON.stringify(coverageMotionState)}`);
 await motionPage.locator(".ria-reviews").scrollIntoViewIfNeeded();
 await motionPage.waitForTimeout(1_500);
 const reviewMotionState = await motionPage.locator(".ria-reviews blockquote").evaluateAll((nodes) => nodes.map((node) => ({ opacity: getComputedStyle(node).opacity, transform: getComputedStyle(node).transform })));
@@ -144,5 +161,5 @@ check(await motionPage.evaluate(() => document.documentElement.scrollWidth <= wi
 
 await chromiumBrowser.close();
 
-console.log(JSON.stringify({ checks, failures, mobileNavMetrics, quickActionMetrics, reducedDialogStyle, reviewMotionState }, null, 2));
+console.log(JSON.stringify({ checks, failures, mobileNavMetrics, quickActionMetrics, coverageFilmMetrics, coverageFilmImagesReady, reducedDialogStyle, coverageMotionState, reviewMotionState }, null, 2));
 if (failures.length) process.exitCode = 1;
