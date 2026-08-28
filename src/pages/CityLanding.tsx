@@ -29,7 +29,13 @@ export default function CityLanding() {
   usePageMeta({ title: city ? `Insurance Broker Serving ${city.name}, CA | Rafla Insurance` : "Page Not Found | Rafla Insurance", description: city ? `Independent insurance broker serving ${city.name}, CA for auto, home, renters, business, workers’ compensation, SR-22 and specialty coverage.` : "The requested page could not be found.", canonical });
   if (!city) return <Navigate to="/404" replace />;
 
-  const nearby = cities.filter((item) => item.slug !== city.slug && (item.group === city.group || item.group === "home")).slice(0, 6);
+  const nearby = cities
+    .filter((item) => item.slug !== city.slug)
+    .sort((a, b) => {
+      const priority = (item: typeof a) => item.group === city.group ? 0 : item.group === "home" ? 1 : 2;
+      return priority(a) - priority(b);
+    })
+    .slice(0, 4);
   return (
     <main id="main-content" className="atlas-page city-file">
       <LocalBusinessSchema url={canonical} areaServed={[`${city.name}, CA`, "Los Angeles, CA"]} />
@@ -46,7 +52,7 @@ export default function CityLanding() {
         <aside className="city-orientation__office motion-reveal"><MapPin/><span>Rafla office</span><strong>{site.contact.address}</strong><a href={site.contact.mapsHref} target="_blank" rel="noreferrer">Directions <ArrowRight size={14}/></a></aside>
       </div></section>
 
-      <section className="city-coverage section-folio-host"><SectionFolio tone="gold">Coverage desk</SectionFolio><div className="atlas-container"><div className="city-coverage__heading motion-reveal"><AtlasEyebrow light>Insurance options for {city.name}</AtlasEyebrow><h2>Start with the policy you need today.</h2></div><div className="city-coverage__grid">{coverageLinks.map(({label,text,href,icon:Icon},index) => <Link key={href} to={href} className="motion-reveal"><span>0{index+1}</span><Icon/><h3>{label}</h3><p>{text}</p><ArrowRight/></Link>)}</div></div></section>
+      <section className="city-coverage section-folio-host"><SectionFolio tone="gold">Coverage desk</SectionFolio><div className="atlas-container"><div className="city-coverage__heading motion-reveal"><AtlasEyebrow light>Insurance options for {city.name}</AtlasEyebrow><h2>Start with the policy you need today.</h2></div><div className="mobile-swipe-hint" aria-hidden="true"><span />Swipe through coverage options</div><div className="city-coverage__grid" role="region" aria-label={`Insurance options for ${city.name}`} tabIndex={0}>{coverageLinks.map(({label,text,href,icon:Icon},index) => <Link key={href} to={href} className="motion-reveal"><span>0{index+1}</span><Icon/><h3>{label}</h3><p>{text}</p><ArrowRight/></Link>)}</div></div></section>
 
       <section className="nearby-files section-folio-host"><SectionFolio tone="paper">Nearby areas</SectionFolio><div className="atlas-container nearby-files__grid"><div className="motion-reveal"><AtlasEyebrow>Nearby communities</AtlasEyebrow><h2>Insurance help throughout the Westside.</h2></div><div>{nearby.map((item,index) => <Link key={item.slug} to={`/insurance/${item.slug}`} className="motion-reveal"><span>0{index+1}</span><strong>{item.name}</strong><small>{item.zips.join(" · ")}</small><ArrowRight size={16}/></Link>)}</div></div></section>
 

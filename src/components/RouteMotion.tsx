@@ -68,16 +68,14 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
             });
 
             prepared.forEach(({ step, targets }) => {
-              timeline
-                .set(targets, { willChange: "transform" }, step.at ?? ">")
-                .to(targets, {
-                  x: 0,
-                  y: 0,
-                  scale: 1,
-                  duration: isCompact ? Math.min(step.duration ?? 0.5, 0.42) : (step.duration ?? 0.5),
-                  stagger: isCompact ? Math.min(step.stagger ?? 0, 0.025) : (step.stagger ?? 0),
-                  clearProps: "transform,willChange",
-                }, "<");
+              timeline.to(targets, {
+                x: 0,
+                y: 0,
+                scale: 1,
+                duration: isCompact ? Math.min(step.duration ?? 0.5, 0.42) : (step.duration ?? 0.5),
+                stagger: isCompact ? Math.min(step.stagger ?? 0, 0.025) : (step.stagger ?? 0),
+                clearProps: "transform",
+              }, step.at ?? ">");
             });
           });
         };
@@ -213,13 +211,13 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         root.querySelectorAll<HTMLElement>(".quote-band").forEach((band) => {
           if (band.getBoundingClientRect().top < window.innerHeight + 24) return;
           const targets = Array.from(band.querySelectorAll<HTMLElement>(".quote-band__art img, .quote-band__mark, h2, .quote-band__grid > p, .quote-band__actions"));
-          gsap.set(targets, { y: 10, willChange: "transform" });
+          gsap.set(targets, { y: 10 });
           gsap.to(targets, {
             y: 0,
             duration: 0.44,
             stagger: 0.045,
             ease: "power3.out",
-            clearProps: "transform,willChange",
+            clearProps: "transform",
             scrollTrigger: { trigger: band, start: "clamp(top 88%)", once: true, fastScrollEnd: true },
           });
         });
@@ -231,7 +229,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
           const nodes = Array.from(rail.querySelectorAll<HTMLElement>(".brokerage-path__node"));
           if (!track || !nodes.length) return;
 
-          gsap.set(track, { scaleX: 0, transformOrigin: "left center", willChange: "transform" });
+          gsap.set(track, { scaleX: 0, transformOrigin: "left center" });
           gsap.set(nodes, { scale: 0.78, transformOrigin: "center" });
           const timeline = gsap.timeline({
             scrollTrigger: {
@@ -257,7 +255,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
           const nodes = Array.from(section.querySelectorAll<HTMLElement>(".coverage-motion__progress > i"));
           if (!track || !nodes.length) return;
 
-          gsap.set(track, { scaleX: 0, transformOrigin: "left center", willChange: "transform" });
+          gsap.set(track, { scaleX: 0, transformOrigin: "left center" });
           gsap.set(nodes, { scale: 0.62, transformOrigin: "center" });
           const timeline = gsap.timeline({
             scrollTrigger: {
@@ -277,7 +275,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
           const media = hero.querySelector<HTMLElement>(".dossier-hero__media");
           if (!media) return;
           gsap.fromTo(media,
-            { yPercent: -0.7, scale: 1.02, transformOrigin: "center", willChange: "transform" },
+            { yPercent: -0.7, scale: 1.02, transformOrigin: "center" },
             {
               yPercent: 0.9,
               scale: 1.045,
@@ -297,7 +295,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               scaleX: 1,
               duration: 0.52,
               ease: "power2.out",
-              clearProps: "transform,willChange",
+              clearProps: "transform",
               scrollTrigger: { trigger: rule, start: "clamp(top 90%)", once: true },
             },
           );
@@ -311,8 +309,8 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
             defaults: { ease: "power3.out" },
           });
           timeline.fromTo(folio,
-            { x: isCompact ? 6 : 10, willChange: "transform" },
-            { x: 0, duration: isCompact ? 0.34 : 0.44, clearProps: "transform,willChange" },
+            { x: isCompact ? 6 : 10 },
+            { x: 0, duration: isCompact ? 0.34 : 0.44, clearProps: "transform" },
           );
           if (dot) timeline.fromTo(dot,
             { scale: 0.2, transformOrigin: "center" },
@@ -333,7 +331,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               scale: 1,
               duration: 0.72,
               ease: "power2.out",
-              clearProps: "transform,willChange",
+              clearProps: "transform",
               scrollTrigger: { trigger: photo, start: "clamp(top 88%)", once: true },
             },
           );
@@ -399,7 +397,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               xPercent: 0,
               duration: isCompact ? 0.5 : 0.78,
               ease: "power3.out",
-              clearProps: "transform,willChange",
+              clearProps: "transform",
               scrollTrigger: {
                 trigger: art,
                 start: "clamp(top 89%)",

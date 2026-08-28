@@ -137,6 +137,8 @@ check(await reduced.locator('img[src*="auto-review-v8"]').first().isVisible(), "
 await reduced.goto(`${base}/privacy/`, { waitUntil: "networkidle" });
 check(await reduced.getByRole("heading", { name: "No online insurance submission" }).isVisible(), "Privacy notice does not explain the no-form workflow");
 check(await reduced.getByText(/Vercel hosts the site and provides Web Analytics and Speed Insights/).isVisible(), "Analytics disclosure is missing");
+check(await reduced.getByRole("heading", { name: "Browser privacy signals and online tracking" }).isVisible(), "Browser privacy-signal disclosure is missing");
+check(await reduced.getByText(/Do Not Track and Global Privacy Control signals do not change its current behavior/).isVisible(), "Do Not Track and Global Privacy Control behavior is unclear");
 check(await reduced.locator("form").count() === 0, "A data-collection form appeared on the privacy route");
 
 await reduced.goto(`${base}/accessibility/`, { waitUntil: "networkidle" });

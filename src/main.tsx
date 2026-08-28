@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import "@fontsource-variable/newsreader/opsz.css";
+import "@fontsource-variable/source-sans-3/wght.css";
 import App from "./App";
 import "./index.css";
 import "./ria-revamp.css";
