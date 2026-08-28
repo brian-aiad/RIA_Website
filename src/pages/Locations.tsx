@@ -1,4 +1,4 @@
-import { ArrowRight, Clock3, ExternalLink, Languages, MapPin, Phone } from "lucide-react";
+import { ArrowRight, BriefcaseBusiness, CarFront, Clock3, ExternalLink, FileText, Languages, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, QuoteBand, SectionFolio } from "../components/AtlasUI";
 import WestsideMap from "../components/WestsideMap";
@@ -54,7 +54,20 @@ export default function Locations() {
         </div>
       </section>
 
-      <section className="planning-note"><div className="atlas-container planning-note__inner motion-reveal"><span>Before you visit</span><p>Bring the document that started the question—a declarations page, renewal, lender request, contract, certificate sample, registration item, or DMV notice. Call first if the matter has a same-day deadline.</p></div></section>
+      <section className="planning-note">
+        <div className="atlas-container planning-note__inner motion-reveal">
+          <div className="planning-note__copy">
+            <span>Before you visit</span>
+            <h2>Bring the paper that started the question.</h2>
+            <p>You do not need to assemble a perfect file. One current document usually gives the conversation a useful place to start. Call first if the matter has a same-day deadline.</p>
+          </div>
+          <ul className="planning-note__documents" aria-label="Useful documents to bring" tabIndex={0}>
+            <li><FileText aria-hidden="true" /><strong>Current policy or renewal</strong></li>
+            <li><BriefcaseBusiness aria-hidden="true" /><strong>Contract or certificate request</strong></li>
+            <li><CarFront aria-hidden="true" /><strong>Registration or DMV notice</strong></li>
+          </ul>
+        </div>
+      </section>
 
       <QuoteBand title="Call ahead or stop by the office." text="Start with the document or deadline in front of you. We’ll tell you what else is useful for the review." />
     </main>

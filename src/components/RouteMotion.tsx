@@ -160,8 +160,8 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
           { selector: ".city-directory__grid > .city-record", y: 12, scale: 0.995, duration: 0.46, stagger: 0.045, at: "-=0.32" },
         ]);
         stageGroup(".planning-note", [
-          { selector: ".planning-note__inner > span", x: -10, duration: 0.42 },
-          { selector: ".planning-note__inner > p", x: 10, duration: 0.48, at: "-=0.32" },
+          { selector: ".planning-note__copy", x: -10, duration: 0.48 },
+          { selector: ".planning-note__documents > li", x: 10, duration: 0.42, stagger: 0.055, at: "-=0.34" },
         ], "clamp(top 91%)");
         stageGroup(".contact-switchboard", [
           { selector: ".contact-switchboard__heading", y: 10, duration: 0.5 },

@@ -82,7 +82,8 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
             <section id="anatomy" className="brief-chapter brief-anatomy">
               <AtlasEyebrow>Understanding the coverage</AtlasEyebrow>
               <h2>{config.anatomyTitle}</h2>
-              <div className="brief-anatomy__list">
+              <div className="mobile-swipe-hint mobile-swipe-hint--ink brief-anatomy__hint" aria-hidden="true"><span />Swipe through coverage parts</div>
+              <div className="brief-anatomy__list" role="region" aria-label="Coverage parts" tabIndex={0}>
                 {config.anatomy.map((item, index) => (
                   <article key={item.title} className="motion-reveal">
                     <span>0{index + 1}</span>

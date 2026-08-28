@@ -1,4 +1,4 @@
-import { Phone } from "lucide-react";
+import { Clock3, Phone } from "lucide-react";
 import { AtlasButton, AtlasEyebrow, DossierHeader, QuoteBand, SectionFolio } from "../components/AtlasUI";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { openQuoteModal } from "../lib/openQuote";
@@ -41,7 +41,17 @@ export default function Faq() {
         <AtlasButton tone="navy" onClick={openQuoteModal}>Ask us a question</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
       </DossierHeader>
       <section className="answer-library section-folio-host"><SectionFolio>Answer file</SectionFolio><div className="atlas-container answer-library__grid">
-        <aside className="answer-library__index motion-reveal"><AtlasEyebrow>Browse by topic</AtlasEyebrow>{sections.map((section) => <a key={section.code} href={`#faq-${section.code}`}>{section.title}</a>)}</aside>
+        <aside className="answer-library__index motion-reveal" aria-label="FAQ topics and office help">
+          <AtlasEyebrow>Browse by topic</AtlasEyebrow>
+          <nav aria-label="FAQ topics">{sections.map((section) => <a key={section.code} href={`#faq-${section.code}`}>{section.title}</a>)}</nav>
+          <div className="answer-library__help">
+            <Phone aria-hidden="true" />
+            <span>Need an answer about your document?</span>
+            <p>Have the policy, notice, quote, or contract in front of you when you call.</p>
+            <a href={site.contact.phoneHref}>{site.contact.phone}</a>
+            <small><Clock3 aria-hidden="true" />Monday–Friday, 10am–5pm</small>
+          </div>
+        </aside>
         <div>{sections.map((section) => <section key={section.code} id={`faq-${section.code}`} className="answer-group"><div className="answer-group__title motion-reveal"><span>{section.code}</span><h2>{section.title}</h2></div>{section.questions.map(([q,a],index) => <details key={q} className="answer-drawer motion-reveal"><summary><span>{section.code}{index+1}</span>{q}<i /></summary><p>{a}</p></details>)}</section>)}</div>
       </div></section>
       <QuoteBand title="Your situation may need a more specific answer." text="Website explanations are general. Bring the actual policy, notice, contract, vehicle, property, or business details into the conversation." />
