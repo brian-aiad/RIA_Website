@@ -16,6 +16,7 @@ const navItems = [
 export default function Navbar() {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const [quickActionsVisible, setQuickActionsVisible] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -30,6 +31,38 @@ export default function Navbar() {
   };
 
   useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    setQuickActionsVisible(false);
+    const main = document.querySelector("main");
+    const anchor = Array.from(main?.children ?? []).find((node): node is HTMLElement =>
+      node instanceof HTMLElement && node.matches("header, section"),
+    );
+    if (!anchor) return;
+
+    let anchorVisible = true;
+    const restingStates = new Map<Element, boolean>();
+    const updateVisibility = () => {
+      const restingActionVisible = Array.from(restingStates.values()).some(Boolean);
+      setQuickActionsVisible(!anchorVisible && !restingActionVisible);
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target === anchor) anchorVisible = entry.isIntersecting;
+          else restingStates.set(entry.target, entry.isIntersecting);
+        });
+        updateVisibility();
+      },
+      { threshold: 0.02, rootMargin: "0px 0px -8% 0px" },
+    );
+    observer.observe(anchor);
+    document.querySelectorAll(".quote-band, .atlas-footer").forEach((element) => {
+      restingStates.set(element, false);
+      observer.observe(element);
+    });
+    return () => observer.disconnect();
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -105,6 +138,15 @@ export default function Navbar() {
         </div>
         <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><a href={site.contact.emailHref}><Mail size={16} /> {site.contact.email}</a><button type="button" onClick={openQuoteModal}>Request a quote <ArrowUpRight size={16} /></button></div>
       </div>
+      <nav
+        className={`mobile-quick-actions ${quickActionsVisible && !open ? "is-visible" : ""}`}
+        aria-label="Quick contact actions"
+        aria-hidden={!quickActionsVisible || open}
+        inert={!quickActionsVisible || open}
+      >
+        <a href={site.contact.phoneHref}><Phone aria-hidden="true" /><span><small>Speak with us</small>Call agency</span></a>
+        <button type="button" onClick={openQuoteModal}><span><small>Start here</small>Request a quote</span><ArrowUpRight aria-hidden="true" /></button>
+      </nav>
     </header>
   );
 }

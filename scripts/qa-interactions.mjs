@@ -31,7 +31,23 @@ check(await mobile.locator(".mobile-nav__office").isVisible(), "Mobile menu offi
 await mobile.getByRole("button", { name: "Close navigation" }).click();
 check(await mobile.locator("#mobile-nav").getAttribute("aria-hidden") === "true", "Mobile menu did not close");
 
-await mobile.locator(".contact-switchboard button").click();
+await mobile.locator(".contact-switchboard__grid").scrollIntoViewIfNeeded();
+await mobile.evaluate(() => scrollBy(0, 220));
+await mobile.waitForTimeout(450);
+check(await mobile.locator(".contact-switchboard__grid").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile contact channels are not a keyboard-focusable compact rail");
+const quickActionMetrics = await mobile.locator(".mobile-quick-actions").evaluate((node) => ({
+  visible: node.classList.contains("is-visible") && node.getAttribute("aria-hidden") === "false",
+  targets: Array.from(node.querySelectorAll("a,button"), (target) => {
+    const rect = target.getBoundingClientRect();
+    return { width: rect.width, height: rect.height };
+  }),
+}));
+check(quickActionMetrics.visible, "Mobile call/quote actions did not appear after the introduction");
+check(quickActionMetrics.targets.every(({ width, height }) => width >= 44 && height >= 44), `Mobile quick-action targets are too small: ${JSON.stringify(quickActionMetrics.targets)}`);
+
+const quickQuoteBox = await mobile.locator(".mobile-quick-actions button").boundingBox();
+check(Boolean(quickQuoteBox), "Mobile quote action does not have a visible click target");
+if (quickQuoteBox) await mobile.mouse.click(quickQuoteBox.x + quickQuoteBox.width / 2, quickQuoteBox.y + quickQuoteBox.height / 2);
 const dialog = mobile.getByRole("dialog");
 await dialog.waitFor({ state: "visible" });
 const dialogReceivedFocus = await mobile.waitForFunction(
@@ -67,6 +83,10 @@ check(await reduced.locator(".ria-reviews__score").textContent().then((text) => 
 check(await reduced.locator(".ria-reviews blockquote").count() === 4, "Expected four real Google review excerpts");
 check(await reduced.locator(".ria-reviews__note").textContent().then((text) => text?.includes("Selected public review excerpts") && text.includes("Individual experiences vary")), "Review selection or outcome disclosure is missing");
 check(await reduced.locator(`a[href="https://cdicloud.insurance.ca.gov/cal"]`).isVisible(), "California license verification link is missing");
+check(await reduced.locator(".ria-service-strip").evaluate((node) => node.getBoundingClientRect().height < 100), "Mobile coverage shortcuts are still using a tall multi-row layout");
+check(await reduced.locator(".brokerage-path__rail").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile broker steps are not a keyboard-focusable compact rail");
+check(await reduced.locator(".ria-reviews__ledger").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile reviews are not a keyboard-focusable compact rail");
+check(await reduced.evaluate(() => document.body.scrollHeight < 11_000), "Mobile homepage remains excessively long after content prioritization");
 
 const claimTab = reduced.getByRole("tab", { name: /Claim next steps/ });
 await claimTab.click();
@@ -86,6 +106,17 @@ const reducedDialogStyle = await reducedDialog.evaluate((node) => ({
   transform: getComputedStyle(node).transform,
 }));
 check(reducedDialogStyle.opacity === "1", "Reduced-motion quote dialog was not immediately visible");
+
+await reduced.keyboard.press("Escape");
+await reduced.locator(".quote-band").scrollIntoViewIfNeeded();
+await reduced.waitForTimeout(250);
+check(await reduced.locator(".mobile-quick-actions").getAttribute("aria-hidden") === "true", "Mobile quick actions did not yield to the page quote band");
+
+await reduced.goto(`${base}/services/`, { waitUntil: "networkidle" });
+check(await reduced.locator(".services-briefs__list").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile coverage guides are not a keyboard-focusable compact rail");
+
+await reduced.goto(`${base}/about/`, { waitUntil: "networkidle" });
+check(await reduced.locator(".agency-principles__grid").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile agency principles are not a keyboard-focusable compact rail");
 
 await reduced.goto(`${base}/auto-insurance-los-angeles-ca/`, { waitUntil: "networkidle" });
 check(await reduced.locator('img[src*="auto-review-v8"]').first().isVisible(), "Corrected auto artwork is not referenced on the auto coverage page");
@@ -113,5 +144,5 @@ check(await motionPage.evaluate(() => document.documentElement.scrollWidth <= wi
 
 await chromiumBrowser.close();
 
-console.log(JSON.stringify({ checks, failures, mobileNavMetrics, reducedDialogStyle, reviewMotionState }, null, 2));
+console.log(JSON.stringify({ checks, failures, mobileNavMetrics, quickActionMetrics, reducedDialogStyle, reviewMotionState }, null, 2));
 if (failures.length) process.exitCode = 1;

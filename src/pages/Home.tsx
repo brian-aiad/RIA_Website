@@ -180,7 +180,8 @@ export default function Home() {
             </div>
           </header>
 
-          <div className="ria-reviews__ledger">
+          <p className="mobile-swipe-hint mobile-swipe-hint--reviews" aria-hidden="true"><span />Swipe to read customer comments</p>
+          <div className="ria-reviews__ledger" role="region" aria-label="Selected customer reviews" tabIndex={0}>
             {site.reviews.excerpts.map((review) => (
               <blockquote key={review.name} className="motion-reveal">
                 <span aria-hidden="true">“</span>
@@ -198,8 +199,8 @@ export default function Home() {
         <div className="atlas-container ria-faq__grid">
           <header className="motion-reveal"><p className="ria-kicker">Straight answers</p><h2>Common questions before you call.</h2><p>No generic promises—just a useful starting point for the conversation.</p><Link to="/faq">Read all FAQs <ArrowRight size={16} /></Link></header>
           <div>
-            {homeFaqs.map((faq, index) => (
-              <details key={faq.question} className="answer-drawer motion-reveal" open={index === 0}>
+            {homeFaqs.map((faq) => (
+              <details key={faq.question} className="answer-drawer motion-reveal">
                 <summary>{faq.question}<i aria-hidden="true" /></summary>
                 <p>{faq.answer}</p>
               </details>

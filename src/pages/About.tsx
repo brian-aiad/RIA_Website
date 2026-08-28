@@ -34,7 +34,8 @@ export default function About() {
         <SectionFolio tone="gold">Working standards</SectionFolio>
         <div className="atlas-container">
           <div className="agency-principles__heading motion-reveal"><AtlasEyebrow light>Working principles</AtlasEyebrow><h2>What the agency tries to make easier.</h2></div>
-          <div className="agency-principles__grid">
+          <div className="mobile-swipe-hint"><span />Swipe through our working principles</div>
+          <div className="agency-principles__grid" role="region" aria-label="Agency working principles" tabIndex={0}>
             {[
               { title: "The comparison", text: "See how limits, deductibles, exclusions, endorsements, and price move together.", detail: "Limits · deductibles · exclusions", icon: Scale },
               { title: "The language", text: "Discuss your coverage in English, Spanish, or Arabic when that makes the details clearer.", detail: "English · Spanish · Arabic", icon: Languages },

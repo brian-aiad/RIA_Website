@@ -63,7 +63,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
             });
 
             const timeline = gsap.timeline({
-              scrollTrigger: { trigger: group, start, once: true },
+              scrollTrigger: { trigger: group, start, once: true, fastScrollEnd: true },
               defaults: { ease: "power3.out", overwrite: "auto" },
             });
 
@@ -202,15 +202,15 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
 
         root.querySelectorAll<HTMLElement>(".quote-band").forEach((band) => {
           if (band.getBoundingClientRect().top < window.innerHeight + 24) return;
-          const targets = Array.from(band.querySelectorAll<HTMLElement>(".quote-band__mark, h2, .quote-band__grid > p, .quote-band__actions"));
-          gsap.set(targets, { y: 10 });
+          const targets = Array.from(band.querySelectorAll<HTMLElement>(".quote-band__art img, .quote-band__mark, h2, .quote-band__grid > p, .quote-band__actions"));
+          gsap.set(targets, { y: 10, willChange: "transform" });
           gsap.to(targets, {
             y: 0,
             duration: 0.44,
             stagger: 0.045,
             ease: "power3.out",
             clearProps: "transform,willChange",
-            scrollTrigger: { trigger: band, start: "clamp(top 88%)", once: true },
+            scrollTrigger: { trigger: band, start: "clamp(top 88%)", once: true, fastScrollEnd: true },
           });
         });
 

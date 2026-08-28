@@ -30,7 +30,8 @@ export default function Contact() {
         <SectionFolio>Choose a channel</SectionFolio>
         <div className="atlas-container">
           <div className="contact-switchboard__heading motion-reveal"><AtlasEyebrow>Contact Rafla Insurance</AtlasEyebrow><h2>Choose what works for you.</h2></div>
-          <div className="contact-switchboard__grid">
+          <div className="mobile-swipe-hint mobile-swipe-hint--ink"><span />Swipe through contact options</div>
+          <div className="contact-switchboard__grid" role="region" aria-label="Contact options" tabIndex={0}>
             <a href={site.contact.phoneHref} className="motion-reveal"><span>01</span><Phone /><h3>Office line</h3><strong>{site.contact.phone}</strong><p>Quotes, policy questions, renewals, and general help.</p><ArrowRight /></a>
             <button type="button" onClick={openQuoteModal} className="motion-reveal"><span>02</span><MessageSquareText /><h3>Request a quote</h3><strong>Start online</strong><p>Share the first details so our team can prepare for the conversation.</p><ArrowRight /></button>
             <a href={site.contact.emailHref} className="motion-reveal"><span>03</span><Mail /><h3>Email</h3><strong>{site.contact.email}</strong><p>Do not send highly sensitive information by ordinary email.</p><ArrowRight /></a>

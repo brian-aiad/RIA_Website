@@ -62,7 +62,8 @@ export default function Services() {
         <SectionFolio tone="paper">Practical guides</SectionFolio>
         <div className="atlas-container services-briefs__grid">
           <div className="services-briefs__copy motion-reveal"><AtlasEyebrow>Coverage guides</AtlasEyebrow><h2>Learn before you decide.</h2><p>Explore practical explanations of common coverage, useful documents, and questions to bring to a broker conversation.</p></div>
-          <div className="services-briefs__list">
+          <div className="mobile-swipe-hint mobile-swipe-hint--ink"><span />Swipe through coverage guides</div>
+          <div className="services-briefs__list" role="region" aria-label="Coverage guides" tabIndex={0}>
             {coverageEntries.slice(0, 4).map((entry) => <Link key={entry.key} to={entry.href} className="motion-reveal"><span>{entry.number}</span><strong>{entry.title}</strong><p>{entry.short}</p><ArrowRight size={18} /></Link>)}
           </div>
         </div>

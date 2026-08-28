@@ -102,6 +102,20 @@ for (const suite of suites) {
           })
           .slice(0, 5)
           .map((element) => `${element.tagName}.${element.className}`);
+        const clippedText = Array.from(
+          document.querySelectorAll("main h1, main h2, main h3, main summary, main button, .atlas-nav a, .atlas-nav button"),
+        )
+          .filter((element) => {
+            const rect = element.getBoundingClientRect();
+            if (rect.width < 4 || rect.height < 4) return false;
+            const style = getComputedStyle(element);
+            if (style.display === "none" || style.visibility === "hidden") return false;
+            const clipsInline = style.overflowX !== "visible" && element.scrollWidth > element.clientWidth + 3;
+            const clipsBlock = style.overflowY !== "visible" && element.scrollHeight > element.clientHeight + 3;
+            return clipsInline || clipsBlock;
+          })
+          .slice(0, 8)
+          .map((element) => `${element.tagName}.${element.className}`);
 
         return {
           h1Count: document.querySelectorAll("main h1").length,
@@ -109,6 +123,7 @@ for (const suite of suites) {
           horizontalOverflow: root.scrollWidth - root.clientWidth,
           brokenImages,
           hiddenContent,
+          clippedText,
         };
       });
 
@@ -119,6 +134,7 @@ for (const suite of suites) {
       if (result.horizontalOverflow > 1) problems.push(`${result.horizontalOverflow}px horizontal overflow`);
       if (result.brokenImages.length) problems.push(`broken images: ${result.brokenImages.join(", ")}`);
       if (result.hiddenContent.length) problems.push(`hidden content: ${result.hiddenContent.join(", ")}`);
+      if (result.clippedText.length) problems.push(`clipped text: ${result.clippedText.join(", ")}`);
       if (consoleErrors.length) problems.push(`console: ${consoleErrors.join(" | ")}`);
       if (problems.length) failures.push(`${suite.name}/${viewport.name} ${route}: ${problems.join("; ")}`);
       checked += 1;

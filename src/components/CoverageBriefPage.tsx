@@ -118,7 +118,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
               <AtlasEyebrow>Useful answers</AtlasEyebrow>
               <h2>Before we compare options.</h2>
               {config.faqs.map((faq, index) => (
-                <details key={faq.q} className="answer-drawer motion-reveal" open={index === 0}>
+                <details key={faq.q} className="answer-drawer motion-reveal">
                   <summary><span>0{index + 1}</span>{faq.q}<i aria-hidden="true" /></summary>
                   <p>{faq.a}</p>
                 </details>

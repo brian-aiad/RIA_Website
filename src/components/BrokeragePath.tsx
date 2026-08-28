@@ -58,7 +58,14 @@ export default function BrokeragePath() {
           </div>
         </header>
 
-        <div className="brokerage-path__rail" data-brokerage-path>
+        <p className="mobile-swipe-hint" aria-hidden="true"><span />Swipe through the four review steps</p>
+        <div
+          className="brokerage-path__rail"
+          data-brokerage-path
+          role="region"
+          aria-label="Four steps in Rafla's broker review process"
+          tabIndex={0}
+        >
           <div className="brokerage-path__track" aria-hidden="true"><span /></div>
           {brokerSteps.map(({ label, title, text, output, icon: Icon }) => (
             <article className="brokerage-path__step" data-brokerage-step key={title}>

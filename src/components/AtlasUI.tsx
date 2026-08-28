@@ -129,6 +129,9 @@ export function QuoteBand({
   return (
     <section className="quote-band section-folio-host">
       <SectionFolio tone="navy">Contact desk</SectionFolio>
+      <div className="quote-band__art" aria-hidden="true">
+        <img src="/images/brand/insurance-line-ribbon-higgsfield.webp" alt="" width="2048" height="420" loading="lazy" />
+      </div>
       <div className="atlas-container quote-band__grid motion-reveal">
         <div className="quote-band__mark" aria-hidden="true"><MessageSquareText size={22} /></div>
         <div>
