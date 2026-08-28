@@ -3,7 +3,6 @@ import {
   BriefcaseBusiness,
   Building2,
   Car,
-  Check,
   FileCheck2,
   Home as HomeIcon,
   Languages,
@@ -14,9 +13,9 @@ import {
 import { Link } from "react-router-dom";
 import { AtlasButton, AtlasImage, QuoteBand } from "../components/AtlasUI";
 import BrokeragePath from "../components/BrokeragePath";
+import BrokerServiceDesk from "../components/BrokerServiceDesk";
 import CoverageDesk from "../components/CoverageDesk";
 import CoverageLinework from "../components/CoverageLinework";
-import PolicyReviewSheet from "../components/PolicyReviewSheet";
 import WestsideMap from "../components/WestsideMap";
 import LocalBusinessSchema from "../components/seo/LocalBusinessSchema";
 import FAQSchema from "../components/seo/FAQSchema";
@@ -109,24 +108,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ria-review">
-        <div className="atlas-container ria-review__grid">
-          <div className="ria-review__image motion-reveal">
-            <PolicyReviewSheet />
-          </div>
-          <div className="ria-review__copy motion-reveal">
-            <p className="ria-kicker">A broker conversation, not a checkout screen</p>
-            <h2>Bring us the real details.</h2>
-            <p>A renewal notice. A first employee. A new driver. A lender deadline. A business vehicle that now carries tools. Those details are where useful insurance work begins.</p>
-            <ul>
-              <li><Check size={18} /><span><strong>We listen first.</strong> Tell us what changed and what you are trying to protect.</span></li>
-              <li><Check size={18} /><span><strong>We compare the substance.</strong> Limits, deductibles, exclusions, carrier rules, and price all matter.</span></li>
-              <li><Check size={18} /><span><strong>You make the decision.</strong> We explain the options and help with the paperwork that follows.</span></li>
-            </ul>
-            <AtlasButton to="/about" tone="line">How Rafla works</AtlasButton>
-          </div>
-        </div>
-      </section>
+      <BrokerServiceDesk />
 
       <section className="ria-editorial">
         <div className="atlas-container">

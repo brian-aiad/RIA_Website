@@ -46,7 +46,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
     <main id="main-content" className="atlas-page coverage-brief">
       <LocalBusinessSchema url="https://raflainsurance.com/" areaServed={["Los Angeles, CA", "Mar Vista", "Los Angeles Westside"]} />
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Services", url: "https://raflainsurance.com/services" }, { name: config.eyebrow, url: config.canonical }]} />
-      <DossierHeader index={config.index} eyebrow={config.eyebrow} title={config.title} lede={config.lede} visual={<CoverageLinework variant={drawing} />}>
+      <DossierHeader index={config.index} eyebrow={config.eyebrow} title={config.title} lede={config.lede} image={config.image} imageAlt={config.imageAlt} visualLabel="Coverage review / Mar Vista">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Request a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
       </DossierHeader>

@@ -19,12 +19,13 @@ export const images = {
     household: "/images/illustrated/household-v6.webp",
     business: "/images/illustrated/small-business-v6.webp",
     renters: "/images/illustrated/renters-inventory-v6.webp",
+    property: "/images/illustrated/home-property-v7.webp",
     why: "/images/illustrated/policy-desk-v6.webp",
     reviews: "/images/illustrated/policy-desk-v6.webp",
   },
   services: {
     auto: "/images/illustrated/auto-review-v6.webp",
-    home: "/images/illustrated/renters-inventory-v6.webp",
+    home: "/images/illustrated/home-property-v7.webp",
     workers: "/images/illustrated/workers-safety-v6.webp",
     commercial: "/images/illustrated/small-business-v6.webp",
     motorcycle: "/images/illustrated/specialty-v6.webp",
@@ -40,6 +41,7 @@ export const images = {
     rv: "/images/illustrated/specialty-v6.webp",
     sr22: "/images/illustrated/auto-review-v6.webp",
     noLicense: "/images/illustrated/policy-desk-v6.webp",
+    filings: "/images/illustrated/certificates-bonds-v7.webp",
   },
   about: {
     office: "/images/illustrated/broker-desk-v6.webp",
@@ -65,7 +67,8 @@ export const images = {
     contactFrontDesk: "/images/illustrated/contact-service-v6.webp",
   },
   claims: {
-    docs: "/images/illustrated/policy-desk-v6.webp",
+    docs: "/images/illustrated/claims-service-v7.webp",
+    certificates: "/images/illustrated/certificates-bonds-v7.webp",
   },
   city: {
     westside: "/images/illustrated/office-venice-illustrated-v6.webp",

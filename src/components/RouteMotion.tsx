@@ -94,9 +94,10 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
           { selector: ".ria-section-heading", y: 10, duration: 0.48 },
           { selector: ".coverage-desk", y: 14, scale: 0.995, duration: 0.58, at: "-=0.34" },
         ]);
-        stageGroup(".ria-review", [
-          { selector: ".ria-review__image", x: -18, duration: 0.62 },
-          { selector: ".ria-review__copy", x: 16, duration: 0.58, at: "-=0.48" },
+        stageGroup(".broker-cases", [
+          { selector: ".broker-cases__heading > div", x: -14, duration: 0.56 },
+          { selector: ".broker-cases__heading > p", x: 14, duration: 0.52, at: "-=0.42" },
+          { selector: ".broker-cases__shell", y: 12, scale: 0.996, duration: 0.58, at: "-=0.32" },
         ]);
         stageGroup(".ria-editorial", [
           { selector: ".ria-section-heading", y: 10, duration: 0.48 },

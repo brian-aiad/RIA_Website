@@ -4,6 +4,7 @@ const PRODUCTION_HOSTS = new Set(["raflainsurance.com", "www.raflainsurance.com"
 const COMING_SOON_ENABLED = true;
 
 export const config = {
+  runtime: "nodejs",
   // Static assets remain available to the holding page. Everything else is
   // gated only on the two public custom domains; localhost and Vercel preview
   // deployments continue to serve the complete site.

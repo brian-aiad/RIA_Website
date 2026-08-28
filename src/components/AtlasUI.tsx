@@ -60,6 +60,7 @@ export function DossierHeader({
   lede,
   image,
   imageAlt,
+  visualLabel,
   visual,
   children,
 }: {
@@ -69,6 +70,7 @@ export function DossierHeader({
   lede: string;
   image?: string;
   imageAlt?: string;
+  visualLabel?: string;
   visual?: ReactNode;
   children?: ReactNode;
 }) {
@@ -96,7 +98,7 @@ export function DossierHeader({
           <figure className="dossier-hero__visual atlas-parallax">
             <AtlasImage src={image} alt={imageAlt ?? ""} width="1536" height="1024" fetchPriority="high" />
             <figcaption>
-              <span>12240 Venice Boulevard</span>
+              <span>{visualLabel ?? "12240 Venice Boulevard"}</span>
               Mar Vista · CA agency license 0D95584
             </figcaption>
           </figure>

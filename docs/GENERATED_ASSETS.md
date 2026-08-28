@@ -73,3 +73,25 @@ A genuine neighborhood insurance service moment at the Rafla front desk. A frien
 Output: `public/images/brand/rafla-social-v6.jpg`
 
 This is a centered 1200×630 production crop of the broker-desk master, created without generative edits so social previews use the same commissioned scene as the website.
+
+## Second craft-pass scenes
+
+Generation mode: built-in Codex `imagegen` tool. All three scenes were generated with `broker-desk-v6.webp` as a style-only reference and with new compositions. Production files are WebP at 640, 828, 1100, and 1536 pixels wide; the original generated PNGs remain in the Codex generated-image store.
+
+### Home and property review
+
+Output: `public/images/illustrated/home-property-v7.webp`
+
+Create a new homeowners and property-insurance review outside a modest, well-kept Westside Los Angeles stucco bungalow on a leafy Mar Vista street. A local broker and two homeowners walk the property together: one homeowner holds keys and a renovation folder, the broker points toward roof and exterior details on a paper property checklist, and the other homeowner measures a window. Keep the bungalow, people, and checklist legible at phone size. Use the shared gouache-and-screen-print visual language and palette. Avoid disaster imagery, luxury-mansion imagery, readable text, logos, UI, gradients, photorealism, and stock-photo posing.
+
+### Claims follow-through
+
+Output: `public/images/illustrated/claims-service-v7.webp`
+
+Create a calm neighborhood service scene beside a modest Los Angeles repair shop after a minor fender-bender. A local broker helps a driver organize next steps at the open trunk of an everyday sedan; the driver holds a phone with a reference photo while the broker checks a paper claim-notes folder, and a repair representative indicates a small bumper dent. The scene should communicate reassurance and local help after the policy begins. Use the shared gouache-and-screen-print visual language and palette. Avoid injuries, emergency response, dramatic damage, readable text, logos, UI, gradients, and photorealism.
+
+### Certificates, bonds, and filings
+
+Output: `public/images/illustrated/certificates-bonds-v7.webp`
+
+Create a business-document service scene at a neighborhood insurance counter. A woman who owns a small contracting business and a crew lead review an organized packet with a local broker. The broker separates a blank certificate page, bond form, registration envelope, and contractor agreement into color-tabbed folders; a hard hat and key ring ground the scene in a real insured operation. Use the shared gouache-and-screen-print visual language and palette. Avoid staged handshakes, courtroom or banking imagery, readable text, logos, UI, gradients, and photorealism.
