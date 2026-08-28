@@ -34,7 +34,7 @@ export default function CityLanding() {
     <main id="main-content" className="atlas-page city-file">
       <LocalBusinessSchema url={canonical} areaServed={[`${city.name}, CA`, "Los Angeles, CA"]} />
       <BreadcrumbSchema crumbs={[{name:"Home",url:"https://raflainsurance.com/"},{name:"Service areas",url:"https://raflainsurance.com/locations"},{name:city.name,url:canonical}]} />
-      <DossierHeader index={city.zips[0]} eyebrow={`Insurance near ${city.name}`} title={`A local insurance broker serving ${city.name}.`} lede={`${city.note} Get independent personal and commercial guidance from Rafla’s Venice Boulevard office.`} image="/images/agency/office-venice-v2.webp" imageAlt="Rafla Insurance Agency office at 12240 Venice Boulevard">
+      <DossierHeader index={city.zips[0]} eyebrow={`Insurance near ${city.name}`} title={`A local insurance broker serving ${city.name}.`} lede={`${city.note} Get independent personal and commercial guidance from Rafla’s Venice Boulevard office.`} image="/images/illustrated/office-venice-illustrated-v6.webp" imageAlt="Illustration of Rafla Insurance Agency's Venice Boulevard neighborhood office">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Request a {city.name} quote</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
       </DossierHeader>
 

@@ -80,59 +80,14 @@ function prioritizeHeroPreloads(html) {
   return withoutHeroPreloads.replace("<head>", `<head>\n${preloadHtml}`);
 }
 
-function deferAppRuntime(html) {
-  const moduleScriptMatch = html.match(
-    /\s*<script\s+type="module"[^>]+src="([^"]*\/assets\/index-[^"]+\.js)"[^>]*><\/script>/
-  );
-  if (!moduleScriptMatch) return html;
-
-  const appScriptSrc = moduleScriptMatch[1];
-  const preloadHrefs = [];
-  let nextHtml = html.replace(moduleScriptMatch[0], "");
-
-  nextHtml = nextHtml.replace(
-    /\s*<link\s+rel="modulepreload"[^>]+href="([^"]+)"[^>]*>/g,
-    (_tag, href) => {
-      preloadHrefs.push(href);
-      return "";
-    }
-  );
-
-  nextHtml = nextHtml.replace(
+function keepAppRuntimeInteractive(html) {
+  // Keep the Vite module script and its preloads in the prerendered document.
+  // Deferring them until pointerdown caused the first tap on a phone to load
+  // React without activating the control the visitor actually touched.
+  return html.replace(
     /\s*<script[^>]+src="\/_vercel\/(?:insights|speed-insights)\/script\.js"[^>]*><\/script>/g,
     ""
   );
-
-  const loader = `<script data-deferred-app-runtime>
-    (function () {
-      var loaded = false;
-      var appScript = ${JSON.stringify(appScriptSrc)};
-      var preloadHrefs = ${JSON.stringify([...new Set(preloadHrefs)])};
-      function loadApp() {
-        if (loaded) return;
-        loaded = true;
-        preloadHrefs.forEach(function (href) {
-          var link = document.createElement('link');
-          link.rel = 'modulepreload';
-          link.href = href;
-          link.crossOrigin = '';
-          document.head.appendChild(link);
-        });
-        var script = document.createElement('script');
-        script.type = 'module';
-        script.crossOrigin = '';
-        script.src = appScript;
-        document.head.appendChild(script);
-      }
-      window.addEventListener('pointerdown', loadApp, { once: true, capture: true });
-      window.addEventListener('keydown', loadApp, { once: true, capture: true });
-      window.addEventListener('load', function () {
-        window.setTimeout(loadApp, 3000);
-      }, { once: true });
-    }());
-  </script>`;
-
-  return nextHtml.replace("</body>", `${loader}</body>`);
 }
 
 function addPrerenderMarker(html) {
@@ -271,7 +226,7 @@ async function prerender() {
     // Replace any localhost origin that crept into JSON-LD via window.location.origin
     html = html.replace(/http:\/\/127\.0\.0\.1:\d+/g, PROD_ORIGIN);
     html = prioritizeHeroPreloads(html);
-    html = deferAppRuntime(html);
+    html = keepAppRuntimeInteractive(html);
 
     writeFileSync(outPath, html, "utf-8");
     console.log(`  ✓ ${route} → ${outPath.replace(DIST, "dist")}`);

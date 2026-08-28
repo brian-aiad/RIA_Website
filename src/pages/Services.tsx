@@ -1,7 +1,6 @@
 import { ArrowRight, Building2, Car, Check, FileBadge2, FileSearch, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, PaperNote, QuoteBand } from "../components/AtlasUI";
-import CoverageLinework, { type CoverageLineworkVariant } from "../components/CoverageLinework";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { coverageEntries, serviceGroups } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
@@ -9,13 +8,12 @@ import { images } from "../lib/images";
 import { usePageMeta } from "../lib/seo";
 import { site } from "../lib/site";
 
-const groupDrawings: CoverageLineworkVariant[] = ["auto", "home", "commercial", "specialty"];
-const groupPhotos = [images.services.auto, null, images.services.workers, null] as const;
+const groupPhotos = [images.services.auto, images.services.home, images.services.workers, images.services.motorcycle] as const;
 const groupPhotoAlts = [
-  "A Los Angeles driver reviewing auto insurance documents with a broker beside an everyday car",
-  "",
-  "A small Los Angeles contractor crew preparing tools and safety equipment before the workday",
-  "",
+  "Illustration of a Los Angeles household reviewing auto insurance beside an everyday car",
+  "Illustration of Los Angeles renters making an inventory of belongings in their apartment",
+  "Illustration of a small Los Angeles contractor crew preparing tools and safety equipment",
+  "Illustration of a motorcycle, travel trailer, and boat being prepared safely for a trip",
 ] as const;
 
 export default function Services() {
@@ -28,7 +26,7 @@ export default function Services() {
   return (
     <main id="main-content" className="atlas-page services-atlas">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Services", url: "https://raflainsurance.com/services" }]} />
-      <DossierHeader index="Services" eyebrow="Personal and business insurance" title="Insurance for what you own, drive, and operate." lede="From the car in your driveway to the business that keeps you moving, we help bring your coverage into one clear conversation." image="/images/agency/people-business-v4.webp" imageAlt="A Westside small-business crew loading tools into a work van outside their shop">
+      <DossierHeader index="Services" eyebrow="Personal and business insurance" title="Insurance for what you own, drive, and operate." lede="From the car in your driveway to the business that keeps you moving, we help bring your coverage into one clear conversation." image="/images/illustrated/small-business-v6.webp" imageAlt="Illustration of a Westside small-business owner reviewing coverage outside her shop">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Tell us what you need</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
       </DossierHeader>
@@ -47,10 +45,8 @@ export default function Services() {
                 <article id={group.id} key={group.id} className={`service-ledger service-ledger--${index % 2 ? "paper" : "navy"} motion-reveal`}>
                   <div className="service-ledger__number">0{index + 1}</div>
                   <div className="service-ledger__title"><span>{group.kicker}</span><Icon size={28} /><h3>{group.label}</h3></div>
-                  <div className={`service-ledger__image ${groupPhotos[index] ? "service-ledger__image--photo" : "service-ledger__image--drawing"}`}>
-                    {groupPhotos[index]
-                      ? <AtlasImage src={groupPhotos[index]} alt={groupPhotoAlts[index]} width="1536" height="1024" loading="lazy" />
-                      : <CoverageLinework variant={groupDrawings[index]} />}
+                  <div className="service-ledger__image service-ledger__image--photo">
+                    <AtlasImage src={groupPhotos[index]} alt={groupPhotoAlts[index]} width="1536" height="1024" loading="lazy" />
                   </div>
                   <ul>{group.lines.map((line) => <li key={line}><Check size={14} />{line}</li>)}</ul>
                   <button type="button" onClick={openQuoteModal}>Talk about this coverage <ArrowRight size={16} /></button>

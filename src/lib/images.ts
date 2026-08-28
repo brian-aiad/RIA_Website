@@ -6,75 +6,71 @@ export function srcset(src: string): string {
 /** Centralized image paths — all optimized from /public/images */
 export const images = {
   hero: {
-    /** Candid broker conversation created for Rafla's people-first campaign */
-    people: "/images/agency/people-broker-review-v4.webp",
-    /** Documentary insurance-review still life created for Rafla */
-    consultation: "/images/agency/policy-desk-v2.webp",
-    /** Real photo: exterior storefront on Venice Blvd, Los Angeles */
-    storefront: "/images/agency/office-venice-v2.webp",
-    officeDetail: "/images/client/rafla-building-front.jpg",
+    /** Commissioned editorial broker conversation for Rafla's people-first campaign */
+    people: "/images/illustrated/broker-desk-v6.webp",
+    /** Illustrated coverage-review desk created for Rafla */
+    consultation: "/images/illustrated/policy-desk-v6.webp",
+    /** Illustrated Venice Boulevard neighborhood office */
+    storefront: "/images/illustrated/office-venice-illustrated-v6.webp",
+    /** The one documentary proof image retained in the visual system. */
+    officeDetail: "/images/brand/office-venice-thumb-v3.webp",
   },
   home: {
-    household: "/images/agency/people-household-v4.webp",
-    business: "/images/agency/people-business-v4.webp",
-    renters: "/images/agency/people-renters-inventory-v5.webp",
-    why: "/images/agency/policy-desk-v2.webp",
-    reviews: "/images/agency/policy-desk-v2.webp",
+    household: "/images/illustrated/household-v6.webp",
+    business: "/images/illustrated/small-business-v6.webp",
+    renters: "/images/illustrated/renters-inventory-v6.webp",
+    why: "/images/illustrated/policy-desk-v6.webp",
+    reviews: "/images/illustrated/policy-desk-v6.webp",
   },
   services: {
-    auto: "/images/agency/people-auto-review-v5.webp",
-    home: "/images/agency/people-renters-inventory-v5.webp",
-    workers: "/images/agency/people-workers-safety-v5.webp",
-    commercial: "/images/agency/small-business-v2.webp",
-    motorcycle: "/images/agency/specialty-v2.webp",
-    rv: "/images/agency/specialty-v2.webp",
+    auto: "/images/illustrated/auto-review-v6.webp",
+    home: "/images/illustrated/renters-inventory-v6.webp",
+    workers: "/images/illustrated/workers-safety-v6.webp",
+    commercial: "/images/illustrated/small-business-v6.webp",
+    motorcycle: "/images/illustrated/specialty-v6.webp",
+    rv: "/images/illustrated/specialty-v6.webp",
   },
   products: {
-    overview: "/images/agency/policy-desk-v2.webp",
-    auto: "/images/agency/people-auto-review-v5.webp",
-    home: "/images/agency/people-renters-inventory-v5.webp",
-    workers: "/images/agency/people-workers-safety-v5.webp",
-    commercial: "/images/agency/small-business-v2.webp",
-    motorcycle: "/images/agency/specialty-v2.webp",
-    rv: "/images/agency/specialty-v2.webp",
-    sr22: "/images/agency/people-auto-review-v5.webp",
-    noLicense: "/images/agency/policy-desk-v2.webp",
+    overview: "/images/illustrated/policy-desk-v6.webp",
+    auto: "/images/illustrated/auto-review-v6.webp",
+    home: "/images/illustrated/renters-inventory-v6.webp",
+    workers: "/images/illustrated/workers-safety-v6.webp",
+    commercial: "/images/illustrated/small-business-v6.webp",
+    motorcycle: "/images/illustrated/specialty-v6.webp",
+    rv: "/images/illustrated/specialty-v6.webp",
+    sr22: "/images/illustrated/auto-review-v6.webp",
+    noLicense: "/images/illustrated/policy-desk-v6.webp",
   },
   about: {
-    office: "/images/agency/people-broker-review-v4.webp",
-    officeAlt: "/images/client/rafla-building-angle.jpg",
+    office: "/images/illustrated/broker-desk-v6.webp",
+    officeAlt: "/images/illustrated/office-venice-illustrated-v6.webp",
   },
   location: {
-    /** Real photo: storefront from across the street — clean, no obstruction */
-    exterior: "/images/client/rafla-building-street.jpg",
-    /** Real photo: wider exterior showing the shopping center context */
-    exteriorWide: "/images/client/rafla-building-wide.jpg",
-    /** Real photo: close exterior view of the Rafla storefront */
-    interior: "/images/client/rafla-building-front.jpg",
-    /** Real photo: angled exterior view of the Rafla storefront */
-    consultationRoom: "/images/client/rafla-building-angle.jpg",
+    exterior: "/images/illustrated/office-venice-illustrated-v6.webp",
+    exteriorWide: "/images/illustrated/office-venice-illustrated-v6.webp",
+    interior: "/images/illustrated/contact-service-v6.webp",
+    consultationRoom: "/images/illustrated/broker-desk-v6.webp",
   },
   testimonials: {
-    auto: "/images/agency/auto-home-v2.webp",
-    family: "/images/agency/auto-home-v2.webp",
-    business: "/images/agency/small-business-v2.webp",
+    auto: "/images/illustrated/auto-review-v6.webp",
+    family: "/images/illustrated/household-v6.webp",
+    business: "/images/illustrated/small-business-v6.webp",
   },
   clients: {
-    officeConsultation: "/images/agency/policy-desk-v2.webp",
-    autoConsultation: "/images/agency/people-auto-review-v5.webp",
-    sr22Consultation: "/images/agency/people-auto-review-v5.webp",
-    noLicenseConsultation: "/images/agency/policy-desk-v2.webp",
-    commercialConsultation: "/images/agency/small-business-v2.webp",
-    /** Representative service moment; not presented as a named staff portrait. */
-    contactFrontDesk: "/images/agency/people-contact-service-v5.webp",
+    officeConsultation: "/images/illustrated/policy-desk-v6.webp",
+    autoConsultation: "/images/illustrated/auto-review-v6.webp",
+    sr22Consultation: "/images/illustrated/auto-review-v6.webp",
+    noLicenseConsultation: "/images/illustrated/policy-desk-v6.webp",
+    commercialConsultation: "/images/illustrated/small-business-v6.webp",
+    contactFrontDesk: "/images/illustrated/contact-service-v6.webp",
   },
   claims: {
-    docs: "/images/agency/policy-desk-v2.webp",
+    docs: "/images/illustrated/policy-desk-v6.webp",
   },
   city: {
-    westside: "/images/agency/office-venice-v2.webp",
-    coastal: "/images/agency/specialty-v2.webp",
-    palmsCulver: "/images/agency/auto-home-v2.webp",
-    southWestside: "/images/agency/small-business-v2.webp",
+    westside: "/images/illustrated/office-venice-illustrated-v6.webp",
+    coastal: "/images/illustrated/specialty-v6.webp",
+    palmsCulver: "/images/illustrated/household-v6.webp",
+    southWestside: "/images/illustrated/small-business-v6.webp",
   },
 };

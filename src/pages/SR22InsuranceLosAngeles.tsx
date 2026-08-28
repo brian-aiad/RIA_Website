@@ -8,7 +8,7 @@ const config: CoverageBriefConfig = {
   metaTitle: "SR-22 Insurance Los Angeles | Rafla Insurance Agency",
   metaDescription: "Get help with California SR-22 filing and eligible auto insurance from an independent broker in Mar Vista, Los Angeles.",
   canonical: "https://raflainsurance.com/sr22-insurance-los-angeles",
-  image: "/images/agency/people-auto-review-v5.webp",
+  image: "/images/illustrated/auto-review-v6.webp",
   imageAlt: "A Los Angeles driver reviewing auto insurance paperwork with a broker beside an everyday car",
   signals: [
     { label: "What it is", value: "Proof certificate" },

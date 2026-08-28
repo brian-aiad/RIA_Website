@@ -8,7 +8,7 @@ const sections: PolicySection[] = [
   { title: "Website services", body: ["The site may use hosting, security, analytics, and form-delivery providers to operate. Those providers may process technical information such as IP address, device or browser details, requested pages, and timestamps. Vercel hosts the site and provides privacy-oriented web analytics and speed insights."], bullets: ["The public website does not intentionally sell personal information.", "Third-party maps, review pages, phone, email, or other links are governed by their own privacy practices."] },
   { title: "Retention and security", body: ["Information is retained as reasonably needed for the request, agency records, legal obligations, fraud prevention, or dispute resolution. No internet transmission or storage system can be guaranteed completely secure. Use the phone or in-person office for sensitive matters."] },
   { title: "Your choices", body: ["You may choose not to submit an online form and contact the agency by telephone or in person. You can ask about information you previously submitted, subject to identity verification and applicable recordkeeping obligations."] },
-  { title: "Contact", body: ["Questions about this notice can be directed to Rafla Insurance Agency at (310) 572-7246 or brinsurance3@msn.com, or by mail at 12240 Venice Blvd, Suite 2, Los Angeles, CA 90066."] },
+  { title: "Contact", body: ["Questions about this notice can be directed to Rafla Insurance Agency at (310) 572-7246 or contact@raflainsurance.com, or by mail at 12240 Venice Blvd, Suite 2, Los Angeles, CA 90066."] },
 ];
 
 export default function Privacy() {

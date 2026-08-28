@@ -9,8 +9,8 @@ export const site = {
     fax: "(310) 572-7247",
     text: "(310) 918-7007",
     textHref: "sms:+13109187007",
-    email: "brinsurance3@msn.com",
-    emailHref: "mailto:brinsurance3@msn.com",
+    email: "contact@raflainsurance.com",
+    emailHref: "mailto:contact@raflainsurance.com",
     address: "12240 Venice Blvd, Suite 2, Los Angeles, CA 90066",
     mapsHref:
       "https://maps.google.com/maps?q=12240+VENICE+BLVD+SUITE+2,+LOS+ANGELES,+CA+90066",

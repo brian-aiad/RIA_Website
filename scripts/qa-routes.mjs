@@ -1,4 +1,4 @@
-import { chromium } from "playwright";
+import { chromium, webkit } from "playwright";
 
 const base = process.env.QA_BASE_URL ?? "http://127.0.0.1:4174";
 const routes = [
@@ -30,31 +30,42 @@ const routes = [
 ];
 
 const viewports = [
+  { name: "compact", width: 320, height: 568 },
   { name: "mobile", width: 390, height: 844 },
   { name: "tablet", width: 768, height: 1024 },
   { name: "desktop", width: 1440, height: 950 },
+  { name: "wide", width: 1920, height: 1080 },
 ];
 
-const browser = await chromium.launch({ headless: true });
 const failures = [];
 let checked = 0;
 
-for (const viewport of viewports) {
-  const context = await browser.newContext({
-    viewport: { width: viewport.width, height: viewport.height },
-    reducedMotion: "no-preference",
-  });
+const suites = [
+  { name: "chromium", engine: chromium, viewports },
+  { name: "webkit", engine: webkit, viewports: viewports.filter(({ name }) => name === "compact" || name === "mobile") },
+  { name: "reduced", engine: chromium, viewports: [{ name: "mobile", width: 390, height: 844 }], reducedMotion: "reduce" },
+];
 
-  for (const route of routes) {
-    const page = await context.newPage();
-    const consoleErrors = [];
-    page.on("console", (message) => {
-      if (message.type() === "error") consoleErrors.push(message.text());
+for (const suite of suites) {
+  const browser = await suite.engine.launch({ headless: true });
+
+  for (const viewport of suite.viewports) {
+    const context = await browser.newContext({
+      viewport: { width: viewport.width, height: viewport.height },
+      reducedMotion: suite.reducedMotion ?? "no-preference",
     });
-    page.on("pageerror", (error) => consoleErrors.push(error.message));
+
+    for (const route of routes) {
+      const page = await context.newPage();
+      const previewPath = route === "/" ? route : `${route}/`;
+      const consoleErrors = [];
+      page.on("console", (message) => {
+        if (message.type() === "error") consoleErrors.push(message.text());
+      });
+      page.on("pageerror", (error) => consoleErrors.push(error.message));
 
     try {
-      const response = await page.goto(`${base}${route}`, {
+      const response = await page.goto(`${base}${previewPath}`, {
         waitUntil: "networkidle",
         timeout: 20_000,
       });
@@ -94,6 +105,7 @@ for (const viewport of viewports) {
 
         return {
           h1Count: document.querySelectorAll("main h1").length,
+          h1Text: document.querySelector("main h1")?.textContent?.trim() ?? "",
           horizontalOverflow: root.scrollWidth - root.clientWidth,
           brokenImages,
           hiddenContent,
@@ -102,22 +114,25 @@ for (const viewport of viewports) {
 
       const problems = [];
       if (result.h1Count !== 1) problems.push(`${result.h1Count} H1 elements`);
+      if (route === "/" && !result.h1Text.includes("Coverage for Los Angeles")) problems.push(`unexpected home H1: ${result.h1Text}`);
+      if (route !== "/" && result.h1Text.includes("Coverage for Los Angeles")) problems.push("homepage fallback rendered for a deep route");
       if (result.horizontalOverflow > 1) problems.push(`${result.horizontalOverflow}px horizontal overflow`);
       if (result.brokenImages.length) problems.push(`broken images: ${result.brokenImages.join(", ")}`);
       if (result.hiddenContent.length) problems.push(`hidden content: ${result.hiddenContent.join(", ")}`);
       if (consoleErrors.length) problems.push(`console: ${consoleErrors.join(" | ")}`);
-      if (problems.length) failures.push(`${viewport.name} ${route}: ${problems.join("; ")}`);
+      if (problems.length) failures.push(`${suite.name}/${viewport.name} ${route}: ${problems.join("; ")}`);
       checked += 1;
     } catch (error) {
-      failures.push(`${viewport.name} ${route}: ${error.message}`);
+      failures.push(`${suite.name}/${viewport.name} ${route}: ${error.message}`);
     } finally {
       await page.close();
     }
   }
 
-  await context.close();
-}
+    await context.close();
+  }
 
-await browser.close();
+  await browser.close();
+}
 console.log(JSON.stringify({ checked, failures }, null, 2));
 if (failures.length) process.exitCode = 1;

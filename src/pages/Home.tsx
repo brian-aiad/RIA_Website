@@ -150,7 +150,7 @@ export default function Home() {
       </section>
 
       <section className="ria-local">
-        <AtlasImage className="ria-local__backdrop" src={images.hero.storefront} alt="" aria-hidden="true" width="924" height="1365" loading="lazy" />
+        <AtlasImage className="ria-local__backdrop" src={images.hero.storefront} alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" />
         <div className="ria-local__veil" aria-hidden="true" />
         <div className="atlas-container ria-local__grid">
           <div className="ria-local__copy motion-reveal">
@@ -162,8 +162,8 @@ export default function Home() {
           </div>
           <div className="ria-local__portfolio motion-reveal">
             <figure className="ria-local__office-photo">
-              <AtlasImage src="/images/agency/office-venice-v2.webp" alt="Rafla Insurance Agency office at 12240 Venice Boulevard" width="924" height="1365" loading="lazy" sizes="(max-width: 900px) 75vw, 30vw" />
-              <figcaption><MapPin size={16} /> Actual Mar Vista office</figcaption>
+              <AtlasImage src={images.hero.storefront} alt="Illustration of Rafla Insurance Agency's neighborhood office on Venice Boulevard" width="1536" height="1024" loading="lazy" sizes="(max-width: 900px) 82vw, 30vw" />
+              <figcaption><MapPin size={16} /> Venice Boulevard / Mar Vista</figcaption>
             </figure>
             <div className="ria-local__facts">
               <div><MapPin /><span><small>Address</small><strong>12240 Venice Blvd, Suite 2<br />Los Angeles, CA 90066</strong></span></div>

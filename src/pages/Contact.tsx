@@ -1,5 +1,5 @@
 import { ArrowRight, Clock3, ExternalLink, Mail, MapPin, MessageSquareText, Phone } from "lucide-react";
-import { AtlasButton, AtlasEyebrow, DossierHeader } from "../components/AtlasUI";
+import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader } from "../components/AtlasUI";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { openQuoteModal } from "../lib/openQuote";
 import { usePageMeta } from "../lib/seo";
@@ -35,7 +35,7 @@ export default function Contact() {
 
       <section className="contact-desk">
         <div className="atlas-container contact-desk__grid">
-          <div className="contact-desk__photo motion-reveal"><img src={images.location.exteriorWide} alt="Rafla Insurance Agency shopping center and Venice Boulevard office" width="1200" height="900" loading="lazy" /><div><MapPin size={17} /> Mar Vista / 90066</div></div>
+          <div className="contact-desk__photo motion-reveal"><AtlasImage src={images.location.exteriorWide} alt="Illustration of Rafla Insurance Agency's Venice Boulevard office" width="1536" height="1024" loading="lazy" /><div><MapPin size={17} /> Mar Vista / 90066</div></div>
           <div className="contact-desk__hours motion-reveal">
             <AtlasEyebrow light>When to reach us</AtlasEyebrow><h2>Office hours</h2>
             <dl><div><dt>Monday – Friday</dt><dd>10:00am – 7:00pm</dd></div><div><dt>Saturday</dt><dd>10:00am – 3:00pm</dd></div><div><dt>Sunday</dt><dd>Closed</dd></div></dl>

@@ -36,7 +36,7 @@ export default function Faq() {
   return (
     <main id="main-content" className="atlas-page faq-file">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "FAQ", url: "https://raflainsurance.com/faq" }]} />
-      <DossierHeader index="Q+A" eyebrow="Insurance questions, clearly answered" title="Helpful answers without the jargon." lede="A practical reference for questions that come up before a quote, during underwriting, and after coverage begins." image="/images/agency/people-broker-review-v4.webp" imageAlt="An insurance broker and a Los Angeles couple reviewing coverage together">
+      <DossierHeader index="Q+A" eyebrow="Insurance questions, clearly answered" title="Helpful answers without the jargon." lede="A practical reference for questions that come up before a quote, during underwriting, and after coverage begins." image="/images/illustrated/broker-desk-v6.webp" imageAlt="Illustration of an insurance broker and a Los Angeles couple reviewing coverage together">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Ask us a question</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
       </DossierHeader>
       <section className="answer-library"><div className="atlas-container answer-library__grid">

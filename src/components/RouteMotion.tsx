@@ -26,10 +26,11 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
     let teardown: (() => void) | undefined;
 
     const setupMotion = async () => {
-      // Phones, touch-first tablets, and reduced-motion users keep native,
-      // immediate rendering. The document remains fully composed without JS.
+      // Reduced-motion users keep native, immediate rendering. Touch devices
+      // receive only small, one-time transforms; no scroll scrubbing or pinning.
       root.classList.remove("motion-managed");
-      if (window.matchMedia("(max-width: 959px), (pointer: coarse), (prefers-reduced-motion: reduce)").matches) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const isCompact = window.matchMedia("(max-width: 959px), (pointer: coarse)").matches;
 
       const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
         import("gsap"),
@@ -55,9 +56,9 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
 
             prepared.forEach(({ step, targets }) => {
               gsap.set(targets, {
-                x: step.x ?? 0,
-                y: step.y ?? 0,
-                scale: step.scale ?? 1,
+                x: (step.x ?? 0) * (isCompact ? 0.45 : 1),
+                y: (step.y ?? 0) * (isCompact ? 0.45 : 1),
+                scale: isCompact && step.scale ? 1 - ((1 - step.scale) * 0.45) : (step.scale ?? 1),
               });
             });
 
@@ -73,8 +74,8 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
                   x: 0,
                   y: 0,
                   scale: 1,
-                  duration: step.duration ?? 0.5,
-                  stagger: step.stagger ?? 0,
+                  duration: isCompact ? Math.min(step.duration ?? 0.5, 0.42) : (step.duration ?? 0.5),
+                  stagger: isCompact ? Math.min(step.stagger ?? 0, 0.025) : (step.stagger ?? 0),
                   clearProps: "transform,willChange",
                 }, "<");
             });
@@ -208,7 +209,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
 
         // This is the one scroll-linked narrative on the site: the gold route
         // follows the actual work of an independent broker from brief to service.
-        root.querySelectorAll<HTMLElement>("[data-brokerage-path]").forEach((rail) => {
+        if (!isCompact) root.querySelectorAll<HTMLElement>("[data-brokerage-path]").forEach((rail) => {
           const track = rail.querySelector<HTMLElement>(".brokerage-path__track span");
           const nodes = Array.from(rail.querySelectorAll<HTMLElement>(".brokerage-path__node"));
           if (!track || !nodes.length) return;
@@ -251,7 +252,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         // Documentary photos settle gently into their frames. No opacity or
         // layout properties are animated, so content stays stable while scrolling.
         root.querySelectorAll<HTMLElement>(
-          ".ria-story__photo, .agency-team__visual img, .office-record__photo img, .contact-desk__photo img, .service-ledger__image--photo img",
+          ".ria-story__photo:not(.atlas-image--illustrated), .agency-team__visual img:not(.atlas-image--illustrated), .office-record__photo img:not(.atlas-image--illustrated), .contact-desk__photo img:not(.atlas-image--illustrated), .service-ledger__image--photo img:not(.atlas-image--illustrated)",
         ).forEach((photo) => {
           if (photo.getBoundingClientRect().top < window.innerHeight + 24) return;
           gsap.fromTo(photo,
@@ -267,7 +268,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         });
 
         // Stable, insurance-specific drawings reveal only when encountered.
-        root.querySelectorAll<SVGSVGElement>(".ria-story__drawing, .brief-closing-image__drawing, .service-ledger__image--drawing .coverage-linework").forEach((drawing) => {
+        if (!isCompact) root.querySelectorAll<SVGSVGElement>(".ria-story__drawing, .brief-closing-image__drawing, .service-ledger__image--drawing .coverage-linework").forEach((drawing) => {
           const strokes = drawing.querySelectorAll<SVGElement>("path:not(.coverage-linework__grid), circle");
           if (drawing.getBoundingClientRect().top < window.innerHeight + 24) {
             gsap.set(strokes, { strokeDashoffset: 0 });
@@ -284,7 +285,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         });
 
         // The map keeps CSS label positioning intact; only its ink and dots move.
-        root.querySelectorAll<HTMLElement>(".westside-map").forEach((map) => {
+        if (!isCompact) root.querySelectorAll<HTMLElement>(".westside-map").forEach((map) => {
           if (map.getBoundingClientRect().top < window.innerHeight + 24) return;
           const routes = map.querySelectorAll<SVGPathElement>(".westside-map__route");
           const dots = map.querySelectorAll<HTMLElement>("a i");
@@ -299,7 +300,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         });
 
         // Two quiet, fixed-size photo movements provide depth without hijacking scroll.
-        root.querySelectorAll<HTMLElement>(".ria-local__backdrop, .brief-closing-image__inner > img").forEach((photo) => {
+        if (!isCompact) root.querySelectorAll<HTMLElement>(".ria-local__backdrop, .brief-closing-image__inner > img").forEach((photo) => {
           gsap.fromTo(photo,
             { yPercent: -1.5, scale: 1.035 },
             {
@@ -307,6 +308,32 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               scale: 1.035,
               ease: "none",
               scrollTrigger: { trigger: photo.parentElement ?? photo, start: "top bottom", end: "bottom top", scrub: 0.7 },
+            },
+          );
+        });
+
+        // Commissioned scenes arrive like printed plates settling into place.
+        // The cue is small on phones and transform-only at every breakpoint.
+        root.querySelectorAll<HTMLElement>(".atlas-image--illustrated").forEach((art, index) => {
+          if (art.closest(".ria-hero__office") || art.getBoundingClientRect().top < window.innerHeight + 24) return;
+          gsap.fromTo(art,
+            {
+              scale: isCompact ? 1.018 : 1.04,
+              xPercent: isCompact ? 0 : (index % 2 === 0 ? -0.65 : 0.65),
+              transformOrigin: "center",
+            },
+            {
+              scale: 1,
+              xPercent: 0,
+              duration: isCompact ? 0.5 : 0.78,
+              ease: "power3.out",
+              clearProps: "transform,willChange",
+              scrollTrigger: {
+                trigger: art,
+                start: "clamp(top 89%)",
+                once: true,
+                fastScrollEnd: true,
+              },
             },
           );
         });

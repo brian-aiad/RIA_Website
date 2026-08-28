@@ -35,14 +35,22 @@ export function AtlasImage({
   alt,
   sizes = "(max-width: 900px) 100vw, 50vw",
   srcSet: providedSrcSet,
+  className,
   ...props
 }: ImgHTMLAttributes<HTMLImageElement> & { src: string; alt: string }) {
-  const isResponsiveAsset = src.startsWith("/images/agency/") && src.endsWith(".webp") && !src.endsWith("-sm.webp") && !src.endsWith("-md.webp");
+  const isIllustratedAsset = src.startsWith("/images/illustrated/");
+  const isResponsiveAsset = (src.startsWith("/images/agency/") || src.startsWith("/images/illustrated/"))
+    && src.endsWith(".webp")
+    && !src.endsWith("-sm.webp")
+    && !src.endsWith("-phone.webp")
+    && !src.endsWith("-md.webp");
   const srcSet = providedSrcSet ?? (isResponsiveAsset
-    ? `${src.replace(/\.webp$/, "-sm.webp")} 640w, ${src.replace(/\.webp$/, "-md.webp")} 1100w, ${src} 1568w`
+    ? `${src.replace(/\.webp$/, "-sm.webp")} 640w, ${src.replace(/\.webp$/, "-phone.webp")} 828w, ${src.replace(/\.webp$/, "-md.webp")} 1100w, ${src} 1536w`
     : undefined);
 
-  return <img src={src} srcSet={srcSet} sizes={srcSet ? sizes : undefined} alt={alt} decoding="async" {...props} />;
+  const imageClassName = [className, isIllustratedAsset ? "atlas-image--illustrated" : ""].filter(Boolean).join(" ") || undefined;
+
+  return <img src={src} srcSet={srcSet} sizes={srcSet ? sizes : undefined} alt={alt} decoding="async" className={imageClassName} {...props} />;
 }
 
 export function DossierHeader({

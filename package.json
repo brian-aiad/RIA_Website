@@ -14,6 +14,7 @@
     "validate:schema": "node scripts/validate-schema.mjs",
     "seo-lint": "node scripts/seo-lint.mjs",
     "qa:routes": "node scripts/qa-routes.mjs",
+    "qa:interactions": "node scripts/qa-interactions.mjs",
     "deploy:check": "npm run seo-lint && npm run build && npm run validate:schema"
   },
   "dependencies": {

@@ -62,7 +62,7 @@ const comingSoonHtml = `<!doctype html>
           <p>Call, email, or visit our Mar Vista office during regular business hours.</p>
           <div class="contact">
             <a href="tel:+13105727246"><small>Office</small><strong>(310) 572-7246</strong></a>
-            <a href="mailto:brinsurance3@msn.com"><small>Email</small><strong>brinsurance3@msn.com</strong></a>
+            <a href="mailto:contact@raflainsurance.com"><small>Email</small><strong>contact@raflainsurance.com</strong></a>
             <a href="https://maps.google.com/maps?q=12240+Venice+Blvd+Suite+2+Los+Angeles+CA+90066"><small>Visit</small><strong>12240 Venice Blvd, Suite 2</strong></a>
           </div>
         </aside>

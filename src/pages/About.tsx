@@ -1,5 +1,5 @@
 import { ArrowRight, ClipboardCheck, Languages, MapPin, Phone, PhoneCall, Scale, ShieldCheck } from "lucide-react";
-import { AtlasButton, AtlasEyebrow, DossierHeader, QuoteBand } from "../components/AtlasUI";
+import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, QuoteBand } from "../components/AtlasUI";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { openQuoteModal } from "../lib/openQuote";
 import { usePageMeta } from "../lib/seo";
@@ -45,7 +45,7 @@ export default function About() {
 
       <section className="agency-team">
         <div className="atlas-container agency-team__grid">
-          <div className="agency-team__visual motion-reveal"><img src={images.about.office} alt="Insurance consultation at Rafla Insurance Agency" width="1200" height="900" loading="lazy" /><div><Languages size={18} /> English · Spanish · Arabic</div></div>
+          <div className="agency-team__visual motion-reveal"><AtlasImage src={images.about.office} alt="Illustration of a personal insurance consultation at Rafla Insurance Agency" width="1536" height="1024" loading="lazy" /><div><Languages size={18} /> English · Spanish · Arabic</div></div>
           <div className="agency-team__records">
             <div className="motion-reveal"><AtlasEyebrow>Meet your local contacts</AtlasEyebrow><h2>Real people, ready to help.</h2></div>
             {site.team.map((person, index) => <article key={person.name} className="motion-reveal"><span>0{index + 1}</span><div><h3>{person.name}</h3><p>{person.role}{person.license ? ` · ${person.license}` : ""}</p></div><a href={person.phoneHref}><Phone size={15} />{person.phone}</a></article>)}
