@@ -1,4 +1,4 @@
-import { ArrowUp, ArrowUpRight, Clock3, Languages, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Clock3, ExternalLink, Languages, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cities, coverageEntries } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
@@ -34,13 +34,13 @@ export default function Footer() {
             <a href={site.contact.mapsHref} target="_blank" rel="noreferrer"><MapPin size={15} /> {site.contact.address}</a>
             <a href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
             <a href={site.contact.emailHref}><Mail size={15} /> {site.contact.email}</a>
-            <p><Clock3 size={15} /> Mon–Fri 10–7 · Sat 10–3</p>
+            <p><Clock3 size={15} /> {site.hours.short}</p>
             <p><Languages size={15} /> English · Spanish · Arabic</p>
           </section>
         </div>
 
         <div className="atlas-footer__legal">
-          <div><span>CA Agency Lic. No. 0D95584</span><span>© {new Date().getFullYear()} Rafla Insurance Agency, Inc.</span></div>
+          <div><a href={site.license.verifyUrl} target="_blank" rel="noreferrer">{site.license.label} <ExternalLink aria-hidden="true" size={12} /></a><span>© {new Date().getFullYear()} Rafla Insurance Agency, Inc.</span></div>
           <div><Link to="/privacy">Privacy</Link><Link to="/accessibility">Accessibility</Link><button type="button" onClick={() => window.scrollTo({ top: 0 })}>Top <ArrowUp size={13} /></button></div>
         </div>
         <p className="atlas-footer__disclaimer">Coverage, eligibility, discounts, pricing, and processing times vary by carrier and policy. Website content is general information and does not bind, amend, or guarantee coverage. Coverage is effective only when confirmed by the carrier or agency in writing.</p>

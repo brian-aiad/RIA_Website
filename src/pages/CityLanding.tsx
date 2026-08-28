@@ -1,6 +1,6 @@
 import { ArrowRight, Building2, Car, FileCheck2, Home, MapPin, Phone } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { AtlasButton, AtlasEyebrow, DossierHeader, FactRail, QuoteBand } from "../components/AtlasUI";
+import { AtlasButton, AtlasEyebrow, DossierHeader, FactRail, QuoteBand, SectionFolio } from "../components/AtlasUI";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import LocalBusinessSchema from "../components/seo/LocalBusinessSchema";
 import { cities, cityMap } from "../data/atlas";
@@ -40,15 +40,15 @@ export default function CityLanding() {
 
       <div className="atlas-container"><FactRail facts={[{label:"Community",value:city.name},{label:"ZIP codes",value:city.zips.join(" · ")},{label:"Agency office",value:"Mar Vista / 90066"},{label:"Languages",value:"English · Spanish · Arabic"}]} /></div>
 
-      <section className="city-orientation"><div className="atlas-container city-orientation__grid">
+      <section className="city-orientation section-folio-host"><SectionFolio>Neighborhood note</SectionFolio><div className="atlas-container city-orientation__grid">
         <div className="city-orientation__title motion-reveal"><AtlasEyebrow>Local, personal guidance</AtlasEyebrow><h2>Your needs matter more than your ZIP code.</h2></div>
         <div className="city-orientation__copy motion-reveal"><p>{groupCopy[city.group]}</p><p>Two neighbors may need different carriers, limits, or policy structures. Vehicles, property, occupants, operations, payroll, contracts, claims, and filing history all shape the right conversation.</p></div>
         <aside className="city-orientation__office motion-reveal"><MapPin/><span>Rafla office</span><strong>{site.contact.address}</strong><a href={site.contact.mapsHref} target="_blank" rel="noreferrer">Directions <ArrowRight size={14}/></a></aside>
       </div></section>
 
-      <section className="city-coverage"><div className="atlas-container"><div className="city-coverage__heading motion-reveal"><AtlasEyebrow light>Insurance options for {city.name}</AtlasEyebrow><h2>Explore popular coverage.</h2></div><div className="city-coverage__grid">{coverageLinks.map(({label,text,href,icon:Icon},index) => <Link key={href} to={href} className="motion-reveal"><span>0{index+1}</span><Icon/><h3>{label}</h3><p>{text}</p><ArrowRight/></Link>)}</div></div></section>
+      <section className="city-coverage section-folio-host"><SectionFolio tone="gold">Coverage desk</SectionFolio><div className="atlas-container"><div className="city-coverage__heading motion-reveal"><AtlasEyebrow light>Insurance options for {city.name}</AtlasEyebrow><h2>Explore popular coverage.</h2></div><div className="city-coverage__grid">{coverageLinks.map(({label,text,href,icon:Icon},index) => <Link key={href} to={href} className="motion-reveal"><span>0{index+1}</span><Icon/><h3>{label}</h3><p>{text}</p><ArrowRight/></Link>)}</div></div></section>
 
-      <section className="nearby-files"><div className="atlas-container nearby-files__grid"><div className="motion-reveal"><AtlasEyebrow>Nearby communities</AtlasEyebrow><h2>Insurance help throughout the Westside.</h2></div><div>{nearby.map((item,index) => <Link key={item.slug} to={`/insurance/${item.slug}`} className="motion-reveal"><span>0{index+1}</span><strong>{item.name}</strong><small>{item.zips.join(" · ")}</small><ArrowRight size={16}/></Link>)}</div></div></section>
+      <section className="nearby-files section-folio-host"><SectionFolio tone="paper">Nearby areas</SectionFolio><div className="atlas-container nearby-files__grid"><div className="motion-reveal"><AtlasEyebrow>Nearby communities</AtlasEyebrow><h2>Insurance help throughout the Westside.</h2></div><div>{nearby.map((item,index) => <Link key={item.slug} to={`/insurance/${item.slug}`} className="motion-reveal"><span>0{index+1}</span><strong>{item.name}</strong><small>{item.zips.join(" · ")}</small><ArrowRight size={16}/></Link>)}</div></div></section>
 
       <QuoteBand title={`Talk with a local broker serving ${city.name}.`} text="Bring any current declarations page, renewal, lender request, contract, or DMV notice. We’ll help identify the next useful step." />
     </main>

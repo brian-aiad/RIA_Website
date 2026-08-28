@@ -1,10 +1,15 @@
 import { ArrowRight, Clock3, ExternalLink, Mail, MapPin, MessageSquareText, Phone } from "lucide-react";
-import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader } from "../components/AtlasUI";
+import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, SectionFolio } from "../components/AtlasUI";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { openQuoteModal } from "../lib/openQuote";
 import { usePageMeta } from "../lib/seo";
 import { images } from "../lib/images";
 import { site } from "../lib/site";
+
+const directContactNotes = [
+  "New quotes, renewals, and agency conversations",
+  "Policy service, documents, and customer support",
+] as const;
 
 export default function Contact() {
   usePageMeta({
@@ -21,7 +26,8 @@ export default function Contact() {
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} />Call now</a>
       </DossierHeader>
 
-      <section className="contact-switchboard">
+      <section className="contact-switchboard section-folio-host">
+        <SectionFolio>Choose a channel</SectionFolio>
         <div className="atlas-container">
           <div className="contact-switchboard__heading motion-reveal"><AtlasEyebrow>Contact Rafla Insurance</AtlasEyebrow><h2>Choose what works for you.</h2></div>
           <div className="contact-switchboard__grid">
@@ -33,18 +39,36 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="contact-desk">
+      <section className="contact-desk section-folio-host">
+        <SectionFolio tone="gold">Office record</SectionFolio>
         <div className="atlas-container contact-desk__grid">
           <div className="contact-desk__photo motion-reveal"><AtlasImage src={images.location.exteriorWide} alt="Illustration of Rafla Insurance Agency's Venice Boulevard office" width="1536" height="1024" loading="lazy" /><div><MapPin size={17} /> Mar Vista / 90066</div></div>
           <div className="contact-desk__hours motion-reveal">
             <AtlasEyebrow light>When to reach us</AtlasEyebrow><h2>Office hours</h2>
-            <dl><div><dt>Monday – Friday</dt><dd>10:00am – 7:00pm</dd></div><div><dt>Saturday</dt><dd>10:00am – 3:00pm</dd></div><div><dt>Sunday</dt><dd>Closed</dd></div></dl>
+            <dl><div><dt>Monday – Friday</dt><dd>{site.hours.weekdays}</dd></div><div><dt>Saturday</dt><dd>{site.hours.saturday}</dd></div><div><dt>Sunday</dt><dd>{site.hours.sunday}</dd></div></dl>
             <p><Clock3 size={16} />Hours may change for holidays. Call before a time-sensitive visit.</p>
           </div>
         </div>
       </section>
 
-      <section className="contact-team"><div className="atlas-container"><div className="contact-team__heading motion-reveal"><AtlasEyebrow>Direct contacts</AtlasEyebrow><h2>Reach someone who knows the agency.</h2></div><div className="contact-team__grid">{site.team.map((person,index) => <article key={person.name} className="motion-reveal"><span>0{index+1}</span><h3>{person.name}</h3><p>{person.role}</p>{person.license && <small>{person.license}</small>}<a href={person.phoneHref}><Phone size={14}/>{person.phone}</a></article>)}</div></div></section>
+      <section className="contact-team section-folio-host">
+        <SectionFolio tone="paper">Direct lines</SectionFolio>
+        <div className="atlas-container">
+          <div className="contact-team__heading motion-reveal"><AtlasEyebrow>Direct contacts</AtlasEyebrow><h2>Reach someone who knows the agency.</h2></div>
+          <div className="contact-team__grid">
+            {site.team.map((person,index) => (
+              <article key={person.name} className="motion-reveal">
+                <span>0{index+1}</span>
+                <h3>{person.name}</h3>
+                <p>{person.role}</p>
+                {person.license && <small>{person.license}</small>}
+                <div className="contact-team__best"><small>Call for</small><strong>{directContactNotes[index]}</strong></div>
+                <a href={person.phoneHref}><Phone size={14}/>{person.phone}<ArrowRight size={14} /></a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

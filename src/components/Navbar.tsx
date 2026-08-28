@@ -101,7 +101,7 @@ export default function Navbar() {
             <span><small>Visit the Mar Vista office</small><strong>12240 Venice Blvd, Suite 2</strong></span>
             <ArrowUpRight aria-hidden="true" />
           </a>
-          <p>Mon–Fri 10–7 · Sat 10–3 <span aria-hidden="true">/</span> English · Spanish · Arabic</p>
+          <p>{site.hours.short} <span aria-hidden="true">/</span> English · Spanish · Arabic</p>
         </div>
         <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><a href={site.contact.emailHref}><Mail size={16} /> {site.contact.email}</a><button type="button" onClick={openQuoteModal}>Request a quote <ArrowUpRight size={16} /></button></div>
       </div>

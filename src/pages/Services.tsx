@@ -1,6 +1,6 @@
 import { ArrowRight, Building2, Car, Check, FileBadge2, FileSearch, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, PaperNote, QuoteBand } from "../components/AtlasUI";
+import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, PaperNote, QuoteBand, SectionFolio } from "../components/AtlasUI";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { coverageEntries, serviceGroups } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
@@ -31,7 +31,8 @@ export default function Services() {
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
       </DossierHeader>
 
-      <section className="services-ledger">
+      <section className="services-ledger section-folio-host">
+        <SectionFolio>Coverage register</SectionFolio>
         <div className="atlas-container">
           <div className="services-ledger__intro motion-reveal">
             <AtlasEyebrow>What we insure</AtlasEyebrow>
@@ -57,7 +58,8 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="services-briefs">
+      <section className="services-briefs section-folio-host">
+        <SectionFolio tone="paper">Practical guides</SectionFolio>
         <div className="atlas-container services-briefs__grid">
           <div className="services-briefs__copy motion-reveal"><AtlasEyebrow>Coverage guides</AtlasEyebrow><h2>Learn before you decide.</h2><p>Explore practical explanations of common coverage, useful documents, and questions to bring to a broker conversation.</p></div>
           <div className="services-briefs__list">
@@ -66,7 +68,8 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="scope-note">
+      <section className="scope-note section-folio-host">
+        <SectionFolio tone="gold">Licensed scope</SectionFolio>
         <div className="atlas-container scope-note__grid">
           <div className="scope-note__intro motion-reveal">
             <FileSearch size={32} />

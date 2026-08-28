@@ -107,6 +107,12 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
           { selector: ".ria-local__copy", x: -14, duration: 0.58 },
           { selector: ".ria-local__portfolio", x: 14, duration: 0.58, at: "-=0.46" },
         ]);
+        stageGroup(".ria-reviews", [
+          { selector: ".ria-reviews__heading > div:first-child", x: -14, duration: 0.56 },
+          { selector: ".ria-reviews__score", x: 14, duration: 0.54, at: "-=0.44" },
+          { selector: ".ria-reviews__ledger > blockquote", y: 12, scale: 0.996, duration: 0.5, stagger: 0.055, at: "-=0.3" },
+          { selector: ".ria-reviews__note", y: 8, duration: 0.38, at: "-=0.3" },
+        ]);
         stageGroup(".ria-faq", [
           { selector: ".ria-faq__grid > header", x: -12, duration: 0.5 },
           { selector: ".ria-faq__grid > div > .answer-drawer", x: 8, duration: 0.38, stagger: 0.035, at: "-=0.34" },
@@ -192,7 +198,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         ]);
         stageGroup(".brief-faq", [{ selector: ".answer-drawer", x: 8, duration: 0.38, stagger: 0.035 }], "clamp(top 90%)");
         stageGroup(".brief-closing-image", [{ selector: ".brief-closing-image__inner", y: 12, scale: 0.995, duration: 0.58 }]);
-        stageGroup(".policy-file__body article", [{ selector: ":scope > section", x: 8, duration: 0.42, stagger: 0.04 }], "clamp(top 90%)");
+        stageGroup(".policy-file__body article > section", [{ selector: ":scope > h2, :scope > p, :scope > ul", x: 8, duration: 0.42, stagger: 0.035 }], "clamp(top 90%)");
 
         root.querySelectorAll<HTMLElement>(".quote-band").forEach((band) => {
           if (band.getBoundingClientRect().top < window.innerHeight + 24) return;

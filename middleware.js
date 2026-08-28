@@ -68,7 +68,7 @@ const comingSoonHtml = `<!doctype html>
           </div>
         </aside>
       </div>
-      <footer><span>Mon–Fri 10am–7pm · Sat 10am–3pm</span><span>English · Spanish · Arabic</span></footer>
+      <footer><span>Mon–Fri 10am–5pm · Sat–Sun closed</span><span>English · Spanish · Arabic</span></footer>
     </section>
   </main>
 </body>

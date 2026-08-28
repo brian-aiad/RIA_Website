@@ -8,7 +8,7 @@ const config: CoverageBriefConfig = {
   metaTitle: "Auto Insurance Los Angeles CA | Rafla Insurance Agency",
   metaDescription: "Compare Los Angeles auto insurance for liability, comprehensive, collision, uninsured motorist and specialty situations with a Mar Vista independent broker.",
   canonical: "https://raflainsurance.com/auto-insurance-los-angeles-ca",
-  image: "/images/illustrated/auto-review-v6.webp",
+  image: "/images/illustrated/auto-review-v8.webp",
   imageAlt: "A Los Angeles driver reviewing auto insurance documents with a broker beside an everyday car",
   signals: [
     { label: "California minimum", value: "30 / 60 / 15" },

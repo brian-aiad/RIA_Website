@@ -13,6 +13,16 @@ export function AtlasEyebrow({ children, light = false }: { children: ReactNode;
   );
 }
 
+export function SectionFolio({
+  children,
+  tone = "navy",
+}: {
+  children: ReactNode;
+  tone?: "navy" | "gold" | "paper";
+}) {
+  return <span className={`section-folio section-folio--${tone}`} aria-hidden="true"><i />{children}</span>;
+}
+
 export function AtlasButton({
   children,
   to,
@@ -117,7 +127,8 @@ export function QuoteBand({
   text?: string;
 }) {
   return (
-    <section className="quote-band">
+    <section className="quote-band section-folio-host">
+      <SectionFolio tone="navy">Contact desk</SectionFolio>
       <div className="atlas-container quote-band__grid motion-reveal">
         <div className="quote-band__mark" aria-hidden="true"><MessageSquareText size={22} /></div>
         <div>

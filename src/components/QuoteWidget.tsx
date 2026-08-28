@@ -142,7 +142,7 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
                   })}
                 </div>
                 <p key={selected.id}>{selected.note}</p>
-                <div className="quote-dialog__hours"><small>Office hours</small><strong>Mon–Fri 10–7 · Sat 10–3</strong><span>English · Spanish · Arabic</span></div>
+                <div className="quote-dialog__hours"><small>Office hours</small><strong>{site.hours.short}</strong><span>English · Spanish · Arabic</span></div>
               </aside>
 
               <section

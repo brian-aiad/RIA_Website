@@ -3,15 +3,17 @@ import {
   BriefcaseBusiness,
   Building2,
   Car,
+  ExternalLink,
   FileCheck2,
   Home as HomeIcon,
   Languages,
   MapPin,
   Phone,
   ShieldCheck,
+  Star,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AtlasButton, AtlasImage, QuoteBand } from "../components/AtlasUI";
+import { AtlasButton, AtlasImage, QuoteBand, SectionFolio } from "../components/AtlasUI";
 import BrokeragePath from "../components/BrokeragePath";
 import BrokerServiceDesk from "../components/BrokerServiceDesk";
 import CoverageDesk from "../components/CoverageDesk";
@@ -27,7 +29,7 @@ import { images } from "../lib/images";
 const homeFaqs = [
   { question: "Why work with an independent insurance agency?", answer: "An independent agency can review available programs from more than one carrier. Eligibility and availability vary, but the conversation is not limited to a single company’s product menu." },
   { question: "Which kinds of insurance does Rafla offer?", answer: "We help with auto, homeowners, renters, commercial auto, general liability, workers’ compensation, bonds, motorcycle, RV, boat, SR-22 filing support, and other specialty situations. Health, life, and notary services are not currently offered." },
-  { question: "Can I visit the office?", answer: "Yes. Rafla Insurance Agency is at 12240 Venice Boulevard, Suite 2, Los Angeles, CA 90066. Office hours are Monday through Friday 10am–7pm and Saturday 10am–3pm." },
+  { question: "Can I visit the office?", answer: "Yes. Rafla Insurance Agency is at 12240 Venice Boulevard, Suite 2, Los Angeles, CA 90066. Office hours are Monday through Friday from 10am to 5pm. Saturday and Sunday are closed." },
   { question: "What should I bring for a quote?", answer: "The useful details depend on the coverage. A current declarations page, driver and vehicle information, property details, or business payroll and operations information can make the review more precise." },
 ];
 
@@ -54,7 +56,7 @@ export default function Home() {
       <section className="ria-hero">
         <div className="atlas-container ria-hero__grid">
           <div className="ria-hero__copy hero-copy-enter">
-            <p className="ria-kicker">Independent insurance agency · Mar Vista</p>
+            <p className="ria-kicker">Independent insurance agency · Mar Vista · Since 2003</p>
             <h1>Coverage for Los Angeles, <span>explained by a local broker.</span></h1>
             <p className="ria-hero__lede">Rafla is an independent agency—not an insurance company. We review available programs for auto, home, commercial, workers’ compensation, bonds, and specialty coverage from our Venice Boulevard office.</p>
             <div className="ria-hero__actions">
@@ -96,7 +98,8 @@ export default function Home() {
 
       <BrokeragePath />
 
-      <section className="ria-coverage" id="coverage-options">
+      <section className="ria-coverage section-folio-host" id="coverage-options">
+        <SectionFolio>Coverage files</SectionFolio>
         <div className="atlas-container">
           <header className="ria-section-heading motion-reveal">
             <p className="ria-kicker">Coverage index</p>
@@ -110,11 +113,13 @@ export default function Home() {
 
       <BrokerServiceDesk />
 
-      <section className="ria-editorial">
+      <section className="ria-editorial section-folio-host">
+        <SectionFolio tone="paper">Households + business</SectionFolio>
         <div className="atlas-container">
           <header className="ria-section-heading motion-reveal">
             <p className="ria-kicker">Personal and commercial</p>
             <h2>The policies connect because real life does.</h2>
+            <p>A household can include a rental property, a work vehicle, or a home-based operation. We look at how the pieces affect one another before treating them as separate files.</p>
           </header>
           <div className="ria-editorial__grid">
             <Link to="/auto-insurance-los-angeles-ca" className="ria-story motion-reveal">
@@ -131,7 +136,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ria-local">
+      <section className="ria-local section-folio-host">
+        <SectionFolio tone="gold">Mar Vista / 90066</SectionFolio>
         <AtlasImage className="ria-local__backdrop" src={images.hero.storefront} alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" />
         <div className="ria-local__veil" aria-hidden="true" />
         <div className="atlas-container ria-local__grid">
@@ -157,7 +163,38 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ria-faq">
+      <section className="ria-reviews section-folio-host" aria-labelledby="reviews-title">
+        <SectionFolio tone="paper">Google reviews</SectionFolio>
+        <div className="atlas-container">
+          <header className="ria-reviews__heading motion-reveal">
+            <div>
+              <p className="ria-kicker">Customer feedback</p>
+              <h2 id="reviews-title">Known for patient explanations and personal service.</h2>
+              <p>These comments come from Rafla Insurance Agency’s public Google Business Profile.</p>
+            </div>
+            <div className="ria-reviews__score" aria-label={`${site.reviews.rating} out of 5 stars from ${site.reviews.count} Google reviews`}>
+              <strong>{site.reviews.rating}</strong>
+              <span aria-hidden="true">{Array.from({ length: 5 }, (_, index) => <Star key={index} fill="currentColor" />)}</span>
+              <small>{site.reviews.count} Google reviews</small>
+              <a href={site.reviews.googleUrl} target="_blank" rel="noreferrer">View Google profile <ExternalLink aria-hidden="true" /></a>
+            </div>
+          </header>
+
+          <div className="ria-reviews__ledger">
+            {site.reviews.excerpts.map((review) => (
+              <blockquote key={review.name} className="motion-reveal">
+                <span aria-hidden="true">“</span>
+                <p>{review.quote}</p>
+                <footer><strong>{review.name}</strong><small>Public Google review</small></footer>
+              </blockquote>
+            ))}
+          </div>
+          <p className="ria-reviews__note">Selected public review excerpts from the agency’s Google profile, excerpted and lightly edited for length and clarity. Rating and review count can change as new reviews are posted. Individual experiences vary; reviews do not guarantee price, savings, eligibility, claim, or coverage outcomes.</p>
+        </div>
+      </section>
+
+      <section className="ria-faq section-folio-host">
+        <SectionFolio>Client questions</SectionFolio>
         <div className="atlas-container ria-faq__grid">
           <header className="motion-reveal"><p className="ria-kicker">Straight answers</p><h2>Common questions before you call.</h2><p>No generic promises—just a useful starting point for the conversation.</p><Link to="/faq">Read all FAQs <ArrowRight size={16} /></Link></header>
           <div>

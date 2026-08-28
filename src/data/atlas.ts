@@ -22,7 +22,7 @@ export const coverageEntries: CoverageEntry[] = [
     title: "Auto",
     short: "Daily drivers, specialty situations, and California filings.",
     href: "/auto-insurance-los-angeles-ca",
-    image: "/images/illustrated/auto-review-v6.webp",
+    image: "/images/illustrated/auto-review-v8.webp",
     imageAlt: "Illustration of a Westside household reviewing auto coverage beside their car",
     accent: "gold",
     icon: Car,

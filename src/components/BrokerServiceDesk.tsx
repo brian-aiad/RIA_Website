@@ -1,9 +1,10 @@
 import { useState, type KeyboardEvent } from "react";
 import { ArrowRight, CarFront, ClipboardPenLine, FileBadge2, RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AtlasImage } from "./AtlasUI";
+import { AtlasImage, SectionFolio } from "./AtlasUI";
 import { images } from "../lib/images";
 import { openQuoteModal } from "../lib/openQuote";
+import { site } from "../lib/site";
 
 const deskFiles = [
   {
@@ -40,7 +41,7 @@ const deskFiles = [
     summary: "The carrier decides coverage and handles the claim. Rafla can help locate reporting information, organize questions, and stay in the conversation.",
     checklist: ["Protect people and property from further harm", "Record the facts without guessing or admitting fault", "Use the carrier’s official claim-reporting path"],
     image: images.claims.docs,
-    alt: "Illustrated broker helping a driver organize claim notes beside a car with a small bumper dent",
+    alt: "Illustrated broker helping two drivers document a small bumper scrape beside their parked car",
     action: "Ask the office for help",
     actionType: "link" as const,
     icon: CarFront,
@@ -82,7 +83,8 @@ export default function BrokerServiceDesk() {
   };
 
   return (
-    <section className="broker-cases" aria-labelledby="broker-cases-title">
+    <section className="broker-cases section-folio-host" aria-labelledby="broker-cases-title">
+      <SectionFolio>Policy service</SectionFolio>
       <div className="atlas-container">
         <header className="broker-cases__heading">
           <div>
@@ -118,7 +120,7 @@ export default function BrokerServiceDesk() {
             })}
             <div className="broker-cases__office">
               <small>Mar Vista office</small>
-              <strong>Mon–Fri 10–7</strong>
+              <strong>{site.hours.short}</strong>
               <span>English · Spanish · Arabic</span>
             </div>
           </div>

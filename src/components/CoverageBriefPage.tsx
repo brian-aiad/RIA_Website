@@ -1,6 +1,6 @@
 import { ArrowRight, Check, FileText, Phone, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, FactRail, PaperNote, QuoteBand } from "./AtlasUI";
+import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, FactRail, PaperNote, QuoteBand, SectionFolio } from "./AtlasUI";
 import CoverageLinework, { type CoverageLineworkVariant } from "./CoverageLinework";
 import BreadcrumbSchema from "./seo/BreadcrumbSchema";
 import LocalBusinessSchema from "./seo/LocalBusinessSchema";
@@ -55,7 +55,8 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
         <FactRail facts={config.signals} />
       </div>
 
-      <section className="brief-reading">
+      <section className="brief-reading section-folio-host">
+        <SectionFolio>Coverage guide</SectionFolio>
         <div className="atlas-container brief-reading__grid">
           <aside className="brief-index motion-reveal">
             <span>On this page</span>
@@ -67,7 +68,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
             <div className="brief-index__desk">
               <small>Rafla broker desk</small>
               <strong>{site.contact.phone}</strong>
-              <p>Mon–Fri 10–7 · Sat 10–3<br />English · Spanish · Arabic</p>
+              <p>{site.hours.short}<br />English · Spanish · Arabic</p>
               <button type="button" onClick={openQuoteModal}>Request a review <ArrowRight size={14} /></button>
             </div>
           </aside>
@@ -127,7 +128,8 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
         </div>
       </section>
 
-      <section className="brief-closing-image">
+      <section className="brief-closing-image section-folio-host">
+        <SectionFolio tone="paper">Illustrated record</SectionFolio>
         <div className="atlas-container brief-closing-image__inner motion-reveal">
           <AtlasImage src={config.image} alt={config.imageAlt} width="1536" height="1024" loading="lazy" />
           <CoverageLinework className="brief-closing-image__drawing" variant={drawing} />

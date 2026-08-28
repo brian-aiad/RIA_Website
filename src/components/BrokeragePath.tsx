@@ -5,6 +5,7 @@ import {
   MessageSquareText,
   Scale,
 } from "lucide-react";
+import { SectionFolio } from "./AtlasUI";
 
 const brokerSteps = [
   {
@@ -39,7 +40,8 @@ const brokerSteps = [
 
 export default function BrokeragePath() {
   return (
-    <section className="brokerage-path" aria-labelledby="brokerage-path-title">
+    <section className="brokerage-path section-folio-host" aria-labelledby="brokerage-path-title">
+      <SectionFolio tone="gold">Broker review</SectionFolio>
       <div className="atlas-container">
         <header className="brokerage-path__heading">
           <div>
