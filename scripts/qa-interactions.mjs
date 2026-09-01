@@ -9,6 +9,14 @@ function check(condition, message) {
   if (!condition) failures.push(message);
 }
 
+async function focusReached(page, selector) {
+  return page.waitForFunction(
+    (targetSelector) => document.activeElement?.matches(targetSelector),
+    selector,
+    { timeout: 1_000 },
+  ).then(() => true).catch(() => false);
+}
+
 const webkitBrowser = await webkit.launch({ headless: true });
 const mobile = await webkitBrowser.newPage({ viewport: { width: 390, height: 844 } });
 mobile.setDefaultTimeout(10_000);
@@ -28,8 +36,29 @@ const mobileNavMetrics = await mobile.locator("#mobile-nav").evaluate((node) => 
 check(Math.abs(mobileNavMetrics.height - mobileNavMetrics.viewport) < 2, `Mobile menu is not viewport-height: ${JSON.stringify(mobileNavMetrics)}`);
 check(mobileNavMetrics.overflowY === "auto", `Mobile menu is not independently scrollable: ${mobileNavMetrics.overflowY}`);
 check(await mobile.locator(".mobile-nav__office").isVisible(), "Mobile menu office details are missing");
-await mobile.getByRole("button", { name: "Close navigation" }).click();
+check(await mobile.locator("main").getAttribute("inert") === "", "Mobile menu did not make page content inert");
+check(await mobile.evaluate(() => document.documentElement.classList.contains("nav-open") && document.body.classList.contains("nav-open")), "Mobile menu did not lock background scroll");
+await mobile.keyboard.press("Escape");
 check(await mobile.locator("#mobile-nav").getAttribute("aria-hidden") === "true", "Mobile menu did not close");
+check(await focusReached(mobile, ".atlas-nav__menu"), "Escape did not restore focus to the mobile-menu trigger");
+check(await mobile.locator("main").getAttribute("inert") === null, "Mobile-menu background remained inert after close");
+
+await mobile.locator(".atlas-nav__menu").click();
+await mobile.locator(".mobile-nav-backdrop").click({ position: { x: 5, y: 180 } });
+check(await mobile.locator("#mobile-nav").getAttribute("aria-hidden") === "true", "Mobile-menu backdrop did not close the menu");
+check(await focusReached(mobile, ".atlas-nav__menu"), "Backdrop close did not restore focus to the mobile-menu trigger");
+
+await mobile.locator(".atlas-nav__menu").click();
+await mobile.locator(".mobile-nav__contact button").scrollIntoViewIfNeeded();
+await mobile.locator(".mobile-nav__contact button").click();
+const menuQuoteDialog = mobile.locator(".quote-dialog");
+await menuQuoteDialog.waitFor({ state: "visible" });
+check(await mobile.locator("#mobile-nav").getAttribute("aria-hidden") === "true", "Opening quote preparation from the mobile menu left the menu open");
+check(await mobile.locator("#root").getAttribute("inert") === "", "Quote dialog did not make the application inert");
+check(await menuQuoteDialog.getByText(/does not submit or save a quote request/).isVisible(), "Quote dialog does not explain that it is preparation only");
+await mobile.keyboard.press("Escape");
+await menuQuoteDialog.waitFor({ state: "hidden" });
+check(await focusReached(mobile, ".atlas-nav__menu"), "Quote dialog opened from the menu did not restore focus to the menu trigger");
 
 await mobile.locator(".contact-switchboard__grid").scrollIntoViewIfNeeded();
 await mobile.evaluate(() => scrollBy(0, 220));
@@ -47,6 +76,8 @@ check(quickActionMetrics.targets.every(({ width, height }) => width >= 44 && hei
 
 const quickQuoteBox = await mobile.locator(".mobile-quick-actions button").boundingBox();
 check(Boolean(quickQuoteBox), "Mobile quote action does not have a visible click target");
+const scrollBeforeQuote = await mobile.evaluate(() => scrollY);
+await mobile.locator(".mobile-quick-actions button").focus();
 if (quickQuoteBox) await mobile.mouse.click(quickQuoteBox.x + quickQuoteBox.width / 2, quickQuoteBox.y + quickQuoteBox.height / 2);
 const dialog = mobile.getByRole("dialog");
 await dialog.waitFor({ state: "visible" });
@@ -57,16 +88,75 @@ const dialogReceivedFocus = await mobile.waitForFunction(
 ).then(() => true).catch(() => false);
 check(dialogReceivedFocus, "Quote dialog did not receive initial focus");
 check(await mobile.evaluate(() => document.body.style.overflow) === "hidden", "Quote dialog did not lock background scroll");
+check(await mobile.locator("#root").getAttribute("inert") === "", "Quote dialog did not block background interaction");
+await mobile.keyboard.press("Shift+Tab");
+check(await dialog.evaluate((node) => node.contains(document.activeElement)), "Shift+Tab escaped the quote-dialog focus trap");
+await mobile.keyboard.press("Tab");
+check(await dialog.evaluate((node) => node.contains(document.activeElement)), "Tab escaped the quote-dialog focus trap");
 const businessQuoteTab = dialog.getByRole("tab", { name: "Business", exact: true });
+check(await dialog.getByRole("tab").count() === 4, "Quote dialog does not expose all four coverage files");
+check(await dialog.getByRole("tab", { name: "Auto", exact: true }).getAttribute("aria-selected") === "true", "Quote dialog did not open on the Auto file");
+const homeQuoteTab = dialog.getByRole("tab", { name: "Home", exact: true });
+await homeQuoteTab.click();
+check(await homeQuoteTab.getAttribute("aria-selected") === "true", "Quote dialog did not select the Home file");
 await businessQuoteTab.click();
 check(await businessQuoteTab.getAttribute("aria-selected") === "true", "Quote dialog did not select the business file");
 check(await dialog.getByText("Business name and a plain description of the work").isVisible(), "Business quote checklist did not update");
 await businessQuoteTab.press("ArrowRight");
 const specialtyQuoteTab = dialog.getByRole("tab", { name: "Specialty", exact: true });
 check(await specialtyQuoteTab.getAttribute("aria-selected") === "true", "Quote dialog arrow-key navigation failed");
+check(await mobile.evaluate(() => localStorage.length === 0 && sessionStorage.length === 0), "Quote preparation wrote information to browser storage");
 await mobile.keyboard.press("Escape");
 await dialog.waitFor({ state: "hidden" });
 check(await mobile.evaluate(() => document.body.style.overflow) === "", "Quote dialog did not restore background scroll");
+check(Math.abs((await mobile.evaluate(() => scrollY)) - scrollBeforeQuote) < 2, "Quote dialog did not restore the page scroll position");
+check(await mobile.locator("#root").getAttribute("inert") === null, "Application remained inert after closing the quote dialog");
+check(await focusReached(mobile, ".mobile-quick-actions button"), "Quote dialog did not restore focus to its invoking action");
+
+await mobile.locator(".mobile-quick-actions button").click();
+await dialog.waitFor({ state: "visible" });
+await dialog.getByRole("button", { name: "Close" }).click();
+await dialog.waitFor({ state: "hidden" });
+check(await focusReached(mobile, ".mobile-quick-actions button"), "Quote-dialog close button did not restore focus");
+
+await mobile.locator(".mobile-quick-actions button").click();
+await dialog.waitFor({ state: "visible" });
+await mobile.locator(".quote-dialog-backdrop").click({ position: { x: 2, y: 2 } });
+await dialog.waitFor({ state: "hidden" });
+check(await focusReached(mobile, ".mobile-quick-actions button"), "Quote-dialog backdrop did not close and restore focus");
+
+await mobile.locator(".contact-next").scrollIntoViewIfNeeded();
+await mobile.waitForTimeout(250);
+check(await mobile.locator(".mobile-quick-actions").getAttribute("aria-hidden") === "true", "Mobile quick actions did not yield to the final contact guide");
+check(await mobile.locator(".contact-next__tool-note").getByText(/does not submit or store a quote request/).isVisible(), "Contact guide does not explain the preparation-only workflow");
+
+const landscape = await webkitBrowser.newPage({ viewport: { width: 844, height: 390 } });
+landscape.setDefaultTimeout(10_000);
+await landscape.goto(`${base}/`, { waitUntil: "networkidle" });
+await landscape.locator(".atlas-nav__menu").click();
+const landscapeMenuMetrics = await landscape.locator("#mobile-nav").evaluate((node) => ({
+  height: node.getBoundingClientRect().height,
+  viewport: innerHeight,
+  overflowY: getComputedStyle(node).overflowY,
+}));
+check(Math.abs(landscapeMenuMetrics.height - landscapeMenuMetrics.viewport) < 2, `Landscape menu is not viewport-height: ${JSON.stringify(landscapeMenuMetrics)}`);
+check(landscapeMenuMetrics.overflowY === "auto", `Landscape menu is not independently scrollable: ${landscapeMenuMetrics.overflowY}`);
+await landscape.locator("#mobile-nav").evaluate((node) => node.scrollTo({ top: node.scrollHeight, behavior: "instant" }));
+check(await landscape.locator(".mobile-nav__contact button").isVisible(), "Landscape menu cannot reach the quote action");
+await landscape.keyboard.press("Escape");
+check(await focusReached(landscape, ".atlas-nav__menu"), "Landscape-menu Escape did not restore focus");
+await landscape.locator(".ria-hero__actions button").click();
+const landscapeDialog = landscape.locator(".quote-dialog");
+await landscapeDialog.waitFor({ state: "visible" });
+const landscapeDialogMetrics = await landscapeDialog.evaluate((node) => ({
+  height: node.getBoundingClientRect().height,
+  viewport: innerHeight,
+  scrollable: node.scrollHeight > node.clientHeight,
+}));
+check(landscapeDialogMetrics.height <= landscapeDialogMetrics.viewport, `Landscape quote dialog exceeds the viewport: ${JSON.stringify(landscapeDialogMetrics)}`);
+check(landscapeDialogMetrics.scrollable, "Landscape quote dialog does not provide internal scrolling");
+await landscape.keyboard.press("Escape");
+await landscape.close();
 await webkitBrowser.close();
 
 const chromiumBrowser = await chromium.launch({ headless: true });
@@ -119,6 +209,7 @@ const reducedDialogStyle = await reducedDialog.evaluate((node) => ({
   transform: getComputedStyle(node).transform,
 }));
 check(reducedDialogStyle.opacity === "1", "Reduced-motion quote dialog was not immediately visible");
+check(reducedDialogStyle.transform === "none", `Reduced-motion quote dialog retained a transform: ${reducedDialogStyle.transform}`);
 
 await reduced.keyboard.press("Escape");
 await reduced.locator(".quote-band").scrollIntoViewIfNeeded();
@@ -144,6 +235,7 @@ check(await reduced.locator("form").count() === 0, "A data-collection form appea
 await reduced.goto(`${base}/accessibility/`, { waitUntil: "networkidle" });
 check(await reduced.getByText(/WCAG 2.2 Level AA is the site’s working accessibility target/).isVisible(), "WCAG 2.2 working target is missing");
 check(await reduced.getByRole("heading", { name: "Testing and limitations" }).isVisible(), "Accessibility testing limitations are missing");
+await reducedContext.close();
 
 const motionContext = await chromiumBrowser.newContext({ viewport: { width: 1440, height: 900 } });
 const motionPage = await motionContext.newPage();
@@ -160,8 +252,61 @@ await motionPage.waitForTimeout(1_500);
 const reviewMotionState = await motionPage.locator(".ria-reviews blockquote").evaluateAll((nodes) => nodes.map((node) => ({ opacity: getComputedStyle(node).opacity, transform: getComputedStyle(node).transform })));
 check(reviewMotionState.every((state) => state.opacity === "1" && state.transform === "none"), `Review scroll animation did not settle cleanly: ${JSON.stringify(reviewMotionState)}`);
 check(await motionPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), "Homepage has horizontal overflow at 1440px");
+await motionContext.close();
+
+const journeyContext = await chromiumBrowser.newContext({ viewport: { width: 1366, height: 768 }, reducedMotion: "reduce" });
+const journey = await journeyContext.newPage();
+journey.setDefaultTimeout(10_000);
+await journey.goto(`${base}/`, { waitUntil: "networkidle" });
+await journey.keyboard.press("Tab");
+check(await journey.locator(".skip-link").evaluate((node) => document.activeElement === node), "Skip link is not the first keyboard stop");
+await journey.keyboard.press("Enter");
+check(await journey.locator("main").evaluate((node) => document.activeElement === node), "Skip link did not move focus to main content");
+
+const journeyNavHrefs = await journey.locator(".atlas-nav__links a").evaluateAll((links) => links.map((link) => link.getAttribute("href")));
+check(JSON.stringify(journeyNavHrefs) === JSON.stringify(["/services", "/about", "/locations", "/faq", "/contact"]), `Desktop navigation hrefs changed: ${JSON.stringify(journeyNavHrefs)}`);
+check((await journey.locator(".atlas-nav__quote").textContent())?.includes("Prepare for a Quote"), "Primary navigation still implies an online quote submission");
+check(await journey.locator('.ria-service-strip a[href="/services#work"]').count() === 2, "Broad business service shortcuts do not lead to the complete business section");
+
+const coverageTabs = journey.locator(".coverage-desk [role='tab']");
+await coverageTabs.first().scrollIntoViewIfNeeded();
+await coverageTabs.first().focus();
+await journey.keyboard.press("ArrowRight");
+check(await coverageTabs.nth(1).getAttribute("aria-selected") === "true", "Coverage desk arrow-key navigation failed");
+
+await journey.locator(".atlas-nav__links").getByRole("link", { name: "Insurance", exact: true }).click();
+await journey.waitForURL("**/services");
+await journey.waitForTimeout(100);
+check(await journey.locator("main").evaluate((node) => document.activeElement === node), "SPA navigation did not focus the destination main content");
+await journey.goBack({ waitUntil: "networkidle" });
+check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Coverage for Los Angeles")), "Browser Back did not restore the homepage");
+await journey.goForward({ waitUntil: "networkidle" });
+check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Insurance for what you own")), "Browser Forward did not restore the services page");
+
+await journey.goto(`${base}/`, { waitUntil: "networkidle" });
+await journey.locator('.ria-service-strip a[href="/services#work"]').first().click();
+await journey.waitForURL("**/services#work");
+await journey.waitForTimeout(100);
+check(await journey.locator("#work").evaluate((node) => document.activeElement === node), "Business shortcut did not focus the complete business-services section");
+
+await journey.goto(`${base}/commercial-auto-insurance-los-angeles`, { waitUntil: "networkidle" });
+check(await journey.locator('.atlas-nav__links a[href="/services"]').evaluate((node) => node.classList.contains("is-active")), "Commercial-auto route lost its Insurance navigation context");
+
+await journey.goto(`${base}/faq`, { waitUntil: "networkidle" });
+const firstDisclosure = journey.locator(".answer-drawer").first();
+await firstDisclosure.locator("summary").click();
+check(await firstDisclosure.getAttribute("open") === "", "FAQ disclosure did not open");
+await firstDisclosure.locator("summary").click();
+check(await firstDisclosure.getAttribute("open") === null, "FAQ disclosure did not close");
+await journey.reload({ waitUntil: "networkidle" });
+check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Start with the question")), "Direct FAQ refresh rendered the wrong page");
+
+await journey.goto(`${base}/this-page-does-not-exist`, { waitUntil: "networkidle" });
+check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("couldn’t find")), "Custom 404 did not render on an unknown URL");
+check(await journey.locator(".not-found-atlas__actions a").count() === 4, "Custom 404 recovery actions are incomplete");
+await journeyContext.close();
 
 await chromiumBrowser.close();
 
-console.log(JSON.stringify({ checks, failures, mobileNavMetrics, quickActionMetrics, coverageFilmMetrics, coverageFilmImagesReady, reducedDialogStyle, coverageMotionState, reviewMotionState }, null, 2));
+console.log(JSON.stringify({ checks, failures, mobileNavMetrics, landscapeMenuMetrics, landscapeDialogMetrics, quickActionMetrics, coverageFilmMetrics, coverageFilmImagesReady, reducedDialogStyle, coverageMotionState, reviewMotionState, journeyNavHrefs }, null, 2));
 if (failures.length) process.exitCode = 1;

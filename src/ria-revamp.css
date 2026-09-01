@@ -3680,3 +3680,479 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
   .answer-library__index nav a::after,
   .answer-drawer { transition: none !important; transform: none !important; }
 }
+
+/* ========================================================================== */
+/* FINAL UX REFINEMENTS — direct contact, modal entry, and 404 recovery        */
+/* ========================================================================== */
+
+html.quote-open { overscroll-behavior: none; }
+
+.quote-dialog-layer { animation: none; }
+.quote-dialog-backdrop { backdrop-filter: none; animation: quote-backdrop-enter 160ms ease-out both; }
+.quote-dialog { animation: quote-dialog-enter 220ms cubic-bezier(.2,.78,.28,1) both; }
+.quote-dialog__close { width: 2.75rem; height: 2.75rem; }
+
+@keyframes quote-backdrop-enter {
+  from { opacity: 0; }
+}
+
+@keyframes quote-dialog-enter {
+  from { transform: translate3d(0,.65rem,0) scale(.995); }
+}
+
+.not-found-atlas__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-top: 1.7rem;
+}
+.not-found-atlas .not-found-atlas__actions a {
+  min-height: 2.9rem;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  margin: 0;
+  padding: .8rem .9rem;
+  border: 1px solid rgba(255,255,255,.34);
+  border-radius: 0;
+  color: white;
+  background: transparent;
+  font: 720 .67rem/1.15 var(--font-body);
+}
+.not-found-atlas .not-found-atlas__actions .not-found-atlas__primary {
+  border-color: var(--agency-gold);
+  color: var(--agency-navy);
+  background: var(--agency-gold);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .not-found-atlas .not-found-atlas__actions a:hover {
+    border-color: var(--agency-gold);
+    color: var(--agency-navy);
+    background: var(--agency-gold);
+  }
+}
+
+@media (max-width: 620px) {
+  .ria-hero__actions {
+    flex-direction: row;
+    gap: .4rem .75rem;
+  }
+  .ria-hero__actions .atlas-button { flex: 0 0 100%; }
+  .ria-hero__actions > a:not(.atlas-button) {
+    min-height: 2.75rem;
+    flex: 1 1 0;
+    justify-content: center;
+    gap: .35rem;
+    width: auto;
+    padding: .55rem .1rem;
+    font-size: .66rem;
+    white-space: nowrap;
+  }
+  .ria-hero__actions > a:not(.atlas-button) svg { width: .95rem; height: .95rem; }
+
+  .not-found-atlas__actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .not-found-atlas .not-found-atlas__actions a { padding-inline: .65rem; }
+}
+
+@media (max-width: 350px) {
+  .ria-hero__actions { column-gap: .45rem; }
+  .ria-hero__actions > a:not(.atlas-button) { gap: .25rem; font-size: .62rem; }
+}
+
+@media (max-width: 350px) and (max-height: 650px) {
+  .ria-hero__copy { padding: 2.35rem 0 1.9rem; }
+  .ria-hero h1 { font-size: 2.45rem; line-height: .97; }
+  .ria-hero__lede { margin-top: 1rem; font-size: .84rem; line-height: 1.48; }
+  .ria-hero__actions { margin-top: 1.05rem; }
+}
+
+@media (min-width: 621px) and (max-width: 900px) {
+  .quote-band__copy { grid-column: 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote-dialog-backdrop,
+  .quote-dialog { animation: none !important; }
+}
+
+/* Measured WCAG contrast repairs for small-print document labels. */
+.scope-card__boundary span,
+.contact-team article > p,
+.contact-team article > small,
+.nearby-files__grid a span,
+.nearby-files__grid a small { color: var(--agency-muted); }
+.agency-story__seal span { color: var(--agency-gold-dark); }
+.agency-story__seal strong { color: var(--agency-navy); }
+.brief-anatomy__list article > span { color: var(--agency-navy); }
+.brief-detail__caution p { color: var(--agency-muted); }
+.city-orientation__office span,
+.westside-map > small { color: rgba(255,255,255,.76); }
+
+/* Contact closes with a plain-language handoff from question to confirmation. */
+.contact-next {
+  position: relative;
+  padding: clamp(5rem,8vw,8rem) 0;
+  color: white;
+  background:
+    linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px),
+    var(--agency-navy);
+  background-size: 4rem 4rem;
+}
+.contact-next__grid { display: grid; grid-template-columns: minmax(0,.82fr) minmax(31rem,1.18fr); gap: clamp(3rem,7vw,7.5rem); align-items: start; }
+.contact-next__heading h2 { max-width: 10ch; margin-top: 1.2rem; color: white; font: 650 clamp(2.8rem,4.8vw,5rem)/.94 var(--font-display); letter-spacing: -.055em; text-wrap: balance; }
+.contact-next__heading > p { max-width: 34rem; margin-top: 1.5rem; color: rgba(255,255,255,.76); font-size: .98rem; line-height: 1.7; }
+.contact-next__actions { display: flex; flex-wrap: wrap; gap: .7rem 1.1rem; align-items: center; margin-top: 2rem; }
+.contact-next__actions > a:not(.atlas-button) { display: inline-flex; min-height: 2.9rem; align-items: center; gap: .45rem; border-bottom: 1px solid rgba(255,255,255,.42); color: white; font-size: .75rem; font-weight: 720; }
+.contact-next__record { position: relative; padding: clamp(1.4rem,3vw,2.25rem); color: var(--agency-ink); border-top: 4px solid var(--agency-gold); background: var(--agency-white); box-shadow: .75rem .75rem 0 rgba(213,161,31,.2); }
+.contact-next__record::before { content: "OFFICE WORKING RECORD"; position: absolute; top: .75rem; right: 1rem; color: var(--agency-gold-dark); font-size: .5rem; font-weight: 780; letter-spacing: .14em; }
+.contact-next__record ol { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--agency-rule); }
+.contact-next__record li { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--agency-rule); }
+.contact-next__record li > span { padding-top: .25rem; color: var(--agency-gold-dark); font-size: .58rem; font-weight: 800; letter-spacing: .08em; }
+.contact-next__record h3 { color: var(--agency-navy); font: 650 1.3rem/1.1 var(--font-display); }
+.contact-next__record li p { max-width: 36rem; margin-top: .45rem; color: var(--agency-muted); font-size: .79rem; line-height: 1.55; }
+.contact-next__record aside { display: grid; grid-template-columns: 1.35rem 1fr; gap: .75rem; margin-top: 1.25rem; padding: 1rem; color: var(--agency-navy); border-left: 3px solid var(--agency-gold); background: var(--agency-paper); }
+.contact-next__record aside svg { color: var(--agency-gold-dark); }
+.contact-next__record aside p { font-size: .73rem; line-height: 1.55; }
+.contact-next__record aside strong { display: block; margin-bottom: .2rem; }
+.contact-next__tool-note { display: flex; gap: .6rem; align-items: flex-start; margin-top: 1rem; color: var(--agency-muted); font-size: .66rem; line-height: 1.45; }
+.contact-next__tool-note svg { width: 1rem; flex: 0 0 1rem; color: var(--agency-gold-dark); }
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-next__actions > a:not(.atlas-button) { transition: color 160ms ease,border-color 160ms ease; }
+  .contact-next__actions > a:not(.atlas-button):hover { color: var(--agency-gold); border-color: var(--agency-gold); }
+}
+
+@media (max-width: 900px) {
+  .contact-next__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .contact-next__heading h2 { max-width: 12ch; }
+}
+
+@media (max-width: 620px) {
+  .contact-next { padding: 4.25rem 0 5rem; background-size: 3rem 3rem; }
+  .contact-next__heading h2 { font-size: clamp(2.4rem,12vw,3.25rem); }
+  .contact-next__heading > p { font-size: .86rem; line-height: 1.6; }
+  .contact-next__actions { display: grid; }
+  .contact-next__actions .atlas-button { width: 100%; }
+  .contact-next__actions > a:not(.atlas-button) { width: fit-content; }
+  .contact-next__record { padding: 1.2rem; box-shadow: .4rem .4rem 0 rgba(213,161,31,.2); }
+  .contact-next__record::before { position: static; display: block; margin-bottom: .8rem; }
+  .contact-next__record li { grid-template-columns: 2rem 1fr; gap: .7rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-next__actions > a:not(.atlas-button) { transition: none !important; }
+}
+
+/* Windows High Contrast / forced-colors keeps state and focus visible without
+   depending on the paper palette or background textures. */
+@media (forced-colors: active) {
+  :focus-visible { outline: 3px solid Highlight !important; outline-offset: 3px !important; box-shadow: none !important; }
+  .atlas-button,
+  .atlas-nav__quote,
+  .atlas-nav__menu,
+  .mobile-nav button,
+  .mobile-quick-actions > *,
+  .quote-dialog button,
+  .quote-dialog a,
+  .answer-drawer,
+  .contact-switchboard__grid > *,
+  .contact-next__record { border: 1px solid ButtonText !important; }
+  .atlas-nav__links .is-active,
+  .mobile-nav__main .active,
+  [role="tab"][aria-selected="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+  .atlas-eyebrow > span,
+  .route-rule,
+  .route-draw,
+  .section-folio > i { background: Highlight !important; }
+  .contact-next,
+  .quote-band,
+  .atlas-footer { border-top: 1px solid CanvasText; }
+}
+
+/* ========================================================================== */
+/* MOTION ART DIRECTION — registration lines, indexed files, paper settling   */
+/* ========================================================================== */
+
+:root {
+  --motion-tap: 140ms;
+  --motion-micro: 190ms;
+  --motion-component: 360ms;
+  --motion-section: 680ms;
+  --motion-file-offset: 10px;
+  --motion-ease-tactile: cubic-bezier(.2,.78,.28,1);
+  --motion-ease-register: cubic-bezier(.22,.72,.16,1);
+}
+
+/* The first frame is always readable. Pages simply align like a working file
+   being placed on the desk; no copy waits for JavaScript or scroll position. */
+@keyframes rafla-copy-register {
+  from { transform: translate3d(calc(var(--motion-file-offset) * -.65),0,0); }
+  to { transform: none; }
+}
+@keyframes rafla-plate-settle {
+  from { transform: translate3d(var(--motion-file-offset),calc(var(--motion-file-offset) * -.35),0) scale(1.006); }
+  to { transform: none; }
+}
+@keyframes rafla-tab-align {
+  from { transform: translate3d(calc(var(--motion-file-offset) * -.8),0,0); }
+  to { transform: none; }
+}
+@keyframes rafla-rule-register {
+  from { transform: scaleX(.04); }
+  to { transform: scaleX(1); }
+}
+@keyframes rafla-record-register {
+  from { transform: translate3d(0,calc(var(--motion-file-offset) * .55),0); }
+  to { transform: none; }
+}
+@keyframes rafla-index-register {
+  from { transform: translate3d(calc(var(--motion-file-offset) * -.55),0,0); }
+  to { transform: none; }
+}
+
+.route-frame .ria-hero__copy,
+.route-frame .dossier-hero__copy,
+.route-frame .policy-file__hero .hero-copy-enter,
+.route-frame .not-found-atlas .hero-copy-enter {
+  animation: rafla-copy-register var(--motion-component) var(--motion-ease-tactile) backwards;
+}
+.route-frame .ria-hero__office,
+.route-frame .dossier-hero__visual,
+.route-frame .not-found-atlas figure {
+  animation: rafla-plate-settle 520ms var(--motion-ease-tactile) backwards;
+}
+.route-frame .ria-hero__office-proof,
+.route-frame .dossier-hero__meta > span,
+.route-frame .policy-file__code {
+  animation: rafla-tab-align 430ms 90ms var(--motion-ease-register) backwards;
+}
+.route-frame .ria-hero__address,
+.route-frame .dossier-hero__visual figcaption {
+  animation: rafla-record-register 380ms 150ms var(--motion-ease-tactile) backwards;
+}
+.route-frame .dossier-hero .route-draw {
+  transform-origin: left center;
+  animation: rafla-rule-register 720ms 80ms var(--motion-ease-register) backwards;
+}
+.route-frame .not-found-atlas__number {
+  transform-origin: left bottom;
+  animation: rafla-tab-align 460ms var(--motion-ease-tactile) backwards;
+}
+
+/* Coverage files pull forward like indexed dividers. State remains equally
+   clear without motion through color, the gold edge, and aria-selected. */
+.coverage-desk__tabs button,
+.broker-cases__tabs > button,
+.quote-dialog__types > div[role="tablist"] button {
+  transition:
+    color var(--motion-micro) ease,
+    background-color var(--motion-micro) ease,
+    transform var(--motion-micro) var(--motion-ease-tactile);
+}
+.coverage-desk__tabs button[aria-selected="true"],
+.broker-cases__tabs > button[aria-selected="true"],
+.quote-dialog__types > div[role="tablist"] button[aria-selected="true"] {
+  z-index: 2;
+  transform: translate3d(4px,0,0);
+}
+.coverage-desk__drawing {
+  animation: rafla-record-register var(--motion-component) var(--motion-ease-tactile) backwards;
+}
+.coverage-desk__drawer {
+  animation: rafla-copy-register 310ms var(--motion-ease-tactile) backwards;
+}
+.broker-cases__visual {
+  animation: rafla-plate-settle var(--motion-component) var(--motion-ease-tactile) backwards;
+}
+.broker-cases__file-label,
+.quote-dialog__file-label {
+  display: inline-block;
+  animation: rafla-index-register 280ms var(--motion-ease-tactile) backwards;
+}
+.broker-cases__clip,
+.quote-dialog__paperclip {
+  transform-origin: center top;
+  animation: rafla-record-register 320ms 80ms var(--motion-ease-tactile) backwards;
+}
+
+/* One gold registration line connects the review ledger and one connects the
+   three contact steps. Both remain ornamental and never carry information. */
+.ria-reviews__ledger { position: relative; }
+.ria-reviews__register {
+  position: absolute;
+  z-index: 3;
+  top: -1px;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--agency-gold);
+  transform-origin: left center;
+  pointer-events: none;
+}
+.contact-next__route {
+  position: absolute;
+  z-index: 0;
+  top: 4.55rem;
+  bottom: 13.4rem;
+  left: calc(clamp(1.4rem,3vw,2.25rem) + .58rem);
+  width: 1px;
+  background: linear-gradient(var(--agency-gold),rgba(213,161,31,.2));
+  transform-origin: center top;
+  pointer-events: none;
+}
+.contact-next__record li { position: relative; z-index: 1; }
+.contact-next__record li > span {
+  width: 1.15rem;
+  min-height: 1.15rem;
+  padding-top: .3rem;
+  color: var(--agency-navy);
+  border: 1px solid var(--agency-gold-dark);
+  background: var(--agency-white);
+  text-align: center;
+  transform-origin: center;
+}
+
+/* Disclosure movement behaves like opening a reference drawer. The answer is
+   in the DOM and available immediately; only a small resting offset changes. */
+.answer-drawer summary i { transition: transform var(--motion-micro) var(--motion-ease-tactile); }
+.answer-drawer[open] summary i { transform: rotate(45deg); }
+.answer-drawer[open] > p { animation: rafla-record-register 260ms var(--motion-ease-tactile) backwards; }
+
+/* Menu sections index quickly after the panel arrives. There is no opacity
+   sequence, so focus and labels stay visible throughout the transition. */
+.mobile-nav.is-open .mobile-nav__main a,
+.mobile-nav.is-open .mobile-nav__coverage a,
+.mobile-nav.is-open .mobile-nav__office,
+.mobile-nav.is-open .mobile-nav__contact {
+  animation: rafla-index-register 300ms var(--motion-ease-tactile) backwards;
+}
+.mobile-nav.is-open .mobile-nav__main a:nth-child(2) { animation-delay: 20ms; }
+.mobile-nav.is-open .mobile-nav__main a:nth-child(3) { animation-delay: 40ms; }
+.mobile-nav.is-open .mobile-nav__main a:nth-child(4) { animation-delay: 60ms; }
+.mobile-nav.is-open .mobile-nav__main a:nth-child(5) { animation-delay: 80ms; }
+.mobile-nav.is-open .mobile-nav__main a:nth-child(6) { animation-delay: 100ms; }
+.mobile-nav.is-open .mobile-nav__coverage { animation-delay: 80ms; }
+.mobile-nav.is-open .mobile-nav__office { animation-delay: 100ms; }
+.mobile-nav.is-open .mobile-nav__contact { animation-delay: 120ms; }
+
+/* Tactile feedback is brief, transform-only, and restricted to fine pointers
+   where hover exists. Touch receives the pressed state below. */
+.atlas-button,
+.atlas-nav__quote,
+.quote-band__phone,
+.coverage-desk__drawer > a,
+.broker-cases__file > a,
+.broker-cases__file > button,
+.contact-switchboard__grid > a,
+.contact-team article > a,
+.city-coverage__grid > a,
+.nearby-files__grid a,
+.not-found-atlas__actions a {
+  transition-duration: var(--motion-micro);
+  transition-timing-function: var(--motion-ease-tactile);
+}
+.atlas-button:active,
+.atlas-nav__quote:active,
+.mobile-nav button:active,
+.mobile-quick-actions > *:active,
+.quote-dialog button:active,
+.quote-dialog a:active,
+.coverage-desk__tabs button:active,
+.broker-cases__tabs > button:active {
+  transform: translate3d(0,1px,0) scale(.992);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .atlas-button:hover,
+  .atlas-nav__quote:hover { transform: translate3d(0,-2px,0); }
+  .coverage-desk__drawer > a svg,
+  .broker-cases__file > a svg,
+  .broker-cases__file > button svg,
+  .nearby-files__grid a svg:last-child,
+  .city-coverage__grid a > svg:last-child {
+    transition: transform var(--motion-micro) var(--motion-ease-tactile);
+  }
+  .coverage-desk__drawer > a:hover svg,
+  .broker-cases__file > a:hover svg,
+  .broker-cases__file > button:hover svg,
+  .nearby-files__grid a:hover svg:last-child,
+  .city-coverage__grid a:hover > svg:last-child { transform: translate3d(3px,0,0); }
+  .westside-map > a { transition: color var(--motion-micro) ease; }
+  .westside-map > a i { transition: transform var(--motion-micro) var(--motion-ease-tactile),background-color var(--motion-micro) ease; }
+  .westside-map > a:hover i,
+  .westside-map > a:focus-visible i { transform: scale(1.45); background: var(--agency-gold); }
+}
+
+@media (max-width: 900px) {
+  :root { --motion-file-offset: 5px; }
+  .coverage-desk__tabs button[aria-selected="true"],
+  .broker-cases__tabs > button[aria-selected="true"] { transform: translate3d(0,-2px,0); }
+  .quote-dialog__types > div[role="tablist"] button[aria-selected="true"] { transform: translate3d(3px,0,0); }
+}
+
+@media (max-width: 620px) {
+  :root { --motion-file-offset: 4px; }
+  .route-frame .ria-hero__office,
+  .route-frame .dossier-hero__visual,
+  .route-frame .not-found-atlas figure { animation-duration: 360ms; }
+  .route-frame .ria-hero__office-proof,
+  .route-frame .dossier-hero__meta > span,
+  .route-frame .policy-file__code { animation-duration: 300ms; }
+  .contact-next__route { top: 4.65rem; bottom: 14.3rem; left: 1.76rem; }
+  .mobile-nav.is-open .mobile-nav__main a,
+  .mobile-nav.is-open .mobile-nav__coverage a,
+  .mobile-nav.is-open .mobile-nav__office,
+  .mobile-nav.is-open .mobile-nav__contact { animation-duration: 220ms; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-frame .ria-hero__copy,
+  .route-frame .dossier-hero__copy,
+  .route-frame .policy-file__hero .hero-copy-enter,
+  .route-frame .not-found-atlas .hero-copy-enter,
+  .route-frame .ria-hero__office,
+  .route-frame .dossier-hero__visual,
+  .route-frame .not-found-atlas figure,
+  .route-frame .ria-hero__office-proof,
+  .route-frame .dossier-hero__meta > span,
+  .route-frame .policy-file__code,
+  .route-frame .ria-hero__address,
+  .route-frame .dossier-hero__visual figcaption,
+  .route-frame .dossier-hero .route-draw,
+  .route-frame .not-found-atlas__number,
+  .coverage-desk__drawing,
+  .coverage-desk__drawer,
+  .broker-cases__visual,
+  .broker-cases__file-label,
+  .quote-dialog__file-label,
+  .broker-cases__clip,
+  .quote-dialog__paperclip,
+  .answer-drawer[open] > p,
+  .mobile-nav.is-open .mobile-nav__main a,
+  .mobile-nav.is-open .mobile-nav__coverage a,
+  .mobile-nav.is-open .mobile-nav__office,
+  .mobile-nav.is-open .mobile-nav__contact {
+    animation: none !important;
+    transform: none !important;
+  }
+  .coverage-desk__tabs button,
+  .broker-cases__tabs > button,
+  .quote-dialog__types > div[role="tablist"] button,
+  .answer-drawer summary i,
+  .westside-map > a,
+  .westside-map > a i { transition: none !important; }
+  .coverage-desk__tabs button[aria-selected="true"],
+  .broker-cases__tabs > button[aria-selected="true"],
+  .quote-dialog__types > div[role="tablist"] button[aria-selected="true"],
+  .answer-drawer[open] summary i { transform: none !important; }
+  .ria-reviews__register,
+  .contact-next__route { transform: none !important; }
+}
+
+@media (forced-colors: active) {
+  .ria-reviews__register,
+  .contact-next__route { background: Highlight; }
+  .contact-next__record li > span { border-color: Highlight; }
+}

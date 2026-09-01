@@ -8,6 +8,7 @@ import {
   Home as HomeIcon,
   Languages,
   MapPin,
+  MessageSquareText,
   Phone,
   ShieldCheck,
   Star,
@@ -37,9 +38,9 @@ const homeFaqs = [
 const serviceMarks = [
   { label: "Auto", detail: "Personal & commercial", icon: Car, href: "/auto-insurance-los-angeles-ca" },
   { label: "Home", detail: "Owners & renters", icon: HomeIcon, href: "/home-insurance-los-angeles-ca" },
-  { label: "Commercial", detail: "Liability & property", icon: Building2, href: "/commercial-auto-insurance-los-angeles" },
+  { label: "Business", detail: "Liability & property", icon: Building2, href: "/services#work" },
   { label: "Workers’ comp", detail: "Protect your team", icon: BriefcaseBusiness, href: "/services#work" },
-  { label: "Bonds & filings", detail: "Special situations", icon: FileCheck2, href: "/sr22-insurance-los-angeles" },
+  { label: "SR-22 filing", detail: "Proof certificate", icon: FileCheck2, href: "/sr22-insurance-los-angeles" },
 ];
 
 export default function Home() {
@@ -61,8 +62,10 @@ export default function Home() {
             <h1>Coverage for Los Angeles, <span>explained by a local broker.</span></h1>
             <p className="ria-hero__lede">Rafla is an independent agency—not an insurance company. We review available programs for auto, home, commercial, workers’ compensation, bonds, and specialty coverage from our Venice Boulevard office.</p>
             <div className="ria-hero__actions">
-              <AtlasButton tone="navy" onClick={openQuoteModal}>Request a quote</AtlasButton>
-              <a href={site.contact.phoneHref}><Phone size={17} /> {site.contact.phone}</a>
+              <AtlasButton tone="navy" onClick={openQuoteModal}>Prepare for a quote</AtlasButton>
+              <a href={site.contact.phoneHref} aria-label={`Call Rafla Insurance Agency at ${site.contact.phone}`}><Phone size={17} />Call agency</a>
+              <a href={site.contact.textHref} aria-label={`Text Mark Rafla at ${site.contact.text}`}><MessageSquareText size={17} />Text Mark</a>
+              <a href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer"><MapPin size={17} />Directions</a>
             </div>
             <dl className="ria-hero__details">
               <div><dt>Office</dt><dd>12240 Venice Blvd, Suite 2</dd></div>
@@ -130,10 +133,10 @@ export default function Home() {
               <CoverageLinework className="ria-story__drawing" variant="home" />
               <div><span>For households</span><h3>Cars, homes, rentals, and the belongings in between.</h3><p>Auto · Homeowners · Renters · Condo · Landlord · Umbrella</p><b>View personal insurance <ArrowRight size={16} /></b></div>
             </Link>
-            <Link to="/commercial-auto-insurance-los-angeles" className="ria-story motion-reveal">
+            <Link to="/services#work" className="ria-story motion-reveal">
               <AtlasImage className="ria-story__photo" src={images.home.business} alt="A Westside small-business crew loading tools into a work van outside their shop" width="1536" height="1024" loading="lazy" />
               <CoverageLinework className="ria-story__drawing" variant="commercial" />
-              <div><span>For businesses</span><h3>Protection for the work, vehicles, people, and contracts.</h3><p>Commercial auto · General liability · Workers’ comp · Property · Bonds</p><b>View business insurance <ArrowRight size={16} /></b></div>
+              <div><span>For businesses</span><h3>Protection for the work, vehicles, people, and contracts.</h3><p>Commercial auto · General liability · Workers’ comp · Property · Bonds</p><b>View business services <ArrowRight size={16} /></b></div>
             </Link>
           </div>
         </div>
@@ -149,7 +152,7 @@ export default function Home() {
             <h2>On Venice Boulevard,<br />close to the communities we serve.</h2>
             <p>Visit the office in Mar Vista or call from anywhere in the surrounding Los Angeles area. We regularly help clients across the Westside and nearby communities.</p>
             <WestsideMap />
-            <div className="ria-local__actions"><AtlasButton to="/locations" tone="paper">See service areas</AtlasButton><a href={site.contact.mapsHref} target="_blank" rel="noreferrer">Get directions <ArrowRight size={16} /></a></div>
+            <div className="ria-local__actions"><AtlasButton to="/locations" tone="paper">See service areas</AtlasButton><a href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer">Get directions <ArrowRight size={16} /></a></div>
           </div>
           <div className="ria-local__portfolio motion-reveal">
             <figure className="ria-local__office-photo">
@@ -179,12 +182,13 @@ export default function Home() {
               <strong>{site.reviews.rating}</strong>
               <span aria-hidden="true">{Array.from({ length: 5 }, (_, index) => <Star key={index} fill="currentColor" />)}</span>
               <small>{site.reviews.count} Google reviews</small>
-              <a href={site.reviews.googleUrl} target="_blank" rel="noreferrer">View Google profile <ExternalLink aria-hidden="true" /></a>
+              <a href={site.reviews.googleUrl} target="_blank" rel="noopener noreferrer">View Google profile <ExternalLink aria-hidden="true" /></a>
             </div>
           </header>
 
           <p className="mobile-swipe-hint mobile-swipe-hint--reviews" aria-hidden="true"><span />Swipe to read customer comments</p>
-          <div className="ria-reviews__ledger" role="region" aria-label="Selected customer reviews" tabIndex={0}>
+          <div className="ria-reviews__ledger" role="region" aria-label="Selected customer reviews" aria-description="On narrow screens, scroll horizontally or use the Left and Right Arrow keys to browse reviews." tabIndex={0}>
+            <span className="ria-reviews__register" aria-hidden="true" />
             {site.reviews.excerpts.map((review) => (
               <blockquote key={review.name} className="motion-reveal">
                 <span aria-hidden="true">“</span>
@@ -212,7 +216,7 @@ export default function Home() {
         </div>
       </section>
 
-      <QuoteBand title="Tell us what needs protecting." text="Call the office or start with a few details online. A local broker will take it from there." />
+      <QuoteBand title="Tell us what needs protecting." text="Call the office or open the preparation guide to see which details may help. Nothing is submitted online." />
     </main>
   );
 }

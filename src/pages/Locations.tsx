@@ -22,8 +22,8 @@ export default function Locations() {
       <LocalBusinessSchema url="https://raflainsurance.com/" areaServed={cities.map((city) => `${city.name}, CA`)} />
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Locations", url: "https://raflainsurance.com/locations" }]} />
       <DossierHeader index="LA" eyebrow="Your Mar Vista insurance office" title="Your insurance office is on Venice Boulevard." lede="Visit Rafla in Mar Vista or call from anywhere in the surrounding Los Angeles area. The office serves households and businesses across the Westside and nearby communities." image="/images/illustrated/office-venice-illustrated-v6.webp" imageAlt="Illustration of Rafla Insurance Agency's Venice Boulevard neighborhood office">
-        <AtlasButton tone="navy" onClick={openQuoteModal}>Request a quote</AtlasButton>
-        <a className="coverage-brief__call" href={site.contact.mapsHref} target="_blank" rel="noreferrer">Directions <ExternalLink size={14} /></a>
+        <AtlasButton tone="navy" onClick={openQuoteModal}>Prepare for a quote</AtlasButton>
+        <a className="coverage-brief__call" href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer">Directions <ExternalLink size={14} /></a>
       </DossierHeader>
 
       <section className="office-record section-folio-host">
@@ -34,7 +34,7 @@ export default function Locations() {
             <AtlasEyebrow>Visit Rafla Insurance</AtlasEyebrow>
             <h2>12240 Venice Blvd<br />Suite 2<br />Los Angeles, CA 90066</h2>
             <div className="office-record__lines">
-              <a href={site.contact.mapsHref} target="_blank" rel="noreferrer"><MapPin />Open in maps<ArrowRight /></a>
+              <a href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer"><MapPin />Open in maps<ArrowRight /></a>
               <a href={site.contact.phoneHref}><Phone />{site.contact.phone}<ArrowRight /></a>
               <p><Clock3 />Monday–Friday 10am–5pm<br />Saturday–Sunday closed</p>
               <p><Languages />English · Spanish · Arabic</p>

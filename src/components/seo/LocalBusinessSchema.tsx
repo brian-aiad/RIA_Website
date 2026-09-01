@@ -71,7 +71,6 @@ export default function LocalBusinessSchema({
           name: "Mark Rafla",
           telephone: "+1-310-918-7007",
           contactType: "sales",
-          availableLanguage: ["English", "Spanish", "Arabic"],
           areaServed: "US-CA",
         },
         {
@@ -79,7 +78,6 @@ export default function LocalBusinessSchema({
           name: "Ashraf Abdelmalik",
           telephone: "+1-213-879-5955",
           contactType: "customer service",
-          availableLanguage: ["English", "Spanish", "Arabic"],
           areaServed: "US-CA",
         },
       ],

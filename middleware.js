@@ -16,59 +16,71 @@ const comingSoonHtml = `<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#102653">
+  <meta name="theme-color" content="#0B2146">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>Rafla Insurance Agency | New Website Coming Soon</title>
   <style>
-    :root{--navy:#102653;--deep:#061329;--blue:#193b6b;--gold:#e3a719;--paper:#fbfaf7}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--deep);color:#fff}
-    body{min-height:100svh;display:grid;place-items:center;overflow-x:hidden;background:radial-gradient(circle at 82% 18%,rgba(227,167,25,.12),transparent 26rem),linear-gradient(135deg,var(--deep),#0b1d3e 58%,var(--navy))}
-    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.42;background-image:linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.026) 1px,transparent 1px);background-size:68px 68px;mask-image:linear-gradient(105deg,#000,transparent 78%)}
-    .rings{position:fixed;right:-10rem;top:-9rem;width:34rem;height:34rem;border:1px solid rgba(227,167,25,.15);border-radius:50%;box-shadow:0 0 0 5rem rgba(255,255,255,.018),0 0 0 10rem rgba(227,167,25,.025);pointer-events:none}
-    main{position:relative;z-index:1;width:min(100% - 2rem,72rem);padding:clamp(1rem,4vw,3rem) 0}
-    .shell{overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:clamp(1.5rem,3vw,2.4rem);background:rgba(8,24,52,.76);box-shadow:0 35px 90px rgba(0,0,0,.34);backdrop-filter:blur(20px)}
-    .goldline{height:4px;background:linear-gradient(90deg,var(--gold),#f3ce70 48%,transparent 92%)}
-    .content{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(18rem,.72fr);gap:clamp(2rem,6vw,6rem);align-items:center;padding:clamp(2rem,6vw,5.2rem)}
-    .logo-wrap{display:inline-flex;align-items:center;border-radius:1rem;background:#fff;padding:.55rem .8rem;box-shadow:0 12px 35px rgba(0,0,0,.18)}
-    .logo{display:block;width:min(13rem,54vw);height:auto}
-    .eyebrow{margin:2.4rem 0 1rem;color:#f3ce70;font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
-    h1{max-width:13ch;margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.65rem,6.5vw,5.7rem);font-weight:600;line-height:.98;letter-spacing:-.045em;text-wrap:balance}
-    .lede{max-width:36rem;margin:1.5rem 0 0;color:rgba(255,255,255,.73);font-size:clamp(1rem,1.7vw,1.2rem);line-height:1.75}
-    .status{position:relative;border-radius:1.5rem;padding:1.5rem;background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.045));box-shadow:inset 0 0 0 1px rgba(255,255,255,.11)}
-    .status:before{content:"";position:absolute;inset:-.5rem auto auto -.5rem;width:4rem;height:4rem;border-top:1px solid var(--gold);border-left:1px solid var(--gold);border-radius:1rem 0 0 0;opacity:.8}
-    .label{display:flex;align-items:center;gap:.65rem;color:#f3ce70;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
-    .dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--gold);box-shadow:0 0 0 .35rem rgba(227,167,25,.12)}
-    .status h2{margin:1.1rem 0 .55rem;font-size:1.3rem}.status p{margin:0;color:rgba(255,255,255,.65);font-size:.94rem;line-height:1.65}
-    .contact{display:grid;gap:.65rem;margin-top:1.5rem}.contact a{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3.2rem;border-radius:.9rem;padding:.8rem 1rem;color:#fff;text-decoration:none;background:rgba(255,255,255,.065);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);transition:transform .2s ease,background .2s ease}.contact a:hover{transform:translateY(-2px);background:rgba(255,255,255,.11)}.contact small{color:rgba(255,255,255,.5);font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.contact strong{font-size:.87rem;text-align:right}
-    footer{display:flex;justify-content:space-between;gap:1.5rem;border-top:1px solid rgba(255,255,255,.09);padding:1.15rem clamp(2rem,6vw,5.2rem);color:rgba(255,255,255,.48);font-size:.76rem}footer span:last-child{text-align:right}
-    @media(max-width:760px){body{place-items:start center}.rings{right:-20rem}.content{grid-template-columns:1fr;padding:2rem 1.35rem 1.5rem}.eyebrow{margin-top:1.8rem}h1{font-size:clamp(2.55rem,13vw,4rem)}.status{padding:1.25rem}footer{flex-direction:column;padding:1.1rem 1.35rem}footer span:last-child{text-align:left}.shell{border-radius:1.5rem}}
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+    :root{--navy:#0B2146;--blue:#163B70;--gold:#D5A11F;--dark-gold:#7D5900;--paper:#F5F1E8;--paper-2:#EBE5D8;--white:#FFFEFB;--ink:#18263B;--muted:#566377;--rule:#D4CCBD}
+    *{box-sizing:border-box}
+    html{min-width:20rem;background:var(--navy)}
+    body{min-height:100svh;margin:0;border-block:6px solid var(--navy);overflow-x:hidden;color:var(--ink);background:var(--paper);font-family:"Segoe UI",Arial,sans-serif}
+    body:before{content:"";position:fixed;z-index:0;inset:0;pointer-events:none;background-image:linear-gradient(rgba(11,33,70,.035) 1px,transparent 1px);background-size:100% 2.45rem}
+    main{position:relative;z-index:1;width:min(100% - 2rem,72rem);margin-inline:auto;padding:clamp(1rem,4vw,3.5rem) 0}
+    .folio{overflow:hidden;border:1px solid var(--rule);border-top:6px solid var(--gold);background:var(--white);box-shadow:1rem 1rem 0 rgba(11,33,70,.08),0 2rem 5rem rgba(11,33,70,.12)}
+    .masthead{display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:1rem clamp(1.25rem,4vw,3rem);border-bottom:1px solid var(--rule)}
+    .logo{display:block;width:min(12.5rem,52vw);height:auto}
+    .record{display:grid;gap:.2rem;color:var(--muted);font-size:.68rem;text-align:right}.record strong{color:var(--navy);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}
+    .content{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(19rem,.72fr);gap:clamp(2rem,6vw,6rem);align-items:center;padding:clamp(2.25rem,6vw,5.25rem) clamp(1.25rem,5vw,4.5rem)}
+    .eyebrow{display:flex;align-items:center;gap:.7rem;margin:0 0 1.2rem;color:var(--dark-gold);font-size:.68rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.eyebrow:before{content:"";width:2.5rem;height:3px;background:var(--gold)}
+    h1{max-width:12ch;margin:0;color:var(--navy);font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.85rem,6.4vw,5.8rem);font-weight:600;line-height:.96;letter-spacing:-.045em;text-wrap:balance}
+    .lede{max-width:38rem;margin:1.5rem 0 0;color:var(--muted);font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.7}
+    .scope{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-width:38rem;margin:2rem 0 0;border-block:1px solid var(--rule)}
+    .scope span{min-height:3.7rem;padding:.85rem 1rem .85rem 0;color:var(--navy);font-size:.76rem;font-weight:700;line-height:1.4}.scope span+span{padding-left:1rem;border-left:1px solid var(--rule)}
+    .contact-file{position:relative;padding:1.6rem;border-left:5px solid var(--gold);color:white;background:var(--navy)}
+    .contact-file:before{content:"RIA / CONTACT";position:absolute;top:.65rem;right:.75rem;color:rgba(255,255,255,.3);font-size:.48rem;font-weight:800;letter-spacing:.14em}
+    .label{margin:0;color:var(--gold);font-size:.63rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .contact-file h2{margin:.7rem 0 .5rem;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:600;line-height:1.05}.contact-file>p:not(.label){margin:0;color:rgba(255,255,255,.7);font-size:.85rem;line-height:1.55}
+    .contact{display:grid;margin-top:1.3rem;border-top:1px solid rgba(255,255,255,.22)}
+    .contact a{display:grid;grid-template-columns:4.5rem minmax(0,1fr);gap:.75rem;align-items:center;min-height:3.35rem;padding:.72rem 0;border-bottom:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;transition:color 160ms ease,background-color 160ms ease}.contact a:hover{color:var(--gold);background:rgba(255,255,255,.045)}
+    .contact small{color:var(--gold);font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.contact strong{min-width:0;overflow-wrap:anywhere;font-size:.82rem;font-weight:700;text-align:right}
+    footer{display:grid;grid-template-columns:1.35fr 1fr .8fr;gap:1.25rem;padding:1.1rem clamp(1.25rem,4vw,3rem);border-top:1px solid var(--rule);color:var(--muted);background:var(--paper-2);font-size:.72rem;line-height:1.45}footer span:nth-child(2){text-align:center}footer span:last-child{text-align:right}
+    a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+    @keyframes file-settle{from{transform:translate3d(0,5px,0)}to{transform:none}}
+    @keyframes rule-register{from{transform:scaleX(.05)}to{transform:scaleX(1)}}
+    .folio{animation:file-settle 420ms cubic-bezier(.2,.78,.28,1) backwards}.contact-file{animation:file-settle 360ms 80ms cubic-bezier(.2,.78,.28,1) backwards}.eyebrow:before{transform-origin:left center;animation:rule-register 620ms 80ms cubic-bezier(.22,.72,.16,1) backwards}
+    @media(max-width:760px){main{width:min(100% - 1rem,42rem);padding:.75rem 0 1.25rem}.masthead{align-items:flex-start;padding:1rem}.record{font-size:.6rem}.content{grid-template-columns:1fr;gap:2rem;padding:2.25rem 1rem 1rem}.eyebrow{font-size:.6rem}h1{font-size:clamp(2.55rem,13vw,4rem)}.scope{margin-top:1.5rem}.contact-file{padding:1.25rem}.contact a{min-height:3.5rem}footer{grid-template-columns:1fr;gap:.35rem;padding:1rem}footer span:nth-child(2),footer span:last-child{text-align:left}.folio{box-shadow:.5rem .5rem 0 rgba(11,33,70,.08)}}
+    @media(max-width:390px){.record span{display:none}.scope{grid-template-columns:1fr}.scope span+span{padding-left:0;border-top:1px solid var(--rule);border-left:0}.contact a{grid-template-columns:3.25rem minmax(0,1fr);gap:.5rem}.contact strong{font-size:.68rem;letter-spacing:-.01em}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important;transform:none!important}}
+    @media(forced-colors:active){.folio,.contact-file,.contact a{border:1px solid CanvasText}.eyebrow:before{background:Highlight}.contact a:focus-visible{outline-color:Highlight}}
   </style>
 </head>
 <body>
-  <div class="rings" aria-hidden="true"></div>
   <main>
-    <section class="shell" aria-labelledby="coming-title">
-      <div class="goldline" aria-hidden="true"></div>
+    <section class="folio" aria-labelledby="coming-title">
+      <header class="masthead">
+        <img class="logo" src="/logo.svg" alt="Rafla Insurance Agency">
+        <div class="record"><strong>Independent since 2003</strong><span>Mar Vista · Los Angeles</span></div>
+      </header>
       <div class="content">
         <div>
-          <span class="logo-wrap"><img class="logo" src="/logo.svg" alt="Rafla Insurance Agency"></span>
-          <p class="eyebrow">Los Angeles · Independent since 2003</p>
-          <h1 id="coming-title">A new website is on the way.</h1>
-          <p class="lede">We are putting the finishing touches on a new online experience. Rafla Insurance Agency remains open and available for personal and commercial insurance assistance.</p>
+          <p class="eyebrow">Website update in progress</p>
+          <h1 id="coming-title">Our new website is being prepared.</h1>
+          <p class="lede">Rafla Insurance Agency remains available from its Venice Boulevard office for personal and commercial property-and-casualty insurance assistance throughout California.</p>
+          <div class="scope" aria-label="Agency overview"><span>Independent insurance guidance for individuals, families, drivers, and property owners.</span><span>Commercial support for contractors, vehicles, property, and small businesses.</span></div>
         </div>
-        <aside class="status" aria-label="Contact Rafla Insurance Agency">
-          <div class="label"><span class="dot"></span>Office open as usual</div>
-          <h2>Need help today?</h2>
-          <p>Call, email, or visit our Mar Vista office during regular business hours.</p>
+        <aside class="contact-file" aria-label="Contact Rafla Insurance Agency">
+          <p class="label">Agency services continue</p>
+          <h2>Reach the broker desk.</h2>
+          <p>Call, text, email, or get directions to the Mar Vista office.</p>
           <div class="contact">
             <a href="tel:+13105727246"><small>Office</small><strong>(310) 572-7246</strong></a>
+            <a href="sms:+13109187007"><small>Text</small><strong>(310) 918-7007</strong></a>
             <a href="mailto:contact@raflainsurance.com"><small>Email</small><strong>contact@raflainsurance.com</strong></a>
-            <a href="https://maps.google.com/maps?q=12240+Venice+Blvd+Suite+2+Los+Angeles+CA+90066"><small>Visit</small><strong>12240 Venice Blvd, Suite 2</strong></a>
+            <a href="https://maps.google.com/maps?q=12240+Venice+Blvd+Suite+2+Los+Angeles+CA+90066" target="_blank" rel="noopener noreferrer"><small>Visit</small><strong>12240 Venice Blvd, Suite 2</strong></a>
           </div>
         </aside>
       </div>
-      <footer><span>Mon–Fri 10am–5pm · Sat–Sun closed</span><span>English · Spanish · Arabic</span></footer>
+      <footer><span>Monday–Friday, 10am–5pm · Saturday–Sunday closed</span><span>English · Spanish · Arabic</span><span>CA Agency License 0D95584</span></footer>
     </section>
   </main>
 </body>
@@ -77,6 +89,14 @@ const comingSoonHtml = `<!doctype html>
 export default function middleware(request) {
   const url = new URL(request.url);
   const isPublicDomain = PRODUCTION_HOSTS.has(url.hostname.toLowerCase());
+
+  // The site does not use query-string state. Remove all query parameters
+  // before rendering so accidental personal data and tracking values are not
+  // retained in the address bar, logs, analytics URLs, or shared links.
+  if (url.search) {
+    url.search = "";
+    return Response.redirect(url, 308);
+  }
 
   if (COMING_SOON_ENABLED && isPublicDomain) {
     if (url.pathname === "/robots.txt") {
@@ -93,13 +113,6 @@ export default function middleware(request) {
         "x-robots-tag": "noindex, nofollow, noarchive",
       },
     });
-  }
-
-  // Preserve the prior cleanup for stray Cloudflare-style ?q parameters on
-  // preview and local deployments.
-  if (url.searchParams.has("q")) {
-    url.searchParams.delete("q");
-    return Response.redirect(url, 308);
   }
 
   return next();

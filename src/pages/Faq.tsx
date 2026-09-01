@@ -10,7 +10,7 @@ const sections = [
   { title: "Getting a quote", code: "A", questions: [
     ["What information helps with a quote?", "It depends on the coverage. A current declarations page is useful. Driver and vehicle details, property information, or business operations, payroll, vehicles, and loss history may also be requested."],
     ["Can Rafla compare multiple carriers?", "As an independent agency, Rafla can review available programs from multiple carriers, subject to carrier appointments, market availability, eligibility, and underwriting."],
-    ["Is an online estimate guaranteed?", "No. A quote can change after verification or underwriting. Coverage is not effective until the carrier or agency confirms binding in writing and all required conditions are met."],
+    ["Is a quoted price guaranteed?", "No. A quote can change after verification or underwriting. Coverage is not effective until the carrier or agency confirms binding in writing and all required conditions are met."],
     ["Which languages are available?", "The agency can assist in English, Spanish, and Arabic."],
   ]},
   { title: "Auto & filings", code: "B", questions: [
@@ -23,11 +23,13 @@ const sections = [
     ["Does homeowners insurance cover earthquake or flood?", "Those causes of loss are generally excluded from a standard homeowners policy and usually require separate coverage or arrangements. Read the actual exclusions."],
     ["Does California require workers’ compensation?", "California employers with one or more employees generally must satisfy workers’ compensation requirements, subject to applicable definitions and exclusions."],
     ["What does a certificate of insurance do?", "It provides evidence of coverage at a point in time. It does not create coverage or rewrite the policy, limits, exclusions, or endorsements."],
-    ["Do you offer health, life, or notary services?", "Not currently. Rafla plans to update the service directory if future licensing changes."],
+    ["What helps with a certificate or bond request?", "Have the contract, sample certificate or bond form, exact holder or obligee details, and deadline ready. The agency and carrier must review what the policy or bond can support; a certificate cannot change coverage."],
+    ["Do you offer health, life, or notary services?", "No. Rafla does not currently offer health insurance, life insurance, or notary services."],
   ]},
   { title: "After the policy starts", code: "D", questions: [
     ["How do I report a claim?", "Use the carrier’s claim-reporting channel shown on the policy or ID materials, then notify the agency if you need help navigating documents or next steps."],
     ["When should I request a policy review?", "Useful moments include renewal, a move, a new driver or vehicle, renovations, a property purchase, hiring employees, changing operations, or signing a contract."],
+    ["When is a requested policy change effective?", "Do not assume a requested change has taken effect. Wait for the proper agency or carrier confirmation, and ask which delivery method to use before sending sensitive records."],
     ["Can I cancel before replacement coverage is confirmed?", "That can create a gap. Confirm the effective date, binding status, and any filing requirements before canceling existing coverage."],
   ]},
 ];
@@ -38,7 +40,7 @@ export default function Faq() {
     <main id="main-content" className="atlas-page faq-file">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "FAQ", url: "https://raflainsurance.com/faq" }]} />
       <DossierHeader index="Q+A" eyebrow="Questions clients bring us" title="Start with the question in front of you." lede="Find the basics for a quote, filing, policy change, or claim—then call the office when the actual document needs to be reviewed." image={images.interior.faq} imageAlt="Illustrated insurance reference desk with a blank folder, vehicle keys, a house model, and a magnifying glass">
-        <AtlasButton tone="navy" onClick={openQuoteModal}>Ask us a question</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
+        <AtlasButton tone="navy" onClick={openQuoteModal}>Open preparation guide</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
       </DossierHeader>
       <section className="answer-library section-folio-host"><SectionFolio>Answer file</SectionFolio><div className="atlas-container answer-library__grid">
         <aside className="answer-library__index motion-reveal" aria-label="FAQ topics and office help">

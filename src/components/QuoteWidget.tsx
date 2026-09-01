@@ -1,7 +1,8 @@
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Building2, CarFront, FileBadge2, House, Mail, MessageSquareText, Phone, X } from "lucide-react";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
+import { takeQuoteInvoker } from "../lib/openQuote";
 import { site } from "../lib/site";
 
 const QUOTE_TYPES = [
@@ -12,11 +13,11 @@ const QUOTE_TYPES = [
 ] as const;
 
 export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number }) {
-  const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [quoteType, setQuoteType] = useState<(typeof QUOTE_TYPES)[number]["id"]>("auto");
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const restoreFocusFrameRef = useRef(0);
   const selectedIndex = QUOTE_TYPES.findIndex((item) => item.id === quoteType);
   const selected = QUOTE_TYPES[selectedIndex] ?? QUOTE_TYPES[0];
 
@@ -41,14 +42,20 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
     window.addEventListener("openQuoteModal", handleOpen);
     return () => window.removeEventListener("openQuoteModal", handleOpen);
   }, []);
+  useEffect(() => () => window.cancelAnimationFrame(restoreFocusFrameRef.current), []);
   useEffect(() => { if (openSignal > 0) setOpen(true); }, [openSignal]);
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
-  useEffect(() => {
     if (!open) return;
-    previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    window.cancelAnimationFrame(restoreFocusFrameRef.current);
+    previousFocusRef.current = takeQuoteInvoker()
+      ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
+    const appRoot = document.getElementById("root");
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    appRoot?.setAttribute("inert", "");
+    document.documentElement.classList.add("quote-open");
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
     const handleKeyDown = (event: globalThis.KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -78,24 +85,23 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
     return () => {
       window.clearTimeout(focusTimer);
       window.removeEventListener("keydown", handleKeyDown);
-      previousFocusRef.current?.focus();
+      appRoot?.removeAttribute("inert");
+      document.documentElement.classList.remove("quote-open");
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+      const restoreTarget = previousFocusRef.current;
+      restoreFocusFrameRef.current = window.requestAnimationFrame(() => {
+        if (restoreTarget?.isConnected) restoreTarget.focus();
+      });
     };
   }, [open]);
 
-  return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={reduceMotion ? undefined : { opacity: 0 }}
-          className="quote-dialog-layer"
-        >
-          <button type="button" className="quote-dialog-backdrop" onClick={() => setOpen(false)} aria-label="Close quote dialog" />
-          <motion.section
-            initial={reduceMotion ? false : { y: 16, opacity: 0, scale: 0.99 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={reduceMotion ? undefined : { y: 12, opacity: 0, scale: 0.99 }}
+  if (!open) return null;
+
+  return createPortal(
+        <div className="quote-dialog-layer">
+          <div className="quote-dialog-backdrop" onMouseDown={() => setOpen(false)} aria-hidden="true" />
+          <section
             className="quote-dialog"
             role="dialog"
             aria-modal="true"
@@ -110,7 +116,7 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
               <div className="quote-dialog__intro">
                 <small>Local broker desk · Mar Vista</small>
                 <h2 id="quote-title">Start with what needs protecting.</h2>
-                <p id="quote-description">Choose the closest coverage file. You do not need every document before calling.</p>
+                <p id="quote-description">Choose the closest coverage file. This preparation guide does not submit or save a quote request.</p>
               </div>
               <button ref={closeButtonRef} type="button" onClick={() => setOpen(false)} className="quote-dialog__close" aria-label="Close"><X /></button>
             </header>
@@ -150,6 +156,7 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
                 className="quote-dialog__file"
                 role="tabpanel"
                 aria-labelledby={`quote-type-${selected.id}`}
+                aria-live="polite"
               >
                 <div className="quote-dialog__paperclip" aria-hidden="true" />
                 <span className="quote-dialog__file-label">Working file · {selected.label}</span>
@@ -168,9 +175,8 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
                 <p className="quote-dialog__privacy">For your privacy, do not email or text Social Security numbers, payment information, or full driver’s-license images.</p>
               </section>
             </div>
-          </motion.section>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          </section>
+        </div>,
+    document.body,
   );
 }

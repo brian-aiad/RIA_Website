@@ -43,7 +43,7 @@ export const coverageEntries: CoverageEntry[] = [
     number: "03",
     title: "Business",
     short: "Commercial auto, liability, workers’ compensation, and bonds.",
-    href: "/commercial-auto-insurance-los-angeles",
+    href: "/services#work",
     image: "/images/illustrated/small-business-v6.webp",
     imageAlt: "Illustration of a Westside small-business owner and crew outside their shop",
     accent: "blue",

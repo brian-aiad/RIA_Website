@@ -136,13 +136,13 @@ export function QuoteBand({
       </div>
       <div className="atlas-container quote-band__grid motion-reveal">
         <div className="quote-band__mark" aria-hidden="true"><MessageSquareText size={22} /></div>
-        <div>
+        <div className="quote-band__copy">
           <AtlasEyebrow light>Personal help starts here</AtlasEyebrow>
           <h2>{title}</h2>
         </div>
         <p>{text}</p>
         <div className="quote-band__actions">
-          <AtlasButton tone="gold" onClick={openQuoteModal}>Request a quote</AtlasButton>
+          <AtlasButton tone="gold" onClick={openQuoteModal}>Prepare for a quote</AtlasButton>
           <a className="quote-band__phone" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
         </div>
       </div>
@@ -152,14 +152,14 @@ export function QuoteBand({
 
 export function FactRail({ facts }: { facts: Array<{ label: string; value: string }> }) {
   return (
-    <div className="fact-rail" aria-label="Agency facts">
+    <section className="fact-rail" aria-label="Agency facts">
       {facts.map((fact) => (
         <div key={fact.label} className="fact-rail__item motion-reveal">
           <span>{fact.label}</span>
           <strong>{fact.value}</strong>
         </div>
       ))}
-    </div>
+    </section>
   );
 }
 
@@ -172,7 +172,7 @@ export function LocalOfficeCard({ compact = false }: { compact?: boolean }) {
         <strong>Venice Blvd / Mar Vista</strong>
         <p>{site.contact.address}</p>
       </div>
-      <a href={site.contact.mapsHref} target="_blank" rel="noreferrer" aria-label="Open Rafla Insurance in maps"><ArrowRight size={18} /></a>
+      <a href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer" aria-label="Open Rafla Insurance in maps"><ArrowRight size={18} /></a>
     </aside>
   );
 }

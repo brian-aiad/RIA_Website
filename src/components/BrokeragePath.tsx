@@ -64,6 +64,7 @@ export default function BrokeragePath() {
           data-brokerage-path
           role="region"
           aria-label="Four steps in Rafla's broker review process"
+          aria-description="On narrow screens, scroll horizontally or use the Left and Right Arrow keys to browse the four steps."
           tabIndex={0}
         >
           <div className="brokerage-path__track" aria-hidden="true"><span /></div>

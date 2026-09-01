@@ -16,7 +16,7 @@ const deskFiles = [
     checklist: ["Current policy or renewal notice", "The people, property, vehicles, or work involved", "A realistic effective date and any deadline"],
     image: images.hero.consultation,
     alt: "Illustrated broker desk with two people comparing a policy folder and coverage documents",
-    action: "Start a quote review",
+    action: "Open quote preparation",
     actionType: "quote" as const,
     icon: ClipboardPenLine,
   },
@@ -132,7 +132,7 @@ export default function BrokerServiceDesk() {
             aria-labelledby={`service-desk-tab-${active.id}`}
             aria-live="polite"
           >
-            <figure className="broker-cases__visual">
+            <figure className="broker-cases__visual" key={`visual-${active.id}`}>
               <AtlasImage src={active.image} alt={active.alt} width="1536" height="1024" loading="lazy" sizes="(max-width: 900px) 100vw, 42vw" />
               <figcaption key={`caption-${active.id}`}><span>Rafla / local service</span><strong>{active.context}</strong></figcaption>
             </figure>

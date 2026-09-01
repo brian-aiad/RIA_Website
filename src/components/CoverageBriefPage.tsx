@@ -47,7 +47,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
       <LocalBusinessSchema url="https://raflainsurance.com/" areaServed={["Los Angeles, CA", "Mar Vista", "Los Angeles Westside"]} />
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Services", url: "https://raflainsurance.com/services" }, { name: config.eyebrow, url: config.canonical }]} />
       <DossierHeader index={config.index} eyebrow={config.eyebrow} title={config.title} lede={config.lede} image={config.image} imageAlt={config.imageAlt} visualLabel="Coverage review / Mar Vista">
-        <AtlasButton tone="navy" onClick={openQuoteModal}>Request a quote</AtlasButton>
+        <AtlasButton tone="navy" onClick={openQuoteModal}>Prepare for a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
       </DossierHeader>
 
@@ -69,7 +69,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
               <small>Rafla broker desk</small>
               <strong>{site.contact.phone}</strong>
               <p>{site.hours.short}<br />English · Spanish · Arabic</p>
-              <button type="button" onClick={openQuoteModal}>Request a review <ArrowRight size={14} /></button>
+              <button type="button" onClick={openQuoteModal}>Open preparation guide <ArrowRight size={14} /></button>
             </div>
           </aside>
           <div className="brief-reading__content">
@@ -83,7 +83,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
               <AtlasEyebrow>Understanding the coverage</AtlasEyebrow>
               <h2>{config.anatomyTitle}</h2>
               <div className="mobile-swipe-hint mobile-swipe-hint--ink brief-anatomy__hint" aria-hidden="true"><span />Swipe through coverage parts</div>
-              <div className="brief-anatomy__list" role="region" aria-label="Coverage parts" tabIndex={0}>
+              <div className="brief-anatomy__list" role="region" aria-label="Coverage parts" aria-description="On narrow screens, scroll horizontally or use the Left and Right Arrow keys to browse coverage parts." tabIndex={0}>
                 {config.anatomy.map((item, index) => (
                   <article key={item.title} className="motion-reveal">
                     <span>0{index + 1}</span>
@@ -100,7 +100,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
                 <h2>{config.checklistTitle}</h2>
                 <ul>{config.checklist.map((item) => <li key={item}><Check size={16} /> {item}</li>)}</ul>
               </div>
-              <PaperNote label="Helpful tip" tone="blue"><p>{config.fieldNote}</p><button type="button" onClick={openQuoteModal}>Ask what applies <ArrowRight size={16} /></button></PaperNote>
+              <PaperNote label="Helpful tip" tone="blue"><p>{config.fieldNote}</p><button type="button" onClick={openQuoteModal}>See what to prepare <ArrowRight size={16} /></button></PaperNote>
             </section>
 
             <section id="fine-print" className="brief-chapter brief-detail motion-reveal">

@@ -4,38 +4,46 @@ interface PageMeta {
   title: string;
   description: string;
   canonical?: string;
+  robots?: string;
 }
 
 /**
  * Sets document title, meta description, and canonical URL per page.
  * Cleans up on unmount by restoring defaults.
  */
-export function usePageMeta({ title, description, canonical }: PageMeta) {
+export function usePageMeta({ title, description, canonical, robots }: PageMeta) {
   useEffect(() => {
-    const prev = document.title;
+    const previousTitle = document.title;
+    const restorers: Array<() => void> = [];
     document.title = title;
 
-    // Meta description
-    let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    const prevDesc = meta?.content ?? "";
-    if (meta) {
-      meta.content = description;
-    } else {
-      meta = document.createElement("meta");
-      meta.name = "description";
-      meta.content = description;
-      document.head.appendChild(meta);
-    }
+    const setMeta = (selector: string, attributes: Record<string, string>, content: string) => {
+      let element = document.querySelector<HTMLMetaElement>(selector);
+      const created = !element;
+      const previousContent = element?.content ?? "";
+      if (!element) {
+        element = document.createElement("meta");
+        Object.entries(attributes).forEach(([name, value]) => element?.setAttribute(name, value));
+        document.head.appendChild(element);
+      }
+      element.content = content;
+      restorers.push(() => {
+        if (created) element?.remove();
+        else if (element) element.content = previousContent;
+      });
+    };
 
-    // Open Graph
-    setOgContent("og:title", title);
-    setOgContent("og:description", description);
-    if (canonical) {
-      setOgContent("og:url", canonical);
-    }
+    setMeta('meta[name="description"]', { name: "description" }, description);
+    setMeta('meta[property="og:title"]', { property: "og:title" }, title);
+    setMeta('meta[property="og:description"]', { property: "og:description" }, description);
+    setMeta('meta[name="twitter:title"]', { name: "twitter:title" }, title);
+    setMeta('meta[name="twitter:description"]', { name: "twitter:description" }, description);
+    if (canonical) setMeta('meta[property="og:url"]', { property: "og:url" }, canonical);
+    if (robots) setMeta('meta[name="robots"]', { name: "robots" }, robots);
 
     // Canonical link
     let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    const createdLink = !link;
     const prevCanonical = link?.href ?? "";
     if (canonical) {
       if (link) {
@@ -49,13 +57,12 @@ export function usePageMeta({ title, description, canonical }: PageMeta) {
     }
 
     return () => {
-      document.title = prev;
-      const m = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-      if (m) m.content = prevDesc;
-      const l = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-      if (l && prevCanonical) l.href = prevCanonical;
+      document.title = previousTitle;
+      restorers.reverse().forEach((restore) => restore());
+      if (createdLink) link?.remove();
+      else if (link && prevCanonical) link.href = prevCanonical;
     };
-  }, [title, description, canonical]);
+  }, [title, description, canonical, robots]);
 }
 
 export function useImagePreload(href?: string, options: { media?: string } = {}) {
@@ -87,11 +94,4 @@ export function useImagePreload(href?: string, options: { media?: string } = {})
       link.remove();
     };
   }, [href, media]);
-}
-
-function setOgContent(property: string, content: string) {
-  const el = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
-  if (el) {
-    el.content = content;
-  }
 }

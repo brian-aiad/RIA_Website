@@ -8,14 +8,33 @@ const routes = [
   "/locations",
   "/contact",
   "/faq",
+  "/privacy",
+  "/accessibility",
   "/auto-insurance-los-angeles-ca",
+  "/sr22-insurance-los-angeles",
+  "/home-insurance-los-angeles-ca",
+  "/no-license-auto-insurance-los-angeles",
+  "/commercial-auto-insurance-los-angeles",
   "/insurance/mar-vista",
+  "/insurance/culver-city",
+  "/insurance/santa-monica",
+  "/insurance/venice",
+  "/insurance/marina-del-rey",
+  "/insurance/west-los-angeles",
+  "/insurance/palms",
+  "/insurance/sawtelle",
+  "/insurance/playa-vista",
+  "/insurance/westchester",
+  "/insurance/inglewood",
+  "/insurance/ladera-heights",
+  "/this-page-does-not-exist",
 ];
 const viewports = [
   { name: "compact", width: 320, height: 568 },
   { name: "mobile", width: 390, height: 844 },
   { name: "tablet", width: 768, height: 1024 },
-  { name: "desktop", width: 1440, height: 950 },
+  { name: "desktop", width: 1440, height: 900 },
+  { name: "short-landscape", width: 844, height: 390 },
 ];
 
 const browser = await chromium.launch({ headless: true });
@@ -87,7 +106,10 @@ for (const viewport of viewports) {
             if (a.owner === b.owner || a.owner.contains(b.owner) || b.owner.contains(a.owner)) continue;
             const overlapX = Math.min(a.right, b.right) - Math.max(a.left, b.left);
             const overlapY = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
-            if (overlapX > 1.5 && overlapY > 1.5) {
+            // Large display faces can extend a few pixels outside their CSS
+            // line box without producing a visible collision. Four pixels
+            // filters that glyph overhang while retaining true text overlap.
+            if (overlapX > 4 && overlapY > 4) {
               hits.push(`${a.owner.tagName} "${a.text}" ↔ ${b.owner.tagName} "${b.text}"`);
               if (hits.length >= 8) return hits;
             }

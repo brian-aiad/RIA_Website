@@ -27,44 +27,71 @@ const routes = [
   "/insurance/westchester",
   "/insurance/inglewood",
   "/insurance/ladera-heights",
+  "/this-page-does-not-exist",
 ];
 
 const viewports = [
-  { name: "compact", width: 320, height: 568 },
-  { name: "mobile", width: 390, height: 844 },
-  { name: "tablet", width: 768, height: 1024 },
-  { name: "desktop", width: 1440, height: 950 },
+  { name: "compact-phone", width: 320, height: 568 },
+  { name: "small-phone", width: 360, height: 640 },
+  { name: "classic-phone", width: 375, height: 667 },
+  { name: "modern-phone", width: 390, height: 844 },
+  { name: "large-phone", width: 412, height: 915 },
+  { name: "max-phone", width: 430, height: 932 },
+  { name: "portrait-tablet", width: 768, height: 1024 },
+  { name: "landscape-tablet", width: 1024, height: 768 },
+  { name: "compact-laptop", width: 1280, height: 720 },
+  { name: "laptop", width: 1366, height: 768 },
+  { name: "desktop", width: 1440, height: 900 },
   { name: "wide", width: 1920, height: 1080 },
+  { name: "short-landscape", width: 844, height: 390 },
 ];
+
+const webkitViewportNames = new Set(["compact-phone", "modern-phone", "portrait-tablet", "desktop", "wide"]);
 
 const failures = [];
 let checked = 0;
 
+const deadline = (promise, milliseconds, label) =>
+  Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      const timer = setTimeout(() => reject(new Error(`${label} timed out after ${milliseconds}ms`)), milliseconds);
+      timer.unref?.();
+    }),
+  ]);
+
 const suites = [
   { name: "chromium", engine: chromium, viewports },
-  { name: "webkit", engine: webkit, viewports: viewports.filter(({ name }) => name === "compact" || name === "mobile") },
-  { name: "reduced", engine: chromium, viewports: [{ name: "mobile", width: 390, height: 844 }], reducedMotion: "reduce" },
+  { name: "webkit", engine: webkit, viewports: viewports.filter(({ name }) => webkitViewportNames.has(name)) },
+  { name: "reduced", engine: chromium, viewports: [{ name: "modern-phone", width: 390, height: 844 }], reducedMotion: "reduce" },
 ];
 
 for (const suite of suites) {
-  const browser = await suite.engine.launch({ headless: true });
-
   for (const viewport of suite.viewports) {
-    const context = await browser.newContext({
+    // A fresh browser per viewport avoids a WebKit process-reuse deadlock that
+    // can otherwise occur after several context teardown cycles.
+    const browser = await deadline(
+      suite.engine.launch({ headless: true }),
+      15_000,
+      `${suite.name}/${viewport.name} browser launch`,
+    );
+    const context = await deadline(browser.newContext({
       viewport: { width: viewport.width, height: viewport.height },
       reducedMotion: suite.reducedMotion ?? "no-preference",
-    });
+    }), 10_000, `${suite.name}/${viewport.name} context creation`);
 
     for (const route of routes) {
-      const page = await context.newPage();
+      let page;
       const previewPath = route === "/" ? route : `${route}/`;
       const consoleErrors = [];
+
+    try {
+      page = await deadline(context.newPage(), 8_000, `${suite.name}/${viewport.name} page creation`);
       page.on("console", (message) => {
         if (message.type() === "error") consoleErrors.push(message.text());
       });
       page.on("pageerror", (error) => consoleErrors.push(error.message));
-
-    try {
+      await deadline((async () => {
       const response = await page.goto(`${base}${previewPath}`, {
         waitUntil: "networkidle",
         timeout: 20_000,
@@ -146,6 +173,7 @@ for (const suite of suites) {
       const problems = [];
       if (result.h1Count !== 1) problems.push(`${result.h1Count} H1 elements`);
       if (route === "/" && !result.h1Text.includes("Coverage for Los Angeles")) problems.push(`unexpected home H1: ${result.h1Text}`);
+      if (route === "/this-page-does-not-exist" && !result.h1Text.includes("couldn’t find")) problems.push(`unexpected 404 H1: ${result.h1Text}`);
       if (route !== "/" && result.h1Text.includes("Coverage for Los Angeles")) problems.push("homepage fallback rendered for a deep route");
       if (result.horizontalOverflow > 1) problems.push(`${result.horizontalOverflow}px horizontal overflow`);
       if (result.brokenImages.length) problems.push(`broken images: ${result.brokenImages.join(", ")}`);
@@ -153,18 +181,27 @@ for (const suite of suites) {
       if (result.clippedText.length) problems.push(`clipped text: ${result.clippedText.join(", ")}`);
       if (consoleErrors.length) problems.push(`console: ${consoleErrors.join(" | ")}`);
       if (problems.length) failures.push(`${suite.name}/${viewport.name} ${route}: ${problems.join("; ")}`);
-      checked += 1;
+      })(), 30_000, `${suite.name}/${viewport.name} ${route}`);
     } catch (error) {
       failures.push(`${suite.name}/${viewport.name} ${route}: ${error.message}`);
     } finally {
-      await page.close();
+      checked += 1;
+      if (page) {
+        await deadline(page.close(), 5_000, `${suite.name}/${viewport.name} page close`).catch((error) => {
+          failures.push(`${suite.name}/${viewport.name} ${route}: ${error.message}`);
+        });
+      }
     }
   }
 
-    await context.close();
+    await deadline(context.close(), 8_000, `${suite.name}/${viewport.name} context close`).catch((error) => {
+      failures.push(`${suite.name}/${viewport.name}: ${error.message}`);
+    });
+    console.log(`${suite.name}/${viewport.name}: ${checked} route checks complete`);
+    await deadline(browser.close(), 8_000, `${suite.name}/${viewport.name} browser close`).catch((error) => {
+      failures.push(`${suite.name}/${viewport.name}: ${error.message}`);
+    });
   }
-
-  await browser.close();
 }
 console.log(JSON.stringify({ checked, failures }, null, 2));
 if (failures.length) process.exitCode = 1;

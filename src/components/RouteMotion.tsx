@@ -5,6 +5,8 @@ type MotionStep = {
   x?: number;
   y?: number;
   scale?: number;
+  scaleX?: number;
+  scaleY?: number;
   duration?: number;
   stagger?: number;
   at?: number | string;
@@ -41,6 +43,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
       gsap.registerPlugin(ScrollTrigger);
       ScrollTrigger.config({ ignoreMobileResize: true, limitCallbacks: true });
       root.classList.add("motion-managed");
+      root.dataset.motionState = "ready";
 
       const context = gsap.context(() => {
         const stageGroup = (groupSelector: string, steps: MotionStep[], start = "clamp(top 86%)") => {
@@ -58,7 +61,15 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               gsap.set(targets, {
                 x: (step.x ?? 0) * (isCompact ? 0.45 : 1),
                 y: (step.y ?? 0) * (isCompact ? 0.45 : 1),
-                scale: isCompact && step.scale ? 1 - ((1 - step.scale) * 0.45) : (step.scale ?? 1),
+                ...(step.scale === undefined ? {} : {
+                  scale: isCompact ? 1 - ((1 - step.scale) * 0.45) : step.scale,
+                }),
+                ...(step.scaleX === undefined ? {} : {
+                  scaleX: isCompact ? 1 - ((1 - step.scaleX) * 0.45) : step.scaleX,
+                }),
+                ...(step.scaleY === undefined ? {} : {
+                  scaleY: isCompact ? 1 - ((1 - step.scaleY) * 0.45) : step.scaleY,
+                }),
               });
             });
 
@@ -71,7 +82,9 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               timeline.to(targets, {
                 x: 0,
                 y: 0,
-                scale: 1,
+                ...(step.scale === undefined ? {} : { scale: 1 }),
+                ...(step.scaleX === undefined ? {} : { scaleX: 1 }),
+                ...(step.scaleY === undefined ? {} : { scaleY: 1 }),
                 duration: isCompact ? Math.min(step.duration ?? 0.5, 0.42) : (step.duration ?? 0.5),
                 stagger: isCompact ? Math.min(step.stagger ?? 0, 0.025) : (step.stagger ?? 0),
                 clearProps: "transform",
@@ -126,6 +139,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         stageGroup(".services-ledger", [
           { selector: ".services-ledger__intro", y: 10, duration: 0.5 },
           { selector: ".services-ledger__groups > .service-ledger", y: 14, scale: 0.995, duration: 0.52, stagger: 0.055, at: "-=0.25" },
+          { selector: ".service-ledger__number", scale: 0.82, duration: 0.34, stagger: 0.055, at: "-=0.38" },
         ]);
         stageGroup(".services-briefs", [
           { selector: ".services-briefs__copy", x: -12, duration: 0.5 },
@@ -173,18 +187,26 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
           { selector: ".contact-team__heading", y: 10, duration: 0.5 },
           { selector: ".contact-team__grid > article", y: 14, scale: 0.995, duration: 0.5, stagger: 0.055, at: "-=0.3" },
         ]);
+        stageGroup(".contact-next", [
+          { selector: ".contact-next__heading", x: -14, duration: 0.56 },
+          { selector: ".contact-next__record", x: 14, scale: 0.996, duration: 0.58, at: "-=0.44" },
+          { selector: ".contact-next__route", scaleY: 0.02, duration: 0.66, at: "-=0.4" },
+          { selector: ".contact-next__record li > span", scale: 0.72, duration: 0.28, stagger: 0.08, at: "-=0.45" },
+        ]);
         stageGroup(".answer-library", [
           { selector: ".answer-library__index", x: -12, duration: 0.5 },
           { selector: ".answer-library__grid > div:last-child", x: 12, duration: 0.55, at: "-=0.4" },
         ]);
         stageGroup(".answer-group", [
           { selector: ".answer-group__title", y: 10, duration: 0.46 },
+          { selector: ".answer-group__title > span", scale: 0.72, duration: 0.3, at: "-=0.34" },
           { selector: ".answer-drawer", x: 8, duration: 0.38, stagger: 0.035, at: "-=0.3" },
         ], "clamp(top 90%)");
         stageGroup(".city-orientation", [
           { selector: ".city-orientation__title", x: -12, duration: 0.5 },
           { selector: ".city-orientation__copy", y: 10, duration: 0.5, at: "-=0.38" },
           { selector: ".city-orientation__office", x: 12, duration: 0.5, at: "-=0.38" },
+          { selector: ".city-orientation__office > svg", scale: 0.72, duration: 0.3, at: "-=0.32" },
         ]);
         stageGroup(".city-coverage", [
           { selector: ".city-coverage__heading", y: 10, duration: 0.5 },
@@ -203,10 +225,15 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         stageGroup(".brief-documents", [
           { selector: ".brief-documents__copy", x: -12, duration: 0.5 },
           { selector: ".paper-note", x: 12, duration: 0.5, at: "-=0.38" },
+          { selector: ".brief-documents__copy li svg", scale: 0.7, duration: 0.28, stagger: 0.045, at: "-=0.34" },
         ]);
         stageGroup(".brief-faq", [{ selector: ".answer-drawer", x: 8, duration: 0.38, stagger: 0.035 }], "clamp(top 90%)");
         stageGroup(".brief-closing-image", [{ selector: ".brief-closing-image__inner", y: 12, scale: 0.995, duration: 0.58 }]);
         stageGroup(".policy-file__body article > section", [{ selector: ":scope > h2, :scope > p, :scope > ul", x: 8, duration: 0.42, stagger: 0.035 }], "clamp(top 90%)");
+
+        stageGroup(".ria-reviews", [
+          { selector: ".ria-reviews__register", scaleX: 0.02, duration: 0.72 },
+        ], "clamp(top 88%)");
 
         root.querySelectorAll<HTMLElement>(".quote-band").forEach((band) => {
           if (band.getBoundingClientRect().top < window.innerHeight + 24) return;
@@ -385,7 +412,9 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         // Commissioned scenes arrive like printed plates settling into place.
         // The cue is small on phones and transform-only at every breakpoint.
         root.querySelectorAll<HTMLElement>(".atlas-image--illustrated").forEach((art, index) => {
-          if (art.closest(".ria-hero__office") || art.getBoundingClientRect().top < window.innerHeight + 24) return;
+          const alreadyMotionManaged = art.closest(".ria-hero__office, [data-dossier-hero], .brief-closing-image__inner")
+            || art.matches(".ria-local__backdrop");
+          if (alreadyMotionManaged || art.getBoundingClientRect().top < window.innerHeight + 24) return;
           gsap.fromTo(art,
             {
               scale: isCompact ? 1.018 : 1.04,
@@ -415,12 +444,15 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         refreshFrame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
       };
       root.addEventListener("toggle", scheduleRefresh, true);
-      void document.fonts?.ready.then(scheduleRefresh);
+      void document.fonts?.ready.then(() => {
+        if (!cancelled) scheduleRefresh();
+      });
 
       teardown = () => {
         window.cancelAnimationFrame(refreshFrame);
         root.removeEventListener("toggle", scheduleRefresh, true);
         root.classList.remove("motion-managed");
+        delete root.dataset.motionState;
         context.revert();
       };
     };

@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /*?q=
+Disallow: /*?*
 
 Sitemap: https://raflainsurance.com/sitemap.xml

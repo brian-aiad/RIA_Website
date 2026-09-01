@@ -18,7 +18,7 @@ const mapStops = [
 
 export default function WestsideMap() {
   return (
-    <div className="westside-map" aria-label="Communities served around Rafla Insurance Agency">
+    <div className="westside-map" role="region" aria-label="Communities served around Rafla Insurance Agency" aria-description="A schematic service-area map. Select a community name to open its local insurance guide.">
       <svg aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none">
         <path className="westside-map__coast" d="M8 8C15 22 9 38 16 50S11 75 26 95" />
         <path className="westside-map__route" d="M18 21C31 19 46 18 57 25S52 42 45 48S54 55 61 61S68 68 74 70S66 82 78 91" />

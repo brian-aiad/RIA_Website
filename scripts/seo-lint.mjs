@@ -254,17 +254,17 @@ if (indexCatchAllRewrite) {
 
 const middlewarePath = join(APP_DIR, "middleware.js");
 if (!existsSync(middlewarePath)) {
-  fail('middleware.js is required to strip "?q=" query URLs before the React app renders.');
+  fail("middleware.js is required to strip query parameters before the React app renders.");
 } else {
   const middlewareContent = readFileSync(middlewarePath, "utf-8");
   if (
-    !middlewareContent.includes('searchParams.has("q")') ||
-    !middlewareContent.includes('searchParams.delete("q")') ||
+    !middlewareContent.includes("if (url.search)") ||
+    !middlewareContent.includes('url.search = ""') ||
     !middlewareContent.includes("Response.redirect")
   ) {
-    fail('middleware.js must redirect URLs with a "q" search parameter after deleting that parameter.');
+    fail("middleware.js must redirect query-string URLs after removing all parameters.");
   } else {
-    ok('Middleware strips "?q=" query URLs before the app renders');
+    ok("Middleware strips query parameters before the app renders");
   }
 }
 

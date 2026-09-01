@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mail, MapPin, Menu, Phone, ShieldCheck, X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Mail, MapPin, Menu, MessageSquareText, Phone, ShieldCheck, X } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { coverageEntries } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
@@ -13,6 +13,12 @@ const navItems = [
   { to: "/contact", label: "Contact" },
 ];
 
+const insurancePaths = new Set([
+  ...coverageEntries.map((entry) => entry.href.split("#")[0]),
+  "/commercial-auto-insurance-los-angeles",
+  "/no-license-auto-insurance-los-angeles",
+]);
+
 export default function Navbar() {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
@@ -20,9 +26,22 @@ export default function Navbar() {
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
+  const closeMenu = useCallback((restoreFocus = true) => {
+    setOpen(false);
+    if (restoreFocus) window.requestAnimationFrame(() => triggerRef.current?.focus());
+  }, []);
+
+  const openQuoteFromMenu = () => {
+    setOpen(false);
+    window.requestAnimationFrame(() => {
+      triggerRef.current?.focus();
+      openQuoteModal();
+    });
+  };
+
   const isSectionActive = (to: string) => {
     if (to === "/services") {
-      return pathname === to || coverageEntries.some((entry) => pathname === entry.href);
+      return pathname === to || insurancePaths.has(pathname);
     }
     if (to === "/locations") {
       return pathname === to || pathname.startsWith("/insurance/");
@@ -57,7 +76,7 @@ export default function Navbar() {
       { threshold: 0.02, rootMargin: "0px 0px -8% 0px" },
     );
     observer.observe(anchor);
-    document.querySelectorAll(".quote-band, .atlas-footer").forEach((element) => {
+    document.querySelectorAll(".quote-band, .contact-next, .atlas-footer").forEach((element) => {
       restingStates.set(element, false);
       observer.observe(element);
     });
@@ -68,10 +87,15 @@ export default function Navbar() {
     if (!open) return;
     const timer = window.setTimeout(() => panelRef.current?.querySelector<HTMLElement>("a,button")?.focus(), 0);
     document.documentElement.classList.add("nav-open");
+    document.body.classList.add("nav-open");
+    const background = Array.from(document.querySelectorAll<HTMLElement>(
+      "main, .atlas-footer, .ria-utility, .atlas-nav, .mobile-quick-actions",
+    ));
+    const priorInert = new Map(background.map((element) => [element, element.hasAttribute("inert")]));
+    background.forEach((element) => element.setAttribute("inert", ""));
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setOpen(false);
-        triggerRef.current?.focus();
+        closeMenu();
         return;
       }
       if (event.key !== "Tab") return;
@@ -92,8 +116,12 @@ export default function Navbar() {
       window.clearTimeout(timer);
       window.removeEventListener("keydown", onKey);
       document.documentElement.classList.remove("nav-open");
+      document.body.classList.remove("nav-open");
+      priorInert.forEach((wasInert, element) => {
+        if (!wasInert) element.removeAttribute("inert");
+      });
     };
-  }, [open]);
+  }, [closeMenu, open]);
 
   return (
     <header className="atlas-nav-wrap">
@@ -116,27 +144,27 @@ export default function Navbar() {
         </nav>
         <div className="atlas-nav__actions">
           <span className="atlas-nav__languages">EN / ES / AR</span>
-          <button type="button" onClick={openQuoteModal} className="atlas-nav__quote">Get a Quote <ArrowUpRight size={15} /></button>
-          <button ref={triggerRef} type="button" className="atlas-nav__menu" onClick={() => setOpen(true)} aria-expanded={open} aria-controls="mobile-nav" aria-label="Open navigation"><Menu /></button>
+          <button type="button" onClick={openQuoteModal} className="atlas-nav__quote">Prepare for a Quote <ArrowUpRight size={15} /></button>
+          <button ref={triggerRef} type="button" className="atlas-nav__menu" onClick={() => setOpen(true)} aria-expanded={open} aria-haspopup="dialog" aria-controls="mobile-nav" aria-label="Open navigation"><Menu /></button>
         </div>
       </div>
-      <div className={`mobile-nav-backdrop ${open ? "is-open" : ""}`} aria-hidden={!open} onMouseDown={() => setOpen(false)} />
-      <div ref={panelRef} id="mobile-nav" className={`mobile-nav ${open ? "is-open" : ""}`} aria-hidden={!open} inert={!open}>
-        <div className="mobile-nav__top"><span>Menu</span><button type="button" onClick={() => setOpen(false)} aria-label="Close navigation"><X /></button></div>
+      <div className={`mobile-nav-backdrop ${open ? "is-open" : ""}`} aria-hidden="true" onMouseDown={() => closeMenu()} />
+      <div ref={panelRef} id="mobile-nav" className={`mobile-nav ${open ? "is-open" : ""}`} role="dialog" aria-modal={open} aria-label="Navigation menu" aria-hidden={!open} inert={!open}>
+        <div className="mobile-nav__top"><span>Menu</span><button type="button" onClick={() => closeMenu()} aria-label="Close navigation"><X /></button></div>
         <nav aria-label="Mobile navigation" className="mobile-nav__main">
           <NavLink to="/" end className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink>
           {navItems.map((item) => <NavLink key={item.to} to={item.to} className={isSectionActive(item.to) ? "active" : ""}>{item.label}</NavLink>)}
         </nav>
         <div className="mobile-nav__coverage"><span>Popular insurance services</span>{coverageEntries.slice(0, 4).map((entry) => <NavLink key={entry.key} to={entry.href}>{entry.title}</NavLink>)}</div>
         <div className="mobile-nav__office">
-          <a href={site.contact.mapsHref} target="_blank" rel="noreferrer">
+          <a href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer">
             <MapPin aria-hidden="true" />
             <span><small>Visit the Mar Vista office</small><strong>12240 Venice Blvd, Suite 2</strong></span>
             <ArrowUpRight aria-hidden="true" />
           </a>
           <p>{site.hours.short} <span aria-hidden="true">/</span> English · Spanish · Arabic</p>
         </div>
-        <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><a href={site.contact.emailHref}><Mail size={16} /> {site.contact.email}</a><button type="button" onClick={openQuoteModal}>Request a quote <ArrowUpRight size={16} /></button></div>
+        <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><a href={site.contact.textHref}><MessageSquareText size={16} /> Text {site.contact.text}</a><a href={site.contact.emailHref}><Mail size={16} /> {site.contact.email}</a><button type="button" onClick={openQuoteFromMenu}>Prepare for a quote <ArrowUpRight size={16} /></button></div>
       </div>
       <nav
         className={`mobile-quick-actions ${quickActionsVisible && !open ? "is-visible" : ""}`}
@@ -145,7 +173,7 @@ export default function Navbar() {
         inert={!quickActionsVisible || open}
       >
         <a href={site.contact.phoneHref}><Phone aria-hidden="true" /><span><small>Speak with us</small>Call agency</span></a>
-        <button type="button" onClick={openQuoteModal}><span><small>Start here</small>Request a quote</span><ArrowUpRight aria-hidden="true" /></button>
+        <button type="button" onClick={openQuoteModal}><span><small>Start here</small>Prepare for a quote</span><ArrowUpRight aria-hidden="true" /></button>
       </nav>
     </header>
   );

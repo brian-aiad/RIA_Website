@@ -21,25 +21,9 @@ import SR22InsuranceLosAngeles from "./pages/SR22InsuranceLosAngeles";
 import HomeInsuranceLosAngelesCA from "./pages/HomeInsuranceLosAngelesCA";
 import NoLicenseInsuranceLosAngeles from "./pages/NoLicenseInsuranceLosAngeles";
 import CommercialAutoInsuranceLosAngeles from "./pages/CommercialAutoInsuranceLosAngeles";
+import NotFound from "./pages/NotFound";
 
-const NotFound = lazy(() => import("./pages/NotFound"));
 const QuoteWidget = lazy(() => import("./components/QuoteWidget"));
-
-function LoadingFallback() {
-  return (
-    <div className="min-h-[60vh] flex items-center justify-center">
-      <div className="text-center">
-        <div className="w-10 h-10 mx-auto mb-4 rounded-xl bg-brand-50 ring-1 ring-brand-100 grid place-items-center">
-          <svg className="animate-spin w-5 h-5 text-brand-600" viewBox="0 0 24 24" fill="none">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
-            <path className="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" fill="currentColor" />
-          </svg>
-        </div>
-        <p className="text-slate-400 text-[13px] font-medium tracking-wide">Loading</p>
-      </div>
-    </div>
-  );
-}
 
 export default function App() {
   const location = useLocation();
@@ -79,25 +63,23 @@ export default function App() {
         <Navbar />
         <div className="flex-1">
           <RouteMotion key={location.pathname} routeKey={location.pathname}>
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes location={location}>
-                <Route path="/" element={<Home />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/locations" element={<Locations />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/faq" element={<Faq />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/accessibility" element={<Accessibility />} />
-                <Route path="/insurance/:citySlug" element={<CityLanding />} />
-                <Route path="/auto-insurance-los-angeles-ca" element={<AutoInsuranceLosAngelesCA />} />
-                <Route path="/sr22-insurance-los-angeles" element={<SR22InsuranceLosAngeles />} />
-                <Route path="/home-insurance-los-angeles-ca" element={<HomeInsuranceLosAngelesCA />} />
-                <Route path="/no-license-auto-insurance-los-angeles" element={<NoLicenseInsuranceLosAngeles />} />
-                <Route path="/commercial-auto-insurance-los-angeles" element={<CommercialAutoInsuranceLosAngeles />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
+            <Routes location={location}>
+              <Route path="/" element={<Home />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/locations" element={<Locations />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/faq" element={<Faq />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/accessibility" element={<Accessibility />} />
+              <Route path="/insurance/:citySlug" element={<CityLanding />} />
+              <Route path="/auto-insurance-los-angeles-ca" element={<AutoInsuranceLosAngelesCA />} />
+              <Route path="/sr22-insurance-los-angeles" element={<SR22InsuranceLosAngeles />} />
+              <Route path="/home-insurance-los-angeles-ca" element={<HomeInsuranceLosAngelesCA />} />
+              <Route path="/no-license-auto-insurance-los-angeles" element={<NoLicenseInsuranceLosAngeles />} />
+              <Route path="/commercial-auto-insurance-los-angeles" element={<CommercialAutoInsuranceLosAngeles />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </RouteMotion>
         </div>
         <Footer />

@@ -1,4 +1,4 @@
-import { ArrowUp, ArrowUpRight, Clock3, ExternalLink, Languages, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Clock3, ExternalLink, Languages, Mail, MapPin, MessageSquareText, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cities, coverageEntries } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
@@ -13,7 +13,7 @@ export default function Footer() {
             <img src="/logo.svg" alt="Rafla Insurance Agency" width="240" height="64" />
             <p>Personal, independent insurance guidance from our Mar Vista office.</p>
           </div>
-          <button type="button" onClick={openQuoteModal}>Request a quote <ArrowUpRight size={18} /></button>
+          <button type="button" onClick={openQuoteModal}>Prepare for a quote <ArrowUpRight size={18} /></button>
         </div>
 
         <div className="atlas-footer__grid">
@@ -31,8 +31,9 @@ export default function Footer() {
           </section>
           <section className="atlas-footer__office">
             <span className="atlas-footer__label">Mar Vista office</span>
-            <a href={site.contact.mapsHref} target="_blank" rel="noreferrer"><MapPin size={15} /> {site.contact.address}</a>
+            <a href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer"><MapPin size={15} /> {site.contact.address}</a>
             <a href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
+            <a href={site.contact.textHref}><MessageSquareText size={15} /> Text {site.contact.text}</a>
             <a href={site.contact.emailHref}><Mail size={15} /> {site.contact.email}</a>
             <p><Clock3 size={15} /> {site.hours.short}</p>
             <p><Languages size={15} /> English · Spanish · Arabic</p>
@@ -40,7 +41,7 @@ export default function Footer() {
         </div>
 
         <div className="atlas-footer__legal">
-          <div><a href={site.license.verifyUrl} target="_blank" rel="noreferrer">{site.license.label} <ExternalLink aria-hidden="true" size={12} /></a><span>© {new Date().getFullYear()} Rafla Insurance Agency, Inc.</span></div>
+          <div><a href={site.license.verifyUrl} target="_blank" rel="noopener noreferrer">{site.license.label} <ExternalLink aria-hidden="true" size={12} /></a><span>© {new Date().getFullYear()} Rafla Insurance Agency, Inc.</span></div>
           <div><Link to="/privacy">Privacy</Link><Link to="/accessibility">Accessibility</Link><button type="button" onClick={() => window.scrollTo({ top: 0 })}>Top <ArrowUp size={13} /></button></div>
         </div>
         <p className="atlas-footer__disclaimer">Coverage, eligibility, discounts, pricing, and processing times vary by carrier and policy. Website content is general information and does not bind, amend, or guarantee coverage. Coverage is effective only when confirmed by the carrier or agency in writing.</p>

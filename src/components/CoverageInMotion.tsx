@@ -57,7 +57,7 @@ export default function CoverageInMotion() {
         </div>
 
         <p className="mobile-swipe-hint mobile-swipe-hint--ink coverage-motion__hint" aria-hidden="true"><span />Swipe through one Los Angeles day</p>
-        <div className="coverage-motion__rail" role="region" aria-label="Insurance moments throughout one day" tabIndex={0}>
+        <div className="coverage-motion__rail" role="region" aria-label="Insurance moments throughout one day" aria-description="On narrow screens, scroll horizontally or use the Left and Right Arrow keys to browse the three moments." tabIndex={0}>
           {scenes.map(({ time, title, detail, action, href, image, alt, icon: Icon, tone }) => (
             <Link className={`coverage-motion__scene coverage-motion__scene--${tone}`} to={href} key={time}>
               <figure>
