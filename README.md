@@ -28,15 +28,10 @@ Public email links use `contact@raflainsurance.com`. Delivery and forwarding are
 
 The canonical production domain is `https://raflainsurance.com`.
 
-### Temporary public-domain holding page
-
-`middleware.js` currently has `COMING_SOON_ENABLED = true`. While enabled:
-
-- `raflainsurance.com` and `www.raflainsurance.com` show the branded holding page.
-- Vercel preview deployments and `localhost:3002` continue to show the complete website.
-- Public-domain responses use `noindex` and `no-store`, and `robots.txt` temporarily disallows crawling.
-
-No DNS changes are needed. For launch, change `COMING_SOON_ENABLED` to `false`, run the validation commands, and deploy.
+The complete website is intended to be public on `raflainsurance.com` and
+`www.raflainsurance.com`. Middleware removes query strings that the site does
+not use, while clean production-domain requests continue to the full site.
+`robots.txt` allows crawling and declares the production sitemap.
 
 ## Visual assets
 
