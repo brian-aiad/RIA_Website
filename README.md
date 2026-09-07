@@ -33,6 +33,10 @@ The complete website is intended to be public on `raflainsurance.com` and
 not use, while clean production-domain requests continue to the full site.
 `robots.txt` allows crawling and declares the production sitemap.
 
+Vercel receives exact app-shell rewrites for every sitemap route because its
+hosted build skips the local Playwright prerender step. Unknown paths are not
+rewritten, so the static noindex 404 response remains intact.
+
 ## Visual assets
 
 Original product and neighborhood photography lives in `public/images/rafla`. Real client-provided storefront photos live in `public/images/client`. The primary brand colors are sampled from the supplied business card and logo: navy `#102653` and gold `#E3A719`.

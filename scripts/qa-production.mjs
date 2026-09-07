@@ -13,6 +13,8 @@ const source = readFileSync(resolve("middleware.js"), "utf8");
 const robots = readFileSync(resolve("public/robots.txt"), "utf8");
 const homepage = readFileSync(resolve("index.html"), "utf8");
 const static404 = readFileSync(resolve("public/404.html"), "utf8");
+const sitemap = readFileSync(resolve("public/sitemap.xml"), "utf8");
+const vercelConfig = JSON.parse(readFileSync(resolve("vercel.json"), "utf8"));
 
 check(!source.includes("COMING_SOON_ENABLED"), "Obsolete Coming Soon flag remains in middleware");
 check(!source.toLowerCase().includes("coming soon"), "Coming Soon content remains in middleware");
@@ -22,6 +24,20 @@ check(robots.includes("Sitemap: https://raflainsurance.com/sitemap.xml"), "Produ
 check(!homepage.includes('name="robots" content="noindex'), "Homepage contains a noindex directive");
 check(static404.includes('content="noindex, nofollow, noarchive"'), "Static 404 robots meta is incomplete");
 check((static404.match(/<a\s/g) ?? []).length === 4, "Static 404 recovery links are incomplete");
+
+const publicRoutes = [...sitemap.matchAll(/<loc>https:\/\/raflainsurance\.com(\/[^<]*)<\/loc>/g)]
+  .map((match) => match[1])
+  .filter((route) => route !== "/");
+for (const route of publicRoutes) {
+  check(
+    vercelConfig.rewrites?.some((rewrite) => rewrite.source === route && rewrite.destination === "/index.html"),
+    `${route}: exact Vercel app-shell rewrite is missing`,
+  );
+}
+check(
+  !vercelConfig.rewrites?.some((rewrite) => rewrite.source === "/(.*)" && rewrite.destination === "/index.html"),
+  "Catch-all app-shell rewrite would turn unknown URLs into soft 404 responses",
+);
 
 for (const host of ["raflainsurance.com", "www.raflainsurance.com"]) {
   const cleanResponse = await middleware(new Request(`https://${host}/insurance/mar-vista`));

@@ -220,6 +220,19 @@ for (const path of expectedRedirectPaths) {
 }
 if (!missingSlashRedirect) ok(`All ${expectedRedirectPaths.length} sitemap routes redirect trailing-slash variants to clean canonicals`);
 
+let missingProductionRewrite = false;
+for (const path of expectedRedirectPaths) {
+  const hasRewrite = vercelJson.rewrites?.some(rule =>
+    rule.source === path &&
+    rule.destination === "/index.html"
+  );
+  if (!hasRewrite) {
+    fail(`vercel.json missing Vercel app-shell rewrite for public route: "${path}"`);
+    missingProductionRewrite = true;
+  }
+}
+if (!missingProductionRewrite) ok(`All ${expectedRedirectPaths.length} sitemap routes have exact Vercel app-shell rewrites`);
+
 const emailProtectionRewrite = vercelJson.rewrites?.some(rule =>
   rule.source === "/cdn-cgi/l/email-protection" &&
   rule.destination === "/api/gone"
