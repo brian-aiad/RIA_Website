@@ -2,7 +2,7 @@ import { ArrowRight, Building2, CarFront, FileBadge2, House, Mail, MessageSquare
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import { takeQuoteInvoker } from "../lib/openQuote";
+import { peekQuoteType, takeQuoteInvoker, takeQuoteType } from "../lib/openQuote";
 import { site } from "../lib/site";
 
 const QUOTE_TYPES = [
@@ -14,7 +14,7 @@ const QUOTE_TYPES = [
 
 export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number }) {
   const [open, setOpen] = useState(false);
-  const [quoteType, setQuoteType] = useState<(typeof QUOTE_TYPES)[number]["id"]>("auto");
+  const [quoteType, setQuoteType] = useState<(typeof QUOTE_TYPES)[number]["id"]>(() => peekQuoteType() ?? "auto");
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const restoreFocusFrameRef = useRef(0);
@@ -38,7 +38,11 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
   };
 
   useEffect(() => {
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+      const requestedType = takeQuoteType();
+      if (requestedType) setQuoteType(requestedType);
+      setOpen(true);
+    };
     window.addEventListener("openQuoteModal", handleOpen);
     return () => window.removeEventListener("openQuoteModal", handleOpen);
   }, []);
@@ -47,6 +51,8 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
   useEffect(() => {
     if (!open) return;
     window.cancelAnimationFrame(restoreFocusFrameRef.current);
+    const requestedType = takeQuoteType();
+    if (requestedType) setQuoteType(requestedType);
     previousFocusRef.current = takeQuoteInvoker()
       ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
     const appRoot = document.getElementById("root");

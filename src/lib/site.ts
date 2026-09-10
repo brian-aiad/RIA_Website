@@ -41,34 +41,4 @@ export const site = {
       { name: "Scott", quote: "Ash is a very knowledgeable person. He explained things in great detail. 10/10 service." },
     ],
   },
-  services: [
-    { key: "auto", title: "Auto Insurance", blurb: "Liability, comprehensive, collision, SR-22 support, and available discounts." },
-    { key: "home", title: "Home & Renters", blurb: "Review the dwelling, belongings, loss-of-use, and liability sections." },
-    { key: "workers", title: "Workers’ Compensation", blurb: "Review employee classifications, payroll, and workplace operations." },
-    { key: "commercial", title: "Commercial", blurb: "General liability, BOP, commercial auto, and workers’ comp." },
-    { key: "moto", title: "Motorcycle", blurb: "Liability, physical damage, gear, and accessory options for riders." },
-    { key: "rec", title: "Recreational", blurb: "RV, boat, and recreational-vehicle coverage questions." },
-    { key: "bonds", title: "Surety Bonds", blurb: "License, permit, contract, and commercial bond support." },
-    { key: "reg", title: "Registration Services", blurb: "Ask about title transfers, renewals, and plate services." },
-    { key: "sr22", title: "SR-22 Filing", blurb: "Electronic filing support after a qualifying policy is bound." },
-    { key: "translate", title: "Document Translation", blurb: "Accurate translation in Arabic, Spanish, and English." },
-  ],
-  faqs: [
-    {
-      q: "What is an insurance broker?",
-      a: "A licensed professional who can review available coverage, pricing, and service from more than one carrier, subject to appointments and eligibility.",
-    },
-    {
-      q: "Which lines do you offer?",
-      a: "Auto, home/renters, commercial, workers’ compensation, bonds, motorcycle, recreational, registration services, SR-22 filing, and document translation. Health, life, and notary services are not currently offered.",
-    },
-    {
-      q: "How do I get a quote?",
-      a: "Call, email, text, or open the quote preparation guide. The guide helps you gather useful details, then connects you directly with the agency; it does not submit insurance information online.",
-    },
-    {
-      q: "How do I file a claim?",
-      a: "Call your carrier’s claims line listed on your policy, then notify us. We’ll help you navigate documentation and next steps.",
-    },
-  ],
 };

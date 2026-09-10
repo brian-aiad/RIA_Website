@@ -282,6 +282,14 @@ await journey.goBack({ waitUntil: "networkidle" });
 check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Coverage for Los Angeles")), "Browser Back did not restore the homepage");
 await journey.goForward({ waitUntil: "networkidle" });
 check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Insurance for what you own")), "Browser Forward did not restore the services page");
+const serviceIndexHrefs = await journey.locator(".services-ledger__index a").evaluateAll((links) => links.map((link) => link.getAttribute("href")));
+check(JSON.stringify(serviceIndexHrefs) === JSON.stringify(["#drive", "#property", "#work", "#weekend"]), `Services coverage index is incomplete: ${JSON.stringify(serviceIndexHrefs)}`);
+await journey.locator("#work > button").click();
+const businessGuide = journey.getByRole("dialog");
+await businessGuide.waitFor({ state: "visible" });
+check(await businessGuide.getByRole("tab", { name: "Business", exact: true }).getAttribute("aria-selected") === "true", "Business service did not open the matching preparation file");
+await journey.keyboard.press("Escape");
+await businessGuide.waitFor({ state: "hidden" });
 
 await journey.goto(`${base}/`, { waitUntil: "networkidle" });
 await journey.locator('.ria-service-strip a[href="/services#work"]').first().click();

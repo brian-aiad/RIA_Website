@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, PaperNote, QuoteBand, SectionFolio } from "../components/AtlasUI";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import { coverageEntries, serviceGroups } from "../data/atlas";
-import { openQuoteModal } from "../lib/openQuote";
+import { openQuoteModal, openQuoteModalFor, type QuoteType } from "../lib/openQuote";
 import { images } from "../lib/images";
 import { usePageMeta } from "../lib/seo";
 import { site } from "../lib/site";
@@ -15,6 +15,12 @@ const groupPhotoAlts = [
   "Illustration of a small Los Angeles contractor crew preparing tools and safety equipment",
   "Illustration of a motorcycle, travel trailer, and boat being prepared safely for a trip",
 ] as const;
+const groupQuoteTypes: Record<(typeof serviceGroups)[number]["id"], QuoteType> = {
+  drive: "auto",
+  property: "home",
+  work: "business",
+  weekend: "specialty",
+};
 
 export default function Services() {
   usePageMeta({
@@ -38,6 +44,14 @@ export default function Services() {
             <AtlasEyebrow>What we insure</AtlasEyebrow>
             <h2>Your policies should match<br />how you actually live and work.</h2>
             <p>A vehicle may serve both a household and a business. A home may include rental use, stored equipment, or work activity. We check where one policy stops and another may need to begin.</p>
+            <nav className="services-ledger__index" aria-label="Jump to a coverage category">
+              {serviceGroups.map((group, index) => (
+                <a key={group.id} href={`#${group.id}`}>
+                  <small>0{index + 1}</small>
+                  <span>{group.label}</span>
+                </a>
+              ))}
+            </nav>
           </div>
           <div className="services-ledger__groups">
             {serviceGroups.map((group, index) => {
@@ -50,7 +64,7 @@ export default function Services() {
                     <AtlasImage src={groupPhotos[index]} alt={groupPhotoAlts[index]} width="1536" height="1024" loading="lazy" />
                   </div>
                   <ul>{group.lines.map((line) => <li key={line}><Check size={14} />{line}</li>)}</ul>
-                  <button type="button" onClick={openQuoteModal}>Prepare for this coverage <ArrowRight size={16} /></button>
+                  <button type="button" onClick={(event) => openQuoteModalFor(groupQuoteTypes[group.id], event)}>Prepare for this coverage <ArrowRight size={16} /></button>
                 </article>
               );
             })}

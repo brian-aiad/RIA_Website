@@ -646,6 +646,31 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
 .scope-note h2 { color: var(--agency-navy); font: 700 clamp(2.5rem,4.4vw,4.4rem)/1 var(--font-display); letter-spacing: -.045em; }
 .services-ledger__intro p,
 .services-briefs__copy p { color: var(--agency-muted); }
+.services-ledger__index {
+  display: grid;
+  grid-column: 1/-1;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  margin-top: 1.35rem;
+  border-top: 1px solid var(--agency-rule);
+  border-left: 1px solid var(--agency-rule);
+}
+.services-ledger__index a {
+  display: grid;
+  grid-template-columns: 1.55rem 1fr;
+  gap: .65rem;
+  align-items: center;
+  min-height: 3.65rem;
+  padding: .8rem 1rem;
+  border-right: 1px solid var(--agency-rule);
+  border-bottom: 1px solid var(--agency-rule);
+  color: var(--agency-navy);
+  background: rgba(255,254,251,.72);
+  font-size: .7rem;
+  font-weight: 720;
+  line-height: 1.25;
+}
+.services-ledger__index small { color: var(--agency-gold-dark); font-size: .56rem; font-weight: 780; }
+.service-ledger { scroll-margin-top: 7rem; }
 .services-ledger__groups { gap: 0; border-top: 1px solid var(--agency-rule); }
 .service-ledger,
 .service-ledger--navy,
@@ -673,6 +698,17 @@ body { background: var(--agency-white); color: var(--agency-ink); font-family: v
 .service-ledger li { opacity: 1; }
 .service-ledger li svg { color: var(--agency-gold-dark); }
 .service-ledger > button { grid-column: 4; color: white; background: var(--agency-navy); font-family: var(--font-body); }
+@media (hover: hover) and (pointer: fine) {
+  .services-ledger__index a { transition: color 160ms ease,background-color 160ms ease; }
+  .services-ledger__index a:hover { color: white; background: var(--agency-navy); }
+}
+@media (max-width: 620px) {
+  .services-ledger__index { grid-template-columns: 1fr 1fr; margin-top: .9rem; }
+  .services-ledger__index a { min-height: 3.35rem; padding: .7rem .8rem; font-size: .64rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .services-ledger__index a { transition: none !important; }
+}
 .services-briefs { background: var(--agency-paper); }
 .services-briefs__list { border-color: var(--agency-rule); }
 .services-briefs__list a { border-color: var(--agency-rule); }

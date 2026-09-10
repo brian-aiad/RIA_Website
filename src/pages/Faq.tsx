@@ -27,7 +27,7 @@ const sections = [
     ["Do you offer health, life, or notary services?", "No. Rafla does not currently offer health insurance, life insurance, or notary services."],
   ]},
   { title: "After the policy starts", code: "D", questions: [
-    ["How do I report a claim?", "Use the carrier’s claim-reporting channel shown on the policy or ID materials, then notify the agency if you need help navigating documents or next steps."],
+    ["How do I report a claim?", "Use the carrier’s claim-reporting channel shown on the policy or ID materials, then notify the agency if you need help locating documents or organizing questions. Coverage and claim decisions remain subject to the policy terms and carrier review."],
     ["When should I request a policy review?", "Useful moments include renewal, a move, a new driver or vehicle, renovations, a property purchase, hiring employees, changing operations, or signing a contract."],
     ["When is a requested policy change effective?", "Do not assume a requested change has taken effect. Wait for the proper agency or carrier confirmation, and ask which delivery method to use before sending sensitive records."],
     ["Can I cancel before replacement coverage is confirmed?", "That can create a gap. Confirm the effective date, binding status, and any filing requirements before canceling existing coverage."],

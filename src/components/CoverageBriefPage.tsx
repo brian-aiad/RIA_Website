@@ -4,7 +4,7 @@ import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, FactRail, PaperNo
 import CoverageLinework, { type CoverageLineworkVariant } from "./CoverageLinework";
 import BreadcrumbSchema from "./seo/BreadcrumbSchema";
 import LocalBusinessSchema from "./seo/LocalBusinessSchema";
-import { openQuoteModal } from "../lib/openQuote";
+import { openQuoteModalFor, type QuoteType } from "../lib/openQuote";
 import { usePageMeta } from "../lib/seo";
 import { site } from "../lib/site";
 
@@ -41,13 +41,20 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
       : config.index === "03"
         ? "commercial"
         : "sr22";
+  const quoteType: QuoteType = drawing === "auto"
+    ? "auto"
+    : drawing === "home"
+      ? "home"
+      : drawing === "commercial"
+        ? "business"
+        : "specialty";
 
   return (
     <main id="main-content" className="atlas-page coverage-brief">
       <LocalBusinessSchema url="https://raflainsurance.com/" areaServed={["Los Angeles, CA", "Mar Vista", "Los Angeles Westside"]} />
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Services", url: "https://raflainsurance.com/services" }, { name: config.eyebrow, url: config.canonical }]} />
       <DossierHeader index={config.index} eyebrow={config.eyebrow} title={config.title} lede={config.lede} image={config.image} imageAlt={config.imageAlt} visualLabel="Coverage review / Mar Vista">
-        <AtlasButton tone="navy" onClick={openQuoteModal}>Prepare for a quote</AtlasButton>
+        <AtlasButton tone="navy" onClick={() => openQuoteModalFor(quoteType)}>Prepare for a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
       </DossierHeader>
 
@@ -69,7 +76,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
               <small>Rafla broker desk</small>
               <strong>{site.contact.phone}</strong>
               <p>{site.hours.short}<br />English · Spanish · Arabic</p>
-              <button type="button" onClick={openQuoteModal}>Open preparation guide <ArrowRight size={14} /></button>
+              <button type="button" onClick={(event) => openQuoteModalFor(quoteType, event)}>Open preparation guide <ArrowRight size={14} /></button>
             </div>
           </aside>
           <div className="brief-reading__content">
@@ -100,7 +107,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
                 <h2>{config.checklistTitle}</h2>
                 <ul>{config.checklist.map((item) => <li key={item}><Check size={16} /> {item}</li>)}</ul>
               </div>
-              <PaperNote label="Helpful tip" tone="blue"><p>{config.fieldNote}</p><button type="button" onClick={openQuoteModal}>See what to prepare <ArrowRight size={16} /></button></PaperNote>
+              <PaperNote label="Helpful tip" tone="blue"><p>{config.fieldNote}</p><button type="button" onClick={(event) => openQuoteModalFor(quoteType, event)}>See what to prepare <ArrowRight size={16} /></button></PaperNote>
             </section>
 
             <section id="fine-print" className="brief-chapter brief-detail motion-reveal">
