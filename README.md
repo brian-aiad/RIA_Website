@@ -28,16 +28,14 @@ Public email links use `contact@raflainsurance.com`. Delivery and forwarding are
 
 The canonical production domain is `https://raflainsurance.com`.
 
-`middleware.js` currently has `COMING_SOON_ENABLED = true`. While enabled,
-`raflainsurance.com` and `www.raflainsurance.com` serve the branded holding
-page with `noindex`, `noarchive`, and `no-store` protections. Local development
-and Vercel preview hosts continue to expose the complete website for review.
-Middleware also removes query strings that the application does not use.
+The complete website is public on `raflainsurance.com` and
+`www.raflainsurance.com`. Middleware removes query strings that the site does
+not use, while clean production-domain requests continue to the full site.
+`robots.txt` allows crawling and declares the production sitemap.
 
 Vercel receives exact app-shell rewrites for every sitemap route because its
-hosted build skips the local Playwright prerender step. These are retained for
-the eventual launch; while the gate is enabled, production-domain requests are
-intercepted before app-shell routing. Unknown paths are not catch-all rewritten.
+hosted build skips the local Playwright prerender step. Unknown paths are not
+rewritten, so the static noindex 404 response remains intact.
 
 ## Visual assets
 
