@@ -1,7 +1,7 @@
-import { ArrowRight, Check, FileText, Phone, ShieldCheck } from "lucide-react";
+import { ArrowRight, Check, Phone, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, FactRail, PaperNote, QuoteBand, SectionFolio } from "./AtlasUI";
-import CoverageLinework, { type CoverageLineworkVariant } from "./CoverageLinework";
+import { AtlasButton, AtlasEyebrow, DossierHeader, FactRail, PaperNote, QuoteBand, SectionFolio } from "./AtlasUI";
+import { type CoverageLineworkVariant } from "./CoverageLinework";
 import BreadcrumbSchema from "./seo/BreadcrumbSchema";
 import LocalBusinessSchema from "./seo/LocalBusinessSchema";
 import { openQuoteModalFor, type QuoteType } from "../lib/openQuote";
@@ -51,8 +51,8 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
 
   return (
     <main id="main-content" className="atlas-page coverage-brief">
-      <LocalBusinessSchema url="https://raflainsurance.com/" areaServed={["Los Angeles, CA", "Mar Vista", "Los Angeles Westside"]} />
-      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Services", url: "https://raflainsurance.com/services" }, { name: config.eyebrow, url: config.canonical }]} />
+      <LocalBusinessSchema url="https://www.raflainsurance.com/" areaServed={["Los Angeles, CA", "Mar Vista", "Los Angeles Westside"]} />
+      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "Services", url: "https://www.raflainsurance.com/services" }, { name: config.eyebrow, url: config.canonical }]} />
       <DossierHeader index={config.index} eyebrow={config.eyebrow} title={config.title} lede={config.lede} image={config.image} imageAlt={config.imageAlt} visualLabel="Coverage review / Mar Vista">
         <AtlasButton tone="navy" onClick={() => openQuoteModalFor(quoteType)}>Prepare for a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
@@ -90,7 +90,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
               <AtlasEyebrow>Understanding the coverage</AtlasEyebrow>
               <h2>{config.anatomyTitle}</h2>
               <div className="mobile-swipe-hint mobile-swipe-hint--ink brief-anatomy__hint" aria-hidden="true"><span />Swipe through coverage parts</div>
-              <div className="brief-anatomy__list" role="region" aria-label="Coverage parts" aria-description="On narrow screens, scroll horizontally or use the Left and Right Arrow keys to browse coverage parts." tabIndex={0}>
+              <div className="brief-anatomy__list" role="region" aria-label="Coverage parts">
                 {config.anatomy.map((item, index) => (
                   <article key={item.title} className="motion-reveal">
                     <span>0{index + 1}</span>
@@ -133,15 +133,6 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
               ))}
             </section>
           </div>
-        </div>
-      </section>
-
-      <section className="brief-closing-image section-folio-host">
-        <SectionFolio tone="paper">Illustrated record</SectionFolio>
-        <div className="atlas-container brief-closing-image__inner motion-reveal">
-          <AtlasImage src={config.image} alt={config.imageAlt} width="1536" height="1024" loading="lazy" />
-          <CoverageLinework className="brief-closing-image__drawing" variant={drawing} />
-          <div><FileText size={22} /><span>Rafla Insurance Agency</span><strong>{config.eyebrow}</strong></div>
         </div>
       </section>
 

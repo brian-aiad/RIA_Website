@@ -12,6 +12,6 @@ const sections: PolicySection[] = [
 ];
 
 export default function Accessibility() {
-  usePageMeta({ title: "Accessibility Statement | Rafla Insurance Agency", description: "Accessibility commitment and contact options for the Rafla Insurance Agency website.", canonical: "https://raflainsurance.com/accessibility" });
-  return <><BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Accessibility", url: "https://raflainsurance.com/accessibility" }]} /><PolicyPage code="A11Y" eyebrow="Accessibility" title="Insurance help should be accessible." lede="Our practical commitment to accessible navigation, communication, and alternatives when the website creates a barrier." updated="August 31, 2026" sections={sections} /></>;
+  usePageMeta({ title: "Accessibility Statement | Rafla Insurance Agency", description: "Accessibility commitment and contact options for the Rafla Insurance Agency website.", canonical: "https://www.raflainsurance.com/accessibility" });
+  return <><BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "Accessibility", url: "https://www.raflainsurance.com/accessibility" }]} /><PolicyPage code="A11Y" eyebrow="Accessibility" title="Insurance help should be accessible." lede="Our practical commitment to accessible navigation, communication, and alternatives when the website creates a barrier." updated="August 31, 2026" sections={sections} /></>;
 }

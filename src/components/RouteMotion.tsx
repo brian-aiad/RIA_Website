@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type MotionStep = {
   selector: string;
@@ -19,6 +19,16 @@ type MotionStep = {
  */
 export default function RouteMotion({ children, routeKey }: { children: ReactNode; routeKey: string }) {
   const scope = useRef<HTMLDivElement>(null);
+  const [reducedMotion, setReducedMotion] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreference = () => setReducedMotion(preference.matches);
+    preference.addEventListener("change", updatePreference);
+    return () => preference.removeEventListener("change", updatePreference);
+  }, []);
 
   useEffect(() => {
     const root = scope.current;
@@ -31,7 +41,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
       // Reduced-motion users keep native, immediate rendering. Touch devices
       // receive only small, one-time transforms; no scroll scrubbing or pinning.
       root.classList.remove("motion-managed");
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (reducedMotion) return;
       const isCompact = window.matchMedia("(max-width: 959px), (pointer: coarse)").matches;
 
       const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
@@ -101,12 +111,6 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
           { selector: ".brokerage-path__step", y: 12, duration: 0.48, stagger: 0.06, at: "-=0.3" },
           { selector: ".brokerage-path__roles", y: 10, duration: 0.5, at: "-=0.3" },
         ], "clamp(top 90%)");
-        stageGroup(".coverage-motion", [
-          { selector: ".coverage-motion__heading > div", x: -14, duration: 0.58 },
-          { selector: ".coverage-motion__heading > p", x: 14, duration: 0.54, at: "-=0.44" },
-          { selector: ".coverage-motion__scene", y: 14, scale: 0.995, duration: 0.54, stagger: 0.065, at: "-=0.3" },
-          { selector: ".coverage-motion__disclosure", y: 8, duration: 0.38, at: "-=0.28" },
-        ], "clamp(top 88%)");
         stageGroup(".ria-coverage", [
           { selector: ".ria-section-heading", y: 10, duration: 0.48 },
           { selector: ".coverage-desk", y: 14, scale: 0.995, duration: 0.58, at: "-=0.34" },
@@ -273,27 +277,6 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               stagger: 0.22,
               ease: "back.out(1.5)",
             }, 0.02);
-        });
-
-        // The day's gold rule advances with the reader, connecting auto, home,
-        // and business as one insurance narrative without moving the page itself.
-        if (!isCompact) root.querySelectorAll<HTMLElement>("[data-coverage-motion]").forEach((section) => {
-          const track = section.querySelector<HTMLElement>(".coverage-motion__progress > span");
-          const nodes = Array.from(section.querySelectorAll<HTMLElement>(".coverage-motion__progress > i"));
-          if (!track || !nodes.length) return;
-
-          gsap.set(track, { scaleX: 0, transformOrigin: "left center" });
-          gsap.set(nodes, { scale: 0.62, transformOrigin: "center" });
-          const timeline = gsap.timeline({
-            scrollTrigger: {
-              trigger: section,
-              start: "clamp(top 78%)",
-              end: "clamp(bottom 54%)",
-              scrub: 0.5,
-            },
-          });
-          timeline.to(track, { scaleX: 1, duration: 1, ease: "none" }, 0)
-            .to(nodes, { scale: 1, duration: 0.14, stagger: 0.3, ease: "back.out(1.45)" }, 0.04);
         });
 
         // The illustration moves inside its printed frame while the opening
@@ -467,7 +450,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
       else if (typeof idleId === "number") globalThis.clearTimeout(idleId);
       teardown?.();
     };
-  }, [routeKey]);
+  }, [routeKey, reducedMotion]);
 
   return <div ref={scope} className="route-frame">{children}</div>;
 }

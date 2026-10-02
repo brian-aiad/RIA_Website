@@ -20,7 +20,7 @@ async function focusReached(page, selector) {
 const webkitBrowser = await webkit.launch({ headless: true });
 const mobile = await webkitBrowser.newPage({ viewport: { width: 390, height: 844 } });
 mobile.setDefaultTimeout(10_000);
-await mobile.goto(`${base}/contact/`, { waitUntil: "networkidle" });
+await mobile.goto(`${base}/contact`, { waitUntil: "networkidle" });
 
 const emailHref = await mobile.locator('a[href^="mailto:"]').first().getAttribute("href");
 check(emailHref === "mailto:contact@raflainsurance.com", `Public mail link mismatch: ${emailHref}`);
@@ -63,7 +63,7 @@ check(await focusReached(mobile, ".atlas-nav__menu"), "Quote dialog opened from 
 await mobile.locator(".contact-switchboard__grid").scrollIntoViewIfNeeded();
 await mobile.evaluate(() => scrollBy(0, 220));
 await mobile.waitForTimeout(450);
-check(await mobile.locator(".contact-switchboard__grid").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile contact channels are not a keyboard-focusable compact rail");
+check(await mobile.locator(".contact-switchboard__grid").evaluate((node) => node.scrollWidth <= node.clientWidth + 1 && getComputedStyle(node).display === "grid" && node.querySelectorAll("a").length === 4), "Mobile contact channels should show all four choices without horizontal scrolling");
 const quickActionMetrics = await mobile.locator(".mobile-quick-actions").evaluate((node) => ({
   visible: node.classList.contains("is-visible") && node.getAttribute("aria-hidden") === "false",
   targets: Array.from(node.querySelectorAll("a,button"), (target) => {
@@ -175,19 +175,6 @@ check(await reduced.locator(".ria-reviews__note").textContent().then((text) => t
 check(await reduced.locator(`a[href="https://cdicloud.insurance.ca.gov/cal"]`).isVisible(), "California license verification link is missing");
 check(await reduced.locator(".ria-service-strip").evaluate((node) => node.getBoundingClientRect().height < 100), "Mobile coverage shortcuts are still using a tall multi-row layout");
 check(await reduced.locator(".brokerage-path__rail").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile broker steps are not a keyboard-focusable compact rail");
-const coverageFilmRail = reduced.locator(".coverage-motion__rail");
-const coverageFilmMetrics = await coverageFilmRail.evaluate((node) => ({
-  compact: node.scrollWidth > node.clientWidth && node.tabIndex === 0,
-  cards: node.querySelectorAll(".coverage-motion__scene").length,
-  captionsFit: Array.from(node.querySelectorAll("figcaption"), (caption) => caption.scrollHeight <= caption.clientHeight + 1),
-}));
-check(coverageFilmMetrics.compact, "Mobile coverage-day scenes are not a keyboard-focusable compact rail");
-check(coverageFilmMetrics.cards === 3, `Coverage-day scene count changed: ${JSON.stringify(coverageFilmMetrics)}`);
-check(coverageFilmMetrics.captionsFit.every(Boolean), `Coverage-day captions overflow their files: ${JSON.stringify(coverageFilmMetrics)}`);
-await coverageFilmRail.evaluate((node) => node.scrollTo({ left: node.scrollWidth, behavior: "instant" }));
-await reduced.waitForTimeout(350);
-const coverageFilmImagesReady = await coverageFilmRail.locator("img").evaluateAll((images) => images.map((image) => image.complete && image.naturalWidth > 0));
-check(coverageFilmImagesReady.every(Boolean), `Coverage-day artwork did not load after swiping the rail: ${JSON.stringify(coverageFilmImagesReady)}`);
 check(await reduced.locator(".ria-reviews__ledger").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile reviews are not a keyboard-focusable compact rail");
 check(await reduced.evaluate(() => document.body.scrollHeight < 11_000), "Mobile homepage remains excessively long after content prioritization");
 
@@ -216,23 +203,23 @@ await reduced.locator(".quote-band").scrollIntoViewIfNeeded();
 await reduced.waitForTimeout(250);
 check(await reduced.locator(".mobile-quick-actions").getAttribute("aria-hidden") === "true", "Mobile quick actions did not yield to the page quote band");
 
-await reduced.goto(`${base}/services/`, { waitUntil: "networkidle" });
-check(await reduced.locator(".services-briefs__list").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile coverage guides are not a keyboard-focusable compact rail");
+await reduced.goto(`${base}/services`, { waitUntil: "networkidle" });
+check(await reduced.locator(".services-briefs__list").evaluate((node) => node.scrollWidth <= node.clientWidth + 1), "Mobile coverage guides require sideways scrolling");
 
-await reduced.goto(`${base}/about/`, { waitUntil: "networkidle" });
-check(await reduced.locator(".agency-principles__grid").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile agency principles are not a keyboard-focusable compact rail");
+await reduced.goto(`${base}/about`, { waitUntil: "networkidle" });
+check(await reduced.locator(".agency-principles__grid").evaluate((node) => node.scrollWidth <= node.clientWidth + 1), "Mobile agency principles require sideways scrolling");
 
-await reduced.goto(`${base}/auto-insurance-los-angeles-ca/`, { waitUntil: "networkidle" });
+await reduced.goto(`${base}/auto-insurance-los-angeles-ca`, { waitUntil: "networkidle" });
 check(await reduced.locator('img[src*="auto-review-v8"]').first().isVisible(), "Corrected auto artwork is not referenced on the auto coverage page");
 
-await reduced.goto(`${base}/privacy/`, { waitUntil: "networkidle" });
+await reduced.goto(`${base}/privacy`, { waitUntil: "networkidle" });
 check(await reduced.getByRole("heading", { name: "No online insurance submission" }).isVisible(), "Privacy notice does not explain the no-form workflow");
 check(await reduced.getByText(/Vercel hosts the site and provides Web Analytics and Speed Insights/).isVisible(), "Analytics disclosure is missing");
 check(await reduced.getByRole("heading", { name: "Browser privacy signals and online tracking" }).isVisible(), "Browser privacy-signal disclosure is missing");
 check(await reduced.getByText(/Do Not Track and Global Privacy Control signals do not change its current behavior/).isVisible(), "Do Not Track and Global Privacy Control behavior is unclear");
 check(await reduced.locator("form").count() === 0, "A data-collection form appeared on the privacy route");
 
-await reduced.goto(`${base}/accessibility/`, { waitUntil: "networkidle" });
+await reduced.goto(`${base}/accessibility`, { waitUntil: "networkidle" });
 check(await reduced.getByText(/WCAG 2.2 Level AA is the site’s working accessibility target/).isVisible(), "WCAG 2.2 working target is missing");
 check(await reduced.getByRole("heading", { name: "Testing and limitations" }).isVisible(), "Accessibility testing limitations are missing");
 await reducedContext.close();
@@ -243,10 +230,10 @@ motionPage.setDefaultTimeout(10_000);
 await motionPage.goto(`${base}/`, { waitUntil: "networkidle" });
 await motionPage.waitForTimeout(1_500);
 check(await motionPage.locator(".route-frame").evaluate((node) => node.classList.contains("motion-managed")), "GSAP enhancement did not initialize for standard motion");
-await motionPage.locator(".coverage-motion").scrollIntoViewIfNeeded();
+await motionPage.locator(".ria-coverage").scrollIntoViewIfNeeded();
 await motionPage.waitForTimeout(1_200);
-const coverageMotionState = await motionPage.locator(".coverage-motion__scene").evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).transform));
-check(coverageMotionState.every((transform) => transform === "none"), `Coverage-day entrance did not settle cleanly: ${JSON.stringify(coverageMotionState)}`);
+const coverageMotionState = await motionPage.locator(".coverage-desk").evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).transform));
+check(coverageMotionState.every((transform) => transform === "none"), `Coverage selector entrance did not settle cleanly: ${JSON.stringify(coverageMotionState)}`);
 await motionPage.locator(".ria-reviews").scrollIntoViewIfNeeded();
 await motionPage.waitForTimeout(1_500);
 const reviewMotionState = await motionPage.locator(".ria-reviews blockquote").evaluateAll((nodes) => nodes.map((node) => ({ opacity: getComputedStyle(node).opacity, transform: getComputedStyle(node).transform })));
@@ -279,7 +266,7 @@ await journey.waitForURL("**/services");
 await journey.waitForTimeout(100);
 check(await journey.locator("main").evaluate((node) => document.activeElement === node), "SPA navigation did not focus the destination main content");
 await journey.goBack({ waitUntil: "networkidle" });
-check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Coverage for Los Angeles")), "Browser Back did not restore the homepage");
+check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Insurance for Los Angeles")), "Browser Back did not restore the homepage");
 await journey.goForward({ waitUntil: "networkidle" });
 check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Insurance for what you own")), "Browser Forward did not restore the services page");
 const serviceIndexHrefs = await journey.locator(".services-ledger__index a").evaluateAll((links) => links.map((link) => link.getAttribute("href")));
@@ -307,7 +294,7 @@ check(await firstDisclosure.getAttribute("open") === "", "FAQ disclosure did not
 await firstDisclosure.locator("summary").click();
 check(await firstDisclosure.getAttribute("open") === null, "FAQ disclosure did not close");
 await journey.reload({ waitUntil: "networkidle" });
-check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Start with the question")), "Direct FAQ refresh rendered the wrong page");
+check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Insurance questions, answered.")), "Direct FAQ refresh rendered the wrong page");
 
 await journey.goto(`${base}/this-page-does-not-exist`, { waitUntil: "networkidle" });
 check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("couldn’t find")), "Custom 404 did not render on an unknown URL");
@@ -316,5 +303,5 @@ await journeyContext.close();
 
 await chromiumBrowser.close();
 
-console.log(JSON.stringify({ checks, failures, mobileNavMetrics, landscapeMenuMetrics, landscapeDialogMetrics, quickActionMetrics, coverageFilmMetrics, coverageFilmImagesReady, reducedDialogStyle, coverageMotionState, reviewMotionState, journeyNavHrefs }, null, 2));
+console.log(JSON.stringify({ checks, failures, mobileNavMetrics, landscapeMenuMetrics, landscapeDialogMetrics, quickActionMetrics, reducedDialogStyle, coverageMotionState, reviewMotionState, journeyNavHrefs }, null, 2));
 if (failures.length) process.exitCode = 1;

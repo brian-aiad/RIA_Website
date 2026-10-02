@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 interface LocalBusinessSchemaProps {
   /** Override the page URL (defaults to homepage) */
   url?: string;
@@ -24,27 +22,13 @@ const DEFAULT_AREA_SERVED = [
 ];
 
 export default function LocalBusinessSchema({
-  url = "https://raflainsurance.com/",
+  url = "https://www.raflainsurance.com/",
   areaServed = DEFAULT_AREA_SERVED,
 }: LocalBusinessSchemaProps) {
-  useEffect(() => {
-    // Remove any pre-existing InsuranceAgency blocks (static template block + prior mounts)
-    // so every page ends up with exactly 1.
-    document.querySelectorAll('script[type="application/ld+json"]').forEach((s) => {
-      try {
-        if (JSON.parse(s.textContent || "{}")["@type"] === "InsuranceAgency") s.remove();
-      } catch {
-        return;
-      }
-    });
-
-    const el = document.createElement("script");
-    el.type = "application/ld+json";
-    el.setAttribute("data-schema", "LocalBusinessSchema");
-    el.text = JSON.stringify({
+  const data = {
       "@context": "https://schema.org",
       "@type": "InsuranceAgency",
-      "@id": "https://raflainsurance.com/#agency",
+      "@id": "https://www.raflainsurance.com/#agency",
       name: "Rafla Insurance Agency",
       legalName: "Rafla Insurance Agency, Inc.",
       identifier: "CA Agency License 0D95584",
@@ -54,9 +38,9 @@ export default function LocalBusinessSchema({
       telephone: "+1-310-572-7246",
       faxNumber: "+1-310-572-7247",
       image: [
-        "https://raflainsurance.com/images/client/rafla-building-street.jpg",
-        "https://raflainsurance.com/images/client/rafla-building-front.jpg",
-        "https://raflainsurance.com/images/client/rafla-building-angle.jpg",
+        "https://www.raflainsurance.com/images/client/rafla-building-street.jpg",
+        "https://www.raflainsurance.com/images/client/rafla-building-front.jpg",
+        "https://www.raflainsurance.com/images/client/rafla-building-angle.jpg",
       ],
       contactPoint: [
         {
@@ -118,10 +102,7 @@ export default function LocalBusinessSchema({
         "Commercial Property Insurance",
         "Condo Insurance",
       ],
-    });
-    document.head.appendChild(el);
-    return () => { el.remove(); };
-  }, [url, areaServed]);
+  };
 
-  return null;
+  return <script type="application/ld+json" data-schema="LocalBusinessSchema" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
 }

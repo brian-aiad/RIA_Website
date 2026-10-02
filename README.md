@@ -26,16 +26,28 @@ Public email links use `contact@raflainsurance.com`. Delivery and forwarding are
 
 ## Production settings
 
-The canonical production domain is `https://raflainsurance.com`.
+The canonical production domain is `https://www.raflainsurance.com`.
+Non-www and HTTP addresses permanently redirect to that preferred address.
+Middleware removes unused query strings. `robots.txt` allows public crawling
+and declares `https://www.raflainsurance.com/sitemap.xml`.
 
-The complete website is public on `raflainsurance.com` and
-`www.raflainsurance.com`. Middleware removes query strings that the site does
-not use, while clean production-domain requests continue to the full site.
-`robots.txt` allows crawling and declares the production sitemap.
+Every build, including Vercel builds, renders all 25 sitemap routes to static
+HTML with React's server renderer. Each page includes its own title,
+description, canonical URL, visible content, and JSON-LD before JavaScript runs.
+Flat files such as `dist/about.html` are served at `/about` through Vercel's
+`cleanUrls` setting. Do not add app-shell rewrites or skip hosted prerendering:
+those would replace interior page HTML with the homepage. Unknown paths use
+the static noindex 404 response.
 
-Vercel receives exact app-shell rewrites for every sitemap route because its
-hosted build skips the local Playwright prerender step. Unknown paths are not
-rewritten, so the static noindex 404 response remains intact.
+Run `npm run deploy:check` before deployment. After deployment, check raw HTML
+on the homepage, an insurance guide, and a community page, plus the sitemap and
+redirect targets. In Google Search Console, submit
+`https://www.raflainsurance.com/sitemap.xml`, then inspect the canonical HTTPS
+www homepage and request indexing. Redirect aliases being excluded as “Page
+with redirect” is expected; assess indexing on their destination instead.
+Sitemap submission and indexing requests require Search Console access and do
+not guarantee indexing. Update sitemap last-modified dates only for meaningful
+page changes.
 
 ## Visual assets
 

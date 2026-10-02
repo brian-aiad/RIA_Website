@@ -15,6 +15,6 @@ const sections: PolicySection[] = [
 ];
 
 export default function Privacy() {
-  usePageMeta({ title: "Privacy & Data Handling | Rafla Insurance Agency", description: "How Rafla Insurance Agency handles information submitted through its Los Angeles insurance website and contact channels.", canonical: "https://raflainsurance.com/privacy" });
-  return <><BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Privacy", url: "https://raflainsurance.com/privacy" }]} /><PolicyPage code="P1" eyebrow="Privacy & data handling" title="Clear expectations for the information you share." lede="This notice describes the public website and agency contact channels. Carrier notices and policy documents may contain additional terms." updated="August 28, 2026" sections={sections} /></>;
+  usePageMeta({ title: "Privacy & Data Handling | Rafla Insurance Agency", description: "How Rafla Insurance Agency handles information submitted through its Los Angeles insurance website and contact channels.", canonical: "https://www.raflainsurance.com/privacy" });
+  return <><BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "Privacy", url: "https://www.raflainsurance.com/privacy" }]} /><PolicyPage code="P1" eyebrow="Privacy & data handling" title="Clear expectations for the information you share." lede="This notice describes the public website and agency contact channels. Carrier notices and policy documents may contain additional terms." updated="August 28, 2026" sections={sections} /></>;
 }

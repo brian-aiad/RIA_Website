@@ -26,12 +26,12 @@ export default function Services() {
   usePageMeta({
     title: "Insurance Services Los Angeles | Rafla Insurance Agency",
     description: "Auto, home, renters, commercial, workers’ compensation, bonds, SR-22, motorcycle, RV, boat and specialty insurance from a Mar Vista broker.",
-    canonical: "https://raflainsurance.com/services",
+    canonical: "https://www.raflainsurance.com/services",
   });
 
   return (
     <main id="main-content" className="atlas-page services-atlas">
-      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Services", url: "https://raflainsurance.com/services" }]} />
+      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "Services", url: "https://www.raflainsurance.com/services" }]} />
       <DossierHeader index="Services" eyebrow="Personal and business insurance" title="Insurance for what you own, drive, and operate." lede="Tell us about the vehicle, property, household, or business in front of you. We’ll organize the carrier questions and coverage details around the real situation." image="/images/illustrated/small-business-v6.webp" imageAlt="Illustration of a Westside small-business owner reviewing coverage outside her shop">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Open preparation guide</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
@@ -77,7 +77,7 @@ export default function Services() {
         <div className="atlas-container services-briefs__grid">
           <div className="services-briefs__copy motion-reveal"><AtlasEyebrow>Coverage guides</AtlasEyebrow><h2>Know what to compare.</h2><p>See the common coverage parts, useful documents, and questions worth bringing to the broker desk.</p></div>
           <div className="mobile-swipe-hint mobile-swipe-hint--ink"><span />Swipe through coverage guides</div>
-          <div className="services-briefs__list" role="region" aria-label="Coverage guides" aria-description="On narrow screens, scroll horizontally or use the Left and Right Arrow keys to browse coverage guides." tabIndex={0}>
+          <div className="services-briefs__list" role="region" aria-label="Coverage guides">
             {coverageEntries.slice(0, 4).map((entry) => <Link key={entry.key} to={entry.href} className="motion-reveal"><span>{entry.number}</span><strong>{entry.title}</strong><p>{entry.short}</p><ArrowRight size={18} /></Link>)}
           </div>
         </div>

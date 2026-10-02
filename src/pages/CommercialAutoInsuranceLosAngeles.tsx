@@ -3,11 +3,11 @@ import CoverageBriefPage, { type CoverageBriefConfig } from "../components/Cover
 const config: CoverageBriefConfig = {
   index: "03",
   eyebrow: "Commercial auto insurance",
-  title: "Coverage built around the work, not just the vehicle.",
+  title: "Commercial auto insurance for Los Angeles businesses.",
   lede: "Practical protection for the vehicles, drivers, and daily operations that keep your business moving.",
   metaTitle: "Commercial Auto Insurance Los Angeles | Rafla Insurance Agency",
   metaDescription: "Commercial auto insurance for Los Angeles contractors, service businesses, fleets and local firms from a Mar Vista independent broker.",
-  canonical: "https://raflainsurance.com/commercial-auto-insurance-los-angeles",
+  canonical: "https://www.raflainsurance.com/commercial-auto-insurance-los-angeles",
   image: "/images/illustrated/small-business-v6.webp",
   imageAlt: "A Westside small-business crew loading tools into a work van outside their shop",
   signals: [

@@ -1,16 +1,9 @@
-import { useEffect } from "react";
-
 interface BreadcrumbSchemaProps {
   crumbs: Array<{ name: string; url: string }>;
 }
 
 export default function BreadcrumbSchema({ crumbs }: BreadcrumbSchemaProps) {
-  useEffect(() => {
-    document.querySelectorAll('script[data-schema="BreadcrumbSchema"]').forEach(s => s.remove());
-    const el = document.createElement("script");
-    el.type = "application/ld+json";
-    el.setAttribute("data-schema", "BreadcrumbSchema");
-    el.textContent = JSON.stringify({
+  const data = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: crumbs.map((c, i) => ({
@@ -19,10 +12,7 @@ export default function BreadcrumbSchema({ crumbs }: BreadcrumbSchemaProps) {
         name: c.name,
         item: c.url,
       })),
-    });
-    document.head.appendChild(el);
-    return () => { el.remove(); };
-  }, [crumbs]);
+  };
 
-  return null;
+  return <script type="application/ld+json" data-schema="BreadcrumbSchema" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
 }

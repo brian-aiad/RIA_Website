@@ -1,6 +1,6 @@
 import type { ImgHTMLAttributes, ReactNode } from "react";
 import { ArrowRight, ArrowUpRight, MapPin, MessageSquareText, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { openQuoteModal } from "../lib/openQuote";
 import { site } from "../lib/site";
 
@@ -84,10 +84,19 @@ export function DossierHeader({
   visual?: ReactNode;
   children?: ReactNode;
 }) {
+  const { pathname } = useLocation();
+  const parent = pathname.startsWith("/insurance/")
+    ? { to: "/locations", label: "Service areas" }
+    : pathname.includes("-insurance-") ? { to: "/services", label: "Insurance" } : null;
   return (
     <header className="dossier-hero" data-dossier-hero>
       <div className="atlas-container dossier-hero__grid">
         <div className="dossier-hero__copy hero-copy-enter">
+          <nav className="page-breadcrumbs" aria-label="Breadcrumb">
+            <Link to="/">Home</Link><span aria-hidden="true">/</span>
+            {parent && <><Link to={parent.to}>{parent.label}</Link><span aria-hidden="true">/</span></>}
+            <span aria-current="page">{eyebrow}</span>
+          </nav>
           <div className="dossier-hero__meta">
             <span>{index}</span>
             <AtlasEyebrow>{eyebrow}</AtlasEyebrow>

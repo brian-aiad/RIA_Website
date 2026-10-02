@@ -3,11 +3,11 @@ import CoverageBriefPage, { type CoverageBriefConfig } from "../components/Cover
 const config: CoverageBriefConfig = {
   index: "04B",
   eyebrow: "Specialty license situations",
-  title: "Bring us the unusual driver situation. We’ll start with the facts.",
+  title: "Auto insurance for specialty license situations.",
   lede: "Foreign-license, newly licensed, vehicle-owner, and restricted-license situations are reviewed case by case under available carrier rules.",
   metaTitle: "Specialty Auto Insurance Situations Los Angeles | Rafla Insurance",
   metaDescription: "Discuss foreign-license, newly licensed and other nonstandard auto-insurance situations with a multilingual independent broker in Los Angeles.",
-  canonical: "https://raflainsurance.com/no-license-auto-insurance-los-angeles",
+  canonical: "https://www.raflainsurance.com/no-license-auto-insurance-los-angeles",
   image: "/images/illustrated/broker-desk-v6.webp",
   imageAlt: "An insurance broker and a Los Angeles couple reviewing a policy folder together",
   signals: [

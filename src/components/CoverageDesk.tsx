@@ -66,7 +66,7 @@ export default function CoverageDesk() {
           <h3>{activeCoverage.title}</h3>
           <p>{activeCoverage.short}</p>
         </div>
-        <Link to={activeCoverage.href}>Open this coverage file <ArrowRight size={17} /></Link>
+        <Link to={activeCoverage.href}>Explore this coverage <ArrowRight size={17} /></Link>
       </article>
     </div>
   );

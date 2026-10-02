@@ -7,20 +7,19 @@ import LocalBusinessSchema from "../components/seo/LocalBusinessSchema";
 import { cities } from "../data/atlas";
 import { openQuoteModal } from "../lib/openQuote";
 import { usePageMeta } from "../lib/seo";
-import { images } from "../lib/images";
 import { site } from "../lib/site";
 
 export default function Locations() {
   usePageMeta({
     title: "Mar Vista Insurance Office & Westside Service Areas | Rafla",
     description: "Visit Rafla Insurance at 12240 Venice Blvd Suite 2 in Mar Vista. Serving Palms, Culver City, Venice, Santa Monica, Marina del Rey and the Westside.",
-    canonical: "https://raflainsurance.com/locations",
+    canonical: "https://www.raflainsurance.com/locations",
   });
 
   return (
     <main id="main-content" className="atlas-page locations-file">
-      <LocalBusinessSchema url="https://raflainsurance.com/" areaServed={cities.map((city) => `${city.name}, CA`)} />
-      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Locations", url: "https://raflainsurance.com/locations" }]} />
+      <LocalBusinessSchema url="https://www.raflainsurance.com/" areaServed={cities.map((city) => `${city.name}, CA`)} />
+      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "Locations", url: "https://www.raflainsurance.com/locations" }]} />
       <DossierHeader index="LA" eyebrow="Your Mar Vista insurance office" title="Your insurance office is on Venice Boulevard." lede="Visit Rafla in Mar Vista or call from anywhere in the surrounding Los Angeles area. The office serves households and businesses across the Westside and nearby communities." image="/images/illustrated/office-venice-illustrated-v6.webp" imageAlt="Illustration of Rafla Insurance Agency's Venice Boulevard neighborhood office">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Prepare for a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer">Directions <ExternalLink size={14} /></a>
@@ -29,7 +28,7 @@ export default function Locations() {
       <section className="office-record section-folio-host">
         <SectionFolio>Visit / 90066</SectionFolio>
         <div className="atlas-container office-record__grid">
-          <div className="office-record__photo motion-reveal"><AtlasImage src={images.location.exterior} alt="Illustration of Rafla Insurance Agency's Venice Boulevard neighborhood office" width="1536" height="1024" loading="lazy" /><span>Neighborhood office / Venice Boulevard</span></div>
+          <div className="office-record__photo motion-reveal"><AtlasImage src="/images/client/rafla-office-front-720.webp" alt="Actual building at 12240 Venice Boulevard, home to Rafla Insurance Agency in Suite 2" width="720" height="1043" loading="lazy" /><span>Neighborhood office / Venice Boulevard</span></div>
           <div className="office-record__details motion-reveal">
             <AtlasEyebrow>Visit Rafla Insurance</AtlasEyebrow>
             <h2>12240 Venice Blvd<br />Suite 2<br />Los Angeles, CA 90066</h2>

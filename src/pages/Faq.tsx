@@ -35,11 +35,11 @@ const sections = [
 ];
 
 export default function Faq() {
-  usePageMeta({ title: "Insurance FAQ | Rafla Insurance Agency Los Angeles", description: "Answers about auto, home, business, workers’ compensation, SR-22 filing, claims, quotes and Rafla Insurance services in Los Angeles.", canonical: "https://raflainsurance.com/faq" });
+  usePageMeta({ title: "Insurance FAQ | Rafla Insurance Agency Los Angeles", description: "Answers about auto, home, business, workers’ compensation, SR-22 filing, claims, quotes and Rafla Insurance services in Los Angeles.", canonical: "https://www.raflainsurance.com/faq" });
   return (
     <main id="main-content" className="atlas-page faq-file">
-      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "FAQ", url: "https://raflainsurance.com/faq" }]} />
-      <DossierHeader index="Q+A" eyebrow="Questions clients bring us" title="Start with the question in front of you." lede="Find the basics for a quote, filing, policy change, or claim—then call the office when the actual document needs to be reviewed." image={images.interior.faq} imageAlt="Illustrated insurance reference desk with a blank folder, vehicle keys, a house model, and a magnifying glass">
+      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "FAQ", url: "https://www.raflainsurance.com/faq" }]} />
+      <DossierHeader index="Q+A" eyebrow="Questions clients bring us" title="Insurance questions, answered." lede="Find the basics for a quote, filing, policy change, or claim—then call the office when the actual document needs to be reviewed." image={images.interior.faq} imageAlt="Illustrated insurance reference desk with a blank folder, vehicle keys, a house model, and a magnifying glass">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Open preparation guide</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
       </DossierHeader>
       <section className="answer-library section-folio-host"><SectionFolio>Answer file</SectionFolio><div className="atlas-container answer-library__grid">
@@ -54,7 +54,7 @@ export default function Faq() {
             <small><Clock3 aria-hidden="true" />Monday–Friday, 10am–5pm</small>
           </div>
         </aside>
-        <div>{sections.map((section) => <section key={section.code} id={`faq-${section.code}`} className="answer-group"><div className="answer-group__title motion-reveal"><span>{section.code}</span><h2>{section.title}</h2></div>{section.questions.map(([q,a],index) => <details key={q} className="answer-drawer motion-reveal"><summary><span>{section.code}{index+1}</span>{q}<i /></summary><p>{a}</p></details>)}</section>)}</div>
+        <div>{sections.map((section) => <section key={section.code} id={`faq-${section.code}`} className="answer-group"><div className="answer-group__title motion-reveal"><span>{section.code}</span><h2>{section.title}</h2></div>{section.questions.map(([q,a]) => <details key={q} className="answer-drawer motion-reveal"><summary>{q}<i aria-hidden="true" /></summary><p>{a}</p></details>)}</section>)}</div>
       </div></section>
       <QuoteBand title="Your situation may need a more specific answer." text="Website explanations are general. Bring the actual policy, notice, contract, vehicle, property, or business details into the conversation." />
     </main>

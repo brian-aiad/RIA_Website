@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /*?*
 
-Sitemap: https://raflainsurance.com/sitemap.xml
+Sitemap: https://www.raflainsurance.com/sitemap.xml

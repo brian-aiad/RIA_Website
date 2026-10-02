@@ -18,7 +18,7 @@ import { dirname } from "path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = resolve(__dirname, "..", "dist");
-const PROD_ORIGIN = "https://raflainsurance.com";
+const PROD_ORIGIN = "https://www.raflainsurance.com";
 
 // Pages that should NOT have BreadcrumbList (home only)
 const NO_BREADCRUMB = new Set(["/"]);
@@ -41,7 +41,7 @@ const NO_INSURANCE_AGENCY = new Set([
 // Pages where InsuranceAgency url must be the homepage (not the page's own URL).
 // City pages (/insurance/*) are allowed to have their own canonical URL.
 // All other pages with InsuranceAgency must use the homepage URL.
-const HOMEPAGE_URL = "https://raflainsurance.com/";
+const HOMEPAGE_URL = "https://www.raflainsurance.com/";
 
 let totalFiles = 0;
 let failures = 0;
@@ -55,8 +55,8 @@ function collectHtmlFiles(dir, base = dir) {
     const full = join(dir, entry);
     if (statSync(full).isDirectory()) {
       results.push(...collectHtmlFiles(full, base));
-    } else if (entry === "index.html") {
-      results.push({ path: full, route: "/" + relative(base, dir).replace(/\\/g, "/") });
+    } else if (entry.endsWith(".html") && entry !== "404.html") {
+      results.push({ path: full, route: entry === "index.html" ? "/" : "/" + relative(base, full).replace(/\\/g, "/").replace(/\.html$/, "") });
     }
   }
   return results;
@@ -101,6 +101,7 @@ if (!existsSync(DIST)) {
 console.log("\n--- Schema validation ---\n");
 
 const files = collectHtmlFiles(DIST);
+check("build", files.length === 25, "Expected all 25 public pages");
 
 // Sort so home (/) appears first
 files.sort((a, b) => a.route.length - b.route.length);

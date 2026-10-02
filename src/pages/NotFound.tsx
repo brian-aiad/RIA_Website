@@ -8,7 +8,7 @@ export default function NotFound() {
   usePageMeta({
     title: "Page Not Found | Rafla Insurance Agency",
     description: "The requested Rafla Insurance Agency page could not be found. Return home or contact the Mar Vista office.",
-    canonical: "https://raflainsurance.com/404",
+    canonical: "https://www.raflainsurance.com/404",
     robots: "noindex, nofollow, noarchive",
   });
 

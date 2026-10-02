@@ -8,6 +8,7 @@ import "@fontsource-variable/source-sans-3/wght.css";
 import App from "./App";
 import "./index.css";
 import "./ria-revamp.css";
+import "./refinement.css";
 
 const rootEl = document.getElementById("root")!;
 const isDeployedHost = /(^|\.)raflainsurance\.com$|\.vercel\.app$/.test(window.location.hostname);
@@ -21,8 +22,7 @@ const app = (
   </React.StrictMode>
 );
 
-// The local prerender step snapshots browser-rendered DOM. Some JSX creates
-// adjacent text nodes that the browser merges when that snapshot is serialized,
-// so mounting cleanly avoids hydration mismatches while preserving static HTML
-// for the initial response and for search crawlers.
+// Static route HTML provides the initial response and crawlable content.
+// Mount the interactive app consistently for direct visits and client routes;
+// motion and analytics initialize only in the browser.
 ReactDOM.createRoot(rootEl).render(app);

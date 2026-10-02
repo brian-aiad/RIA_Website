@@ -35,7 +35,7 @@ check(heroState.copy === "none", `Homepage copy did not settle: ${heroState.copy
 check(heroState.plate === "none", `Homepage image plate did not settle: ${heroState.plate}`);
 check(heroState.h1Visible, "Homepage headline was not visible after initialization");
 
-for (const selector of [".brokerage-path", ".coverage-motion", ".ria-coverage", ".broker-cases", ".ria-reviews", ".quote-band"]) {
+for (const selector of [".brokerage-path", ".ria-coverage", ".broker-cases", ".ria-reviews", ".quote-band"]) {
   await page.locator(selector).scrollIntoViewIfNeeded();
   await page.waitForTimeout(850);
   const state = await page.locator(selector).evaluate((section) => ({
@@ -62,7 +62,14 @@ const settledState = await page.evaluate(() => ({
 check(settledState.staleReveals.length === 0, `Settled homepage retained reveal transforms: ${settledState.staleReveals.join(", ")}`);
 check(settledState.willChange.length === 0, `Homepage retained will-change layers: ${settledState.willChange.join(", ")}`);
 
-await page.goto(`${base}/contact/`, { waitUntil: "networkidle" });
+await page.emulateMedia({ reducedMotion: "reduce" });
+await page.waitForTimeout(150);
+check(!await page.locator(".route-frame").evaluate((node) => node.classList.contains("motion-managed")), "Changing the motion preference did not tear down existing animations");
+await page.emulateMedia({ reducedMotion: "no-preference" });
+await page.waitForTimeout(1500);
+check(await page.locator(".route-frame").getAttribute("data-motion-state") === "ready", "Motion did not reinitialize after a preference change");
+
+await page.goto(`${base}/contact`, { waitUntil: "networkidle" });
 await page.locator(".contact-next").scrollIntoViewIfNeeded();
 await page.waitForTimeout(1_500);
 const contactMotion = await page.locator(".contact-next").evaluate((section) => ({
@@ -101,7 +108,7 @@ check(await page.locator(".route-frame").getAttribute("data-motion-state") === "
 await page.goBack({ waitUntil: "networkidle" });
 await page.waitForTimeout(1_350);
 check(await page.locator(".route-frame").count() === 1, "Back navigation retained a duplicate route frame");
-check(await page.locator("main h1").textContent().then((text) => text?.includes("Coverage for Los Angeles")), "Back navigation did not restore the homepage");
+check(await page.locator("main h1").textContent().then((text) => text?.includes("Insurance for Los Angeles")), "Back navigation did not restore the homepage");
 await page.goForward({ waitUntil: "networkidle" });
 await page.waitForTimeout(1_350);
 check(await page.locator(".route-frame").count() === 1, "Forward navigation retained a duplicate route frame");
@@ -116,7 +123,7 @@ await page.waitForTimeout(500);
 check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), "Portrait orientation restore introduced root overflow");
 
 const backgroundPage = await context.newPage();
-await backgroundPage.goto(`${base}/faq/`, { waitUntil: "networkidle" });
+await backgroundPage.goto(`${base}/faq`, { waitUntil: "networkidle" });
 await backgroundPage.close();
 await page.bringToFront();
 await page.waitForTimeout(350);

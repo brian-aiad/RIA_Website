@@ -122,14 +122,14 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
               <div className="quote-dialog__intro">
                 <small>Local broker desk · Mar Vista</small>
                 <h2 id="quote-title">Start with what needs protecting.</h2>
-                <p id="quote-description">Choose the closest coverage file. This preparation guide does not submit or save a quote request.</p>
+                <p id="quote-description">Choose the coverage you need. This preparation guide does not submit or save a quote request.</p>
               </div>
               <button ref={closeButtonRef} type="button" onClick={() => setOpen(false)} className="quote-dialog__close" aria-label="Close"><X /></button>
             </header>
 
             <div className="quote-dialog__body">
               <aside className="quote-dialog__types">
-                <span>Choose a working file</span>
+                <span>Choose your coverage</span>
                 <div role="tablist" aria-label="Quote coverage type">
                   {QUOTE_TYPES.map((item, index) => {
                     const Icon = item.icon;
@@ -164,8 +164,7 @@ export default function QuoteWidget({ openSignal = 0 }: { openSignal?: number })
                 aria-labelledby={`quote-type-${selected.id}`}
                 aria-live="polite"
               >
-                <div className="quote-dialog__paperclip" aria-hidden="true" />
-                <span className="quote-dialog__file-label">Working file · {selected.label}</span>
+                <span className="quote-dialog__file-label">Preparing for {selected.label.toLowerCase()} insurance</span>
                 <h3>Helpful details to have ready.</h3>
                 <p>Bring what you have. The office can tell you which details apply to your situation and what can follow later.</p>
                 <ul key={selected.id}>

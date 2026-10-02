@@ -15,12 +15,12 @@ export default function Contact() {
   usePageMeta({
     title: "Contact Rafla Insurance Agency | Mar Vista Los Angeles",
     description: "Call Rafla Insurance at (310) 572-7246 or visit 12240 Venice Blvd Suite 2, Los Angeles, CA 90066. English, Spanish and Arabic assistance.",
-    canonical: "https://raflainsurance.com/contact",
+    canonical: "https://www.raflainsurance.com/contact",
   });
 
   return (
     <main id="main-content" className="atlas-page contact-file">
-      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "Contact", url: "https://raflainsurance.com/contact" }]} />
+      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "Contact", url: "https://www.raflainsurance.com/contact" }]} />
       <DossierHeader index="C1" eyebrow="Contact Rafla Insurance" title="Call, text, email, or stop by." lede="Reach the Venice Boulevard office for a quote, renewal, policy question, document request, or help finding the right carrier contact." image={images.clients.contactFrontDesk} imageAlt="Illustration of an insurance broker answering a client call from a Los Angeles office">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Prepare for a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} />Call now</a>
@@ -31,7 +31,7 @@ export default function Contact() {
         <div className="atlas-container">
           <div className="contact-switchboard__heading motion-reveal"><AtlasEyebrow>Contact options</AtlasEyebrow><h2>Use the channel that fits the question.</h2></div>
           <div className="mobile-swipe-hint mobile-swipe-hint--ink"><span />Swipe through contact options</div>
-          <div className="contact-switchboard__grid" role="region" aria-label="Contact options" aria-description="On narrow screens, scroll horizontally or use the Left and Right Arrow keys to browse contact options." tabIndex={0}>
+          <div className="contact-switchboard__grid" role="region" aria-label="Contact options">
             <a href={site.contact.phoneHref} className="motion-reveal"><span>01</span><Phone /><h3>Office line</h3><strong>{site.contact.phone}</strong><p>Quotes, policy questions, renewals, and general help.</p><ArrowRight /></a>
             <a href={site.contact.textHref} className="motion-reveal"><span>02</span><MessageSquareText /><h3>Text / direct line</h3><strong>{site.contact.text}</strong><p>Useful for a short first question. Do not text sensitive documents or personal data.</p><ArrowRight /></a>
             <a href={site.contact.emailHref} className="motion-reveal"><span>03</span><Mail /><h3>Email</h3><strong>{site.contact.email}</strong><p>Do not send highly sensitive information by ordinary email.</p><ArrowRight /></a>
@@ -76,7 +76,7 @@ export default function Contact() {
         <div className="atlas-container contact-next__grid">
           <header className="contact-next__heading motion-reveal">
             <AtlasEyebrow light>What happens next</AtlasEyebrow>
-            <h2>Start with the task—not a perfect file.</h2>
+            <h2>Let’s start with your question.</h2>
             <p>Tell the office what changed, which document prompted the call, and whether a real deadline is involved. The broker can then narrow the questions.</p>
             <div className="contact-next__actions">
               <AtlasButton tone="gold" onClick={openQuoteModal}>Open the preparation guide</AtlasButton>

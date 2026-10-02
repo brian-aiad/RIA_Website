@@ -3,11 +3,11 @@ import CoverageBriefPage, { type CoverageBriefConfig } from "../components/Cover
 const config: CoverageBriefConfig = {
   index: "04A",
   eyebrow: "SR-22 filing support",
-  title: "Start with the notice. Then build the policy.",
+  title: "SR-22 insurance and filing help in Los Angeles.",
   lede: "Help arranging an eligible auto policy and submitting California proof of financial responsibility when the DMV requires it.",
   metaTitle: "SR-22 Insurance Los Angeles | Rafla Insurance Agency",
   metaDescription: "Get help with California SR-22 filing and eligible auto insurance from an independent broker in Mar Vista, Los Angeles.",
-  canonical: "https://raflainsurance.com/sr22-insurance-los-angeles",
+  canonical: "https://www.raflainsurance.com/sr22-insurance-los-angeles",
   image: "/images/illustrated/auto-review-v8.webp",
   imageAlt: "A Los Angeles driver reviewing auto insurance paperwork with a broker beside an everyday car",
   signals: [

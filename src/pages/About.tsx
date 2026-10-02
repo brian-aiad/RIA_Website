@@ -10,12 +10,12 @@ export default function About() {
   usePageMeta({
     title: "About Rafla Insurance Agency | Mar Vista Los Angeles",
     description: "Meet Rafla Insurance Agency, an independent multilingual insurance brokerage at 12240 Venice Blvd in Mar Vista, Los Angeles.",
-    canonical: "https://raflainsurance.com/about",
+    canonical: "https://www.raflainsurance.com/about",
   });
 
   return (
     <main id="main-content" className="atlas-page about-file">
-      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://raflainsurance.com/" }, { name: "About", url: "https://raflainsurance.com/about" }]} />
+      <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "About", url: "https://www.raflainsurance.com/about" }]} />
       <DossierHeader index="A1" eyebrow="About Rafla Insurance" title="A neighborhood office with a direct phone line." lede="Talk through available carrier programs in English, Spanish, or Arabic with people you can call again after the policy begins." image={images.about.conversation} imageAlt="An insurance broker reviewing a blank policy folder with a Los Angeles couple">
         <AtlasButton tone="navy" onClick={openQuoteModal}>Open preparation guide</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer"><MapPin size={15} /> Visit the office</a>
@@ -35,7 +35,7 @@ export default function About() {
         <div className="atlas-container">
           <div className="agency-principles__heading motion-reveal"><AtlasEyebrow light>Working principles</AtlasEyebrow><h2>The parts of insurance we make clearer.</h2></div>
           <div className="mobile-swipe-hint"><span />Swipe through our working principles</div>
-          <div className="agency-principles__grid" role="region" aria-label="Agency working principles" aria-description="On narrow screens, scroll horizontally or use the Left and Right Arrow keys to browse the principles." tabIndex={0}>
+          <div className="agency-principles__grid" role="region" aria-label="Agency working principles">
             {[
               { title: "Compare the parts", text: "Look at limits, deductibles, exclusions, endorsements, and price together.", detail: "Limits · deductibles · exclusions", icon: Scale },
               { title: "Talk it through", text: "Discuss the details in English, Spanish, or Arabic when that makes the policy easier to understand.", detail: "English · Spanish · Arabic", icon: Languages },

@@ -39,7 +39,7 @@ const NO_LOCAL_BUSINESS = new Set([
 // City pages and money pages are allowed. Homepage uses LocalBusinessSchema too.
 // This list is the deny-list for wrong pages; everything else is allowed.
 
-const HOMEPAGE = "https://raflainsurance.com/";
+const HOMEPAGE = "https://www.raflainsurance.com/";
 
 // Expected city slugs — must match sitemap AND homepage ServiceAreas.
 const EXPECTED_CITIES = [
@@ -170,19 +170,10 @@ if (!cityMismatch) ok(`All ${EXPECTED_CITIES.length} cities in sitemap and homep
 console.log("\n5. vercel.json redirect rules (loop check + trailingSlash):");
 const vercelJson = JSON.parse(readFileSync(join(APP_DIR, "vercel.json"), "utf-8"));
 
-// This app prerenders routes as /route/index.html. Vercel's global
-// trailingSlash:false can redirect /route/ -> /route while also making /route
-// miss the prerendered directory file. Use explicit redirects for sitemap routes.
-if (vercelJson.trailingSlash === false) {
-  fail('vercel.json must not set "trailingSlash": false because this prerendered directory build returns 404 for clean canonical paths on Vercel.');
+if (vercelJson.trailingSlash === false && vercelJson.cleanUrls === true) {
+  ok("Flat prerendered HTML uses clean canonical paths without trailing slashes");
 } else {
-  ok('No global "trailingSlash": false setting is present');
-}
-
-if (vercelJson.cleanUrls === true) {
-  fail('vercel.json must not set "cleanUrls": true for this prerendered directory build.');
-} else {
-  ok('No global "cleanUrls": true setting is present');
+  fail("Flat prerendered HTML requires cleanUrls:true and trailingSlash:false");
 }
 
 if (vercelJson.routes) {
@@ -202,36 +193,17 @@ if (!uppercaseSitemapRedirect) {
   ok('Uppercase sitemap URL redirects to the canonical lowercase sitemap');
 }
 
-const expectedRedirectPaths = [...sitemapContent.matchAll(/<loc>https:\/\/raflainsurance\.com(\/[^<]*)<\/loc>/g)]
-  .map(match => match[1])
-  .filter(path => path !== "/");
 
-let missingSlashRedirect = false;
-for (const path of expectedRedirectPaths) {
-  const hasRedirect = vercelJson.redirects?.some(rule =>
-    rule.source === `${path}/` &&
-    rule.destination === path &&
-    rule.permanent === true
-  );
-  if (!hasRedirect) {
-    fail(`vercel.json missing canonical slash redirect: "${path}/" -> "${path}"`);
-    missingSlashRedirect = true;
-  }
+if (vercelJson.rewrites?.some(rule => rule.destination === "/index.html")) {
+  fail("App-shell rewrites bypass the unique prerendered HTML for each page");
+} else {
+  ok("Public routes serve their own prerendered HTML");
 }
-if (!missingSlashRedirect) ok(`All ${expectedRedirectPaths.length} sitemap routes redirect trailing-slash variants to clean canonicals`);
-
-let missingProductionRewrite = false;
-for (const path of expectedRedirectPaths) {
-  const hasRewrite = vercelJson.rewrites?.some(rule =>
-    rule.source === path &&
-    rule.destination === "/index.html"
-  );
-  if (!hasRewrite) {
-    fail(`vercel.json missing Vercel app-shell rewrite for public route: "${path}"`);
-    missingProductionRewrite = true;
-  }
+if (vercelJson.redirects?.some(rule => rule.has?.some(condition => condition.type === "host" && condition.value === "raflainsurance.com") && rule.destination === "https://www.raflainsurance.com/:path*")) {
+  ok("Non-www host permanently redirects to the canonical www host");
+} else {
+  fail("Missing canonical www host redirect");
 }
-if (!missingProductionRewrite) ok(`All ${expectedRedirectPaths.length} sitemap routes have exact Vercel app-shell rewrites`);
 
 const emailProtectionRewrite = vercelJson.rewrites?.some(rule =>
   rule.source === "/cdn-cgi/l/email-protection" &&
@@ -354,7 +326,7 @@ for (const f of srcFiles) {
   const content = readFileSync(f, "utf-8");
   const rel = relative(APP_DIR, f);
   // Find canonical URLs with trailing slashes.
-  const canonicalMatches = [...content.matchAll(/canonical[^"']*["']https:\/\/raflainsurance\.com(\/[^"']*\/)["']/g)];
+  const canonicalMatches = [...content.matchAll(/canonical[^"']*["']https:\/\/www\.raflainsurance\.com(\/[^"']*\/)["']/g)];
   for (const m of canonicalMatches) {
     const path = m[1];
     if (path !== "/") {

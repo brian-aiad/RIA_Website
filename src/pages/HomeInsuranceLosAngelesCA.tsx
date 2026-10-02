@@ -3,11 +3,11 @@ import CoverageBriefPage, { type CoverageBriefConfig } from "../components/Cover
 const config: CoverageBriefConfig = {
   index: "02",
   eyebrow: "Home & renters insurance",
-  title: "Protect the place. Understand the boundaries.",
+  title: "Home and renters insurance in Los Angeles.",
   lede: "Homeowners, renters, condo, and landlord coverage reviewed through the details that actually shape the policy.",
   metaTitle: "Home & Renters Insurance Los Angeles CA | Rafla Insurance",
   metaDescription: "Review homeowners, renters, condo and landlord insurance with a Mar Vista independent broker serving Los Angeles and the Westside.",
-  canonical: "https://raflainsurance.com/home-insurance-los-angeles-ca",
+  canonical: "https://www.raflainsurance.com/home-insurance-los-angeles-ca",
   image: "/images/illustrated/home-property-v7.webp",
   imageAlt: "A local broker reviewing a Westside Los Angeles home and renovation details with homeowners",
   signals: [

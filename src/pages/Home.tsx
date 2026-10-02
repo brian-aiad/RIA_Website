@@ -18,7 +18,6 @@ import { AtlasButton, AtlasImage, QuoteBand, SectionFolio } from "../components/
 import BrokeragePath from "../components/BrokeragePath";
 import BrokerServiceDesk from "../components/BrokerServiceDesk";
 import CoverageDesk from "../components/CoverageDesk";
-import CoverageInMotion from "../components/CoverageInMotion";
 import CoverageLinework from "../components/CoverageLinework";
 import WestsideMap from "../components/WestsideMap";
 import LocalBusinessSchema from "../components/seo/LocalBusinessSchema";
@@ -47,19 +46,19 @@ export default function Home() {
   usePageMeta({
     title: "Rafla Insurance Agency | Independent Broker in Mar Vista, Los Angeles",
     description: "Independent insurance broker on Venice Boulevard in Mar Vista for auto, home, renters, commercial, workers’ compensation, bonds, SR-22 and specialty coverage.",
-    canonical: "https://raflainsurance.com/",
+    canonical: "https://www.raflainsurance.com/",
   });
 
   return (
     <main id="main-content" className="atlas-page ria-home">
-      <LocalBusinessSchema url="https://raflainsurance.com/" areaServed={["Mar Vista", "Los Angeles Westside", "Los Angeles, CA"]} />
+      <LocalBusinessSchema url="https://www.raflainsurance.com/" areaServed={["Mar Vista", "Los Angeles Westside", "Los Angeles, CA"]} />
       <FAQSchema questions={homeFaqs.map((faq) => ({ q: faq.question, a: faq.answer }))} />
 
       <section className="ria-hero">
         <div className="atlas-container ria-hero__grid">
           <div className="ria-hero__copy hero-copy-enter">
             <p className="ria-kicker">Independent insurance agency · Mar Vista · Since 2003</p>
-            <h1>Coverage for Los Angeles, <span>explained by a local broker.</span></h1>
+            <h1>Insurance for Los Angeles, <span>explained by a local broker.</span></h1>
             <p className="ria-hero__lede">Rafla is an independent agency—not an insurance company. We review available programs for auto, home, commercial, workers’ compensation, bonds, and specialty coverage from our Venice Boulevard office.</p>
             <div className="ria-hero__actions">
               <AtlasButton tone="navy" onClick={openQuoteModal}>Prepare for a quote</AtlasButton>
@@ -100,22 +99,20 @@ export default function Home() {
         </div>
       </nav>
 
-      <BrokeragePath />
-
-      <CoverageInMotion />
-
       <section className="ria-coverage section-folio-host" id="coverage-options">
-        <SectionFolio>Coverage files</SectionFolio>
+        <SectionFolio>Coverage options</SectionFolio>
         <div className="atlas-container">
           <header className="ria-section-heading motion-reveal">
-            <p className="ria-kicker">Coverage index</p>
-            <h2>Start with what changed.</h2>
-            <p>A new car. A renewal increase. A first employee. A lender deadline. Choose the closest file and we’ll sort through the details with you.</p>
+            <p className="ria-kicker">Personal and business insurance</p>
+            <h2>Find the coverage you need.</h2>
+            <p>A new car. A renewal increase. A first employee. A lender deadline. Choose a coverage type and we’ll talk through the details with you.</p>
           </header>
 
           <CoverageDesk />
         </div>
       </section>
+
+      <BrokeragePath />
 
       <BrokerServiceDesk />
 
@@ -156,7 +153,7 @@ export default function Home() {
           </div>
           <div className="ria-local__portfolio motion-reveal">
             <figure className="ria-local__office-photo">
-              <AtlasImage src={images.hero.storefront} alt="Illustration of Rafla Insurance Agency's neighborhood office on Venice Boulevard" width="1536" height="1024" loading="lazy" sizes="(max-width: 900px) 82vw, 30vw" />
+              <AtlasImage src="/images/client/rafla-office-front-720.webp" alt="Rafla Insurance Agency’s building at 12240 Venice Boulevard" width="720" height="1043" loading="lazy" sizes="(max-width: 900px) 82vw, 30vw" />
               <figcaption><MapPin size={16} /> Venice Boulevard / Mar Vista</figcaption>
             </figure>
             <div className="ria-local__facts">

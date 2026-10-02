@@ -66,8 +66,14 @@ const suites = [
   { name: "reduced", engine: chromium, viewports: [{ name: "modern-phone", width: 390, height: 844 }], reducedMotion: "reduce" },
 ];
 
+// Optional shards keep the same complete matrix while allowing independent
+// browser processes to run in parallel on larger verification passes.
+const shard = Number(process.env.QA_SHARD ?? 0);
+const shardCount = Number(process.env.QA_SHARDS ?? 1);
+let matrixIndex = 0;
 for (const suite of suites) {
   for (const viewport of suite.viewports) {
+    if (matrixIndex++ % shardCount !== shard) continue;
     // A fresh browser per viewport avoids a WebKit process-reuse deadlock that
     // can otherwise occur after several context teardown cycles.
     const browser = await deadline(
@@ -82,7 +88,7 @@ for (const suite of suites) {
 
     for (const route of routes) {
       let page;
-      const previewPath = route === "/" ? route : `${route}/`;
+      const previewPath = route;
       const consoleErrors = [];
 
     try {
@@ -172,9 +178,9 @@ for (const suite of suites) {
 
       const problems = [];
       if (result.h1Count !== 1) problems.push(`${result.h1Count} H1 elements`);
-      if (route === "/" && !result.h1Text.includes("Coverage for Los Angeles")) problems.push(`unexpected home H1: ${result.h1Text}`);
+      if (route === "/" && !result.h1Text.includes("Insurance for Los Angeles")) problems.push(`unexpected home H1: ${result.h1Text}`);
       if (route === "/this-page-does-not-exist" && !result.h1Text.includes("couldn’t find")) problems.push(`unexpected 404 H1: ${result.h1Text}`);
-      if (route !== "/" && result.h1Text.includes("Coverage for Los Angeles")) problems.push("homepage fallback rendered for a deep route");
+      if (route !== "/" && result.h1Text.includes("Insurance for Los Angeles")) problems.push("homepage fallback rendered for a deep route");
       if (result.horizontalOverflow > 1) problems.push(`${result.horizontalOverflow}px horizontal overflow`);
       if (result.brokenImages.length) problems.push(`broken images: ${result.brokenImages.join(", ")}`);
       if (result.hiddenContent.length) problems.push(`hidden content: ${result.hiddenContent.join(", ")}`);

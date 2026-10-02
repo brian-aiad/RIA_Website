@@ -1,0 +1,342 @@
+/* Agency-wide design refinements. One quiet surface, clear type, useful motion. */
+:root {
+  --agency-paper: #f2f5f7;
+  --agency-paper-2: #e6ecf1;
+  --agency-white: #ffffff;
+  --agency-muted: #526176;
+  --agency-rule: #dce3ea;
+  --agency-pattern-light: none;
+  --agency-pattern-dark: none;
+  --font-display: "Source Sans 3 Variable", "Helvetica Neue", Arial, sans-serif;
+}
+
+.atlas-container { width: min(100% - 5rem, 1200px); }
+.atlas-page { background: var(--agency-white); }
+.atlas-nav { min-height: 5.25rem; gap: 1.5rem; }
+.atlas-nav__links a { font-size: .875rem; padding-block: 2rem; }
+.atlas-nav__quote, .atlas-button { border-radius: 5px; border-bottom-width: 1px; font-size: .875rem; }
+.atlas-nav__quote { min-height: 2.9rem; }
+.atlas-button { min-height: 3.1rem; padding-inline: 1.3rem; }
+.ria-utility .atlas-container { font-size: .75rem; }
+.ria-kicker, .atlas-eyebrow { font-size: .75rem; letter-spacing: .1em; }
+
+/* Gold is reserved for actions and small accents; sections don't need frames. */
+.section-folio, .route-rule, .ria-hero__address { display: none; }
+.atlas-page > section, .dossier-hero, .brief-closing-image { box-shadow: none; background-image: none; }
+.ria-hero::before, .dossier-hero::before, .dossier-hero::after,
+.ria-hero__office::before, .ria-hero__office::after,
+.dossier-hero__visual::before, .dossier-hero__visual::after,
+.ria-story::before, .ria-story::after { display: none; }
+.ria-hero { background: #fff; }
+.ria-hero__grid { min-height: 0; grid-template-columns: 1.08fr 1fr; gap: 3.5rem; padding-block: 3.5rem; align-items: center; }
+.ria-hero__copy { padding: 0; }
+.ria-hero h1 { margin-top: 1.2rem; font-size: clamp(2.9rem,4.5vw,4.5rem); line-height: 1.04; font-weight: 650; letter-spacing: -.045em; }
+.ria-hero h1 span { margin-top: .2rem; font-family: "Newsreader Variable", Georgia, serif; font-weight: 450; letter-spacing: -.035em; }
+.ria-hero__lede { margin-top: 1.5rem; font-size: 1.1rem; line-height: 1.65; }
+.ria-hero__actions { gap: .6rem 1.1rem; margin-top: 1.65rem; }
+.ria-hero__actions > a:not(.atlas-button) { font-size: .85rem; border: 0; }
+.ria-hero__details { margin-top: 2rem; border-bottom: 0; }
+.ria-hero__details dt { color: var(--agency-muted); font-size: .68rem; }
+.ria-hero__details dd { font-size: .85rem; }
+.ria-hero__office { min-height: 0; height: 34rem; border: 0; border-radius: 8px; }
+.ria-hero__office > img { min-height: 0; height: 100%; object-position: 55% center; }
+.ria-hero__office figcaption { left: 0; grid-template-columns: 1fr; gap: .35rem; padding: 1.25rem 1.5rem; }
+.ria-hero__office figcaption strong { font-size: 1rem; }
+.ria-hero__office figcaption small { display: none; }
+.ria-hero__office-proof { top: 1rem; left: 1rem; width: 16rem; border: 0; border-radius: 4px; box-shadow: 0 3px 16px #0b214618; }
+.ria-service-strip a { min-height: 5.5rem; padding-inline: 1.15rem; }
+.ria-service-strip a small { font-size: .72rem; color: #bbc8dc; }
+
+/* Shared interior headings have the same scale and generous reading measure. */
+.dossier-hero { padding-block: 3.5rem; background: var(--agency-paper); }
+.dossier-hero__grid { grid-template-columns: 1.05fr 1fr; min-height: 0; gap: 4rem; align-items: center; }
+.dossier-hero__copy { padding: 0; }
+.dossier-hero__meta > span { display: none; }
+.dossier-hero h1 { font-size: clamp(2.5rem,3.8vw,3.75rem); line-height: 1.08; letter-spacing: -.035em; font-weight: 650; }
+.dossier-hero__lede { font-size: 1.08rem; line-height: 1.65; }
+.dossier-hero__visual { height: 25rem; min-height: 0; margin: 0; border: 0; border-radius: 7px; }
+.dossier-hero__visual img { min-height: 0; height: 100%; }
+.dossier-hero__visual figcaption { left: 0; right: 0; bottom: 0; padding: 1rem 1.25rem; font-size: .7rem; }
+.coverage-brief__call { font-size: .9rem; }
+
+.ria-section-heading h2, .ria-local__copy h2, .ria-faq header h2,
+.services-ledger__intro h2, .services-briefs__copy h2, .scope-note h2,
+.agency-story__statement h2, .agency-team__records h2, .agency-principles h2,
+.office-record h2, .city-directory h2, .contact-switchboard h2, .contact-desk h2,
+.contact-team h2, .city-orientation__title h2, .city-coverage h2, .nearby-files h2,
+.brokerage-path h2, .broker-cases h2, .ria-reviews h2, .contact-next h2,
+.brief-chapter h2, .quote-band h2 {
+  font-size: clamp(2rem,3vw,2.8rem); line-height: 1.13; font-weight: 620; letter-spacing: -.03em;
+}
+.ria-section-heading { max-width: none; margin-bottom: 2.5rem; row-gap: 1.25rem; }
+.ria-section-heading > p:last-child { font-size: 1.05rem; line-height: 1.65; }
+.ria-coverage, .ria-editorial, .ria-local, .ria-reviews, .ria-faq,
+.services-ledger, .services-briefs, .scope-note, .agency-story,
+.agency-team, .agency-principles, .office-record, .city-directory,
+.contact-switchboard, .contact-team, .answer-library, .city-orientation,
+.city-coverage, .nearby-files, .brokerage-path, .broker-cases { padding-block: clamp(3.5rem,6vw,5.5rem); }
+.ria-story { border: 1px solid var(--agency-rule); border-radius: 7px; box-shadow: none; }
+.ria-story__drawing, .brief-closing-image__drawing { display: none; }
+.ria-story > div { background: #fff; }
+.ria-story h3 { font-size: 1.7rem; line-height: 1.2; }
+.ria-local__backdrop, .ria-local__veil { display: none; }
+.ria-local { background: var(--agency-navy); }
+.ria-local__office-photo, .agency-team__visual, .office-record__photo { border: 0; border-radius: 7px; overflow: hidden; }
+.ria-reviews__ledger blockquote { background: #fff; }
+.ria-reviews__ledger blockquote > p { font-family: "Newsreader Variable", Georgia, serif; font-size: 1.4rem; line-height: 1.45; }
+.ria-reviews__note { font-size: .75rem; line-height: 1.6; }
+
+/* Directory cards and factual content use simple, legible records. */
+.agency-story__seal { transform: none; box-shadow: none; border: 1px solid var(--agency-rule); border-radius: 6px; }
+.city-record { min-height: 8rem; grid-template-columns: 1fr auto; padding: 1.6rem; }
+.city-record > span, .contact-switchboard__grid > a > span,
+.contact-team article > span, .agency-team__records article > span,
+.services-briefs__list a > span, .city-coverage__grid a > span { display: none; }
+.agency-team__records article { grid-template-columns: 1fr auto; }
+.city-record p { font-size: .95rem; line-height: 1.5; }
+.city-record small { font-size: .8rem; }
+.services-ledger__index a { grid-template-columns: 1fr; font-size: .9rem; }
+.services-ledger__index small { display: none; }
+.services-ledger__groups { gap: 1.5rem; border: 0; }
+.service-ledger { border: 1px solid var(--agency-rule); border-radius: 7px; overflow: hidden; box-shadow: none; }
+.service-ledger__title h3 { font-family: var(--font-body); font-size: 1.8rem; }
+.service-ledger li { font-size: .9rem; }
+.contact-switchboard__grid { gap: 1rem; border: 0; }
+.contact-switchboard__grid > a { border: 1px solid var(--agency-rule); border-radius: 6px; min-height: 14rem; }
+.contact-switchboard__grid strong { font-size: 1.2rem; overflow-wrap: anywhere; }
+.contact-switchboard__grid p { font-size: .95rem; line-height: 1.55; }
+.contact-team article { box-shadow: none; border-radius: 6px; }
+
+/* Supporting containers share the same restrained surface treatment. */
+.services-ledger__groups, .contact-switchboard__grid,
+.answer-library__grid > div:last-child, .broker-cases__shell,
+.brokerage-path__roles, .ria-story:nth-child(2), .ria-reviews__score {
+  box-shadow: none;
+}
+.services-ledger__groups, .contact-switchboard__grid { margin-right: 0; }
+.answer-library__grid > div:last-child { padding: 0; border: 0; background: transparent; }
+.contact-switchboard__grid > a:nth-child(n) { background: white; }
+.contact-switchboard__grid > a:hover { background: var(--agency-navy); }
+.broker-cases__shell { border-radius: 7px; overflow: hidden; }
+.ria-reviews { background: var(--agency-paper); }
+.ria-reviews__score { border-radius: 6px; }
+.ria-reviews__ledger blockquote { border-color: var(--agency-rule); }
+.brief-anatomy__list article { border-radius: 5px; }
+.agency-principles article, .city-coverage__grid a { border: 1px solid var(--agency-rule); border-radius: 5px; }
+.agency-principles article { min-height: 14rem; }
+.city-coverage__grid a { min-height: 15rem; }
+
+.mobile-swipe-hint--reviews, .agency-team__records article p, .brief-related > span { color: var(--agency-muted); }
+.agency-principles__detail { color: #66501a; font-size: .7rem; }
+.agency-team__records article p, .agency-team__records article a { font-size: .9rem; }
+.brief-related > span { font-size: .75rem; }
+
+.services-briefs__list a { grid-template-columns: minmax(9rem, .8fr) minmax(0, 1.2fr) 1.25rem; gap: 1.25rem; }
+.services-briefs__list p { font-size: .95rem; line-height: 1.5; }
+.agency-principles article h3 { margin-top: 1.25rem; }
+.agency-principles__detail { margin-top: auto; }
+.agency-principles article p { margin-bottom: 1.25rem; }
+.contact-next__heading h2 { max-width: 17ch; }
+.contact-next__record { box-shadow: none; border-radius: 6px; }
+.atlas-footer__grid section > a, .atlas-footer__cities a,
+.atlas-footer__office p { font-size: .875rem; line-height: 1.5; }
+.atlas-footer__label { font-size: .7rem; }
+
+.scope-note .paper-note { border-radius: 6px; box-shadow: none; }
+.scope-note .paper-note > span { margin-bottom: 1.25rem; line-height: 1.4; }
+.not-found-atlas__number { font-size: clamp(4.5rem,8vw,7rem); line-height: 1.35; margin-top: 1.5rem; }
+.not-found-atlas h1 { margin-top: 1.5rem; }
+
+/* Reading pages: readable copy and an understated contents rail. */
+.fact-rail { border: 0; border-bottom: 1px solid var(--agency-rule); box-shadow: none; }
+.fact-rail__item { min-height: 6rem; }
+.fact-rail__item:nth-child(even) { background: transparent; }
+.fact-rail__item span { color: var(--agency-muted); font-size: .7rem; }
+.fact-rail__item strong { font-size: .95rem; }
+.brief-reading { background: white; }
+.brief-reading__grid { grid-template-columns: 15rem minmax(0,1fr); gap: 4rem; }
+.brief-reading__content { padding: 0; border: 0; box-shadow: none; max-width: 48rem; }
+.brief-index { border: 0; border-radius: 6px; box-shadow: none; padding: 1.3rem; }
+.brief-index > a { font-size: .85rem; }
+.brief-chapter > p, .brief-anatomy__list p { font-size: 1.05rem; line-height: 1.75; }
+.brief-chapter { padding-bottom: 3rem; }
+.brief-closing-image__inner { height: 23rem; border: 0; border-radius: 7px; }
+.answer-drawer summary { grid-template-columns: 1fr 1.2rem; gap: 1rem; min-height: 5rem; padding-block: 1.25rem; font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
+.answer-drawer summary > span { display: none; }
+.answer-drawer p { margin-left: 0; padding: 0 2.5rem 1.5rem 0; font-size: 1rem; line-height: 1.7; }
+.answer-group__title > span { display: none; }
+.answer-group__title { grid-template-columns: 1fr; }
+.answer-group h2 { font-size: 1.65rem; }
+.answer-library__index { border: 1px solid var(--agency-rule); border-radius: 6px; box-shadow: none; }
+.answer-library__index nav a { font-size: .9rem; }
+.policy-file__hero { padding-block: 4.5rem; }
+.policy-file__hero h1 { font-size: clamp(2.5rem,4.5vw,4rem); line-height: 1.1; max-width: 50rem; }
+.policy-file__code { display: none; }
+.policy-file__grid { gap: 4rem; }
+.policy-file__grid article > section { padding: 0 0 3rem; border: 0; }
+.policy-file__grid article > section > span { display: none; }
+.policy-file__grid h2 { font-size: 1.75rem; line-height: 1.2; }
+.policy-file__grid article p, .policy-file__grid article li { color: var(--agency-muted); font-size: 1.05rem; }
+.policy-file__grid > aside a { font-size: .85rem; }
+.quote-band__art, .quote-band__mark { display: none; }
+.quote-band__grid { grid-template-columns: 1.2fr 1fr auto; gap: 2.5rem; }
+.quote-band { padding-block: 3.75rem; }
+.quote-band__grid > p { font-size: 1rem; line-height: 1.65; }
+.atlas-footer { border-top-width: 1px; }
+.not-found-atlas h1 { font-size: clamp(2.5rem,4vw,4rem); line-height: 1.1; }
+.not-found-atlas figure { border-radius: 7px; overflow: hidden; box-shadow: none; }
+
+/* The quote guide follows the same clear hierarchy as the reading pages. */
+.quote-dialog { border-radius: 8px; box-shadow: 0 24px 80px #07183240; }
+.quote-dialog__file { background: white; }
+.quote-dialog__file h3 { font-size: clamp(1.8rem,3vw,2.4rem); line-height: 1.15; max-width: 28rem; }
+.quote-dialog__file > p:not(.quote-dialog__privacy), .quote-dialog__intro p { font-size: .9rem; }
+.quote-dialog__file li { font-size: .875rem; line-height: 1.5; }
+.quote-dialog__action { border-radius: 4px; }
+.quote-dialog__action strong { font-size: .8rem; }
+.quote-dialog__action small, .quote-dialog__privacy { font-size: .7rem; }
+.quote-dialog__action--primary small { color: var(--agency-navy); }
+
+@media (hover: hover) and (pointer: fine) {
+  .atlas-button, .atlas-nav__quote { transition: background-color 180ms ease, transform 180ms ease; }
+  .atlas-button:hover, .atlas-nav__quote:hover { transform: translateY(-2px); }
+  .answer-drawer summary { transition: color 160ms ease; }
+  .answer-drawer summary:hover { color: var(--agency-blue); }
+}
+@media (max-width: 1100px) {
+  .atlas-container { width: min(100% - 3rem, 1200px); }
+  .ria-hero__grid, .dossier-hero__grid { gap: 2rem; }
+  .ria-hero__office { height: 32rem; }
+  .quote-band__grid { grid-template-columns: 1fr 1fr; }
+  .quote-band__actions { grid-column: 1/-1; flex-direction: row; }
+}
+@media (max-width: 900px) {
+  .ria-hero__grid, .dossier-hero__grid { grid-template-columns: 1fr; }
+  .ria-hero__copy, .dossier-hero__copy { max-width: 42rem; }
+  .ria-hero__office { height: 28rem; }
+  .ria-hero__office > img { object-position: center 40%; }
+  .dossier-hero__visual { height: 24rem; }
+  .brief-reading__grid { grid-template-columns: 1fr; gap: 2rem; }
+  .policy-file__grid { gap: 2.5rem; }
+}
+@media (max-width: 620px) {
+  .atlas-container { width: calc(100% - 2.5rem); }
+  .ria-hero__grid { padding-block: 2.5rem; gap: 2rem; }
+  .ria-hero h1 { font-size: clamp(2.65rem,10vw,3.6rem); }
+  .ria-hero__lede { font-size: 1rem; }
+  .ria-hero__details { margin-top: 1.5rem; }
+  .ria-hero__details dd { font-size: .8rem; }
+  .ria-hero__office, .ria-hero__office > img { min-height: 0; height: 23rem; }
+  .ria-hero__office-proof { width: 15rem; }
+  .ria-hero__office-proof > img { min-height: 0; height: 3.7rem; }
+  .ria-service-strip .atlas-container { width: max-content; }
+  .dossier-hero { padding-block: 2.5rem; }
+  .dossier-hero h1 { font-size: clamp(2.3rem,9vw,3rem); }
+  .dossier-hero__lede { font-size: 1rem; }
+  .dossier-hero__visual, .dossier-hero__visual img { min-height: 0; height: 19rem; }
+  .ria-section-heading h2, .brief-chapter h2 { font-size: 2rem; }
+  .ria-coverage .ria-section-heading .ria-kicker { margin-bottom: 1rem; }
+  .city-record { padding: 1.25rem 0; }
+  .agency-team__records article { grid-template-columns: 1fr; gap: .75rem; }
+  .agency-team__records article a { grid-column: 1; }
+  .agency-principles__detail { color: #e0c776; }
+  .services-briefs__list a { grid-template-columns: 1fr auto; }
+  .services-briefs__list a p { grid-column: 1/-1; }
+  .contact-switchboard .mobile-swipe-hint { display: none; }
+  .contact-switchboard__grid { display: grid; grid-template-columns: 1fr; padding: 0; overflow: visible; }
+  .contact-switchboard__grid > a { min-height: 0; padding: 1.5rem; }
+  .contact-switchboard__grid strong { font-size: 1.15rem; }
+  .fact-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fact-rail__item { min-width: 0; padding: 1rem .75rem; border-bottom: 1px solid var(--agency-rule); }
+  .fact-rail__item strong { overflow-wrap: anywhere; }
+  .answer-drawer summary { font-size: 1rem; }
+  .answer-drawer p { padding-right: 0; font-size: 1rem; }
+  .policy-file__hero { padding-block: 3rem; }
+  .policy-file__grid article > section { padding-left: 0; }
+  .quote-band__grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .quote-band__actions { grid-column: auto; flex-direction: column; align-items: start; }
+  .mobile-quick-actions { border-radius: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-button, .atlas-nav__quote, .answer-drawer summary { transition: none; transform: none; }
+}
+
+/* Wayfinding stays visible without competing with the page title. */
+.page-breadcrumbs { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .6rem; margin-bottom: 1.35rem; font-size: .8rem; line-height: 1.5; color: var(--agency-muted); }
+.page-breadcrumbs a { text-decoration: underline; text-underline-offset: 3px; }
+.page-breadcrumbs a:hover { color: var(--agency-navy); }
+.page-breadcrumbs + .dossier-hero__meta { display: none; }
+.coverage-desk__number { display: none; }
+.coverage-desk__copy small { font-size: .75rem; }
+
+@media (max-width: 620px) {
+  .ria-utility { display: none; }
+  .atlas-nav-wrap { position: sticky; top: 0; z-index: 60; background: white; }
+  .atlas-nav { min-height: 4.5rem; }
+  [id] { scroll-margin-top: 5.5rem; }
+  .page-breadcrumbs { font-size: .8rem; margin-bottom: 1rem; }
+  .page-breadcrumbs a { min-height: 2rem; display: inline-flex; align-items: center; }
+  .ria-hero__grid { padding-top: 1.75rem; }
+  .ria-hero h1 { font-size: clamp(2.45rem,9.8vw,3.5rem); }
+  .ria-hero__office, .ria-hero__office > img { height: 17rem; }
+  .ria-hero__office-proof { display: none; }
+  .ria-hero__office figcaption { padding: .85rem 1rem; }
+  .dossier-hero { padding-block: 1.5rem 2rem; }
+  .dossier-hero__grid { gap: 1.5rem; }
+  .dossier-hero__visual, .dossier-hero__visual img { height: 14rem; }
+  .dossier-hero__visual figcaption { font-size: .65rem; padding: .65rem .85rem; }
+  .dossier-hero__visual--linework .coverage-linework { max-height: 11rem; }
+  .ria-hero__details dt, .ria-hero__details dd { font-size: .8rem; }
+  .services-briefs .mobile-swipe-hint, .agency-principles .mobile-swipe-hint,
+  .city-coverage .mobile-swipe-hint, .brief-anatomy__hint { display: none; }
+  .services-briefs__list, .agency-principles__grid,
+  .city-coverage__grid, .brief-anatomy__list { display: grid; grid-template-columns: minmax(0,1fr); gap: .85rem; overflow: visible; padding: 0; scroll-snap-type: none; margin-top: 1.5rem; }
+  .services-briefs__list > a { min-height: 0; border-top-width: 1px; padding: 1.25rem; }
+  .services-briefs__list p { display: block; font-size: 1rem; }
+  .services-briefs__list strong { font-size: 1.25rem; }
+  .agency-principles__grid > article { min-height: 0; padding: 1.5rem; }
+  .agency-principles__grid > article h3 { font-size: 1.35rem; }
+  .agency-principles__grid > article p { font-size: 1rem; line-height: 1.6; }
+  .agency-principles__detail { font-size: .8rem; }
+  .city-coverage__grid a { min-height: 0; padding: 1.25rem; gap: .7rem; }
+  .city-coverage__grid h3 { font-size: 1.4rem; }
+  .city-coverage__grid p { font-size: 1rem; line-height: 1.55; max-width: none; }
+  .brief-anatomy__list article { min-height: 0; padding: 1.25rem; gap: .5rem; }
+  .brief-anatomy__list article > div { margin-top: .25rem; }
+  .brief-anatomy__list article small { margin-top: .5rem; font-size: .8rem; }
+  .brief-anatomy__list article > span { font-size: .8rem; }
+  .brief-anatomy__list h3 { font-size: 1.25rem; }
+  .brief-anatomy__list p { font-size: 1rem; line-height: 1.6; }
+  .service-ledger { grid-template-columns: minmax(0,1fr); padding: 1.25rem; gap: 1rem; }
+  .service-ledger__number { display: none; }
+  .service-ledger__title { grid-column: 1; grid-row: 1; padding: 0; }
+  .service-ledger__title h3 { font-size: 1.8rem; }
+  .service-ledger__title > span { font-size: .75rem; }
+  .service-ledger__image { grid-column: 1; grid-row: 2; min-height: 0; height: 12rem; border: 0; border-radius: 4px; }
+  .service-ledger__image img { height: 100%; width: 100%; object-fit: cover; }
+  .service-ledger ul { grid-column: 1; font-size: 1rem; gap: .65rem; }
+  .service-ledger li { font-size: 1rem; }
+  .service-ledger > button { grid-column: 1; font-size: .9rem; min-height: 3rem; }
+  .coverage-desk__surface { display: flex; flex-direction: column; min-height: 0; }
+  .coverage-desk__drawing { min-height: 0; height: 14rem; padding: 1rem; }
+  .coverage-desk__surface figcaption { display: none; }
+  .coverage-desk__tabs { position: static; height: auto; width: 100%; grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: auto; }
+  .coverage-desk__tabs button { min-height: 3.25rem; padding: .6rem .75rem; border-bottom: 1px solid var(--agency-rule); }
+  .coverage-desk__tabs button:last-child { grid-column: 1/-1; }
+  .coverage-desk__tabs button strong { font-size: .95rem; }
+  .coverage-desk__tabs button span { display: none; }
+  .coverage-desk__drawer { min-height: 0; padding: 1.5rem; }
+  .coverage-desk__icon { margin-top: 0; }
+  .coverage-desk__copy p { font-size: 1rem; line-height: 1.65; }
+  .coverage-desk__drawer > a { font-size: .9rem; min-height: 2.75rem; }
+  .westside-map { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .5rem; min-height: 0; padding: 1rem; }
+  .westside-map > svg, .westside-map > small { display: none; }
+  .westside-map > a, .westside-map > a.is-office { position: static; transform: none; min-width: 0; min-height: 3rem; padding: .6rem; font-size: .9rem; border: 1px solid #ffffff30; border-radius: 3px; line-height: 1.25; }
+  .westside-map > a.is-office { border-color: var(--agency-gold); }
+  .westside-map > a span { max-width: none; }
+  .westside-map > a i { flex-shrink: 0; }
+  .policy-file__index { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .5rem; overflow: visible; }
+  .policy-file__index a { min-width: 0; min-height: 3rem; padding: .75rem; border: 1px solid var(--agency-rule) !important; font-size: .9rem; }
+  .city-record p { display: block; font-size: 1rem; }
+  .city-record h3 { font-size: 1.45rem; }
+}

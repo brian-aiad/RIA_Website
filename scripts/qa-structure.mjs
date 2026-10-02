@@ -132,7 +132,7 @@ for (const route of routes) {
     check(result.brokenHashes.length === 0, `${label}: missing hash targets: ${result.brokenHashes.join(", ")}`);
     check(result.forms === 0, `${label}: unexpected form count ${result.forms}`);
     check(result.description.length >= 70 && result.description.length <= 170, `${label}: meta description length ${result.description.length}`);
-    check(result.canonical.startsWith("https://raflainsurance.com/"), `${label}: invalid canonical ${result.canonical}`);
+    check(result.canonical.startsWith("https://www.raflainsurance.com/"), `${label}: invalid canonical ${result.canonical}`);
     check(result.ogTitle === result.title, `${label}: Open Graph title differs from document title`);
     check(result.twitterTitle === result.title, `${label}: Twitter title differs from document title`);
     check(result.ogDescription === result.description, `${label}: Open Graph description differs from meta description`);

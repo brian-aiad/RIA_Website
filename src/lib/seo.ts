@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { ServerMetaContext } from "./serverMeta";
 
-interface PageMeta {
+export interface PageMeta {
   title: string;
   description: string;
   canonical?: string;
@@ -12,6 +13,10 @@ interface PageMeta {
  * Cleans up on unmount by restoring defaults.
  */
 export function usePageMeta({ title, description, canonical, robots }: PageMeta) {
+  // Only the build-time renderer provides this collector. Client navigation
+  // continues to update the document head through the effect below.
+  const collect = useContext(ServerMetaContext);
+  collect?.({ title, description, canonical, robots });
   useEffect(() => {
     const previousTitle = document.title;
     const restorers: Array<() => void> = [];
