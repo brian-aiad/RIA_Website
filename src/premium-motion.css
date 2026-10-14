@@ -1,0 +1,54 @@
+/* Motion belongs to the document detail, not to the reader's scroll position. */
+[data-register-line], [data-register-mark], [data-document-tab] { will-change: auto; }
+[data-register-mark] { transform-box: fill-box; }
+
+:is(.atlas-button, .atlas-nav__quote, .mobile-nav__quote, .mobile-quick-actions__quote):is(:hover,:active) {
+  transform: none;
+}
+:is(.service-ledger__quote, .broker-cases__file > a, .footer-directory a, .city-orientation__office > a) > svg:last-child {
+  transition: transform 180ms cubic-bezier(.2,.78,.28,1);
+}
+@media (hover: hover) and (pointer: fine) {
+  :is(.service-ledger__quote, .broker-cases__file > a, .city-orientation__office > a):hover > svg:last-child {
+    transform: translateX(3px);
+  }
+  .footer-directory a:hover > svg:last-child { transform: translate(1px,-1px); }
+}
+:is(.service-ledger__quote, .broker-cases__file > a, .city-orientation__office > a):focus-visible > svg:last-child {
+  transform: translateX(3px);
+}
+:is(.atlas-button, .atlas-nav__quote, .mobile-nav__quote, .mobile-quick-actions__quote, .service-ledger__quote):active > svg:last-child {
+  transform: translate(1px,0);
+}
+
+/* Footer navigation arrives with an ink rule, while its links remain stationary. */
+.footer-column-enter { animation: none !important; }
+.footer-directory h2::after { content: ""; display: block; width: 1.75rem; height: 2px; margin-top: .65rem; background: var(--agency-gold); transform-origin: left; }
+@keyframes footer-ink-register {
+  from { transform: scaleX(.12); }
+  to { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .footer-column-enter h2::after { animation: footer-ink-register .55s cubic-bezier(.22,1,.36,1) both; }
+}
+@media (max-width: 959px), (pointer: coarse) {
+  .page-scroll-progress { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.service-ledger__quote, .broker-cases__file > a, .footer-directory a, .city-orientation__office > a) > svg:last-child {
+    transition: none;
+    transform: none !important;
+  }
+  [data-register-line], [data-register-mark], [data-document-tab], .footer-directory h2::after { animation: none !important; }
+}
+
+/* GSAP owns entrance transforms; CSS interpolation would keep a focused card moving. */
+.motion-managed :is(.service-ledger, .ria-story, .city-record, .atlas-card, .guide-card) {
+  transition-property: color, background-color, border-color, box-shadow;
+}
+
+/* Compact map labels still need a deliberate pointer and keyboard target. */
+@media (min-width: 901px) {
+  .westside-map > a { min-height: 2rem; padding: .3rem .4rem; font-size: .68rem; }
+}
+.westside-map > a:focus-visible { color: white; background: var(--agency-navy); z-index: 3; }

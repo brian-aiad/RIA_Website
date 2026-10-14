@@ -8,8 +8,8 @@ const config: CoverageBriefConfig = {
   metaTitle: "Commercial Auto Insurance Los Angeles | Rafla Insurance Agency",
   metaDescription: "Commercial auto insurance for Los Angeles contractors, service businesses, fleets and local firms from a Mar Vista independent broker.",
   canonical: "https://www.raflainsurance.com/commercial-auto-insurance-los-angeles",
-  image: "/images/illustrated/small-business-v6.webp",
-  imageAlt: "A Westside small-business crew loading tools into a work van outside their shop",
+  image: "/images/editorial/guide-commercial.webp",
+  imageAlt: "Two commercial vans with secured tool storage in a contractor yard",
   signals: [
     { label: "Useful scope", value: "Vehicles + drivers + operations" },
     { label: "Related lines", value: "GL · workers’ comp · bonds" },

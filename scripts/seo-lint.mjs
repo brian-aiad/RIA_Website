@@ -76,7 +76,7 @@ for (const f of srcFiles) {
   const content = readFileSync(f, "utf-8");
   const rel = relative(APP_DIR, f);
   // Match to="/something/" (not just to="/")
-  const matches = [...content.matchAll(/\bto=["'](\/.+\/)["']/g)];
+  const matches = [...content.matchAll(/\bto=["'](\/[^"'\s]+\/)["']/g)];
   for (const m of matches) {
     if (m[1] !== "/") {
       fail(`${rel}: trailing-slash link: to="${m[1]}"`);
@@ -241,16 +241,36 @@ const middlewarePath = join(APP_DIR, "middleware.js");
 if (!existsSync(middlewarePath)) {
   fail("middleware.js is required to strip query parameters before the React app renders.");
 } else {
-  const middlewareContent = readFileSync(middlewarePath, "utf-8");
-  if (
-    !middlewareContent.includes("if (url.search)") ||
-    !middlewareContent.includes('url.search = ""') ||
-    !middlewareContent.includes("Response.redirect")
-  ) {
-    fail("middleware.js must redirect query-string URLs after removing all parameters.");
-  } else {
-    ok("Middleware strips query parameters before the app renders");
+  const { fullSiteMiddleware } = await import("../middleware.js");
+  const cases = [
+    ["/", ""],
+    ["/?tracking=private", ""],
+    ["/services?coverage=auto", ""],
+    ["/contact?coverage=invalid", ""],
+    ["/contact?coverage=AUTO", ""],
+    ["/contact?email=private%40example.com", ""],
+    ...["auto", "home", "business", "specialty"].flatMap(value => [
+      [`/contact?coverage=${value}`, `?coverage=${value}`],
+      [`/contact?coverage=${value}&tracking=private`, `?coverage=${value}`],
+    ]),
+    ["/contact?coverage=auto&coverage=home", "?coverage=auto"],
+  ];
+  for (const [path, expectedSearch] of cases) {
+    const original = new URL(path, "https://www.raflainsurance.com");
+    const response = fullSiteMiddleware(new Request(original));
+    if (original.search === expectedSearch) {
+      if (response.headers.get("x-middleware-next") !== "1" || response.headers.has("location")) {
+        fail(`Middleware must preserve the clean URL without a redirect loop: ${path}`);
+      }
+    } else {
+      const expected = new URL(original);
+      expected.search = expectedSearch;
+      if (response.status !== 308 || response.headers.get("location") !== expected.href) {
+        fail(`Middleware must remove private/unsupported parameters while preserving only valid contact coverage: ${path}`);
+      }
+    }
   }
+  ok("Middleware behavior checked: coverage whitelist, private query removal, duplicate normalization, no redirect loops");
 }
 
 let loopFound = false;

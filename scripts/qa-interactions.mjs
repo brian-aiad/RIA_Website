@@ -44,21 +44,22 @@ check(await focusReached(mobile, ".atlas-nav__menu"), "Escape did not restore fo
 check(await mobile.locator("main").getAttribute("inert") === null, "Mobile-menu background remained inert after close");
 
 await mobile.locator(".atlas-nav__menu").click();
+await mobile.locator(".mobile-nav__main").getByRole("link", { name: "Contact", exact: true }).click();
+await mobile.waitForFunction(() => document.querySelector("#mobile-nav")?.getAttribute("aria-hidden") === "true");
+check(await mobile.locator("main").getAttribute("inert") === null, "Current-page menu link left the page inert");
+check(await focusReached(mobile, ".atlas-nav__menu"), "Current-page menu link did not close and restore focus");
+
+await mobile.locator(".atlas-nav__menu").click();
 await mobile.locator(".mobile-nav-backdrop").click({ position: { x: 5, y: 180 } });
 check(await mobile.locator("#mobile-nav").getAttribute("aria-hidden") === "true", "Mobile-menu backdrop did not close the menu");
 check(await focusReached(mobile, ".atlas-nav__menu"), "Backdrop close did not restore focus to the mobile-menu trigger");
 
 await mobile.locator(".atlas-nav__menu").click();
-await mobile.locator(".mobile-nav__contact button").scrollIntoViewIfNeeded();
-await mobile.locator(".mobile-nav__contact button").click();
-const menuQuoteDialog = mobile.locator(".quote-dialog");
-await menuQuoteDialog.waitFor({ state: "visible" });
-check(await mobile.locator("#mobile-nav").getAttribute("aria-hidden") === "true", "Opening quote preparation from the mobile menu left the menu open");
-check(await mobile.locator("#root").getAttribute("inert") === "", "Quote dialog did not make the application inert");
-check(await menuQuoteDialog.getByText(/does not submit or save a quote request/).isVisible(), "Quote dialog does not explain that it is preparation only");
-await mobile.keyboard.press("Escape");
-await menuQuoteDialog.waitFor({ state: "hidden" });
-check(await focusReached(mobile, ".atlas-nav__menu"), "Quote dialog opened from the menu did not restore focus to the menu trigger");
+await mobile.locator(".mobile-nav__quote").click();
+await mobile.waitForURL("**/contact#quote-request");
+check(await mobile.locator("#mobile-nav").getAttribute("aria-hidden") === "true", "Quote navigation left the mobile menu open");
+check(await focusReached(mobile, "#quote-request"), "Mobile menu quote link did not focus the form section");
+check(await mobile.locator("main").getAttribute("inert") === null, "Mobile quote navigation left the page inert");
 
 await mobile.locator(".contact-switchboard__grid").scrollIntoViewIfNeeded();
 await mobile.evaluate(() => scrollBy(0, 220));
@@ -74,61 +75,15 @@ const quickActionMetrics = await mobile.locator(".mobile-quick-actions").evaluat
 check(quickActionMetrics.visible, "Mobile call/quote actions did not appear after the introduction");
 check(quickActionMetrics.targets.every(({ width, height }) => width >= 44 && height >= 44), `Mobile quick-action targets are too small: ${JSON.stringify(quickActionMetrics.targets)}`);
 
-const quickQuoteBox = await mobile.locator(".mobile-quick-actions button").boundingBox();
+const quickQuoteBox = await mobile.locator(".mobile-quick-actions__quote").boundingBox();
 check(Boolean(quickQuoteBox), "Mobile quote action does not have a visible click target");
-const scrollBeforeQuote = await mobile.evaluate(() => scrollY);
-await mobile.locator(".mobile-quick-actions button").focus();
-if (quickQuoteBox) await mobile.mouse.click(quickQuoteBox.x + quickQuoteBox.width / 2, quickQuoteBox.y + quickQuoteBox.height / 2);
-const dialog = mobile.getByRole("dialog");
-await dialog.waitFor({ state: "visible" });
-const dialogReceivedFocus = await mobile.waitForFunction(
-  () => document.activeElement?.getAttribute("aria-label") === "Close",
-  undefined,
-  { timeout: 2_000 },
-).then(() => true).catch(() => false);
-check(dialogReceivedFocus, "Quote dialog did not receive initial focus");
-check(await mobile.evaluate(() => document.body.style.overflow) === "hidden", "Quote dialog did not lock background scroll");
-check(await mobile.locator("#root").getAttribute("inert") === "", "Quote dialog did not block background interaction");
-await mobile.keyboard.press("Shift+Tab");
-check(await dialog.evaluate((node) => node.contains(document.activeElement)), "Shift+Tab escaped the quote-dialog focus trap");
-await mobile.keyboard.press("Tab");
-check(await dialog.evaluate((node) => node.contains(document.activeElement)), "Tab escaped the quote-dialog focus trap");
-const businessQuoteTab = dialog.getByRole("tab", { name: "Business", exact: true });
-check(await dialog.getByRole("tab").count() === 4, "Quote dialog does not expose all four coverage files");
-check(await dialog.getByRole("tab", { name: "Auto", exact: true }).getAttribute("aria-selected") === "true", "Quote dialog did not open on the Auto file");
-const homeQuoteTab = dialog.getByRole("tab", { name: "Home", exact: true });
-await homeQuoteTab.click();
-check(await homeQuoteTab.getAttribute("aria-selected") === "true", "Quote dialog did not select the Home file");
-await businessQuoteTab.click();
-check(await businessQuoteTab.getAttribute("aria-selected") === "true", "Quote dialog did not select the business file");
-check(await dialog.getByText("Business name and a plain description of the work").isVisible(), "Business quote checklist did not update");
-await businessQuoteTab.press("ArrowRight");
-const specialtyQuoteTab = dialog.getByRole("tab", { name: "Specialty", exact: true });
-check(await specialtyQuoteTab.getAttribute("aria-selected") === "true", "Quote dialog arrow-key navigation failed");
-check(await mobile.evaluate(() => localStorage.length === 0 && sessionStorage.length === 0), "Quote preparation wrote information to browser storage");
-await mobile.keyboard.press("Escape");
-await dialog.waitFor({ state: "hidden" });
-check(await mobile.evaluate(() => document.body.style.overflow) === "", "Quote dialog did not restore background scroll");
-check(Math.abs((await mobile.evaluate(() => scrollY)) - scrollBeforeQuote) < 2, "Quote dialog did not restore the page scroll position");
-check(await mobile.locator("#root").getAttribute("inert") === null, "Application remained inert after closing the quote dialog");
-check(await focusReached(mobile, ".mobile-quick-actions button"), "Quote dialog did not restore focus to its invoking action");
-
-await mobile.locator(".mobile-quick-actions button").click();
-await dialog.waitFor({ state: "visible" });
-await dialog.getByRole("button", { name: "Close" }).click();
-await dialog.waitFor({ state: "hidden" });
-check(await focusReached(mobile, ".mobile-quick-actions button"), "Quote-dialog close button did not restore focus");
-
-await mobile.locator(".mobile-quick-actions button").click();
-await dialog.waitFor({ state: "visible" });
-await mobile.locator(".quote-dialog-backdrop").click({ position: { x: 2, y: 2 } });
-await dialog.waitFor({ state: "hidden" });
-check(await focusReached(mobile, ".mobile-quick-actions button"), "Quote-dialog backdrop did not close and restore focus");
-
-await mobile.locator(".contact-next").scrollIntoViewIfNeeded();
+await mobile.locator(".mobile-quick-actions__quote").click();
+check(await focusReached(mobile, "#quote-request"), "Repeated same-page quote navigation did not focus the form");
 await mobile.waitForTimeout(250);
-check(await mobile.locator(".mobile-quick-actions").getAttribute("aria-hidden") === "true", "Mobile quick actions did not yield to the final contact guide");
-check(await mobile.locator(".contact-next__tool-note").getByText(/does not submit or store a quote request/).isVisible(), "Contact guide does not explain the preparation-only workflow");
+check(await mobile.locator(".mobile-quick-actions").getAttribute("aria-hidden") === "true", "Mobile quick actions did not yield to the quote form");
+check(await mobile.evaluate(() => document.body.style.overflow !== "hidden" && !document.querySelector("main").inert), "Quote form navigation locked the page");
+check(await mobile.locator('#quote-request input[type="file"]').count() === 0, "Contact request unexpectedly accepts uploads");
+check(await mobile.evaluate(() => localStorage.length === 0 && sessionStorage.length === 0), "Quote navigation wrote to browser storage");
 
 const landscape = await webkitBrowser.newPage({ viewport: { width: 844, height: 390 } });
 landscape.setDefaultTimeout(10_000);
@@ -142,20 +97,15 @@ const landscapeMenuMetrics = await landscape.locator("#mobile-nav").evaluate((no
 check(Math.abs(landscapeMenuMetrics.height - landscapeMenuMetrics.viewport) < 2, `Landscape menu is not viewport-height: ${JSON.stringify(landscapeMenuMetrics)}`);
 check(landscapeMenuMetrics.overflowY === "auto", `Landscape menu is not independently scrollable: ${landscapeMenuMetrics.overflowY}`);
 await landscape.locator("#mobile-nav").evaluate((node) => node.scrollTo({ top: node.scrollHeight, behavior: "instant" }));
-check(await landscape.locator(".mobile-nav__contact button").isVisible(), "Landscape menu cannot reach the quote action");
+check(await landscape.locator(".mobile-nav__quote").isVisible(), "Landscape menu cannot reach the quote action");
 await landscape.keyboard.press("Escape");
 check(await focusReached(landscape, ".atlas-nav__menu"), "Landscape-menu Escape did not restore focus");
-await landscape.locator(".ria-hero__actions button").click();
-const landscapeDialog = landscape.locator(".quote-dialog");
-await landscapeDialog.waitFor({ state: "visible" });
-const landscapeDialogMetrics = await landscapeDialog.evaluate((node) => ({
-  height: node.getBoundingClientRect().height,
-  viewport: innerHeight,
-  scrollable: node.scrollHeight > node.clientHeight,
-}));
-check(landscapeDialogMetrics.height <= landscapeDialogMetrics.viewport, `Landscape quote dialog exceeds the viewport: ${JSON.stringify(landscapeDialogMetrics)}`);
-check(landscapeDialogMetrics.scrollable, "Landscape quote dialog does not provide internal scrolling");
-await landscape.keyboard.press("Escape");
+await landscape.locator(".ria-hero__actions .atlas-button").click();
+check(await focusReached(landscape, "#quote-request"), "Landscape quote navigation did not focus form");
+const landscapeFormMetrics = await landscape.locator("#quote-request").evaluate(node => ({ width: node.getBoundingClientRect().width, viewport: innerWidth, overflow: document.documentElement.scrollWidth - innerWidth }));
+check(landscapeFormMetrics.overflow <= 1, `Landscape quote form overflows: ${JSON.stringify(landscapeFormMetrics)}`);
+await landscape.locator('#quote-request button[type="submit"]').scrollIntoViewIfNeeded();
+check(await landscape.locator('#quote-request button[type="submit"]').isVisible(), "Landscape cannot reach the quote submit action");
 await landscape.close();
 await webkitBrowser.close();
 
@@ -174,7 +124,6 @@ check(await reduced.locator(".ria-reviews blockquote").count() === 4, "Expected 
 check(await reduced.locator(".ria-reviews__note").textContent().then((text) => text?.includes("Selected public review excerpts") && text.includes("Individual experiences vary")), "Review selection or outcome disclosure is missing");
 check(await reduced.locator(`a[href="https://cdicloud.insurance.ca.gov/cal"]`).isVisible(), "California license verification link is missing");
 check(await reduced.locator(".ria-service-strip").evaluate((node) => node.getBoundingClientRect().height < 100), "Mobile coverage shortcuts are still using a tall multi-row layout");
-check(await reduced.locator(".brokerage-path__rail").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile broker steps are not a keyboard-focusable compact rail");
 check(await reduced.locator(".ria-reviews__ledger").evaluate((node) => node.scrollWidth > node.clientWidth && node.tabIndex === 0), "Mobile reviews are not a keyboard-focusable compact rail");
 check(await reduced.evaluate(() => document.body.scrollHeight < 11_000), "Mobile homepage remains excessively long after content prioritization");
 
@@ -183,22 +132,16 @@ await claimTab.click();
 check(await claimTab.getAttribute("aria-selected") === "true", "Broker service desk did not select the claim file");
 const serviceDeskPanel = reduced.locator(".broker-cases").getByRole("tabpanel");
 check(await serviceDeskPanel.getByRole("heading", { level: 3 }).textContent() === "A local person can help you find the next step.", "Broker service desk claim content did not update");
-check(await serviceDeskPanel.locator('img[src*="claims-service-v8"]').isVisible(), "Corrected claims artwork did not load in the service desk");
+check(await serviceDeskPanel.locator('img[src*="desk-claim"]').isVisible(), "People-free claims paperwork image did not load in the service desk");
 await reduced.keyboard.press("ArrowRight");
 const certificateTab = reduced.getByRole("tab", { name: /Certificate or bond/ });
 check(await certificateTab.getAttribute("aria-selected") === "true", "Broker service desk arrow-key navigation failed");
 
-await reduced.locator(".ria-hero__actions button").click();
-const reducedDialog = reduced.getByRole("dialog");
-await reducedDialog.waitFor({ state: "visible" });
-const reducedDialogStyle = await reducedDialog.evaluate((node) => ({
-  opacity: getComputedStyle(node).opacity,
-  transform: getComputedStyle(node).transform,
-}));
-check(reducedDialogStyle.opacity === "1", "Reduced-motion quote dialog was not immediately visible");
-check(reducedDialogStyle.transform === "none", `Reduced-motion quote dialog retained a transform: ${reducedDialogStyle.transform}`);
-
-await reduced.keyboard.press("Escape");
+await reduced.locator(".ria-hero__actions .atlas-button").click();
+const reducedFormStyle = await reduced.locator("#quote-request").evaluate(node => ({ opacity: getComputedStyle(node).opacity, transform: getComputedStyle(node).transform }));
+check(reducedFormStyle.opacity === "1" && reducedFormStyle.transform === "none", "Reduced-motion quote form was not immediately readable");
+check(await focusReached(reduced, "#quote-request"), "Reduced-motion quote navigation lost focus");
+await reduced.goto(`${base}/`, { waitUntil: "networkidle" });
 await reduced.locator(".quote-band").scrollIntoViewIfNeeded();
 await reduced.waitForTimeout(250);
 check(await reduced.locator(".mobile-quick-actions").getAttribute("aria-hidden") === "true", "Mobile quick actions did not yield to the page quote band");
@@ -210,10 +153,10 @@ await reduced.goto(`${base}/about`, { waitUntil: "networkidle" });
 check(await reduced.locator(".agency-principles__grid").evaluate((node) => node.scrollWidth <= node.clientWidth + 1), "Mobile agency principles require sideways scrolling");
 
 await reduced.goto(`${base}/auto-insurance-los-angeles-ca`, { waitUntil: "networkidle" });
-check(await reduced.locator('img[src*="auto-review-v8"]').first().isVisible(), "Corrected auto artwork is not referenced on the auto coverage page");
+check(await reduced.locator('img[src*="guide-auto"]').first().isVisible(), "People-free auto image is not referenced on the auto coverage page");
 
 await reduced.goto(`${base}/privacy`, { waitUntil: "networkidle" });
-check(await reduced.getByRole("heading", { name: "No online insurance submission" }).isVisible(), "Privacy notice does not explain the no-form workflow");
+check(await reduced.getByRole("heading", { name: "Quote-request form" }).isVisible(), "Privacy notice does not explain the quote-request form");
 check(await reduced.getByText(/Vercel hosts the site and provides Web Analytics and Speed Insights/).isVisible(), "Analytics disclosure is missing");
 check(await reduced.getByRole("heading", { name: "Browser privacy signals and online tracking" }).isVisible(), "Browser privacy-signal disclosure is missing");
 check(await reduced.getByText(/Do Not Track and Global Privacy Control signals do not change its current behavior/).isVisible(), "Do Not Track and Global Privacy Control behavior is unclear");
@@ -230,10 +173,10 @@ motionPage.setDefaultTimeout(10_000);
 await motionPage.goto(`${base}/`, { waitUntil: "networkidle" });
 await motionPage.waitForTimeout(1_500);
 check(await motionPage.locator(".route-frame").evaluate((node) => node.classList.contains("motion-managed")), "GSAP enhancement did not initialize for standard motion");
-await motionPage.locator(".ria-coverage").scrollIntoViewIfNeeded();
+await motionPage.locator(".ria-editorial").scrollIntoViewIfNeeded();
 await motionPage.waitForTimeout(1_200);
-const coverageMotionState = await motionPage.locator(".coverage-desk").evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).transform));
-check(coverageMotionState.every((transform) => transform === "none"), `Coverage selector entrance did not settle cleanly: ${JSON.stringify(coverageMotionState)}`);
+const coverageMotionState = await motionPage.locator(".ria-editorial__grid").evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).transform));
+check(coverageMotionState.every((transform) => transform === "none"), `Coverage links entrance did not settle cleanly: ${JSON.stringify(coverageMotionState)}`);
 await motionPage.locator(".ria-reviews").scrollIntoViewIfNeeded();
 await motionPage.waitForTimeout(1_500);
 const reviewMotionState = await motionPage.locator(".ria-reviews blockquote").evaluateAll((nodes) => nodes.map((node) => ({ opacity: getComputedStyle(node).opacity, transform: getComputedStyle(node).transform })));
@@ -252,14 +195,11 @@ check(await journey.locator("main").evaluate((node) => document.activeElement ==
 
 const journeyNavHrefs = await journey.locator(".atlas-nav__links a").evaluateAll((links) => links.map((link) => link.getAttribute("href")));
 check(JSON.stringify(journeyNavHrefs) === JSON.stringify(["/services", "/about", "/locations", "/faq", "/contact"]), `Desktop navigation hrefs changed: ${JSON.stringify(journeyNavHrefs)}`);
-check((await journey.locator(".atlas-nav__quote").textContent())?.includes("Prepare for a Quote"), "Primary navigation still implies an online quote submission");
+check((await journey.locator(".atlas-nav__quote").textContent())?.includes("Get a quote"), "Primary quote action label is incorrect");
 check(await journey.locator('.ria-service-strip a[href="/services#work"]').count() === 2, "Broad business service shortcuts do not lead to the complete business section");
 
-const coverageTabs = journey.locator(".coverage-desk [role='tab']");
-await coverageTabs.first().scrollIntoViewIfNeeded();
-await coverageTabs.first().focus();
-await journey.keyboard.press("ArrowRight");
-check(await coverageTabs.nth(1).getAttribute("aria-selected") === "true", "Coverage desk arrow-key navigation failed");
+check(await journey.locator('.ria-story').count() === 2, "Personal and business coverage entry points are missing");
+check(await journey.locator('.ria-story').first().getAttribute('href') === '/auto-insurance-los-angeles-ca', "Personal coverage entry point is incorrect");
 
 await journey.locator(".atlas-nav__links").getByRole("link", { name: "Insurance", exact: true }).click();
 await journey.waitForURL("**/services");
@@ -271,12 +211,14 @@ await journey.goForward({ waitUntil: "networkidle" });
 check(await journey.getByRole("heading", { level: 1 }).textContent().then((value) => value?.includes("Insurance for what you own")), "Browser Forward did not restore the services page");
 const serviceIndexHrefs = await journey.locator(".services-ledger__index a").evaluateAll((links) => links.map((link) => link.getAttribute("href")));
 check(JSON.stringify(serviceIndexHrefs) === JSON.stringify(["#drive", "#property", "#work", "#weekend"]), `Services coverage index is incomplete: ${JSON.stringify(serviceIndexHrefs)}`);
-await journey.locator("#work > button").click();
-const businessGuide = journey.getByRole("dialog");
-await businessGuide.waitFor({ state: "visible" });
-check(await businessGuide.getByRole("tab", { name: "Business", exact: true }).getAttribute("aria-selected") === "true", "Business service did not open the matching preparation file");
-await journey.keyboard.press("Escape");
-await businessGuide.waitFor({ state: "hidden" });
+for (const [category, expected] of [["drive","auto"],["property","home"],["work","business"],["weekend","specialty"]]) {
+  await journey.goto(`${base}/services`, { waitUntil: "networkidle" });
+  await journey.locator(`#${category} > .service-ledger__quote`).click();
+  await journey.waitForURL(`**/contact?coverage=${expected}#quote-request`);
+  await journey.waitForFunction(value => document.querySelector("#quote-coverage")?.value === value, expected, { timeout: 1000 }).catch(() => {});
+  check(await journey.locator("#quote-coverage").inputValue() === expected, `${category} quote link did not preselect ${expected}`);
+  check(await focusReached(journey, "#quote-request"), `${category} quote link did not focus the form`);
+}
 
 await journey.goto(`${base}/`, { waitUntil: "networkidle" });
 await journey.locator('.ria-service-strip a[href="/services#work"]').first().click();
@@ -303,5 +245,5 @@ await journeyContext.close();
 
 await chromiumBrowser.close();
 
-console.log(JSON.stringify({ checks, failures, mobileNavMetrics, landscapeMenuMetrics, landscapeDialogMetrics, quickActionMetrics, reducedDialogStyle, coverageMotionState, reviewMotionState, journeyNavHrefs }, null, 2));
+console.log(JSON.stringify({ checks, failures, mobileNavMetrics, landscapeMenuMetrics, landscapeFormMetrics, quickActionMetrics, reducedFormStyle, coverageMotionState, reviewMotionState, journeyNavHrefs }, null, 2));
 if (failures.length) process.exitCode = 1;

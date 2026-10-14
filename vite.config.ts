@@ -1,15 +1,16 @@
 // vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { quoteEndpoint } from "./server/viteQuote";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ isSsrBuild }) => ({
-  plugins: [react()],
+export default defineConfig(({ isSsrBuild, mode }) => ({
+  plugins: [react(), quoteEndpoint(mode)],
 
   base: "/",
 
   build: {
-    outDir: "dist",
+    outDir: mode === "review" ? "dist-review" : "dist",
     assetsDir: "assets",
     sourcemap: false,
     target: "es2015",

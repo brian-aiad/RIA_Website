@@ -17,7 +17,7 @@ const validContactHrefs = new Set([
   "tel:+13105727246",
   "tel:+13109187007",
   "tel:+12138795955",
-  "sms:+13109187007",
+  "sms:+12138795955",
   "mailto:contact@raflainsurance.com",
 ]);
 const failures = [];
@@ -130,7 +130,7 @@ for (const route of routes) {
     check(result.emptyHrefs.length === 0, `${label}: empty hrefs: ${result.emptyHrefs.join(", ")}`);
     check(result.unsafeBlanks.length === 0, `${label}: unsafe new-window links: ${result.unsafeBlanks.join(", ")}`);
     check(result.brokenHashes.length === 0, `${label}: missing hash targets: ${result.brokenHashes.join(", ")}`);
-    check(result.forms === 0, `${label}: unexpected form count ${result.forms}`);
+    check(result.forms === (route === "/contact" ? 1 : 0), `${label}: unexpected form count ${result.forms}`);
     check(result.description.length >= 70 && result.description.length <= 170, `${label}: meta description length ${result.description.length}`);
     check(result.canonical.startsWith("https://www.raflainsurance.com/"), `${label}: invalid canonical ${result.canonical}`);
     check(result.ogTitle === result.title, `${label}: Open Graph title differs from document title`);

@@ -9,8 +9,6 @@ export type CoverageEntry = {
   title: string;
   short: string;
   href: string;
-  image: string;
-  imageAlt: string;
   accent: "gold" | "teal" | "blue";
   icon: LucideIcon;
 };
@@ -22,8 +20,6 @@ export const coverageEntries: CoverageEntry[] = [
     title: "Auto",
     short: "Daily drivers, specialty situations, and California filings.",
     href: "/auto-insurance-los-angeles-ca",
-    image: "/images/illustrated/auto-review-v8.webp",
-    imageAlt: "Illustration of a Westside household reviewing auto coverage beside their car",
     accent: "gold",
     icon: Car,
   },
@@ -33,8 +29,6 @@ export const coverageEntries: CoverageEntry[] = [
     title: "Home & renters",
     short: "Property, belongings, loss of use, and personal liability.",
     href: "/home-insurance-los-angeles-ca",
-    image: "/images/illustrated/household-v6.webp",
-    imageAlt: "Illustration of a Westside Los Angeles household, bungalow, car, and bicycle",
     accent: "teal",
     icon: Home,
   },
@@ -44,8 +38,6 @@ export const coverageEntries: CoverageEntry[] = [
     title: "Business",
     short: "Commercial auto, liability, workers’ compensation, and bonds.",
     href: "/services#work",
-    image: "/images/illustrated/small-business-v6.webp",
-    imageAlt: "Illustration of a Westside small-business owner and crew outside their shop",
     accent: "blue",
     icon: BriefcaseBusiness,
   },
@@ -55,8 +47,6 @@ export const coverageEntries: CoverageEntry[] = [
     title: "Filings & complex cases",
     short: "SR-22 support and careful review of nonstandard license situations.",
     href: "/sr22-insurance-los-angeles",
-    image: "/images/illustrated/policy-desk-v6.webp",
-    imageAlt: "Illustration of insurance documents, vehicle keys, and notes arranged for review",
     accent: "gold",
     icon: FileCheck2,
   },
@@ -66,8 +56,6 @@ export const coverageEntries: CoverageEntry[] = [
     title: "Specialty",
     short: "Motorcycle, RV, boat, recreational vehicles, and surety bonds.",
     href: "/services#specialty",
-    image: "/images/illustrated/specialty-v6.webp",
-    imageAlt: "Illustration of a motorcycle, travel trailer, and small boat prepared for a trip",
     accent: "teal",
     icon: Ship,
   },

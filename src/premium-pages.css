@@ -1,0 +1,130 @@
+/* Interior editorial details: local facts, subject drawings, and readable records. */
+.interior-signature { display: block; flex: none; width: 6rem; height: 4rem; color: var(--agency-gold-dark); overflow: visible; }
+
+/* A visual category key, drawn for this collection of coverage subjects. */
+.services-atlas .service-ledger__title { position: relative; }
+.services-atlas .service-ledger__title .interior-signature { margin-block: .85rem .4rem; width: 5rem; height: 3.35rem; }
+.services-atlas .service-ledger__title h3 { margin-top: .35rem; }
+.services-atlas .services-ledger__index { border-top: 2px solid var(--agency-navy); }
+.services-atlas .services-ledger__index a { position: relative; transition: background-color 160ms ease,color 160ms ease; }
+.services-atlas .services-ledger__index a:hover { background: white; color: var(--agency-gold-dark); }
+.services-atlas .services-briefs__list a { min-height: 6rem; }
+.services-atlas .service-scope-note { padding-top: 0; }
+
+/* About: an agency signature tied to its real history, not a decorative statistic. */
+.agency-origin { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.5rem; color: var(--agency-muted); font-size: .85rem; line-height: 1.65; }
+.agency-origin strong { color: var(--agency-navy); font: 600 1.6rem/1.25 var(--font-display); }
+.about-file .agency-story__statement { padding-top: .5rem; border-left: 0; padding-left: 0; }
+.about-file .agency-story__statement h2 { padding-top: 1.25rem; border-top: 1px solid var(--agency-rule); }
+.about-file .agency-team__visual { max-height: 30rem; aspect-ratio: 1.12; }
+.about-file .agency-team__visual img { height: 100%; object-fit: cover; }
+.about-file .agency-team__records > article { padding-block: 1.5rem; }
+.about-file .agency-team__records article > a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: .5rem; margin-inline: -.5rem; }
+.about-file .agency-principles__grid > article { border-top: 2px solid var(--agency-gold); border-radius: 2px; }
+.about-file .agency-principles__grid > article p { margin-bottom: 0; }
+
+/* Arrival instructions sit beside a small elevation of the actual building. */
+.office-arrival { grid-column: 1; display: flex; align-items: center; gap: 1rem; font-size: .8rem; line-height: 1.6; color: #ced7e4; }
+.office-arrival .interior-signature { width: 5.25rem; height: 3.5rem; color: var(--agency-gold); }
+.office-arrival strong { color: white; font-weight: 650; }
+.locations-file .office-record__details > h2 { align-self: start; padding-top: .5rem; }
+.locations-file .city-directory__grid { margin-top: 1.5rem; }
+.locations-file .city-record { min-height: 8.5rem; border-left: 2px solid transparent; }
+.locations-file .city-record:is(:hover,:focus-visible) { border-left-color: var(--agency-gold-dark); }
+.locations-file .city-record h3 { margin-bottom: .55rem; }
+.locations-file .office-record__lines > :first-child { border-top-color: #ffffff45; }
+
+/* Correspondence: the request form is the working surface, with one quiet mark. */
+.contact-file .quote-request__layout > header > .interior-signature { margin-bottom: 1.15rem; }
+.contact-file .quote-request__layout > header { border-top: 0; padding-top: .5rem; }
+.contact-file .quote-request form { border-top: 3px solid var(--agency-gold); }
+.contact-file .contact-desk { padding-block: clamp(3.5rem,6vw,5.5rem); }
+.contact-file .contact-desk__photo { max-height: 30rem; }
+.contact-file .contact-desk__hours { padding: clamp(1.5rem,3vw,2.5rem); }
+.contact-file .contact-team article { border-top: 1px solid var(--agency-rule); border-radius: 2px; }
+.contact-file .contact-team__best { margin-top: 1.25rem; }
+
+/* The question index borrows the shape of an open reference volume. */
+.answer-library__signature { display: flex; align-items: center; gap: .9rem; padding: 1.15rem; border-bottom: 1px solid #ffffff30; }
+.answer-library__signature .interior-signature { width: 4rem; height: 2.7rem; color: var(--agency-gold); }
+.answer-library__signature > .atlas-eyebrow { padding: 0; border: 0; line-height: 1.5; }
+.answer-library__signature > .atlas-eyebrow > span { display: none; }
+.faq-file .faq-search { border-top: 2px solid var(--agency-gold); padding-top: 1.25rem; }
+.faq-file .answer-group { margin-bottom: 3rem; }
+.faq-file .answer-group__title { padding-top: .5rem; }
+.faq-file .answer-drawer[open] { background: #f6f8fa; }
+.faq-file .answer-drawer[open] summary { color: var(--agency-navy); }
+
+/* Neighborhood names and their real ZIP codes form compact local identifiers. */
+.city-postmark { display: flex; align-items: flex-start; gap: .85rem; padding-bottom: 1rem; border-bottom: 1px solid var(--agency-rule); margin-bottom: 1.25rem; }
+.city-postmark > svg { width: 1.25rem; height: 1.25rem; margin-top: .15rem; color: var(--agency-gold-dark); flex: none; }
+.city-postmark > span { color: var(--agency-navy); font: 650 1.1rem/1.4 var(--font-display); }
+.city-postmark small { display: block; margin-top: .35rem; color: var(--agency-muted); font: 400 .8rem/1.7 var(--font-body); }
+.city-file .city-orientation__copy p { margin-top: 0; }
+.city-file .city-coverage__grid > a { border-radius: 2px; border-top: 2px solid var(--agency-gold); }
+.city-file .nearby-files__grid > div:last-child { gap: .75rem; }
+.city-file .nearby-files__grid a { background: white; border: 1px solid var(--agency-rule); }
+.city-file .nearby-files__grid a strong { overflow-wrap: normal; }
+
+/* A subject marker and stable index give long guides an editorial spine. */
+.brief-navigation { position: sticky; top: 7rem; align-self: start; min-width: 0; }
+.brief-navigation > .brief-index { position: static; }
+.brief-subject-mark { display: flex; align-items: center; gap: .8rem; padding: 1rem; background: var(--agency-paper); border-top: 2px solid var(--agency-gold); }
+.brief-subject-mark .interior-signature { width: 4.5rem; height: 3rem; }
+.brief-subject-mark > span { color: var(--agency-navy); font: 650 .95rem/1.4 var(--font-display); }
+.brief-subject-mark small { display: block; font: 400 .75rem/1.5 var(--font-body); color: var(--agency-muted); margin-top: .25rem; }
+.coverage-brief .brief-chapter { scroll-margin-top: 7rem; }
+.coverage-brief .brief-anatomy__list article { border-radius: 2px; }
+.coverage-brief .brief-documents .paper-note { box-shadow: none; border-top: 2px solid var(--agency-gold); }
+.coverage-brief .brief-documents .paper-note p { font-size: 1.15rem; line-height: 1.6; }
+.coverage-brief .brief-detail__caution { border-left: 2px solid var(--agency-red); }
+
+/* Legal information is quiet and legible, with a fine document margin. */
+.policy-file .policy-file__body { padding-block: clamp(3rem,6vw,5.5rem); }
+.policy-file .policy-file__grid > article { border-left: 1px solid var(--agency-rule); padding-left: 2.5rem; }
+.policy-file .policy-file__grid > article > section { position: relative; scroll-margin-top: 7rem; }
+.policy-file .policy-file__grid > article > section::before { content: ""; position: absolute; top: .65rem; left: -2.5rem; width: .6rem; height: 2px; background: var(--agency-gold-dark); }
+.policy-file .policy-file__index a { line-height: 1.5; }
+.policy-file .policy-file__grid > article h2 { text-wrap: balance; }
+
+/* The recovery route is a drawn turn back, not another promotional card. */
+.not-found-atlas__wayfinding { display: flex; align-items: center; gap: 2rem; }
+.not-found-atlas__wayfinding .interior-signature { color: var(--agency-gold); width: 7rem; height: 4.7rem; }
+.not-found-atlas__wayfinding .not-found-atlas__number { margin: 0; }
+.not-found-atlas .not-found-atlas__actions { margin-top: 1.75rem; }
+
+@media (max-width: 1200px) {
+  .services-atlas .service-ledger__title { min-height: 7.25rem; padding-right: 7rem; }
+  .services-atlas .service-ledger__title .interior-signature { position: absolute; right: 1.5rem; top: 1.15rem; margin: 0; }
+  .services-atlas .service-ledger__title h3 { font-size: 1.65rem; }
+}
+@media (max-width: 900px) {
+  .brief-navigation { position: static; }
+  .brief-subject-mark { padding: .85rem 1.1rem; }
+  .policy-file .policy-file__grid > article { padding-left: 0; border-left: 0; }
+  .policy-file .policy-file__grid > article > section::before { display: none; }
+  .about-file .agency-team__visual { width: 100%; max-height: 24rem; }
+  .contact-file .contact-desk__photo { max-height: 24rem; }
+}
+@media (max-width: 620px) {
+  .agency-origin { gap: 1rem; margin-bottom: 1rem; }
+  .agency-origin .interior-signature { width: 5rem; height: 3.35rem; }
+  .about-file .agency-team__visual { max-height: 19rem; }
+  .office-arrival { gap: .85rem; }
+  .office-arrival .interior-signature { width: 4rem; height: 2.7rem; }
+  .locations-file .city-record { min-height: 6.75rem; }
+  .answer-library__signature { padding: .9rem 1rem; }
+  .faq-file .answer-group { margin-bottom: 2rem; }
+  .city-file .nearby-files__grid a { min-height: 4rem; }
+  .coverage-brief .brief-chapter { scroll-margin-top: 5.5rem; }
+  .policy-file .policy-file__grid > article > section { scroll-margin-top: 5.5rem; }
+  .contact-file .quote-request__layout > header > .interior-signature { width: 5rem; height: 3.35rem; }
+}
+@media (max-width: 360px) {
+  .services-atlas .service-ledger__title { padding-right: 5.75rem; }
+  .services-atlas .service-ledger__title .interior-signature { right: 1rem; width: 3.75rem; }
+  .not-found-atlas__wayfinding { gap: 1.25rem; }
+}
+@media (max-height: 550px) and (min-width: 621px) {
+  .brief-navigation { position: static; }
+}

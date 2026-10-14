@@ -4,9 +4,10 @@ import { AtlasButton, AtlasEyebrow, DossierHeader, FactRail, PaperNote, QuoteBan
 import { type CoverageLineworkVariant } from "./CoverageLinework";
 import BreadcrumbSchema from "./seo/BreadcrumbSchema";
 import LocalBusinessSchema from "./seo/LocalBusinessSchema";
-import { openQuoteModalFor, type QuoteType } from "../lib/openQuote";
 import { usePageMeta } from "../lib/seo";
 import { site } from "../lib/site";
+import InteriorSignature from "./InteriorSignature";
+import GuideIndex from "./GuideIndex";
 
 export type CoverageBriefConfig = {
   index: string;
@@ -41,7 +42,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
       : config.index === "03"
         ? "commercial"
         : "sr22";
-  const quoteType: QuoteType = drawing === "auto"
+  const quoteType = drawing === "auto"
     ? "auto"
     : drawing === "home"
       ? "home"
@@ -53,32 +54,19 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
     <main id="main-content" className="atlas-page coverage-brief">
       <LocalBusinessSchema url="https://www.raflainsurance.com/" areaServed={["Los Angeles, CA", "Mar Vista", "Los Angeles Westside"]} />
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "Services", url: "https://www.raflainsurance.com/services" }, { name: config.eyebrow, url: config.canonical }]} />
-      <DossierHeader index={config.index} eyebrow={config.eyebrow} title={config.title} lede={config.lede} image={config.image} imageAlt={config.imageAlt} visualLabel="Coverage review / Mar Vista">
-        <AtlasButton tone="navy" onClick={() => openQuoteModalFor(quoteType)}>Prepare for a quote</AtlasButton>
+      <DossierHeader index={config.index} eyebrow={config.eyebrow} title={config.title} lede={config.lede} image={config.image} imageAlt={config.imageAlt}>
+        <AtlasButton tone="navy" to={`/contact?coverage=${quoteType}#quote-request`}>Get a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
       </DossierHeader>
 
       <div className="atlas-container">
-        <FactRail facts={config.signals} />
+        <FactRail facts={config.signals.filter(fact => !/local|languages|office/i.test(fact.label))} />
       </div>
 
       <section className="brief-reading section-folio-host">
         <SectionFolio>Coverage guide</SectionFolio>
         <div className="atlas-container brief-reading__grid">
-          <aside className="brief-index motion-reveal">
-            <span>On this page</span>
-            <a href="#orientation">What to know</a>
-            <a href="#anatomy">What coverage may include</a>
-            <a href="#documents">What to have ready</a>
-            <a href="#fine-print">A practical note</a>
-            <a href="#answers">Common questions</a>
-            <div className="brief-index__desk">
-              <small>Rafla broker desk</small>
-              <strong>{site.contact.phone}</strong>
-              <p>{site.hours.short}<br />English · Spanish · Arabic</p>
-              <button type="button" onClick={(event) => openQuoteModalFor(quoteType, event)}>Open preparation guide <ArrowRight size={14} /></button>
-            </div>
-          </aside>
+          <div className="brief-navigation"><div className="brief-subject-mark"><InteriorSignature kind={drawing === "auto" ? "drive" : drawing === "home" ? "property" : drawing === "commercial" ? "work" : "correspondence"} /><span>{config.eyebrow}<small>Coverage guide</small></span></div><GuideIndex /></div>
           <div className="brief-reading__content">
             <section id="orientation" className="brief-chapter motion-reveal">
               <AtlasEyebrow>What to know</AtlasEyebrow>
@@ -107,7 +95,7 @@ export default function CoverageBriefPage({ config }: { config: CoverageBriefCon
                 <h2>{config.checklistTitle}</h2>
                 <ul>{config.checklist.map((item) => <li key={item}><Check size={16} /> {item}</li>)}</ul>
               </div>
-              <PaperNote label="Helpful tip" tone="blue"><p>{config.fieldNote}</p><button type="button" onClick={(event) => openQuoteModalFor(quoteType, event)}>See what to prepare <ArrowRight size={16} /></button></PaperNote>
+              <PaperNote label="Helpful tip" tone="blue"><p>{config.fieldNote}</p></PaperNote>
             </section>
 
             <section id="fine-print" className="brief-chapter brief-detail motion-reveal">

@@ -7,9 +7,13 @@ import { resolve, dirname } from "node:path";
 import { pathToFileURL } from "node:url";
 
 const { render } = await import(pathToFileURL(resolve("node_modules/.cache/rafla-ssr/entry-server.js")));
-const shell = readFileSync("dist/index.html", "utf8");
+const outputDirectory = process.argv[2] ?? "dist";
+const shell = readFileSync(resolve(outputDirectory, "index.html"), "utf8");
 const sitemap = readFileSync("public/sitemap.xml", "utf8");
 const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1]));
+// The host's actual error document must match the locally rendered recovery page.
+// It stays outside the sitemap and is explicitly excluded from indexing.
+urls.push(new URL('https://www.raflainsurance.com/404'));
 const escapeHtml = (value) => value.replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]));
 const titles = new Set();
 const descriptions = new Set();
@@ -36,8 +40,14 @@ for (const url of urls) {
   }
   html = html.replace(/<link rel="canonical" href="[^"]*"\s*\/?>/, `<link rel="canonical" href="${meta.canonical}" />`);
   html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+  if (meta.robots) {
+    const robotsTag = `<meta name="robots" content="${escapeHtml(meta.robots)}" />`;
+    html = /<meta name="robots"[^>]*>/.test(html)
+      ? html.replace(/<meta name="robots"[^>]*>/, robotsTag)
+      : html.replace('</head>', `${robotsTag}\n</head>`);
+  }
   html = html.replace("</head>", '<!-- prerendered by scripts/prerender.mjs -->\n</head>');
-  const output = resolve("dist", url.pathname === "/" ? "index.html" : `${url.pathname.slice(1)}.html`);
+  const output = resolve(outputDirectory, url.pathname === "/" ? "index.html" : `${url.pathname.slice(1)}.html`);
   mkdirSync(dirname(output), { recursive: true });
   writeFileSync(output, html);
   console.log(`✓ ${url.pathname} — unique HTML, metadata, and structured data`);

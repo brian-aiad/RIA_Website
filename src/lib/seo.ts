@@ -44,7 +44,9 @@ export function usePageMeta({ title, description, canonical, robots }: PageMeta)
     setMeta('meta[name="twitter:title"]', { name: "twitter:title" }, title);
     setMeta('meta[name="twitter:description"]', { name: "twitter:description" }, description);
     if (canonical) setMeta('meta[property="og:url"]', { property: "og:url" }, canonical);
-    if (robots) setMeta('meta[name="robots"]', { name: "robots" }, robots);
+    // Direct visits to the prerendered error document start with noindex. Clear
+    // that state when a recovery link takes the visitor to a regular page.
+    setMeta('meta[name="robots"]', { name: "robots" }, robots ?? "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1");
 
     // Canonical link
     let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');

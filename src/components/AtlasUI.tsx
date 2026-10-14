@@ -1,7 +1,6 @@
 import type { ImgHTMLAttributes, ReactNode } from "react";
-import { ArrowRight, ArrowUpRight, MapPin, MessageSquareText, Phone } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, Phone } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { openQuoteModal } from "../lib/openQuote";
 import { site } from "../lib/site";
 
 export function AtlasEyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
@@ -54,8 +53,12 @@ export function AtlasImage({
     && !src.endsWith("-sm.webp")
     && !src.endsWith("-phone.webp")
     && !src.endsWith("-md.webp");
-  const srcSet = providedSrcSet ?? (isResponsiveAsset
-    ? `${src.replace(/\.webp$/, "-sm.webp")} 640w, ${src.replace(/\.webp$/, "-phone.webp")} 828w, ${src.replace(/\.webp$/, "-md.webp")} 1100w, ${src} 1536w`
+  const srcSet = providedSrcSet ?? (src === "/images/photography/commercial-workshop.webp"
+    ? `${src.replace(/\.webp$/, "-sm.webp")} 640w, ${src.replace(/\.webp$/, "-md.webp")} 1100w, ${src} 1536w`
+    : src.startsWith("/images/editorial/")
+    ? `${src.replace(/\.webp$/, "-sm.webp")} 640w, ${src} 1100w`
+    : isResponsiveAsset
+    ? `${src.replace(/\.webp$/, "-sm.webp")} 640w, ${src.startsWith("/images/agency/") ? "" : `${src.replace(/\.webp$/, "-phone.webp")} 828w, `}${src.replace(/\.webp$/, "-md.webp")} 1100w, ${src} 1536w`
     : undefined);
 
   const imageClassName = [className, isIllustratedAsset ? "atlas-image--illustrated" : ""].filter(Boolean).join(" ") || undefined;
@@ -70,7 +73,6 @@ export function DossierHeader({
   lede,
   image,
   imageAlt,
-  visualLabel,
   visual,
   children,
 }: {
@@ -80,7 +82,6 @@ export function DossierHeader({
   lede: string;
   image?: string;
   imageAlt?: string;
-  visualLabel?: string;
   visual?: ReactNode;
   children?: ReactNode;
 }) {
@@ -108,20 +109,14 @@ export function DossierHeader({
         {visual ? (
           <figure className="dossier-hero__visual dossier-hero__visual--linework atlas-parallax">
             {visual}
-            <figcaption>
-              <span>Rafla coverage desk</span>
-              Mar Vista · CA agency license 0D95584
-            </figcaption>
+
           </figure>
         ) : image && (
           <figure className="dossier-hero__visual atlas-parallax">
             <div className="dossier-hero__media">
               <AtlasImage src={image} alt={imageAlt ?? ""} width="1536" height={image.startsWith("/images/interior/") ? "864" : "1024"} fetchPriority="high" />
             </div>
-            <figcaption>
-              <span>{visualLabel ?? "12240 Venice Boulevard"}</span>
-              Mar Vista · CA agency license 0D95584
-            </figcaption>
+
           </figure>
         )}
       </div>
@@ -140,18 +135,14 @@ export function QuoteBand({
   return (
     <section className="quote-band section-folio-host">
       <SectionFolio tone="navy">Contact desk</SectionFolio>
-      <div className="quote-band__art" aria-hidden="true">
-        <img src="/images/brand/insurance-line-ribbon-higgsfield.webp" alt="" width="2048" height="420" loading="lazy" />
-      </div>
       <div className="atlas-container quote-band__grid motion-reveal">
-        <div className="quote-band__mark" aria-hidden="true"><MessageSquareText size={22} /></div>
         <div className="quote-band__copy">
-          <AtlasEyebrow light>Personal help starts here</AtlasEyebrow>
+          <AtlasEyebrow>Personal help starts here</AtlasEyebrow>
           <h2>{title}</h2>
+          <p>{text}</p>
         </div>
-        <p>{text}</p>
         <div className="quote-band__actions">
-          <AtlasButton tone="gold" onClick={openQuoteModal}>Prepare for a quote</AtlasButton>
+          <AtlasButton tone="navy" to="/contact#quote-request">Get a quote</AtlasButton>
           <a className="quote-band__phone" href={site.contact.phoneHref}><Phone size={15} /> {site.contact.phone}</a>
         </div>
       </div>

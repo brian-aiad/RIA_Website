@@ -9,25 +9,33 @@ type MotionStep = {
   scaleY?: number;
   duration?: number;
   stagger?: number;
-  at?: number | string;
 };
 
 /**
  * Motion follows the agency's printed-file idea: one composed entrance per
- * section, a few line drawings revealed at the moment they are read, and two
- * restrained photo moves. It never owns scrolling and never hides content.
+ * section, individual records arriving as they enter view, and framed photo
+ * movements. It never owns scrolling and never hides meaningful content.
  */
 export default function RouteMotion({ children, routeKey }: { children: ReactNode; routeKey: string }) {
   const scope = useRef<HTMLDivElement>(null);
   const [reducedMotion, setReducedMotion] = useState(() =>
     typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
+  const [compactMotion, setCompactMotion] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(max-width: 959px), (pointer: coarse)").matches,
+  );
 
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const compact = window.matchMedia("(max-width: 959px), (pointer: coarse)");
     const updatePreference = () => setReducedMotion(preference.matches);
+    const updateCompact = () => setCompactMotion(compact.matches);
     preference.addEventListener("change", updatePreference);
-    return () => preference.removeEventListener("change", updatePreference);
+    compact.addEventListener("change", updateCompact);
+    return () => {
+      preference.removeEventListener("change", updatePreference);
+      compact.removeEventListener("change", updateCompact);
+    };
   }, []);
 
   useEffect(() => {
@@ -42,35 +50,41 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
       // receive only small, one-time transforms; no scroll scrubbing or pinning.
       root.classList.remove("motion-managed");
       if (reducedMotion) return;
-      const isCompact = window.matchMedia("(max-width: 959px), (pointer: coarse)").matches;
+      const isCompact = compactMotion;
 
-      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+      const modules = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
-      ]);
-      if (cancelled) return;
+      ]).catch(() => null);
+      if (cancelled || !modules) return;
+      const [{ default: gsap }, { ScrollTrigger }] = modules;
 
       gsap.registerPlugin(ScrollTrigger);
       ScrollTrigger.config({ ignoreMobileResize: true, limitCallbacks: true });
       root.classList.add("motion-managed");
       root.dataset.motionState = "ready";
+      const entrances = new WeakMap<Element, gsap.core.Tween>();
 
       const context = gsap.context(() => {
+        const progress = root.querySelector<HTMLElement>(".page-scroll-progress");
+        if (progress && !isCompact) gsap.fromTo(progress, { scaleX: 0 }, {
+          scaleX: 1,
+          ease: "none",
+          scrollTrigger: { start: 0, end: "max", scrub: true },
+        });
         const stageGroup = (groupSelector: string, steps: MotionStep[], start = "clamp(top 86%)") => {
           root.querySelectorAll<HTMLElement>(groupSelector).forEach((group) => {
             // Motion is enhancement only. Anything already in or above the
             // viewport stays untouched, which protects hash links and captures.
-            if (group.getBoundingClientRect().top < window.innerHeight + 24) return;
-
             const prepared = steps
-              .map((step) => ({ step, targets: Array.from(group.querySelectorAll<HTMLElement>(step.selector)) }))
+              .map((step) => ({ step, targets: Array.from(group.querySelectorAll<HTMLElement>(step.selector)).filter(target => target.getBoundingClientRect().top >= window.innerHeight + 24) }))
               .filter(({ targets }) => targets.length);
             if (!prepared.length) return;
 
             prepared.forEach(({ step, targets }) => {
               gsap.set(targets, {
-                x: (step.x ?? 0) * (isCompact ? 0.45 : 1),
-                y: (step.y ?? 0) * (isCompact ? 0.45 : 1),
+                x: (step.x ?? 0) * (isCompact ? 0.65 : 1.5),
+                y: (step.y ?? 0) * (isCompact ? 0.85 : 1.8),
                 ...(step.scale === undefined ? {} : {
                   scale: isCompact ? 1 - ((1 - step.scale) * 0.45) : step.scale,
                 }),
@@ -83,143 +97,178 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               });
             });
 
-            const timeline = gsap.timeline({
-              scrollTrigger: { trigger: group, start, once: true, fastScrollEnd: true },
-              defaults: { ease: "power3.out", overwrite: "auto" },
-            });
-
             prepared.forEach(({ step, targets }) => {
-              timeline.to(targets, {
+              const destination = {
                 x: 0,
                 y: 0,
                 ...(step.scale === undefined ? {} : { scale: 1 }),
                 ...(step.scaleX === undefined ? {} : { scaleX: 1 }),
                 ...(step.scaleY === undefined ? {} : { scaleY: 1 }),
-                duration: isCompact ? Math.min(step.duration ?? 0.5, 0.42) : (step.duration ?? 0.5),
-                stagger: isCompact ? Math.min(step.stagger ?? 0, 0.025) : (step.stagger ?? 0),
+                duration: isCompact ? Math.min(step.duration ?? 0.5, 0.5) : (step.duration ?? 0.5) * 1.25,
                 clearProps: "transform",
-              }, step.at ?? ">");
+              };
+              // Each block waits for its own entrance, including paired copy
+              // that becomes a separate row on mobile. Stagger same-row items.
+                const tops = targets.map(target => target.getBoundingClientRect().top);
+                targets.forEach((target, index) => {
+                  const rowIndex = tops.slice(0, index).filter(top => Math.abs(top - tops[index]) < 5).length;
+                  const entrance = gsap.to(target, {
+                    ...destination,
+                    ease: "power3.out",
+                    delay: isCompact ? 0 : Math.min(rowIndex * (step.stagger ?? .05), .15),
+                    scrollTrigger: {
+                      trigger: target,
+                      // Links must finish arriving as soon as they are visible,
+                      // including short cards at the bottom of the viewport.
+                      start: target.matches("a, button, [role=tab]") ? "clamp(top 98%)" : start,
+                      once: true,
+                      fastScrollEnd: true,
+                    },
+                  });
+                  entrances.set(target, entrance);
+                });
             });
           });
         };
 
+        // These hooks belong only to authored decorative details. Text, fields,
+        // and navigation are never hidden while a drawing registers into place.
+        const decorativeStart = (target: Element) => ({
+          trigger: target,
+          start: "clamp(top 92%)",
+          once: true,
+          fastScrollEnd: true,
+        });
+        const isUpcoming = (target: Element) => target.getClientRects().length > 0
+          && target.getBoundingClientRect().top >= window.innerHeight + 24;
+        root.querySelectorAll<HTMLElement | SVGElement>("[data-register-line]").forEach((line) => {
+          if (!isUpcoming(line)) return;
+          if (line instanceof SVGGeometryElement) {
+            const length = line.getTotalLength();
+            if (!Number.isFinite(length) || length < 1) return;
+            gsap.fromTo(line, { strokeDasharray: length, strokeDashoffset: length }, {
+              strokeDashoffset: 0,
+              duration: isCompact ? .48 : .85,
+              ease: "power2.inOut",
+              clearProps: "strokeDasharray,strokeDashoffset",
+              scrollTrigger: decorativeStart(line),
+            });
+          } else {
+            gsap.fromTo(line, { scaleX: .08, transformOrigin: "left center" }, {
+              scaleX: 1, duration: isCompact ? .4 : .65, ease: "power3.out",
+              clearProps: "transform,transformOrigin", scrollTrigger: decorativeStart(line),
+            });
+          }
+        });
+        root.querySelectorAll<HTMLElement | SVGElement>("[data-register-mark]").forEach((mark) => {
+          if (!isUpcoming(mark)) return;
+          gsap.fromTo(mark, { scale: .9, rotation: -2, transformOrigin: "center" }, {
+            scale: 1, rotation: 0, duration: isCompact ? .35 : .55, ease: "power3.out",
+            clearProps: "transform,transformOrigin", scrollTrigger: decorativeStart(mark),
+          });
+        });
+        root.querySelectorAll<HTMLElement>("[data-document-tab]").forEach((tab) => {
+          if (!isUpcoming(tab)) return;
+          gsap.fromTo(tab, { x: isCompact ? -4 : -9 }, {
+            x: 0, duration: isCompact ? .3 : .48, ease: "power3.out",
+            clearProps: "transform", scrollTrigger: decorativeStart(tab),
+          });
+        });
+
         // Homepage: each band has its own short, editorially meaningful beat.
         stageGroup(".ria-service-strip", [{ selector: "a", y: 8, duration: 0.36, stagger: 0.035 }], "clamp(top 92%)");
-        stageGroup(".brokerage-path", [
-          { selector: ".brokerage-path__heading > div", x: -14, duration: 0.58 },
-          { selector: ".brokerage-path__support", x: 14, duration: 0.54, at: "-=0.42" },
-          { selector: ".brokerage-path__step", y: 12, duration: 0.48, stagger: 0.06, at: "-=0.3" },
-          { selector: ".brokerage-path__roles", y: 10, duration: 0.5, at: "-=0.3" },
-        ], "clamp(top 90%)");
-        stageGroup(".ria-coverage", [
-          { selector: ".ria-section-heading", y: 10, duration: 0.48 },
-          { selector: ".coverage-desk", y: 14, scale: 0.995, duration: 0.58, at: "-=0.34" },
-        ]);
         stageGroup(".broker-cases", [
           { selector: ".broker-cases__heading > div", x: -14, duration: 0.56 },
-          { selector: ".broker-cases__heading > p", x: 14, duration: 0.52, at: "-=0.42" },
-          { selector: ".broker-cases__shell", y: 12, scale: 0.996, duration: 0.58, at: "-=0.32" },
+          { selector: ".broker-cases__heading > p", x: 14, duration: 0.52 },
+          { selector: ".broker-cases__shell", y: 12, scale: 0.996, duration: 0.58 },
         ]);
         stageGroup(".ria-editorial", [
           { selector: ".ria-section-heading", y: 10, duration: 0.48 },
-          { selector: ".ria-editorial__grid > .ria-story", y: 14, scale: 0.995, duration: 0.52, stagger: 0.065, at: "-=0.28" },
+          { selector: ".ria-editorial__grid > .ria-story", y: 14, scale: 0.995, duration: 0.52, stagger: 0.065 },
         ]);
         stageGroup(".ria-local", [
           { selector: ".ria-local__copy", x: -14, duration: 0.58 },
-          { selector: ".ria-local__portfolio", x: 14, duration: 0.58, at: "-=0.46" },
+          { selector: ".ria-local__portfolio", x: 14, duration: 0.58 },
+          { selector: ".ria-local__facts > div", y: 8, duration: 0.4, stagger: 0.04 },
         ]);
         stageGroup(".ria-reviews", [
           { selector: ".ria-reviews__heading > div:first-child", x: -14, duration: 0.56 },
-          { selector: ".ria-reviews__score", x: 14, duration: 0.54, at: "-=0.44" },
-          { selector: ".ria-reviews__ledger > blockquote", y: 12, scale: 0.996, duration: 0.5, stagger: 0.055, at: "-=0.3" },
-          { selector: ".ria-reviews__note", y: 8, duration: 0.38, at: "-=0.3" },
+          { selector: ".ria-reviews__score", x: 14, duration: 0.54 },
+          { selector: ".ria-reviews__ledger > blockquote", y: 12, scale: 0.996, duration: 0.5, stagger: 0.055 },
+          { selector: ".ria-reviews__note", y: 8, duration: 0.38 },
         ]);
         stageGroup(".ria-faq", [
           { selector: ".ria-faq__grid > header", x: -12, duration: 0.5 },
-          { selector: ".ria-faq__grid > div > .answer-drawer", x: 8, duration: 0.38, stagger: 0.035, at: "-=0.34" },
+          { selector: ".ria-faq__grid > div > .answer-drawer", x: 8, duration: 0.38, stagger: 0.035 },
         ]);
 
         // Interior pages: photo/copy pairs, cards, and records each move once.
         stageGroup(".services-ledger", [
           { selector: ".services-ledger__intro", y: 10, duration: 0.5 },
-          { selector: ".services-ledger__groups > .service-ledger", y: 14, scale: 0.995, duration: 0.52, stagger: 0.055, at: "-=0.25" },
-          { selector: ".service-ledger__number", scale: 0.82, duration: 0.34, stagger: 0.055, at: "-=0.38" },
+          { selector: ".services-ledger__groups > .service-ledger", y: 14, scale: 0.995, duration: 0.52, stagger: 0.055 },
+          { selector: ".service-ledger__number", scale: 0.82, duration: 0.34, stagger: 0.055 },
         ]);
         stageGroup(".services-briefs", [
           { selector: ".services-briefs__copy", x: -12, duration: 0.5 },
-          { selector: ".services-briefs__list > a", x: 8, duration: 0.38, stagger: 0.035, at: "-=0.34" },
-        ]);
-        stageGroup(".scope-note", [
-          { selector: ".scope-note__intro", x: -12, duration: 0.54 },
-          { selector: ".paper-note", y: 12, duration: 0.5, stagger: 0.08, at: "-=0.38" },
+          { selector: ".services-briefs__list > a", x: 8, duration: 0.38, stagger: 0.035 },
         ]);
         stageGroup(".agency-story", [
           { selector: ".agency-story__statement", x: -12, duration: 0.5 },
-          { selector: ".agency-story__copy", y: 10, duration: 0.5, at: "-=0.36" },
-          { selector: ".agency-story__seal", scale: 0.96, duration: 0.48, at: "-=0.32" },
+          { selector: ".agency-story__copy", y: 10, duration: 0.5 },
+          { selector: ".agency-credential", y: 10, duration: 0.48 },
         ]);
         stageGroup(".agency-principles", [
           { selector: ".agency-principles__heading", y: 10, duration: 0.5 },
-          { selector: ".agency-principles__grid > article", y: 14, scale: 0.995, duration: 0.5, stagger: 0.055, at: "-=0.3" },
+          { selector: ".agency-principles__grid > article", y: 14, scale: 0.995, duration: 0.5, stagger: 0.055 },
         ]);
         stageGroup(".agency-team", [
           { selector: ".agency-team__visual", x: -18, duration: 0.62 },
-          { selector: ".agency-team__records", x: 16, duration: 0.58, at: "-=0.48" },
+          { selector: ".agency-team__records", x: 16, duration: 0.58 },
         ]);
         stageGroup(".office-record", [
           { selector: ".office-record__photo", x: -18, duration: 0.62 },
-          { selector: ".office-record__details", x: 16, duration: 0.58, at: "-=0.48" },
+          { selector: ".office-record__details", x: 16, duration: 0.58 },
         ]);
         stageGroup(".city-directory", [
           { selector: ".city-directory__heading", y: 10, duration: 0.5 },
-          { selector: ".locations-map-plate", scale: 0.99, duration: 0.55, at: "-=0.32" },
-          { selector: ".city-directory__grid > .city-record", y: 12, scale: 0.995, duration: 0.46, stagger: 0.045, at: "-=0.32" },
+          { selector: ".locations-map-plate", scale: 0.99, duration: 0.55 },
+          { selector: ".city-directory__grid > .city-record", y: 12, scale: 0.995, duration: 0.46, stagger: 0.045 },
         ]);
-        stageGroup(".planning-note", [
-          { selector: ".planning-note__copy", x: -10, duration: 0.48 },
-          { selector: ".planning-note__documents > li", x: 10, duration: 0.42, stagger: 0.055, at: "-=0.34" },
-        ], "clamp(top 91%)");
         stageGroup(".contact-switchboard", [
           { selector: ".contact-switchboard__heading", y: 10, duration: 0.5 },
-          { selector: ".contact-switchboard__grid > *", y: 14, scale: 0.995, duration: 0.5, stagger: 0.055, at: "-=0.3" },
+          { selector: ".contact-switchboard__grid > *", y: 14, scale: 0.995, duration: 0.5, stagger: 0.055 },
         ]);
         stageGroup(".contact-desk", [
           { selector: ".contact-desk__photo", x: -18, duration: 0.62 },
-          { selector: ".contact-desk__hours", x: 16, duration: 0.58, at: "-=0.48" },
+          { selector: ".contact-desk__hours", x: 16, duration: 0.58 },
         ]);
         stageGroup(".contact-team", [
           { selector: ".contact-team__heading", y: 10, duration: 0.5 },
-          { selector: ".contact-team__grid > article", y: 14, scale: 0.995, duration: 0.5, stagger: 0.055, at: "-=0.3" },
-        ]);
-        stageGroup(".contact-next", [
-          { selector: ".contact-next__heading", x: -14, duration: 0.56 },
-          { selector: ".contact-next__record", x: 14, scale: 0.996, duration: 0.58, at: "-=0.44" },
-          { selector: ".contact-next__route", scaleY: 0.02, duration: 0.66, at: "-=0.4" },
-          { selector: ".contact-next__record li > span", scale: 0.72, duration: 0.28, stagger: 0.08, at: "-=0.45" },
+          { selector: ".contact-team__grid > article", y: 14, scale: 0.995, duration: 0.5, stagger: 0.055 },
         ]);
         stageGroup(".answer-library", [
           { selector: ".answer-library__index", x: -12, duration: 0.5 },
-          { selector: ".answer-library__grid > div:last-child", x: 12, duration: 0.55, at: "-=0.4" },
+          { selector: ".answer-library__grid > div:last-child", x: 12, duration: 0.55 },
         ]);
-        stageGroup(".answer-group", [
-          { selector: ".answer-group__title", y: 10, duration: 0.46 },
-          { selector: ".answer-group__title > span", scale: 0.72, duration: 0.3, at: "-=0.34" },
-          { selector: ".answer-drawer", x: 8, duration: 0.38, stagger: 0.035, at: "-=0.3" },
-        ], "clamp(top 90%)");
+        // Search results are live React content. Their native disclosures animate
+        // on open; scroll tweens stay on the stable search/index wrapper only.
         stageGroup(".city-orientation", [
           { selector: ".city-orientation__title", x: -12, duration: 0.5 },
-          { selector: ".city-orientation__copy", y: 10, duration: 0.5, at: "-=0.38" },
-          { selector: ".city-orientation__office", x: 12, duration: 0.5, at: "-=0.38" },
-          { selector: ".city-orientation__office > svg", scale: 0.72, duration: 0.3, at: "-=0.32" },
+          { selector: ".city-orientation__copy", y: 10, duration: 0.5 },
+          { selector: ".city-orientation__office", x: 12, duration: 0.5 },
+          { selector: ".city-orientation__office > svg", scale: 0.72, duration: 0.3 },
         ]);
         stageGroup(".city-coverage", [
           { selector: ".city-coverage__heading", y: 10, duration: 0.5 },
-          { selector: ".city-coverage__grid > a", y: 14, scale: 0.995, duration: 0.5, stagger: 0.055, at: "-=0.3" },
+          { selector: ".city-coverage__grid > a", y: 14, scale: 0.995, duration: 0.5, stagger: 0.055 },
         ]);
         stageGroup(".nearby-files", [
           { selector: ".nearby-files__grid > div:first-child", x: -12, duration: 0.5 },
-          { selector: ".nearby-files__grid > div:last-child > a", x: 8, duration: 0.38, stagger: 0.035, at: "-=0.34" },
+          { selector: ".nearby-files__grid > div:last-child > a", x: 8, duration: 0.38, stagger: 0.035 },
         ]);
+
+        stageGroup(".quote-request", [{ selector: ".quote-request__layout > header", y: 10, duration: .45 }]);
+        stageGroup(".service-scope-note", [{ selector: "p", y: 10, duration: .45 }]);
 
         // Product briefs retain a reading hierarchy instead of fading every paragraph.
         stageGroup(".fact-rail", [{ selector: ".fact-rail__item", x: 8, duration: 0.38, stagger: 0.035 }], "clamp(top 91%)");
@@ -228,12 +277,14 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         stageGroup(".brief-anatomy__list", [{ selector: ":scope > article", x: 8, duration: 0.38, stagger: 0.035 }], "clamp(top 90%)");
         stageGroup(".brief-documents", [
           { selector: ".brief-documents__copy", x: -12, duration: 0.5 },
-          { selector: ".paper-note", x: 12, duration: 0.5, at: "-=0.38" },
-          { selector: ".brief-documents__copy li svg", scale: 0.7, duration: 0.28, stagger: 0.045, at: "-=0.34" },
+          { selector: ".paper-note", x: 12, duration: 0.5 },
+          { selector: ".brief-documents__copy li svg", scale: 0.7, duration: 0.28, stagger: 0.045 },
         ]);
         stageGroup(".brief-faq", [{ selector: ".answer-drawer", x: 8, duration: 0.38, stagger: 0.035 }], "clamp(top 90%)");
         stageGroup(".brief-closing-image", [{ selector: ".brief-closing-image__inner", y: 12, scale: 0.995, duration: 0.58 }]);
         stageGroup(".policy-file__body article > section", [{ selector: ":scope > h2, :scope > p, :scope > ul", x: 8, duration: 0.42, stagger: 0.035 }], "clamp(top 90%)");
+
+        stageGroup(".ria-award", [{ selector: ".ria-award__image, figcaption", y: 18, duration: .7, stagger: .08 }]);
 
         stageGroup(".ria-reviews", [
           { selector: ".ria-reviews__register", scaleX: 0.02, duration: 0.72 },
@@ -241,7 +292,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
 
         root.querySelectorAll<HTMLElement>(".quote-band").forEach((band) => {
           if (band.getBoundingClientRect().top < window.innerHeight + 24) return;
-          const targets = Array.from(band.querySelectorAll<HTMLElement>(".quote-band__art img, .quote-band__mark, h2, .quote-band__grid > p, .quote-band__actions"));
+          const targets = Array.from(band.querySelectorAll<HTMLElement>(".quote-band__copy, .quote-band__actions"));
           gsap.set(targets, { y: 10 });
           gsap.to(targets, {
             y: 0,
@@ -251,32 +302,6 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
             clearProps: "transform",
             scrollTrigger: { trigger: band, start: "clamp(top 88%)", once: true, fastScrollEnd: true },
           });
-        });
-
-        // The homepage's primary scroll-linked narrative: the gold route follows
-        // the actual work of an independent broker from brief to service.
-        if (!isCompact) root.querySelectorAll<HTMLElement>("[data-brokerage-path]").forEach((rail) => {
-          const track = rail.querySelector<HTMLElement>(".brokerage-path__track span");
-          const nodes = Array.from(rail.querySelectorAll<HTMLElement>(".brokerage-path__node"));
-          if (!track || !nodes.length) return;
-
-          gsap.set(track, { scaleX: 0, transformOrigin: "left center" });
-          gsap.set(nodes, { scale: 0.78, transformOrigin: "center" });
-          const timeline = gsap.timeline({
-            scrollTrigger: {
-              trigger: rail,
-              start: "clamp(top 82%)",
-              end: "clamp(bottom 58%)",
-              scrub: 0.55,
-            },
-          });
-          timeline.to(track, { scaleX: 1, duration: 1, ease: "none" }, 0)
-            .to(nodes, {
-              scale: 1,
-              duration: 0.12,
-              stagger: 0.22,
-              ease: "back.out(1.5)",
-            }, 0.02);
         });
 
         // The illustration moves inside its printed frame while the opening
@@ -293,6 +318,15 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
               scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 0.65 },
             },
           );
+        });
+
+        if (!isCompact) root.querySelectorAll<HTMLElement>(".ria-hero__office > img").forEach((photo) => {
+          gsap.fromTo(photo, { scale: 1.035, yPercent: -.5 }, {
+            scale: 1.035,
+            yPercent: 1,
+            ease: "none",
+            scrollTrigger: { trigger: photo.parentElement, start: "top top", end: "bottom top", scrub: .6 },
+          });
         });
 
         // Small pieces of the print identity arrive as the reader reaches them.
@@ -336,10 +370,10 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
         ).forEach((photo) => {
           if (photo.getBoundingClientRect().top < window.innerHeight + 24) return;
           gsap.fromTo(photo,
-            { scale: 1.025, transformOrigin: "center" },
+            { scale: isCompact ? 1.035 : 1.075, transformOrigin: "center" },
             {
               scale: 1,
-              duration: 0.72,
+              duration: isCompact ? .7 : 1.15,
               ease: "power2.out",
               clearProps: "transform",
               scrollTrigger: { trigger: photo, start: "clamp(top 88%)", once: true },
@@ -422,11 +456,39 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
       }, root);
 
       let refreshFrame = 0;
+      let previousHeight = root.getBoundingClientRect().height;
       const scheduleRefresh = () => {
+        if (cancelled || document.visibilityState === "hidden") return;
         window.cancelAnimationFrame(refreshFrame);
         refreshFrame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
       };
+      // A link that is being pointed at or focused must stop moving immediately.
+      // Only complete the owned entrances, never image-depth or ambient timelines.
+      const settleInteraction = (event: Event) => {
+        const origin = event.target instanceof Element ? event.target : null;
+        if (!origin?.closest("a,button,input,select,textarea,summary,[role=tab]")) return;
+        for (let node: Element | null = origin; node && node !== root; node = node.parentElement) {
+          const entrance = entrances.get(node);
+          if (entrance) {
+            // Killing with the default revert flag would restore the entrance's
+            // start transform just as the visitor focuses the control.
+            entrance.scrollTrigger?.kill(false, true);
+            entrance.progress(1);
+            entrances.delete(node);
+          }
+        }
+      };
+      root.addEventListener("focusin", settleInteraction);
+      root.addEventListener("pointerover", settleInteraction);
       root.addEventListener("toggle", scheduleRefresh, true);
+      document.addEventListener("visibilitychange", scheduleRefresh);
+      window.addEventListener("pageshow", scheduleRefresh);
+      const resizeObserver = new ResizeObserver(([entry]) => {
+        if (Math.abs(entry.contentRect.height - previousHeight) < 1) return;
+        previousHeight = entry.contentRect.height;
+        scheduleRefresh();
+      });
+      resizeObserver.observe(root);
       void document.fonts?.ready.then(() => {
         if (!cancelled) scheduleRefresh();
       });
@@ -434,6 +496,11 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
       teardown = () => {
         window.cancelAnimationFrame(refreshFrame);
         root.removeEventListener("toggle", scheduleRefresh, true);
+        root.removeEventListener("focusin", settleInteraction);
+        root.removeEventListener("pointerover", settleInteraction);
+        document.removeEventListener("visibilitychange", scheduleRefresh);
+        window.removeEventListener("pageshow", scheduleRefresh);
+        resizeObserver.disconnect();
         root.classList.remove("motion-managed");
         delete root.dataset.motionState;
         context.revert();
@@ -450,7 +517,7 @@ export default function RouteMotion({ children, routeKey }: { children: ReactNod
       else if (typeof idleId === "number") globalThis.clearTimeout(idleId);
       teardown?.();
     };
-  }, [routeKey, reducedMotion]);
+  }, [routeKey, reducedMotion, compactMotion]);
 
-  return <div ref={scope} className="route-frame">{children}</div>;
+  return <div ref={scope} className="route-frame"><div className="page-scroll-progress" aria-hidden="true" />{children}</div>;
 }

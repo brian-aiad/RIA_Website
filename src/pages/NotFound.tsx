@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowRight, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AtlasEyebrow, AtlasImage } from "../components/AtlasUI";
 import { usePageMeta } from "../lib/seo";
+import InteriorSignature from "../components/InteriorSignature";
 import { site } from "../lib/site";
 
 export default function NotFound() {
@@ -17,7 +18,7 @@ export default function NotFound() {
       <div className="atlas-container not-found-atlas__grid">
         <div className="hero-copy-enter">
           <AtlasEyebrow light>Page not found</AtlasEyebrow>
-          <span className="not-found-atlas__number">404</span>
+          <div className="not-found-atlas__wayfinding"><span className="not-found-atlas__number">404</span><InteriorSignature kind="route" /></div>
           <h1>We couldn’t find that page.</h1>
           <p>The address may have changed, or the link may be incomplete. Choose a useful way back—or call the office if you were looking for something specific.</p>
           <nav className="not-found-atlas__actions" aria-label="Page recovery options">
@@ -28,7 +29,7 @@ export default function NotFound() {
           </nav>
         </div>
         <figure className="atlas-parallax">
-          <AtlasImage src="/images/illustrated/office-venice-illustrated-v6.webp" alt="Illustration of Rafla Insurance Agency's Venice Boulevard office" width="1536" height="1024" />
+          <AtlasImage src="/images/editorial/not-found.webp" alt="A quiet pedestrian passage between stucco buildings" width="1536" height="1024" />
           <figcaption><MapPin size={15} />Back to Mar Vista</figcaption>
         </figure>
       </div>

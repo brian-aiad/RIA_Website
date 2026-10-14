@@ -1,9 +1,10 @@
-import { Clock3, Phone } from "lucide-react";
-import { AtlasButton, AtlasEyebrow, DossierHeader, QuoteBand, SectionFolio } from "../components/AtlasUI";
+import { useRef, useState } from "react";
+import { Search, X } from "lucide-react";
+import { AtlasEyebrow, DossierHeader, QuoteBand, SectionFolio } from "../components/AtlasUI";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
-import { openQuoteModal } from "../lib/openQuote";
 import { usePageMeta } from "../lib/seo";
 import { site } from "../lib/site";
+import InteriorSignature from "../components/InteriorSignature";
 import { images } from "../lib/images";
 
 const sections = [
@@ -35,26 +36,32 @@ const sections = [
 ];
 
 export default function Faq() {
+  const [query, setQuery] = useState("");
+  const searchInput = useRef<HTMLInputElement>(null);
+  const terms = query.toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
+  const filteredSections = sections.map(section => ({ ...section, questions: section.questions.filter(([question, answer]) => terms.every(term => `${section.title} ${question} ${answer}`.toLocaleLowerCase().includes(term))) })).filter(section => section.questions.length);
+  const resultCount = filteredSections.reduce((count, section) => count + section.questions.length, 0);
+  const clearSearch = () => { setQuery(""); searchInput.current?.focus(); };
   usePageMeta({ title: "Insurance FAQ | Rafla Insurance Agency Los Angeles", description: "Answers about auto, home, business, workers’ compensation, SR-22 filing, claims, quotes and Rafla Insurance services in Los Angeles.", canonical: "https://www.raflainsurance.com/faq" });
   return (
     <main id="main-content" className="atlas-page faq-file">
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "FAQ", url: "https://www.raflainsurance.com/faq" }]} />
-      <DossierHeader index="Q+A" eyebrow="Questions clients bring us" title="Insurance questions, answered." lede="Find the basics for a quote, filing, policy change, or claim—then call the office when the actual document needs to be reviewed." image={images.interior.faq} imageAlt="Illustrated insurance reference desk with a blank folder, vehicle keys, a house model, and a magnifying glass">
-        <AtlasButton tone="navy" onClick={openQuoteModal}>Open preparation guide</AtlasButton><a className="coverage-brief__call" href={site.contact.phoneHref}><Phone size={15}/>{site.contact.phone}</a>
-      </DossierHeader>
+      <DossierHeader index="Q+A" eyebrow="Questions clients bring us" title="Insurance questions, answered." lede="Find the basics for a quote, filing, policy change, or claim—then call the office when the actual document needs to be reviewed." image={images.interior.faq} imageAlt="An open reference book, reading glasses, and page tabs" />
       <section className="answer-library section-folio-host"><SectionFolio>Answer file</SectionFolio><div className="atlas-container answer-library__grid">
         <aside className="answer-library__index motion-reveal" aria-label="FAQ topics and office help">
-          <AtlasEyebrow>Browse by topic</AtlasEyebrow>
-          <nav aria-label="FAQ topics">{sections.map((section) => <a key={section.code} href={`#faq-${section.code}`}>{section.title}</a>)}</nav>
-          <div className="answer-library__help">
-            <Phone aria-hidden="true" />
-            <span>Need an answer about your document?</span>
-            <p>Have the policy, notice, quote, or contract in front of you when you call.</p>
-            <a href={site.contact.phoneHref}>{site.contact.phone}</a>
-            <small><Clock3 aria-hidden="true" />Monday–Friday, 10am–5pm</small>
-          </div>
+          <div className="answer-library__signature"><InteriorSignature kind="reading" /><AtlasEyebrow>Browse by topic</AtlasEyebrow></div>
+          <nav aria-label="FAQ topics">{filteredSections.map((section) => <a key={section.code} href={`#faq-${section.code}`}>{section.title}</a>)}</nav>
+
         </aside>
-        <div>{sections.map((section) => <section key={section.code} id={`faq-${section.code}`} className="answer-group"><div className="answer-group__title motion-reveal"><span>{section.code}</span><h2>{section.title}</h2></div>{section.questions.map(([q,a]) => <details key={q} className="answer-drawer motion-reveal"><summary>{q}<i aria-hidden="true" /></summary><p>{a}</p></details>)}</section>)}</div>
+        <div className="answer-library__answers">
+          <div className="faq-search" role="search" aria-label="Search insurance questions">
+            <label htmlFor="faq-search">Find an answer</label>
+            <div className="faq-search__field"><Search aria-hidden="true" size={20} /><input ref={searchInput} id="faq-search" type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Try renewal, SR-22, or business" autoComplete="off" aria-describedby="faq-search-count" />{query && <button type="button" onClick={clearSearch} aria-label="Clear search"><X aria-hidden="true" size={18} /></button>}</div>
+            <p id="faq-search-count" role="status" aria-live="polite">{terms.length ? `${resultCount} ${resultCount === 1 ? "answer" : "answers"} found` : "Search by a coverage type, document, or question."}</p>
+          </div>
+          {filteredSections.map((section) => <section key={section.code} id={`faq-${section.code}`} className="answer-group"><div className="answer-group__title"><h2>{section.title}</h2></div>{section.questions.map(([q,a]) => <details key={q} open={terms.length > 0 ? true : undefined} className="answer-drawer"><summary>{q}<i aria-hidden="true" /></summary><p>{a}</p></details>)}</section>)}
+          {!resultCount && <div className="faq-search__empty"><h2>No matching questions yet.</h2><p>Try a broader phrase, or call the office with your specific question.</p><button type="button" onClick={clearSearch}>Show all questions</button><a href={site.contact.phoneHref}>Call {site.contact.phone}</a></div>}
+        </div>
       </div></section>
       <QuoteBand title="Your situation may need a more specific answer." text="Website explanations are general. Bring the actual policy, notice, contract, vehicle, property, or business details into the conversation." />
     </main>

@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Mail, MapPin, Menu, MessageSquareText, Phone, ShieldCheck, X } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { coverageEntries } from "../data/atlas";
-import { openQuoteModal } from "../lib/openQuote";
 import { site } from "../lib/site";
 
 const navItems = [
@@ -31,12 +30,10 @@ export default function Navbar() {
     if (restoreFocus) window.requestAnimationFrame(() => triggerRef.current?.focus());
   }, []);
 
-  const openQuoteFromMenu = () => {
-    setOpen(false);
-    window.requestAnimationFrame(() => {
-      triggerRef.current?.focus();
-      openQuoteModal();
-    });
+  const closeForNavigation = (to: string) => {
+    // Same-page links do not trigger the pathname effect. Restore focus to
+    // the menu button in that case; route changes manage their own focus.
+    closeMenu(!to.includes("#") && pathname === to.split("?")[0]);
   };
 
   const isSectionActive = (to: string) => {
@@ -50,6 +47,22 @@ export default function Navbar() {
   };
 
   useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 901px)");
+    const releaseMobilePanel = () => {
+      if (!desktop.matches) return;
+      const focusWasInPanel = panelRef.current?.contains(document.activeElement);
+      closeMenu(false);
+      // The mobile trigger is hidden after this breakpoint; return to a visible
+      // navigation target rather than leaving focus in an inert, hidden dialog.
+      if (focusWasInPanel) window.requestAnimationFrame(() => {
+        document.querySelector<HTMLElement>(".atlas-nav__brand")?.focus();
+      });
+    };
+    desktop.addEventListener("change", releaseMobilePanel);
+    return () => desktop.removeEventListener("change", releaseMobilePanel);
+  }, [closeMenu]);
 
   useEffect(() => {
     setQuickActionsVisible(false);
@@ -76,7 +89,7 @@ export default function Navbar() {
       { threshold: 0.02, rootMargin: "0px 0px -8% 0px" },
     );
     observer.observe(anchor);
-    document.querySelectorAll(".quote-band, .contact-next, .atlas-footer").forEach((element) => {
+    document.querySelectorAll(".quote-band, #quote-request, .atlas-footer").forEach((element) => {
       restingStates.set(element, false);
       observer.observe(element);
     });
@@ -135,7 +148,7 @@ export default function Navbar() {
       </div>
       <div className="atlas-nav atlas-container">
         <NavLink to="/" className="atlas-nav__brand" aria-label="Rafla Insurance Agency home">
-          <img src="/logo.svg" alt="Rafla Insurance Agency" width="208" height="52" />
+          <img src="/logo.svg" alt="Rafla Insurance Agency" width="1185" height="460" />
         </NavLink>
         <nav className="atlas-nav__links" aria-label="Primary navigation">
           {navItems.map((item) => (
@@ -144,7 +157,7 @@ export default function Navbar() {
         </nav>
         <div className="atlas-nav__actions">
           <span className="atlas-nav__languages">EN / ES / AR</span>
-          <button type="button" onClick={openQuoteModal} className="atlas-nav__quote">Prepare for a Quote <ArrowUpRight size={15} /></button>
+          <Link to="/contact#quote-request" className="atlas-nav__quote">Get a quote <ArrowUpRight size={15} /></Link>
           <button ref={triggerRef} type="button" className="atlas-nav__menu" onClick={() => setOpen(true)} aria-expanded={open} aria-haspopup="dialog" aria-controls="mobile-nav" aria-label="Open navigation"><Menu /></button>
         </div>
       </div>
@@ -152,10 +165,10 @@ export default function Navbar() {
       <div ref={panelRef} id="mobile-nav" className={`mobile-nav ${open ? "is-open" : ""}`} role="dialog" aria-modal={open} aria-label="Navigation menu" aria-hidden={!open} inert={!open}>
         <div className="mobile-nav__top"><span>Menu</span><button type="button" onClick={() => closeMenu()} aria-label="Close navigation"><X /></button></div>
         <nav aria-label="Mobile navigation" className="mobile-nav__main">
-          <NavLink to="/" end className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink>
-          {navItems.map((item) => <NavLink key={item.to} to={item.to} className={isSectionActive(item.to) ? "active" : ""}>{item.label}</NavLink>)}
+          <NavLink to="/" end onClick={() => closeForNavigation("/")} className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink>
+          {navItems.map((item) => <NavLink key={item.to} to={item.to} onClick={() => closeForNavigation(item.to)} className={isSectionActive(item.to) ? "active" : ""}>{item.label}</NavLink>)}
         </nav>
-        <div className="mobile-nav__coverage"><span>Popular insurance services</span>{coverageEntries.slice(0, 4).map((entry) => <NavLink key={entry.key} to={entry.href}>{entry.title}</NavLink>)}</div>
+        <div className="mobile-nav__coverage"><span>Popular insurance services</span>{coverageEntries.slice(0, 4).map((entry) => <NavLink key={entry.key} to={entry.href} onClick={() => closeForNavigation(entry.href)}>{entry.title}</NavLink>)}</div>
         <div className="mobile-nav__office">
           <a href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer">
             <MapPin aria-hidden="true" />
@@ -164,7 +177,7 @@ export default function Navbar() {
           </a>
           <p>{site.hours.short} <span aria-hidden="true">/</span> English · Spanish · Arabic</p>
         </div>
-        <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><a href={site.contact.textHref}><MessageSquareText size={16} /> Text {site.contact.text}</a><a href={site.contact.emailHref}><Mail size={16} /> {site.contact.email}</a><button type="button" onClick={openQuoteFromMenu}>Prepare for a quote <ArrowUpRight size={16} /></button></div>
+        <div className="mobile-nav__contact"><a href={site.contact.phoneHref}><Phone size={16} /> {site.contact.phone}</a><a href={site.contact.textHref}><MessageSquareText size={16} /> Text Ash {site.contact.text}</a><a href={site.contact.emailHref}><Mail size={16} /> {site.contact.email}</a><Link className="mobile-nav__quote" to="/contact#quote-request" onClick={() => closeForNavigation("/contact#quote-request")}>Get a quote <ArrowUpRight size={16} /></Link></div>
       </div>
       <nav
         className={`mobile-quick-actions ${quickActionsVisible && !open ? "is-visible" : ""}`}
@@ -173,7 +186,7 @@ export default function Navbar() {
         inert={!quickActionsVisible || open}
       >
         <a href={site.contact.phoneHref}><Phone aria-hidden="true" /><span><small>Speak with us</small>Call agency</span></a>
-        <button type="button" onClick={openQuoteModal}><span><small>Start here</small>Prepare for a quote</span><ArrowUpRight aria-hidden="true" /></button>
+        <Link className="mobile-quick-actions__quote" to="/contact#quote-request"><span><small>Start here</small>Get a quote</span><ArrowUpRight aria-hidden="true" /></Link>
       </nav>
     </header>
   );

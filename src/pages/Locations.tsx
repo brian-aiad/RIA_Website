@@ -1,11 +1,11 @@
-import { ArrowRight, BriefcaseBusiness, CarFront, Clock3, ExternalLink, FileText, Languages, MapPin, Phone } from "lucide-react";
+import { ArrowRight, Clock3, ExternalLink, Languages, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AtlasButton, AtlasEyebrow, AtlasImage, DossierHeader, QuoteBand, SectionFolio } from "../components/AtlasUI";
+import { AtlasButton, AtlasEyebrow, DossierHeader, SectionFolio } from "../components/AtlasUI";
+import InteriorSignature from "../components/InteriorSignature";
 import WestsideMap from "../components/WestsideMap";
 import BreadcrumbSchema from "../components/seo/BreadcrumbSchema";
 import LocalBusinessSchema from "../components/seo/LocalBusinessSchema";
 import { cities } from "../data/atlas";
-import { openQuoteModal } from "../lib/openQuote";
 import { usePageMeta } from "../lib/seo";
 import { site } from "../lib/site";
 
@@ -20,17 +20,17 @@ export default function Locations() {
     <main id="main-content" className="atlas-page locations-file">
       <LocalBusinessSchema url="https://www.raflainsurance.com/" areaServed={cities.map((city) => `${city.name}, CA`)} />
       <BreadcrumbSchema crumbs={[{ name: "Home", url: "https://www.raflainsurance.com/" }, { name: "Locations", url: "https://www.raflainsurance.com/locations" }]} />
-      <DossierHeader index="LA" eyebrow="Your Mar Vista insurance office" title="Your insurance office is on Venice Boulevard." lede="Visit Rafla in Mar Vista or call from anywhere in the surrounding Los Angeles area. The office serves households and businesses across the Westside and nearby communities." image="/images/illustrated/office-venice-illustrated-v6.webp" imageAlt="Illustration of Rafla Insurance Agency's Venice Boulevard neighborhood office">
-        <AtlasButton tone="navy" onClick={openQuoteModal}>Prepare for a quote</AtlasButton>
+      <DossierHeader index="LA" eyebrow="Your Mar Vista insurance office" title="Your insurance office is on Venice Boulevard." lede="Visit Rafla in Mar Vista or call from anywhere in the surrounding Los Angeles area. The office serves households and businesses across the Westside and nearby communities." image="/images/agency/office-venice-v2.webp" imageAlt="Rafla Insurance Agency’s office building on Venice Boulevard">
+        <AtlasButton tone="navy" to="/contact#quote-request">Get a quote</AtlasButton>
         <a className="coverage-brief__call" href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer">Directions <ExternalLink size={14} /></a>
       </DossierHeader>
 
       <section className="office-record section-folio-host">
         <SectionFolio>Visit / 90066</SectionFolio>
         <div className="atlas-container office-record__grid">
-          <div className="office-record__photo motion-reveal"><AtlasImage src="/images/client/rafla-office-front-720.webp" alt="Actual building at 12240 Venice Boulevard, home to Rafla Insurance Agency in Suite 2" width="720" height="1043" loading="lazy" /><span>Neighborhood office / Venice Boulevard</span></div>
+
           <div className="office-record__details motion-reveal">
-            <AtlasEyebrow>Visit Rafla Insurance</AtlasEyebrow>
+            <div className="office-arrival"><InteriorSignature kind="office" /><span>Find the 12240 building<br /><strong>Rafla Insurance · Suite 2</strong></span></div>
             <h2>12240 Venice Blvd<br />Suite 2<br />Los Angeles, CA 90066</h2>
             <div className="office-record__lines">
               <a href={site.contact.mapsHref} target="_blank" rel="noopener noreferrer"><MapPin />Open in maps<ArrowRight /></a>
@@ -48,27 +48,12 @@ export default function Locations() {
           <div className="city-directory__heading motion-reveal"><AtlasEyebrow>Communities we serve</AtlasEyebrow><h2>A Mar Vista office for the Westside.</h2><p>We work with nearby households and businesses. The address tells us where you are; the vehicles, property, people, and operations determine what needs review.</p></div>
           <div className="locations-map-plate motion-reveal"><WestsideMap /></div>
           <div className="city-directory__grid">
-            {cities.map((city, index) => <Link key={city.slug} to={`/insurance/${city.slug}`} className={`city-record city-record--${city.group} motion-reveal`}><span>{String(index + 1).padStart(2,"0")}</span><div><h3>{city.name}</h3><p>{city.note}</p><small>{city.zips.join(" · ")}</small></div><ArrowRight size={18} /></Link>)}
+            {cities.map((city, index) => <Link key={city.slug} to={`/insurance/${city.slug}`} className={`city-record city-record--${city.group} motion-reveal`}><span>{String(index + 1).padStart(2,"0")}</span><div><h3>{city.name}</h3><small>{city.zips.join(" · ")}</small></div><ArrowRight size={18} /></Link>)}
           </div>
         </div>
       </section>
 
-      <section className="planning-note">
-        <div className="atlas-container planning-note__inner motion-reveal">
-          <div className="planning-note__copy">
-            <span>Before you visit</span>
-            <h2>Bring the paper that started the question.</h2>
-            <p>You do not need to assemble a perfect file. One current document usually gives the conversation a useful place to start. Call first if the matter has a same-day deadline.</p>
-          </div>
-          <ul className="planning-note__documents" aria-label="Useful documents to bring" tabIndex={0}>
-            <li><FileText aria-hidden="true" /><strong>Current policy or renewal</strong></li>
-            <li><BriefcaseBusiness aria-hidden="true" /><strong>Contract or certificate request</strong></li>
-            <li><CarFront aria-hidden="true" /><strong>Registration or DMV notice</strong></li>
-          </ul>
-        </div>
-      </section>
 
-      <QuoteBand title="Call ahead or stop by the office." text="Start with the document or deadline in front of you. We’ll tell you what else is useful for the review." />
     </main>
   );
 }

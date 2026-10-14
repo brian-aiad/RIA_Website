@@ -35,7 +35,7 @@ check(heroState.copy === "none", `Homepage copy did not settle: ${heroState.copy
 check(heroState.plate === "none", `Homepage image plate did not settle: ${heroState.plate}`);
 check(heroState.h1Visible, "Homepage headline was not visible after initialization");
 
-for (const selector of [".brokerage-path", ".ria-coverage", ".broker-cases", ".ria-reviews", ".quote-band"]) {
+for (const selector of [".ria-editorial", ".ria-local", ".broker-cases", ".ria-reviews", ".quote-band"]) {
   await page.locator(selector).scrollIntoViewIfNeeded();
   await page.waitForTimeout(850);
   const state = await page.locator(selector).evaluate((section) => ({
@@ -70,33 +70,15 @@ await page.waitForTimeout(1500);
 check(await page.locator(".route-frame").getAttribute("data-motion-state") === "ready", "Motion did not reinitialize after a preference change");
 
 await page.goto(`${base}/contact`, { waitUntil: "networkidle" });
-await page.locator(".contact-next").scrollIntoViewIfNeeded();
-await page.waitForTimeout(1_500);
-const contactMotion = await page.locator(".contact-next").evaluate((section) => ({
-  line: getComputedStyle(section.querySelector(".contact-next__route")).transform,
-  markers: Array.from(section.querySelectorAll("li > span"), (node) => getComputedStyle(node).transform),
-}));
-check(contactMotion.line === "none", `Contact registration line did not settle: ${contactMotion.line}`);
-check(contactMotion.markers.every((value) => value === "none"), `Contact step markers did not settle: ${contactMotion.markers.join(", ")}`);
-
-for (let iteration = 0; iteration < 4; iteration += 1) {
+await page.locator("#quote-request").scrollIntoViewIfNeeded();
+await page.waitForTimeout(1500);
+check(await page.locator("#quote-request").evaluate(node => getComputedStyle(node).transform === "none"), "Contact form retained a transform");
+for (let iteration = 0; iteration < 4; iteration++) {
+  await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
   await page.locator(".atlas-nav__quote").click();
-  const dialog = page.getByRole("dialog");
-  await dialog.waitFor({ state: "visible" });
-  const closeFocused = await page.waitForFunction(
-    () => document.activeElement?.classList.contains("quote-dialog__close"),
-    undefined,
-    { timeout: 1_000 },
-  ).then(() => true).catch(() => false);
-  check(closeFocused, `Dialog opening ${iteration + 1} did not focus Close`);
-  await page.keyboard.press("Escape");
-  await dialog.waitFor({ state: "hidden" });
-  const focusRestored = await page.waitForFunction(
-    () => document.activeElement?.classList.contains("atlas-nav__quote"),
-    undefined,
-    { timeout: 1_000 },
-  ).then(() => true).catch(() => false);
-  check(focusRestored, `Dialog closing ${iteration + 1} did not restore focus`);
+  const focused = await page.waitForFunction(() => document.activeElement?.id === "quote-request", undefined, { timeout: 1000 }).then(() => true).catch(() => false);
+  check(focused, `Repeated quote navigation ${iteration + 1} did not focus the form`);
+  check(await page.evaluate(() => !document.querySelector("main").inert), `Quote navigation ${iteration + 1} left content inert`);
 }
 
 await page.goto(`${base}/`, { waitUntil: "networkidle" });
@@ -145,10 +127,8 @@ const reducedHero = await reduced.locator(".ria-hero").evaluate((hero) => ({
 }));
 check(reducedHero.copyAnimation === "none" && reducedHero.plateAnimation === "none", `Reduced-motion hero retained animation: ${JSON.stringify(reducedHero)}`);
 check(reducedHero.copyTransform === "none" && reducedHero.plateTransform === "none", `Reduced-motion hero retained transforms: ${JSON.stringify(reducedHero)}`);
-await reduced.locator(".ria-hero__actions button").click();
-const reducedDialog = reduced.getByRole("dialog");
-check(await reducedDialog.evaluate((node) => getComputedStyle(node).animationName) === "none", "Reduced-motion dialog retained entry animation");
-await reduced.keyboard.press("Escape");
+await reduced.locator(".ria-hero__actions .atlas-button").click();
+check(await reduced.locator("#quote-request").evaluate(node => getComputedStyle(node).animationName) === "none", "Reduced-motion form retained entry animation");
 await reducedContext.close();
 
 const forcedContext = await browser.newContext({ viewport: { width: 390, height: 844 }, forcedColors: "active", reducedMotion: "reduce" });

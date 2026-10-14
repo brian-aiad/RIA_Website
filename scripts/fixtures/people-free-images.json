@@ -1,0 +1,816 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-12",
+  "reviewer": "Codex visual review during requested site refinement",
+  "attestation": "These exact image files were opened and visually inspected. No people were observed in the production photography. Brand artwork and the award contain no photographic people. This is a recorded visual-review judgment, not an automated person-detection guarantee. SHA-256 verifies that reviewed files have not changed; it does not determine image content.",
+  "scope": "Every rendered img source and srcset candidate on all 25 sitemap routes plus 404, including all four home service-desk tab states. Unused legacy assets are excluded.",
+  "rereview": "When an asset changes or a new asset is introduced, visually inspect the full image and each responsive crop, update its description and review date, then deliberately update its hash. Do not regenerate this manifest automatically as part of QA.",
+  "exceptions": [],
+  "assets": [
+    {
+      "path": "/images/agency/office-venice-v2-md.webp",
+      "sha256": "fbef02cdd7f7f9c900a7ba2b38fb2f835e94e209c59b69403830e282541ae96d",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Rafla Insurance Agency’s office building on Venice Boulevard",
+      "routes": [
+        "/locations"
+      ]
+    },
+    {
+      "path": "/images/agency/office-venice-v2-sm.webp",
+      "sha256": "e52ddcf9abef3115077d48efde92bfd12177a6a1ae2ebd8d3567d207155c5b42",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Rafla Insurance Agency’s office building on Venice Boulevard",
+      "routes": [
+        "/locations"
+      ]
+    },
+    {
+      "path": "/images/agency/office-venice-v2.webp",
+      "sha256": "a58950d4f3a32cce17100b94795e74b3c2dc446437b9267ab70af749c06c59d1",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Rafla Insurance Agency’s office building on Venice Boulevard",
+      "routes": [
+        "/locations"
+      ]
+    },
+    {
+      "path": "/images/brand/businessrate-2026-320.webp",
+      "sha256": "cdb55c1aaf67c49f4872c7dd76a0fd879f0afd2fb79d748f3000a20b24639bcb",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "client-award",
+      "description": "BusinessRate Ranked #1, 2026 Award Winner: Rafla Insurance Agency, Inc., Insurance Agency, Mar Vista, Los Angeles, CA",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/brand/businessrate-2026-640.webp",
+      "sha256": "12004b9ee2cd97c8a61251c8a399ba131f2de2db87d5cdd0412f2efa3caa7700",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "client-award",
+      "description": "BusinessRate Ranked #1, 2026 Award Winner: Rafla Insurance Agency, Inc., Insurance Agency, Mar Vista, Los Angeles, CA",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/brand/businessrate-2026-960.webp",
+      "sha256": "238c120dc337c6f9edfbb8054754da4a21b7a7c7f4d41929c27ec60021bf709d",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "client-award",
+      "description": "BusinessRate Ranked #1, 2026 Award Winner: Rafla Insurance Agency, Inc., Insurance Agency, Mar Vista, Los Angeles, CA",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/client/rafla-office-angle.webp",
+      "sha256": "3705b1e854853e853bd5b77eb2a8a70bfe3ea2bfe347621c7ebad46c7eaeae05",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Rafla Insurance Agency’s office building on Venice Boulevard",
+      "routes": [
+        "/contact"
+      ]
+    },
+    {
+      "path": "/images/client/rafla-office-front-720.webp",
+      "sha256": "a42a8a56c3f691143a5c4e7604558441ce06f377e2c06ca4595f55c8b10c40dc",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Rafla Insurance Agency’s office building on Venice Boulevard",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/about-detail-sm.webp",
+      "sha256": "30d2376d700a6b5dcfe4a72fd2ebdb196eeee28bb23b8b5f9a2451128cbbb42b",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Reference binders, a brass bookend, and a clock on a wooden shelf",
+      "routes": [
+        "/about"
+      ]
+    },
+    {
+      "path": "/images/editorial/about-detail.webp",
+      "sha256": "615382216f138469bd7d1c550e17e8e38c7197295a371bcb4acb7d6811d68b05",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Reference binders, a brass bookend, and a clock on a wooden shelf",
+      "routes": [
+        "/about"
+      ]
+    },
+    {
+      "path": "/images/editorial/about-hero-sm.webp",
+      "sha256": "3df58fdff56136b0a661cedc5ce32090029b971e06aa17a2425c3b872e72414e",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "An unoccupied consultation room with two chairs and a small round table",
+      "routes": [
+        "/about"
+      ]
+    },
+    {
+      "path": "/images/editorial/about-hero.webp",
+      "sha256": "99ca846080815c0e42c486eb9cc4d1442c62e2e8a121198107d8c248846fe657",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "An unoccupied consultation room with two chairs and a small round table",
+      "routes": [
+        "/about"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-culver-city-sm.webp",
+      "sha256": "2f472431409e172e29a0564f38be588d79eb86f829c19aab403a6257a810e9e1",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: A low-rise brick office building beside a tree-lined sidewalk",
+      "routes": [
+        "/insurance/culver-city"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-culver-city.webp",
+      "sha256": "dd0bf0f1bd4adaed4ae6200914406be881bf435991fae5bbc768369177bf6bbc",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: A low-rise brick office building beside a tree-lined sidewalk",
+      "routes": [
+        "/insurance/culver-city"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-inglewood-sm.webp",
+      "sha256": "c67828b13bbedbca97fe8937a743d8a4f675aabec1c1fe9a93162a7f00a0b6b0",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: A small industrial property with a parked box truck",
+      "routes": [
+        "/insurance/inglewood"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-inglewood.webp",
+      "sha256": "45a4739e1b06e886f788090563726e54ec39e3268a5f11d5a05362b396ed9a03",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: A small industrial property with a parked box truck",
+      "routes": [
+        "/insurance/inglewood"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-ladera-heights-sm.webp",
+      "sha256": "44466b13d80d2123c7fadb2a7bdfb3e444f82e2b9bb000f3984e74383bbaceaa",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: A hillside ranch home with a stone entry wall and native planting",
+      "routes": [
+        "/insurance/ladera-heights"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-ladera-heights.webp",
+      "sha256": "1b13a8b2c0f1355fcd90dc979daf569df610889b06ba78f38b5cac700315a87f",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: A hillside ranch home with a stone entry wall and native planting",
+      "routes": [
+        "/insurance/ladera-heights"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-mar-vista-sm.webp",
+      "sha256": "5a1205eae03beb52ce695fc176072bda4dafab7868268e95cb641cb6f5a0e18a",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: A mid-century home and native garden in a Westside residential setting",
+      "routes": [
+        "/insurance/mar-vista"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-mar-vista.webp",
+      "sha256": "417c3af9fd9361c09705dd36f459b8e5956dab7891d32d71a6b1fddcc062c31f",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: A mid-century home and native garden in a Westside residential setting",
+      "routes": [
+        "/insurance/mar-vista"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-marina-del-rey-sm.webp",
+      "sha256": "b9d568bb8d481163936f1c3e2e8c834f7a37487a8a2f5894ab56e06423660ee2",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: A sailboat moored beside an empty marina dock",
+      "routes": [
+        "/insurance/marina-del-rey"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-marina-del-rey.webp",
+      "sha256": "122737e095fd72ccf1523aec6870e562ab252c87985b5e0215fb800a42e2209c",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: A sailboat moored beside an empty marina dock",
+      "routes": [
+        "/insurance/marina-del-rey"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-palms-sm.webp",
+      "sha256": "2a7bf0f53b5a08d7730f270240725a512f9eed96df5bcdd4036e00a941343a62",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: A courtyard apartment building with shaded planting and exterior stairs",
+      "routes": [
+        "/insurance/palms"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-palms.webp",
+      "sha256": "341e17c8833913809471579d7289d74e1322a8bae933195565e57c5d2df2bed6",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: A courtyard apartment building with shaded planting and exterior stairs",
+      "routes": [
+        "/insurance/palms"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-playa-vista-sm.webp",
+      "sha256": "64c63b456699b8bbe9cc9eb0835836f02b7e5dfb559225ead18dcbe3faf8087e",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: Contemporary apartments beside a planted pedestrian greenway",
+      "routes": [
+        "/insurance/playa-vista"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-playa-vista.webp",
+      "sha256": "815e01db878ae98e4d9b48959252cda22be60dc075ee223387af54877287012d",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: Contemporary apartments beside a planted pedestrian greenway",
+      "routes": [
+        "/insurance/playa-vista"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-santa-monica-sm.webp",
+      "sha256": "6f6478d5f2343acbccc9e52e5ea8f6c135aee91607b29951a8c5f57b4f8f51bc",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: A palm-lined coastal overlook and bench above the Pacific",
+      "routes": [
+        "/insurance/santa-monica"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-santa-monica.webp",
+      "sha256": "726793911711152273581e5b8f3ea5833bef33e1ed33ee4cd11a61787db5497e",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: A palm-lined coastal overlook and bench above the Pacific",
+      "routes": [
+        "/insurance/santa-monica"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-sawtelle-sm.webp",
+      "sha256": "15b7fb152ac14a7b4267e908922fa73c628c359ad207c059a2b49f4eea0b09a2",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: Small neighborhood shopfronts with navy awnings and potted maples",
+      "routes": [
+        "/insurance/sawtelle"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-sawtelle.webp",
+      "sha256": "f1fe28942f50d474992c74095de4169544455b972fc8419ff7404e1f5e939cb1",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: Small neighborhood shopfronts with navy awnings and potted maples",
+      "routes": [
+        "/insurance/sawtelle"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-venice-sm.webp",
+      "sha256": "b35db0b85cdba85fa8202dd3c00f5da51f65e1c00d969f33c5e6fc2a52161859",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: A quiet residential canal with a footbridge and waterside homes",
+      "routes": [
+        "/insurance/venice"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-venice.webp",
+      "sha256": "b5395a0904b4b8d5f7ac466e1250de1a1e6b83442aeba033fc234ce0650245cd",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: A quiet residential canal with a footbridge and waterside homes",
+      "routes": [
+        "/insurance/venice"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-west-los-angeles-sm.webp",
+      "sha256": "2ff0344e74057928e8466396d529c971a5b8b38c69a19855c27ecd6e48ffd77b",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: A low-rise professional office building with a landscaped entrance",
+      "routes": [
+        "/insurance/west-los-angeles"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-west-los-angeles.webp",
+      "sha256": "c543738558c121485e33119081431659c2c02c99a295b99dce475d66ee4957e9",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: A low-rise professional office building with a landscaped entrance",
+      "routes": [
+        "/insurance/west-los-angeles"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-westchester-sm.webp",
+      "sha256": "62853266a34424dd4828c916cdbd2883c4ea3d10a72bbef8c122bdfa724f9f42",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Representative neighborhood scene: Single-story ranch homes and a shaded residential driveway",
+      "routes": [
+        "/insurance/westchester"
+      ]
+    },
+    {
+      "path": "/images/editorial/city-westchester.webp",
+      "sha256": "6cdde2d9b2b6afc53e1d1076c09c762557ae557aaad06e6871f28469317224e6",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Representative neighborhood scene: Single-story ranch homes and a shaded residential driveway",
+      "routes": [
+        "/insurance/westchester"
+      ]
+    },
+    {
+      "path": "/images/editorial/contact-welcome-sm.webp",
+      "sha256": "527204ed0eabfcd24d28ed66abed163ab688dd14fdc32d9faffd9d648592f9bb",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A sunlit meeting area with navy guest chairs and a walnut desk",
+      "routes": [
+        "/contact"
+      ]
+    },
+    {
+      "path": "/images/editorial/contact-welcome.webp",
+      "sha256": "d3b02233f67f627629c520512f26c9e3c57a8b55ce21bc536e929885a97f6bf1",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A sunlit meeting area with navy guest chairs and a walnut desk",
+      "routes": [
+        "/contact"
+      ]
+    },
+    {
+      "path": "/images/editorial/desk-certificate-sm.webp",
+      "sha256": "03048a16fbc734577b0e80fd658d2c0e9bca97e542661742ca13a7cb99cc3c88",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A contract binder, architectural plans, and hard hat on a workshop table",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/desk-certificate.webp",
+      "sha256": "16b9fc6973c63a4b755a045d4863338f1a31c6cedc006a68632b3fcfd25e5492",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A contract binder, architectural plans, and hard hat on a workshop table",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/desk-change-sm.webp",
+      "sha256": "e4402666975220dbbf5f44b09989c3b037969c68a59794ff04dcf5bdb3763907",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A refreshed bungalow entrance with a moving box and new door hardware",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/desk-change.webp",
+      "sha256": "70cac3c1d2c968e8f7e69dec9cfd9b95331cf57a79a5b46af1054250fe94152e",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A refreshed bungalow entrance with a moving box and new door hardware",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/desk-claim-sm.webp",
+      "sha256": "da76bfbffb7b247ea5b63ffc26f1b380c35e13a256f1a4ad4d54a949b2e6838b",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A small scrape on a parked sedan’s bumper with a camera nearby for documentation",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/desk-claim.webp",
+      "sha256": "2077361e97db6d39584b10a7010e95c81318c5aad1279f37fbb650f405b3eb85",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A small scrape on a parked sedan’s bumper with a camera nearby for documentation",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/desk-quote-sm.webp",
+      "sha256": "a3858af1887633a36cdca0efdd2108c1491d0da9e5ca0be7da1fd2bd13023131",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Two policy folders, a calculator, and vehicle keys ready for a quote comparison",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/desk-quote.webp",
+      "sha256": "1818f64112bbf24b00192294aacf332805b306c7d58ee1afb90f9149b04a3899",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Two policy folders, a calculator, and vehicle keys ready for a quote comparison",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/faq-hero-sm.webp",
+      "sha256": "7f4a5065105255ec5c2ca6e245118fc91dcbb434c0e1e99c140b5dd7c4a489a5",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "An open reference book, reading glasses, and page tabs",
+      "routes": [
+        "/faq"
+      ]
+    },
+    {
+      "path": "/images/editorial/faq-hero.webp",
+      "sha256": "f4518999aca2392a112f2b35893a78d0d366e69186d35f2578eb3412597f4fdf",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "An open reference book, reading glasses, and page tabs",
+      "routes": [
+        "/faq"
+      ]
+    },
+    {
+      "path": "/images/editorial/guide-auto-sm.webp",
+      "sha256": "bd382f844869852eb0d3b1875afd95d0f6edb9eb890652ff5beda7bfd55c1f8a",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A dark blue sedan parked on a tree-lined residential street",
+      "routes": [
+        "/auto-insurance-los-angeles-ca"
+      ]
+    },
+    {
+      "path": "/images/editorial/guide-auto.webp",
+      "sha256": "6ad3726de35f6a76efd418baa74ef8ab7604f70ec52108ddf8e8ff5a561a5925",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A dark blue sedan parked on a tree-lined residential street",
+      "routes": [
+        "/auto-insurance-los-angeles-ca"
+      ]
+    },
+    {
+      "path": "/images/editorial/guide-commercial-sm.webp",
+      "sha256": "4a9ef5656bec788cc5bde3f3ecfd4d44eaefac7bd79b3933704cbdaac806a0dc",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Two commercial vans with secured tool storage in a contractor yard",
+      "routes": [
+        "/commercial-auto-insurance-los-angeles"
+      ]
+    },
+    {
+      "path": "/images/editorial/guide-commercial.webp",
+      "sha256": "f1db30c4e178e894de0b7e64aa0e5cb7b97a1d1cc3913b9ce13f68df461a09fd",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Two commercial vans with secured tool storage in a contractor yard",
+      "routes": [
+        "/commercial-auto-insurance-los-angeles"
+      ]
+    },
+    {
+      "path": "/images/editorial/guide-home-sm.webp",
+      "sha256": "d8aa8703a26bf0ed3e6f60de75de49e9c15ba3af0dbb0a93e1ce7489fdfa84ed",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A California bungalow with a terracotta roof and drought-tolerant garden",
+      "routes": [
+        "/home-insurance-los-angeles-ca"
+      ]
+    },
+    {
+      "path": "/images/editorial/guide-home.webp",
+      "sha256": "e9055b3216d251f3867de3c92e418be87e7b1a18698a4c14f77a3761924682d0",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A California bungalow with a terracotta roof and drought-tolerant garden",
+      "routes": [
+        "/home-insurance-los-angeles-ca"
+      ]
+    },
+    {
+      "path": "/images/editorial/guide-license-sm.webp",
+      "sha256": "01e5d59ced9ccb1a8705f8caacebff92dc9985c6c562f96fd18b92e38109d228",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A document envelope, notebook, and car key ready for a coverage discussion",
+      "routes": [
+        "/no-license-auto-insurance-los-angeles"
+      ]
+    },
+    {
+      "path": "/images/editorial/guide-license.webp",
+      "sha256": "f346e44327266303fb6e64d0ea3b516e4840073c8f22cca3cb82bc6ed694a8f6",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A document envelope, notebook, and car key ready for a coverage discussion",
+      "routes": [
+        "/no-license-auto-insurance-los-angeles"
+      ]
+    },
+    {
+      "path": "/images/editorial/guide-sr22-sm.webp",
+      "sha256": "66525def9c3504a0ff88eae84c38ba92a6d6f38f76d914c6a68ce83583f33b1a",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A vehicle document wallet and keys on a passenger seat",
+      "routes": [
+        "/sr22-insurance-los-angeles"
+      ]
+    },
+    {
+      "path": "/images/editorial/guide-sr22.webp",
+      "sha256": "7cd37be4a99dac1fd062f51c807a4a7d44213635c2f50396db26a05c8edb0cb9",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A vehicle document wallet and keys on a passenger seat",
+      "routes": [
+        "/sr22-insurance-los-angeles"
+      ]
+    },
+    {
+      "path": "/images/editorial/home-hero-sm.webp",
+      "sha256": "cbdd6e441fd1f6ef689e060d2b8a7a0bd2a2877e6c15e2b3da8438380628c6c5",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A quiet Los Angeles streetscape with a small commercial building and neighborhood homes",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/home-hero.webp",
+      "sha256": "5b9ebc5f672bc0de1fa287a67f9e13e5448a6543d252e1485479f32ead49fb6f",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A quiet Los Angeles streetscape with a small commercial building and neighborhood homes",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/home-household-sm.webp",
+      "sha256": "1cb11a9f2e398db37df17f402fc37243d42d319c013a1337501724170447d077",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A bungalow courtyard with a station wagon, bicycle, and native planting",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/home-household.webp",
+      "sha256": "6d274d892ccfa4e95473437aba5ff8dab485364158f89e479a8779b8af7aaf57",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A bungalow courtyard with a station wagon, bicycle, and native planting",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/editorial/not-found-sm.webp",
+      "sha256": "99da0e2812cbfa5a9e6cbd5ba229cdde2ea2e18bbc9a8184aee5e2af9490e7e0",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A quiet pedestrian passage between stucco buildings",
+      "routes": [
+        "/404"
+      ]
+    },
+    {
+      "path": "/images/editorial/not-found.webp",
+      "sha256": "cb086284f3cd4a78cf2f8a81237d5bdf5fd28fe1d0159db808bb4184374ba388",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A quiet pedestrian passage between stucco buildings",
+      "routes": [
+        "/404"
+      ]
+    },
+    {
+      "path": "/images/editorial/services-auto-sm.webp",
+      "sha256": "06f777b4785b942e7f62dd1bd5a59fe4f87ffba0a803f7de6a682da82c2e999f",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "The empty interior and seat belt of a parked car",
+      "routes": [
+        "/services"
+      ]
+    },
+    {
+      "path": "/images/editorial/services-auto.webp",
+      "sha256": "97924e1fcc0bb277857dc54166657fe65fc7612ef6339c5917c8beab6d1a1158",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "The empty interior and seat belt of a parked car",
+      "routes": [
+        "/services"
+      ]
+    },
+    {
+      "path": "/images/editorial/services-hero-sm.webp",
+      "sha256": "840c3cf9b43fbcf516825ec4f9c2a60155dc97615c2f3ba430f099faaf14e1f5",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A commercial loading courtyard with crates and a delivery van",
+      "routes": [
+        "/services"
+      ]
+    },
+    {
+      "path": "/images/editorial/services-hero.webp",
+      "sha256": "9b4e022222cdd3bd29f0e31db6b68df24ec6f6fcc65d5904ca3d02ebb26b92b6",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A commercial loading courtyard with crates and a delivery van",
+      "routes": [
+        "/services"
+      ]
+    },
+    {
+      "path": "/images/editorial/services-home-sm.webp",
+      "sha256": "3dfdf499e77c9823595087001f9b7f6a9960a5ba6ef45b9fbcdd466345d70e37",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "An apartment living room with a sofa, bookshelf, and neighborhood view",
+      "routes": [
+        "/services"
+      ]
+    },
+    {
+      "path": "/images/editorial/services-home.webp",
+      "sha256": "bd296da30e1719033a5eb24bfd3569176e7eec9cc5174679f65615a17b0f7af1",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "An apartment living room with a sofa, bookshelf, and neighborhood view",
+      "routes": [
+        "/services"
+      ]
+    },
+    {
+      "path": "/images/editorial/services-specialty-sm.webp",
+      "sha256": "04f2c787cb364321c6b91378b6e0e71cbc2c26660f429e28e47e5e6c324d8ae2",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A travel trailer parked at a quiet oak-shaded campground",
+      "routes": [
+        "/services"
+      ]
+    },
+    {
+      "path": "/images/editorial/services-specialty.webp",
+      "sha256": "da0102b9c5123c53a0494f9d9fb42c349988cc1fad7eb012b9a08e10aeac260b",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A travel trailer parked at a quiet oak-shaded campground",
+      "routes": [
+        "/services"
+      ]
+    },
+    {
+      "path": "/images/editorial/services-workers-sm.webp",
+      "sha256": "97e7106e624d1a29d7ee2da4e48ed28fe7631ad6875154a412f703cd09444124",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "Safety glasses, gloves, a hard hat, and a work jacket on a bench",
+      "routes": [
+        "/services"
+      ]
+    },
+    {
+      "path": "/images/editorial/services-workers.webp",
+      "sha256": "5e2603ad09c4911b00affad566d8d935644bb85979dca7f71b8f86820fe54691",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "Safety glasses, gloves, a hard hat, and a work jacket on a bench",
+      "routes": [
+        "/services"
+      ]
+    },
+    {
+      "path": "/images/photography/commercial-workshop-md.webp",
+      "sha256": "922f68c1a2efa1f767a4985fe18487ffdac9db2052aa811149f97c918dce8c60",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A white commercial van parked outside a Los Angeles workshop",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/photography/commercial-workshop-sm.webp",
+      "sha256": "8c8d5ac8c50c78275db6b28c07865110ad2156c1f4648c585acf68c02cc24483",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "responsive-photo-variant",
+      "description": "A white commercial van parked outside a Los Angeles workshop",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/images/photography/commercial-workshop.webp",
+      "sha256": "a9f05526dcb11d816614e5f23f1d93a9699c0e811d6c517b64b7132975b7d355",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "production-photo",
+      "description": "A white commercial van parked outside a Los Angeles workshop",
+      "routes": [
+        "/"
+      ]
+    },
+    {
+      "path": "/logo.svg",
+      "sha256": "b3d805800491b7b8367317474bd6bcae432327227a4a6c418f2ef2aaad2ee0c5",
+      "review": "visually-reviewed-no-people-observed",
+      "role": "client-logo",
+      "description": "Rafla Insurance Agency",
+      "routes": [
+        "/",
+        "/services",
+        "/locations",
+        "/about",
+        "/contact",
+        "/faq",
+        "/privacy",
+        "/accessibility",
+        "/auto-insurance-los-angeles-ca",
+        "/sr22-insurance-los-angeles",
+        "/home-insurance-los-angeles-ca",
+        "/no-license-auto-insurance-los-angeles",
+        "/commercial-auto-insurance-los-angeles",
+        "/insurance/mar-vista",
+        "/insurance/culver-city",
+        "/insurance/santa-monica",
+        "/insurance/venice",
+        "/insurance/marina-del-rey",
+        "/insurance/west-los-angeles",
+        "/insurance/playa-vista",
+        "/insurance/westchester",
+        "/insurance/inglewood",
+        "/insurance/palms",
+        "/insurance/sawtelle",
+        "/insurance/ladera-heights",
+        "/404"
+      ]
+    }
+  ]
+}

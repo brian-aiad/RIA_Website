@@ -5,7 +5,7 @@ export default function PolicyReviewSheet() {
     <div className="review-sheet" aria-label="A sample policy review worksheet">
       <div className="review-sheet__clip" aria-hidden="true"><Paperclip /></div>
       <div className="review-sheet__masthead">
-        <img src="/logo.svg" alt="" aria-hidden="true" width="176" height="44" />
+        <img src="/logo.svg" alt="" aria-hidden="true" width="1185" height="460" />
         <span>Policy review / 90066</span>
       </div>
       <div className="review-sheet__title">

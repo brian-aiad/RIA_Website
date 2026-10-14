@@ -8,8 +8,8 @@ const config: CoverageBriefConfig = {
   metaTitle: "Specialty Auto Insurance Situations Los Angeles | Rafla Insurance",
   metaDescription: "Discuss foreign-license, newly licensed and other nonstandard auto-insurance situations with a multilingual independent broker in Los Angeles.",
   canonical: "https://www.raflainsurance.com/no-license-auto-insurance-los-angeles",
-  image: "/images/illustrated/broker-desk-v6.webp",
-  imageAlt: "An insurance broker and a Los Angeles couple reviewing a policy folder together",
+  image: "/images/editorial/guide-license.webp",
+  imageAlt: "A document envelope, notebook, and car key ready for a coverage discussion",
   signals: [
     { label: "Review type", value: "Carrier-specific" },
     { label: "Languages", value: "English · Spanish · Arabic" },

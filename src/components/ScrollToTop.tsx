@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
 export default function ScrollToTop() {
-  const { pathname, hash } = useLocation();
+  const { pathname, hash, key } = useLocation();
   const previousPath = useRef(pathname);
 
   useLayoutEffect(() => {
@@ -32,7 +32,7 @@ export default function ScrollToTop() {
     document.body.scrollTop = 0;
 
     return () => window.cancelAnimationFrame(frame);
-  }, [pathname, hash]);
+  }, [pathname, hash, key]);
 
   return null;
 }

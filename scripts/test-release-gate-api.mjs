@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import handler from '../api/quote.ts';
+let output;
+const headers = new Map();
+const response = { statusCode: 200, setHeader: (key, value) => headers.set(key, value), end: body => { output = JSON.parse(body); } };
+await handler({ method: 'POST', body: { name: 'Gate check' } }, response);
+assert.equal(response.statusCode, 503);
+assert.match(output.error, /not open yet/);
+assert.equal(headers.get('Cache-Control'), 'no-store');
+console.log('Deployed quote endpoint remains closed behind release gate.');

@@ -12,3 +12,6 @@ dist/
 .vercel
 .playwright-cli/
 output/
+
+dist-review/
+.env*

@@ -2,8 +2,6 @@ import { useState, type KeyboardEvent } from "react";
 import { ArrowRight, CarFront, ClipboardPenLine, FileBadge2, RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AtlasImage, SectionFolio } from "./AtlasUI";
-import { images } from "../lib/images";
-import { openQuoteModal } from "../lib/openQuote";
 import { site } from "../lib/site";
 
 const deskFiles = [
@@ -14,9 +12,9 @@ const deskFiles = [
     title: "Something changed. Start there.",
     summary: "A renewal climbed, you bought a car, moved, or started a business. We build the review around the change—not a generic form.",
     checklist: ["Current policy or renewal notice", "The people, property, vehicles, or work involved", "A realistic effective date and any deadline"],
-    image: images.hero.consultation,
-    alt: "Illustrated broker desk with two people comparing a policy folder and coverage documents",
-    action: "Open quote preparation",
+    image: "/images/editorial/desk-quote.webp",
+    alt: "Two policy folders, a calculator, and vehicle keys ready for a quote comparison",
+    action: "Get a quote",
     actionType: "quote" as const,
     icon: ClipboardPenLine,
   },
@@ -27,8 +25,8 @@ const deskFiles = [
     title: "Tell us when the policy facts change.",
     summary: "A new driver, address, employee, vehicle, renovation, or equipment purchase can change how the policy should be reviewed.",
     checklist: ["What changed and when", "Any lender, lease, or contract instructions", "Updated values, use, drivers, payroll, or locations"],
-    image: images.home.property,
-    alt: "Illustrated local broker reviewing a Westside home and renovation details with homeowners",
+    image: "/images/editorial/desk-change.webp",
+    alt: "A refreshed bungalow entrance with a moving box and new door hardware",
     action: "Contact the service desk",
     actionType: "link" as const,
     icon: RefreshCw,
@@ -40,8 +38,8 @@ const deskFiles = [
     title: "A local person can help you find the next step.",
     summary: "The carrier decides coverage and handles the claim. Rafla can help locate reporting information, organize questions, and stay in the conversation.",
     checklist: ["Protect people and property from further harm", "Record the facts without guessing or admitting fault", "Use the carrier’s official claim-reporting path"],
-    image: images.claims.docs,
-    alt: "Illustrated broker helping two drivers document a small bumper scrape beside their parked car",
+    image: "/images/editorial/desk-claim.webp",
+    alt: "A small scrape on a parked sedan’s bumper with a camera nearby for documentation",
     action: "Ask the office for help",
     actionType: "link" as const,
     icon: CarFront,
@@ -53,8 +51,8 @@ const deskFiles = [
     title: "Bring the requirement, not only the due date.",
     summary: "Certificates, additional-insured requests, bonds, and filings should be checked against the actual contract and policy.",
     checklist: ["The contract or sample certificate", "Exact holder, obligee, or filing instructions", "Deadline, project, vehicle, and operation details"],
-    image: images.claims.certificates,
-    alt: "Illustrated contractor and broker reviewing certificate, bond, and business document folders",
+    image: "/images/editorial/desk-certificate.webp",
+    alt: "A contract binder, architectural plans, and hard hat on a workshop table",
     action: "Send the requirement",
     actionType: "link" as const,
     icon: FileBadge2,
@@ -137,7 +135,6 @@ export default function BrokerServiceDesk() {
               <figcaption key={`caption-${active.id}`}><span>Rafla / local service</span><strong>{active.context}</strong></figcaption>
             </figure>
             <article className="broker-cases__file" key={`file-${active.id}`}>
-              <div className="broker-cases__clip" aria-hidden="true" />
               <span className="broker-cases__file-label">Working file · {active.label}</span>
               <h3>{active.title}</h3>
               <p>{active.summary}</p>
@@ -145,7 +142,7 @@ export default function BrokerServiceDesk() {
                 {active.checklist.map((item) => <li key={item}><span aria-hidden="true" />{item}</li>)}
               </ul>
               {active.actionType === "quote"
-                ? <button type="button" onClick={openQuoteModal}>{active.action}<ArrowRight size={16} /></button>
+                ? <Link to="/contact#quote-request">{active.action}<ArrowRight size={16} /></Link>
                 : <Link to="/contact">{active.action}<ArrowRight size={16} /></Link>}
             </article>
           </div>

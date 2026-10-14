@@ -1,84 +1,21 @@
-/** Generate a simple srcSet string for a single WebP image path */
-export function srcset(src: string): string {
-  return src;
-}
-
-/** Centralized image paths — all optimized from /public/images */
+/** Page-specific, people-free imagery. Generated asset prompts live beside the WebP files. */
 export const images = {
-  hero: {
-    /** Commissioned editorial broker conversation for Rafla's people-first campaign */
-    people: "/images/illustrated/broker-desk-v6.webp",
-    /** Illustrated coverage-review desk created for Rafla */
-    consultation: "/images/illustrated/policy-desk-v6.webp",
-    /** Illustrated Venice Boulevard neighborhood office */
-    storefront: "/images/illustrated/office-venice-illustrated-v6.webp",
-    /** The one documentary proof image retained in the visual system. */
-    officeDetail: "/images/brand/office-venice-thumb-v3.webp",
-  },
+  hero: { desk: "/images/editorial/home-hero.webp" },
   home: {
-    household: "/images/illustrated/household-v6.webp",
-    business: "/images/illustrated/small-business-v6.webp",
-    renters: "/images/illustrated/renters-inventory-v6.webp",
-    property: "/images/illustrated/home-property-v7.webp",
-    why: "/images/illustrated/policy-desk-v6.webp",
-    reviews: "/images/illustrated/policy-desk-v6.webp",
+    household: "/images/editorial/home-household.webp",
+    business: "/images/photography/commercial-workshop.webp",
   },
   services: {
-    auto: "/images/illustrated/auto-review-v8.webp",
-    home: "/images/illustrated/home-property-v7.webp",
-    workers: "/images/illustrated/workers-safety-v8.webp",
-    commercial: "/images/illustrated/small-business-v6.webp",
-    motorcycle: "/images/illustrated/specialty-v6.webp",
-    rv: "/images/illustrated/specialty-v6.webp",
-  },
-  products: {
-    overview: "/images/illustrated/policy-desk-v6.webp",
-    auto: "/images/illustrated/auto-review-v8.webp",
-    home: "/images/illustrated/renters-inventory-v6.webp",
-    workers: "/images/illustrated/workers-safety-v8.webp",
-    commercial: "/images/illustrated/small-business-v6.webp",
-    motorcycle: "/images/illustrated/specialty-v6.webp",
-    rv: "/images/illustrated/specialty-v6.webp",
-    sr22: "/images/illustrated/auto-review-v8.webp",
-    noLicense: "/images/illustrated/policy-desk-v6.webp",
-    filings: "/images/illustrated/certificates-bonds-v7.webp",
+    auto: "/images/editorial/services-auto.webp",
+    home: "/images/editorial/services-home.webp",
+    workers: "/images/editorial/services-workers.webp",
+    motorcycle: "/images/editorial/services-specialty.webp",
   },
   about: {
-    conversation: "/images/interior/interior-about.webp",
-    office: "/images/illustrated/broker-desk-v6.webp",
-    officeAlt: "/images/illustrated/office-venice-illustrated-v6.webp",
+    conversation: "/images/editorial/about-hero.webp",
+    office: "/images/editorial/about-detail.webp",
   },
-  interior: {
-    contact: "/images/interior/interior-contact.webp",
-    faq: "/images/interior/interior-faq.webp",
-  },
-  location: {
-    exterior: "/images/illustrated/office-venice-illustrated-v6.webp",
-    exteriorWide: "/images/illustrated/office-venice-illustrated-v6.webp",
-    interior: "/images/illustrated/contact-service-v6.webp",
-    consultationRoom: "/images/illustrated/broker-desk-v6.webp",
-  },
-  testimonials: {
-    auto: "/images/illustrated/auto-review-v8.webp",
-    family: "/images/illustrated/household-v6.webp",
-    business: "/images/illustrated/small-business-v6.webp",
-  },
-  clients: {
-    officeConsultation: "/images/illustrated/policy-desk-v6.webp",
-    autoConsultation: "/images/illustrated/auto-review-v8.webp",
-    sr22Consultation: "/images/illustrated/auto-review-v8.webp",
-    noLicenseConsultation: "/images/illustrated/policy-desk-v6.webp",
-    commercialConsultation: "/images/illustrated/small-business-v6.webp",
-    contactFrontDesk: "/images/interior/interior-contact.webp",
-  },
-  claims: {
-    docs: "/images/illustrated/claims-service-v8.webp",
-    certificates: "/images/illustrated/certificates-bonds-v7.webp",
-  },
-  city: {
-    westside: "/images/illustrated/office-venice-illustrated-v6.webp",
-    coastal: "/images/illustrated/specialty-v6.webp",
-    palmsCulver: "/images/illustrated/household-v6.webp",
-    southWestside: "/images/illustrated/small-business-v6.webp",
-  },
+  interior: { faq: "/images/editorial/faq-hero.webp" },
+  location: { exteriorWide: "/images/client/rafla-office-angle.webp" },
+  clients: { contactFrontDesk: "/images/editorial/contact-welcome.webp" },
 };

@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import middleware from "../middleware.js";
+import { fullSiteMiddleware as middleware } from "../middleware.js";
 
 const failures = [];
 let checks = 0;
@@ -26,11 +26,15 @@ const publicRoutes = [...sitemap.matchAll(/<loc>https:\/\/www\.raflainsurance\.c
   .filter((route) => route !== "/");
 const titles = new Set();
 const descriptions = new Set();
+const built404 = readFileSync(resolve(process.env.QA_DIST_DIR ?? "dist", "404.html"), "utf8");
+check(built404.includes('name="robots" content="noindex, nofollow, noarchive"'), "Built error page must remain noindex");
+check(built404.includes('class="not-found-atlas"'), "Built error page must use the designed recovery template");
+check(built404.includes('href="sms:+12138795955"'), "Built error page must retain the current text contact");
 check(publicRoutes.length === 24, "Sitemap must include all 25 public pages");
 check(vercelConfig.cleanUrls === true && vercelConfig.trailingSlash === false, "Clean static routing configuration is missing");
 check(!vercelConfig.rewrites?.some(rule => rule.destination === "/index.html"), "App-shell rewrites bypass route HTML");
 for (const route of ["/", ...publicRoutes]) {
-  const html = readFileSync(resolve("dist", route === "/" ? "index.html" : `${route.slice(1)}.html`), "utf8");
+  const html = readFileSync(resolve(process.env.QA_DIST_DIR ?? "dist", route === "/" ? "index.html" : `${route.slice(1)}.html`), "utf8");
   const canonical = `https://www.raflainsurance.com${route}`;
   const title = html.match(/<title>(.*?)<\/title>/)?.[1];
   const description = html.match(/<meta name="description" content="([^"]*)"/ )?.[1];
@@ -43,6 +47,8 @@ for (const route of ["/", ...publicRoutes]) {
   check(html.includes("<main") && html.includes('type="application/ld+json"'), `${route}: crawlable content/schema missing`);
   check(!html.includes('id="root"></div>'), `${route}: empty app shell`);
   check(!/noindex/.test(html), `${route}: unexpected noindex`);
+  check(!html.includes("Open preparation guide") && !html.includes("Prepare for a quote"), `${route}: obsolete quote-guide CTA remains in prerendered HTML`);
+  if (route === "/contact") check(html.includes('id="quote-request"') && html.includes('id="quote-name"'), "Contact request form is missing from prerendered HTML");
 }
 
 for (const host of ["raflainsurance.com", "www.raflainsurance.com"]) {
@@ -54,6 +60,14 @@ for (const host of ["raflainsurance.com", "www.raflainsurance.com"]) {
   const queryResponse = await middleware(new Request(`https://${host}/insurance/mar-vista?q=private&utm_source=test`));
   check(queryResponse.status === 308, `${host}: query cleanup returned ${queryResponse.status}`);
   check(queryResponse.headers.get("location") === `https://${host}/insurance/mar-vista`, `${host}: query cleanup target is incorrect`);
+  for (const coverage of ["auto", "home", "business", "specialty"]) {
+    const categoryResponse = await middleware(new Request(`https://${host}/contact?coverage=${coverage}`));
+    check(categoryResponse.status === 200, `${host}: supported ${coverage} quote selection was redirected`);
+  }
+  const mixedQuery = await middleware(new Request(`https://${host}/contact?coverage=home&email=private@example.com`));
+  check(mixedQuery.status === 308 && mixedQuery.headers.get("location") === `https://${host}/contact?coverage=home`, `${host}: quote query cleanup did not preserve only the supported coverage`);
+  const invalidQuery = await middleware(new Request(`https://${host}/contact?coverage=invalid`));
+  check(invalidQuery.status === 308 && invalidQuery.headers.get("location") === `https://${host}/contact`, `${host}: invalid quote selection was retained`);
 }
 
 console.log(JSON.stringify({ checks, failures }, null, 2));

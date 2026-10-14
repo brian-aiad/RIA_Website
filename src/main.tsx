@@ -9,6 +9,8 @@ import App from "./App";
 import "./index.css";
 import "./ria-revamp.css";
 import "./refinement.css";
+import "./premium-pages.css";
+import "./premium-motion.css";
 
 const rootEl = document.getElementById("root")!;
 const isDeployedHost = /(^|\.)raflainsurance\.com$|\.vercel\.app$/.test(window.location.hostname);

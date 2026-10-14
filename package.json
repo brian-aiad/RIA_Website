@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir node_modules/.cache/rafla-ssr && node scripts/prerender.mjs",
+    "build": "node scripts/build.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "validate:schema": "node scripts/validate-schema.mjs",
@@ -21,7 +21,21 @@
     "qa:production": "node scripts/qa-production.mjs",
     "qa:performance": "node scripts/qa-performance.mjs",
     "qa:motion": "node scripts/qa-motion.mjs",
-    "deploy:check": "npm run seo-lint && npm run build && npm run validate:schema && npm run qa:production"
+    "deploy:check": "npm run build && node scripts/check-deployment.mjs",
+    "qa:imagery": "node scripts/qa-imagery.mjs",
+    "qa:interaction-states": "node scripts/qa-interaction-states.mjs",
+    "qa:reading-tools": "node scripts/qa-reading-tools.mjs",
+    "qa:scroll-scenes": "node scripts/qa-scroll-scenes.mjs",
+    "test:quote-api": "node --experimental-strip-types --test scripts/test-quote-api.mjs",
+    "qa:quote-form": "node scripts/qa-quote-form.mjs",
+    "build:review": "node scripts/build.mjs --review",
+    "preview:review": "vite preview --outDir dist-review",
+    "qa:gate": "node scripts/qa-release-gate.mjs && node --experimental-strip-types scripts/test-release-gate-api.mjs",
+    "validate:schema:review": "QA_DIST_DIR=dist-review node scripts/validate-schema.mjs",
+    "qa:production:review": "QA_DIST_DIR=dist-review node scripts/qa-production.mjs",
+    "review:check": "npm run seo-lint && npm run build:review && npm run validate:schema:review && npm run qa:production:review",
+    "qa:motion-lifecycle": "node scripts/qa-motion-lifecycle.mjs",
+    "qa:gate:browser": "node scripts/qa-gate-browser.mjs"
   },
   "dependencies": {
     "@fontsource-variable/newsreader": "^5.3.0",

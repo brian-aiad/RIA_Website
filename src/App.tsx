@@ -1,4 +1,3 @@
-import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -23,37 +22,8 @@ import NoLicenseInsuranceLosAngeles from "./pages/NoLicenseInsuranceLosAngeles";
 import CommercialAutoInsuranceLosAngeles from "./pages/CommercialAutoInsuranceLosAngeles";
 import NotFound from "./pages/NotFound";
 
-const QuoteWidget = lazy(() => import("./components/QuoteWidget"));
-
 export default function App() {
   const location = useLocation();
-  const [quoteWidgetReady, setQuoteWidgetReady] = useState(false);
-  const [quoteOpenSignal, setQuoteOpenSignal] = useState(0);
-
-  useEffect(() => {
-    if (navigator.userAgent === "prerender-bot") return;
-
-    const loadQuoteWidget = () => setQuoteWidgetReady(true);
-    const openQuoteWidget = () => {
-      setQuoteWidgetReady(true);
-      setQuoteOpenSignal((value) => value + 1);
-    };
-
-    window.addEventListener("openQuoteModal", openQuoteWidget);
-    const idleId =
-      "requestIdleCallback" in window
-        ? window.requestIdleCallback(loadQuoteWidget, { timeout: 5000 })
-        : globalThis.setTimeout(loadQuoteWidget, 5000);
-
-    return () => {
-      window.removeEventListener("openQuoteModal", openQuoteWidget);
-      if ("cancelIdleCallback" in window && typeof idleId === "number") {
-        window.cancelIdleCallback(idleId);
-      } else if (typeof idleId === "number") {
-        globalThis.clearTimeout(idleId);
-      }
-    };
-  }, []);
 
   return (
     <>
@@ -85,11 +55,6 @@ export default function App() {
         <Footer />
       </div>
 
-      {quoteWidgetReady && (
-        <Suspense fallback={null}>
-          <QuoteWidget openSignal={quoteOpenSignal} />
-        </Suspense>
-      )}
     </>
   );
 }

@@ -17,7 +17,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DIST = resolve(__dirname, "..", "dist");
+const DIST = resolve(__dirname, "..", process.env.QA_DIST_DIR ?? "dist");
 const PROD_ORIGIN = "https://www.raflainsurance.com";
 
 // Pages that should NOT have BreadcrumbList (home only)
