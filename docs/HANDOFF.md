@@ -38,7 +38,7 @@ Central business configuration is [src/lib/site.ts](../src/lib/site.ts). Preserv
 | Languages | English, Spanish, Arabic |
 | California agency license | `0D95584` — first character is zero |
 | Mark Rafla | President; separate call-only number `(310) 918-7007` |
-| Ashraf Abdelmalik | Customer service; `CA Lic. 4035040` in team data |
+| Ashraf Abdelmalik | Insurance Agent; `CA Lic. 4035040` in team data |
 | Canonical domain | `https://www.raflainsurance.com` |
 
 Mark’s legitimate president telephone entry was intentionally retained. A repository search for his old number can therefore find a **call-only** record; that must not be mistaken for an obsolete SMS action. All customer-facing text-message actions use Ash. Existing review quotations mentioning Mark are customer quotations, not text buttons.

@@ -61,7 +61,7 @@ export default function LocalBusinessSchema({
           "@type": "ContactPoint",
           name: "Ashraf Abdelmalik",
           telephone: "+1-213-879-5955",
-          contactType: "customer service",
+          contactType: "insurance agent",
           areaServed: "US-CA",
         },
       ],

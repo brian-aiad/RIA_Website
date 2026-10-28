@@ -28,7 +28,7 @@ export const site = {
   },
   team: [
     { name: "Mark Rafla", role: "President", phone: "(310) 918-7007", phoneHref: "tel:+13109187007", license: null },
-    { name: "Ashraf Abdelmalik", role: "Customer Service", phone: "(213) 879-5955", phoneHref: "tel:+12138795955", license: "CA Lic. 4035040" },
+    { name: "Ashraf Abdelmalik", role: "Insurance Agent", phone: "(213) 879-5955", phoneHref: "tel:+12138795955", license: "CA Lic. 4035040" },
   ],
   reviews: {
     rating: 4.9,
