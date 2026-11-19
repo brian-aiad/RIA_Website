@@ -1,5 +1,7 @@
 # Rafla Insurance Agency Website
 
+[Project structure and shared workspace](docs/PROJECT_STRUCTURE.md)
+
 React 19 + Vite 7 website for Rafla Insurance Agency in Mar Vista, Los Angeles.
 
 For the complete client context, implementation history, architecture, validation results,
