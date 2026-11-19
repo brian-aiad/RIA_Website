@@ -12,7 +12,7 @@ npm install
 npm run dev
 ```
 
-The development server runs at `http://localhost:3002`.
+The development server runs at `http://localhost:3004`.
 
 ## Validation
 

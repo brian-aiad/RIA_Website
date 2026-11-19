@@ -1,16 +1,17 @@
 import { spawnSync } from 'node:child_process';
 import { COMING_SOON_ENABLED } from '../config/release.mjs';
 const review = process.argv.includes('--review');
-const run = (command, args) => {
-  const result = spawnSync(command, args, { stdio: 'inherit', env: process.env });
+const run = (args) => {
+  const result = spawnSync(process.execPath, args, { stdio: 'inherit', env: process.env });
+  if (result.error) console.error(result.error.message);
   if (result.status !== 0) process.exit(result.status ?? 1);
 };
-run('npx', ['tsc', '-b']);
+run(['node_modules/typescript/bin/tsc', '-b']);
 if (COMING_SOON_ENABLED && !review) {
-  run('node', ['--experimental-strip-types', 'scripts/build-coming-soon.mjs']);
+  run(['--experimental-strip-types', 'scripts/build-coming-soon.mjs']);
 } else {
   const mode = review ? 'review' : 'production';
-  run('npx', ['vite', 'build', '--mode', mode]);
-  run('npx', ['vite', 'build', '--mode', mode, '--ssr', 'src/entry-server.tsx', '--outDir', 'node_modules/.cache/rafla-ssr']);
-  run('node', ['scripts/prerender.mjs', review ? 'dist-review' : 'dist']);
+  run(['node_modules/vite/bin/vite.js', 'build', '--mode', mode]);
+  run(['node_modules/vite/bin/vite.js', 'build', '--mode', mode, '--ssr', 'src/entry-server.tsx', '--outDir', 'node_modules/.cache/rafla-ssr']);
+  run(['scripts/prerender.mjs', review ? 'dist-review' : 'dist']);
 }

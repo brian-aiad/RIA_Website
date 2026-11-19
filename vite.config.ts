@@ -26,7 +26,7 @@ export default defineConfig(({ isSsrBuild, mode }) => ({
   },
 
   server: {
-    port: 3002,
+    port: 3004,
     strictPort: true,
     open: true,
   },
