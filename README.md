@@ -1,5 +1,7 @@
 # Rafla Insurance Agency Website
 
+[AI workflow and shared context](AGENTS.md)
+
 [Project structure and shared workspace](docs/PROJECT_STRUCTURE.md)
 
 React 19 + Vite 7 website for Rafla Insurance Agency in Mar Vista, Los Angeles.
@@ -95,9 +97,9 @@ icons only after certification approval. Any later federal page should use subtl
 stars/stripes and muted red; avoid large flags, eagles, Capitol stock photos, military
 clip art, and campaign styling.
 
-## Local design review
+## Design review history and local review
 
-This pass stays on `design/rafla-brand-revamp`; it has not been pushed or deployed.
+The canonical shared checkout uses `main`. These notes describe the earlier design review; current completion, validation, and release status live in the shared AI_Brain context linked from `AGENTS.md`.
 Run `npm run dev -- --host 127.0.0.1 --port 4174` for live edits. For the full built site, run `npm run build:review` then
 `npm run preview:review -- --host 127.0.0.1 --port 4176`. Port 4175 is reserved for the release preview.
 
